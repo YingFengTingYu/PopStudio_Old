@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>5162deba-202f-485f-8b68-0c1c2212382a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>PopStudio</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\Const.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\ENUS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\ILanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BitWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BZip2Compressor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BZip2InputStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BZip2OutputStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\CRC32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\ParallelBZip2OutputStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\Rand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\FileInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\MatchInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\CompressFlags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\FileInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\Pak.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\PakInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\CompressStringControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\Rsb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsbAutoPoolInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsbCompositeInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsbHeadInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsbInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsbPtxInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsbRsgpInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsgpHeadInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsgpInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\XmlConvert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\Dir.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\StringPool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\TempFilePool.cs" />
+    <Compile Include="..\PopStudio\Plugin\BinaryStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)OtherProject\" />
+  </ItemGroup>
+</Project>
