@@ -3,7 +3,7 @@
     internal class RsbAutoPoolInfo
     {
         public string? ID;
-        public int part1_Offset;
+        public int part1_Offset_InDecompress;
         public int part1_Size;
         public int type = 0x1;
         //我很抱歉我无法解释rsb ps3版本号为3的rsb中出现的type不为1的情况
@@ -14,7 +14,7 @@
         public void Write(BinaryStream bs)
         {
             bs.WriteString(ID, 0x80);
-            bs.WriteInt32(part1_Offset);
+            bs.WriteInt32(part1_Offset_InDecompress);
             bs.WriteInt32(part1_Size);
             bs.WriteInt32(type);
             bs.WriteInt32(0);
@@ -25,7 +25,7 @@
         public RsbAutoPoolInfo Read(BinaryStream bs)
         {
             ID = bs.ReadString(0x80).Replace("\0", "");
-            part1_Offset = bs.ReadInt32();
+            part1_Offset_InDecompress = bs.ReadInt32();
             part1_Size = bs.ReadInt32();
             type = bs.ReadInt32();
             if (type != 0x1) Console.WriteLine(bs.Position);

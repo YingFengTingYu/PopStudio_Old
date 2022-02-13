@@ -4,6 +4,8 @@ namespace PopStudio.Package.Rsb
 {
     internal class Rsb
     {
+        static string autopoolname = "_AutoPool";
+
         public static void Pack(string inFolder, string outFile)
         {
             if (!Directory.Exists(inFolder))
@@ -24,8 +26,8 @@ namespace PopStudio.Package.Rsb
             bool smf = false;
             string xmldata;
             XmlDocument xml;
-            XmlNode? root;
-            XmlNodeList? childlist;
+            XmlNode root;
+            XmlNodeList childlist;
             if (File.Exists(studioPath + "PACKINFO.XML"))
             {
                 xmldata = File.ReadAllText(studioPath + "PACKINFO.XML");
@@ -70,7 +72,7 @@ namespace PopStudio.Package.Rsb
             {
                 while (!sr.EndOfStream)
                 {
-                    var s = sr.ReadLine() ?? string.Empty;
+                    var s = sr.ReadLine();
                     if (s.IndexOf(',') != -1)
                     {
                         var ss = s.Split(',');
@@ -82,7 +84,7 @@ namespace PopStudio.Package.Rsb
             {
                 while (!sr.EndOfStream)
                 {
-                    var s = sr.ReadLine() ?? string.Empty;
+                    var s = sr.ReadLine();
                     if (s.IndexOf(',') != -1)
                     {
                         var ss = s.Split(',');
@@ -94,7 +96,7 @@ namespace PopStudio.Package.Rsb
             {
                 while (!sr.EndOfStream)
                 {
-                    var s = sr.ReadLine() ?? string.Empty;
+                    var s = sr.ReadLine();
                     if (s.IndexOf(',') != -1)
                     {
                         var ss = s.Split(',');
@@ -110,7 +112,7 @@ namespace PopStudio.Package.Rsb
             xml = new XmlDocument();
             xml.LoadXml(xmldata);
             root = xml.SelectSingleNode("/ResourcesGroupInfo");
-            childlist = root?.ChildNodes;
+            childlist = root.ChildNodes;
             if (childlist == null) return;
             rsb.head.rsgp_Number = childlist.Count;
             rsb.rsgpInfo = new RsbRsgpInfo[childlist.Count];
@@ -133,12 +135,12 @@ namespace PopStudio.Package.Rsb
                 long off = bs_rsgpfile.Position;
                 int thisPtxNumber = 0;
                 var rsgpinfo = rsb.rsgpInfo[i] = new RsbRsgpInfo();
-                rsgpinfo.ID = childlist[i]?.Attributes?["id"]?.Value;
+                rsgpinfo.ID = childlist[i].Attributes["id"].Value;
                 rsgpinfo.index = i;
                 rsgpinfo.flags = f;
                 rsgpinfo.offset = (int)off;
                 var autopool = rsb.autopoolInfo[i] = new RsbAutoPoolInfo();
-                autopool.ID = rsgpinfo.ID + "_AutoPool";
+                autopool.ID = rsgpinfo.ID + autopoolname;
                 var rsgp = rsb.rsgp[i] = new RsgpInfo();
                 rsgp.head = new RsgpHeadInfo();
                 rsgp.head.flags = f;
@@ -152,14 +154,14 @@ namespace PopStudio.Package.Rsb
                         {
                             using (BinaryStream bsP1 = new BinaryStream())
                             {
-                                var childchildlist = childlist[i]?.ChildNodes;
-                                for (int j = 0; j < childchildlist?.Count; j++)
+                                var childchildlist = childlist[i].ChildNodes;
+                                for (int j = 0; j < childchildlist.Count; j++)
                                 {
-                                    if (childchildlist[j]?.Name == "Img")
+                                    if (childchildlist[j].Name == "Img")
                                     {
                                         //p1
                                         var ptx = new RsbPtxInfo(ptxEachLength);
-                                        string name = Dir.FormatPath(inFolder + childchildlist[j]?.Attributes?["id"]?.Value);
+                                        string name = Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value);
                                         using (BinaryStream bsindexunknow = BinaryStream.Open(name))
                                         {
                                             bsindexunknow.Endian = endian;
@@ -171,7 +173,7 @@ namespace PopStudio.Package.Rsb
                                             ptx.format = bsindexunknow.ReadInt32();
                                             ptx.alphaSize = bsindexunknow.ReadInt32();
                                             ptx.alphaFormat = bsindexunknow.ReadInt32();
-                                            rsgp.fileList.Add(new CompressString(childchildlist[j]?.Attributes?["id"]?.Value, new RsgpPart1ExtraInfo((int)bsP1.Position, (int)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
+                                            rsgp.fileList.Add(new CompressString(childchildlist[j].Attributes["id"].Value, new RsgpPart1ExtraInfo((int)bsP1.Position, (int)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
                                             bsindexunknow.CopyTo(bsP1);
                                             bsP1.Length = FourK(bsP1.Position);
                                             bsP1.Position = bsP1.Length;
@@ -181,9 +183,9 @@ namespace PopStudio.Package.Rsb
                                     else
                                     {
                                         //p0
-                                        using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist?[j]?.Attributes?["id"]?.Value)))
+                                        using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value)))
                                         {
-                                            rsgp.fileList.Add(new CompressString(childchildlist?[j]?.Attributes?["id"]?.Value, new RsgpPart0ExtraInfo((int)bsP0.Position, (int)bsindexunknow.Length)));
+                                            rsgp.fileList.Add(new CompressString(childchildlist[j].Attributes["id"].Value, new RsgpPart0ExtraInfo((int)bsP0.Position, (int)bsindexunknow.Length)));
                                             bsindexunknow.CopyTo(bsP0);
                                             bsP0.Length = FourK(bsP0.Position);
                                             bsP0.Position = bsP0.Length;
@@ -250,7 +252,8 @@ namespace PopStudio.Package.Rsb
                         bs_rsgpfile.Position = bs_rsgpfile.Length;
                         rsgp.head.fileOffset = rsgp.head.part0_Offset = rsgpinfo.fileOffset = rsgpinfo.part0_Offset = (int)(bs_rsgpfile.Position - off);
                         bsP0over.CopyTo(bs_rsgpfile);
-                        rsgp.head.part1_Offset = autopool.part1_Offset = rsgpinfo.part1_Offset = (int)(bs_rsgpfile.Position - off);
+                        rsgp.head.part1_Offset = rsgpinfo.part1_Offset = (int)(bs_rsgpfile.Position - off);
+                        autopool.part1_Offset_InDecompress = rsgp.head.part0_Offset + rsgp.head.part0_Size; //Not zsize
                         bsP1over.CopyTo(bs_rsgpfile);
                     }
                 }
@@ -261,6 +264,7 @@ namespace PopStudio.Package.Rsb
                 ptxNumber += thisPtxNumber;
                 bs_rsgpfile.Position = bs_rsgpfile.Length;
                 rsb.rsgpInfo[i].size = (int)(bs_rsgpfile.Length - off);
+                GC.Collect();
             }
             rsb.head.ptx_Number = ptxNumber;
             string mfile = outFile;
@@ -294,21 +298,21 @@ namespace PopStudio.Package.Rsb
                 xml = new XmlDocument();
                 xml.LoadXml(xmldata);
                 root = xml.SelectSingleNode("/CompositeResourcesInfo");
-                childlist = root?.ChildNodes;
+                childlist = root.ChildNodes;
                 if (childlist == null) return;
                 rsb.compositeInfo = new RsbCompositeInfo[childlist.Count];
                 rsb.head.composite_Number = childlist.Count;
                 for (int i = 0; i < childlist.Count; i++)
                 {
                     rsb.compositeInfo[i] = new RsbCompositeInfo();
-                    rsb.compositeInfo[i].ID = childlist[i]?.Attributes?["id"]?.Value;
-                    var childchildlist = childlist[i]?.ChildNodes;
-                    int num = childchildlist?.Count ?? 0;
+                    rsb.compositeInfo[i].ID = childlist[i].Attributes["id"].Value;
+                    var childchildlist = childlist[i].ChildNodes;
+                    int num = childchildlist.Count;
                     rsb.compositeInfo[i].child_Number = num;
                     for (int j = 0; j < num; j++)
                     {
-                        rsb.compositeInfo[i].child_Info[j].index = Convert.ToInt32(childchildlist?[j]?.Attributes?["index"]?.Value);
-                        rsb.compositeInfo[i].child_Info[j].ratio = Convert.ToInt32(childchildlist?[j]?.Attributes?["res"]?.Value);
+                        rsb.compositeInfo[i].child_Info[j].index = Convert.ToInt32(childchildlist[j].Attributes?["index"]?.Value);
+                        rsb.compositeInfo[i].child_Info[j].ratio = Convert.ToInt32(childchildlist[j].Attributes?["res"]?.Value);
                         rsb.compositeInfo[i].child_Info[j].language = childchildlist?[j]?.Attributes?["loc"]?.Value;
                     }
                     rsb.compositeInfo[i].Write(bs);
@@ -600,6 +604,7 @@ namespace PopStudio.Package.Rsb
                                             throw new Exception();
                                         }
                                     }
+
                                 }
                             }
                             sw.WriteLine("  </Group>");
