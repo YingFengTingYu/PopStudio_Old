@@ -4,7 +4,7 @@
     {
         public int index;
         public int ratio;
-        public string? language;
+        public string language;
 
         public void Write(BinaryStream bs)
         {
@@ -26,7 +26,7 @@
 
     internal class RsbCompositeInfo
     {
-        public string? ID;
+        public string ID;
         public ChildRsgpInfo[] child_Info = new ChildRsgpInfo[0x40];
         public int child_Number;
 

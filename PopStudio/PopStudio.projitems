@@ -13,6 +13,22 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ENUS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ILanguage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Cdat\Cdat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Cdat\CdatHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\PtxXbox360\Ptx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\PtxXbox360\PtxHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Ptx\Ptx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Ptx\PtxFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Ptx\PtxHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\TexTV\Tex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\TexTV\TexFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\TexTV\TexHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Tex\Tex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Tex\TexFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Tex\TexHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Txz\Txz.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Txz\TxzFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Txz\TxzHead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BitWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BZip2Compressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\BZip2InputStream.cs" />
@@ -20,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\CRC32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\ParallelBZip2OutputStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\Rand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\PvrTC\PvrtcDecoder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
@@ -42,14 +59,38 @@
     <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\XmlConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Dir.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\StringPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\TempFilePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\A8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ABGR8888.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB1555.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB4444.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB8888.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1A8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1AIndex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\L8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\LA44.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\LA88.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC2BPP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC4BPP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC4BPPA8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB565.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB565Block.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB888.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA4444.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA4444Block.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA5551.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA5551Block.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888A8.cs" />
     <Compile Include="..\PopStudio\Plugin\BinaryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)OtherProject\" />
   </ItemGroup>
 </Project>

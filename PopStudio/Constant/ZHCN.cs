@@ -15,5 +15,7 @@
         public string FolderNotFound => "文件夹{0}不存在";
 
         public string XmemCompressInvalid => "不支持Xmem压缩";
+
+        public string UnknownFormat => "不支持的格式";
     }
 }

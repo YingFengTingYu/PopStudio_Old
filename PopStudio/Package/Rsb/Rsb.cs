@@ -311,9 +311,9 @@ namespace PopStudio.Package.Rsb
                     rsb.compositeInfo[i].child_Number = num;
                     for (int j = 0; j < num; j++)
                     {
-                        rsb.compositeInfo[i].child_Info[j].index = Convert.ToInt32(childchildlist[j].Attributes?["index"]?.Value);
-                        rsb.compositeInfo[i].child_Info[j].ratio = Convert.ToInt32(childchildlist[j].Attributes?["res"]?.Value);
-                        rsb.compositeInfo[i].child_Info[j].language = childchildlist?[j]?.Attributes?["loc"]?.Value;
+                        rsb.compositeInfo[i].child_Info[j].index = Convert.ToInt32(childchildlist[j].Attributes["index"].Value);
+                        rsb.compositeInfo[i].child_Info[j].ratio = Convert.ToInt32(childchildlist[j].Attributes["res"].Value);
+                        rsb.compositeInfo[i].child_Info[j].language = childchildlist[j].Attributes["loc"].Value;
                     }
                     rsb.compositeInfo[i].Write(bs);
                 }
@@ -399,7 +399,7 @@ namespace PopStudio.Package.Rsb
             return off % 0x1000 == 0 ? off : (off + 0x1000 - (off % 0x1000));
         }
 
-        public static void Unpack(string inFile, string outFolder)
+        public static void Unpack(string inFile, string outFolder, bool changeimage = false, bool delete = false)
         {
             if (!File.Exists(inFile))
             {
@@ -428,7 +428,7 @@ namespace PopStudio.Package.Rsb
                     }
                     if (temphead == 828535666) //rsb1
                     {
-                        bs.Endian = Endian.Big;
+                        bs.Endian = bs.Endian == Endian.Small ? Endian.Big : Endian.Small;
                     }
                     else if (temphead != 1920164401) //not 1bsr => wrong file magic
                     {
@@ -442,24 +442,24 @@ namespace PopStudio.Package.Rsb
                     {
                         for (int i = 0; i < rsb.fileList.Length; i++)
                         {
-                            sw.WriteLine(rsb.fileList[i].name + "," + ((RsbExtraInfo?)rsb.fileList[i].extraInfo)?.index);
+                            sw.WriteLine(rsb.fileList[i].name + "," + ((RsbExtraInfo)rsb.fileList[i].extraInfo).index);
                         }
                     }
                     using (StreamWriter sw = new StreamWriter(lst + "RESOURCESGROUP.CSV", false))
                     {
                         for (int i = 0; i < rsb.rsgpList.Length; i++)
                         {
-                            sw.WriteLine(rsb.rsgpList[i].name + "," + ((RsbExtraInfo?)rsb.rsgpList[i].extraInfo)?.index);
+                            sw.WriteLine(rsb.rsgpList[i].name + "," + ((RsbExtraInfo)rsb.rsgpList[i].extraInfo).index);
                         }
                     }
                     using (StreamWriter sw = new StreamWriter(lst + "COMPOSITERESOURCES.CSV", false))
                     {
                         for (int i = 0; i < rsb.compositeList.Length; i++)
                         {
-                            sw.WriteLine(rsb.compositeList[i].name + "," + ((RsbExtraInfo?)rsb.compositeList[i].extraInfo)?.index);
+                            sw.WriteLine(rsb.compositeList[i].name + "," + ((RsbExtraInfo)rsb.compositeList[i].extraInfo).index);
                         }
                     }
-                    if (rsb?.head?.xmlPart1_BeginOffset != 0)
+                    if (rsb.head.xmlPart1_BeginOffset != 0)
                     {
                         using (BinaryStream bs2 = new BinaryStream())
                         {
@@ -467,10 +467,10 @@ namespace PopStudio.Package.Rsb
                             bs2.WriteInt32(1919251249);
                             bs2.WriteInt32(1);
                             bs2.WriteInt32(0x14);
-                            bs2.WriteInt32((rsb?.head?.xmlPart2_BeginOffset ?? 0) - (rsb?.head?.xmlPart1_BeginOffset ?? 0) + 0x14);
-                            bs2.WriteInt32((rsb?.head?.xmlPart3_BeginOffset ?? 0) - (rsb?.head?.xmlPart1_BeginOffset ?? 0) + 0x14);
-                            bs.Position = rsb?.head?.xmlPart1_BeginOffset ?? 0;
-                            bs2.WriteBytes(bs.ReadBytes((rsb?.head?.headLength ?? 0) - (rsb?.head?.xmlPart1_BeginOffset ?? 0)));
+                            bs2.WriteInt32(rsb.head.xmlPart2_BeginOffset - rsb.head.xmlPart1_BeginOffset + 0x14);
+                            bs2.WriteInt32(rsb.head.xmlPart3_BeginOffset - rsb.head.xmlPart1_BeginOffset + 0x14);
+                            bs.Position = rsb.head.xmlPart1_BeginOffset;
+                            bs2.WriteBytes(bs.ReadBytes(rsb.head.headLength - rsb.head.xmlPart1_BeginOffset));
                             bs2.Position = 0;
                             XmlConvert.DatToXml(bs2, lst + "RESOURCES.XML");
                         }
@@ -480,7 +480,7 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                         sw.WriteLine("<!-- DO NOT EDIT THIS FILE. This file is generated by PopStudio. -->");
                         sw.WriteLine("<CompositeResourcesInfo>");
-                        for (int i = 0; i < rsb?.compositeInfo?.Length; i++)
+                        for (int i = 0; i < rsb.compositeInfo.Length; i++)
                         {
                             sw.WriteLine("  <CompositeResources id=\"" + rsb.compositeInfo[i].ID + "\">");
                             for (int j = 0; j < rsb.compositeInfo[i].child_Number; j++)
@@ -496,92 +496,75 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                         sw.WriteLine("<!-- DO NOT EDIT THIS FILE. This file is generated by PopStudio. (unless you want to add or delete some resources, or want to change default format of ptx which was transformed into png) -->");
                         sw.WriteLine("<ResourcesGroupInfo>");
-                        for (int i = 0; i < rsb?.head?.rsgp_Number; i++)
+                        for (int i = 0; i < rsb.head.rsgp_Number; i++)
                         {
-                            sw.WriteLine("\n  <Group id=\"" + rsb?.rsgpInfo?[i].ID + "\">");
-                            int rback = rsb?.rsgpInfo?[i].offset ?? 0;
+                            sw.WriteLine("\n  <Group id=\"" + rsb.rsgpInfo[i].ID + "\">");
+                            int rback = rsb.rsgpInfo[i].offset;
                             using (BinaryStream bs_p0 = new BinaryStream())
                             {
                                 using (BinaryStream bs_p1 = new BinaryStream())
                                 {
-                                    bs.Position = rback + (rsb?.rsgp?[i]?.head?.part0_Offset ?? 0);
-                                    if ((rsb?.rsgp?[i]?.head?.flags & 0b10) == 0 && (rsb?.rsgp?[i]?.head?.part0_ZSize == rsb?.rsgp?[i]?.head?.part0_Size))
+                                    bs.Position = rback + rsb.rsgp[i].head.part0_Offset;
+                                    using (BinaryStream bs_temp = new BinaryStream())
                                     {
-                                        bs_p0.WriteBytes(bs.ReadBytes(rsb?.rsgp?[i]?.head?.part0_ZSize ?? 0));
-                                    }
-                                    else
-                                    {
-                                        using (BinaryStream bs_temp = new BinaryStream())
+                                        bs_temp.WriteBytes(bs.ReadBytes(rsb.rsgp[i].head.part0_ZSize));
+                                        bs_temp.Position = 0;
+                                        try
                                         {
-                                            bs_temp.WriteBytes(bs.ReadBytes(rsb?.rsgp?[i]?.head?.part0_ZSize ?? 0));
-                                            bs_temp.Position = 0;
-                                            bool ts = false;
-                                            try
+                                            using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
                                             {
-                                                using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
-                                                {
-                                                    ts = true;
-                                                    zLibStream.CopyTo(bs_p0);
-                                                }
-                                            }
-                                            catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
-                                            {
-                                                if (ts) Console.WriteLine("1");
-                                                bs_temp.Position = 0;
-                                                bs_p0.Position = 0;
-                                                bs_temp.CopyTo(bs_p0);
+                                                zLibStream.CopyTo(bs_p0);
                                             }
                                         }
-                                    }
-                                    bs.Position = rback + (rsb?.rsgp?[i]?.head?.part1_Offset ?? 0);
-                                    if ((rsb?.rsgp?[i]?.head?.flags & 0b1) == 0 && (rsb?.rsgp?[i]?.head?.part1_ZSize == rsb?.rsgp?[i]?.head?.part1_Size))
-                                    {
-                                        bs_p1.WriteBytes(bs.ReadBytes(rsb?.rsgp?[i]?.head?.part1_ZSize ?? 0));
-                                    }
-                                    else
-                                    {
-                                        using (BinaryStream bs_temp = new BinaryStream())
+                                        catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
                                         {
-                                            bs_temp.WriteBytes(bs.ReadBytes(rsb?.rsgp?[i]?.head?.part1_ZSize ?? 0));
                                             bs_temp.Position = 0;
-                                            try
+                                            bs_p0.Position = 0;
+                                            bs_temp.CopyTo(bs_p0);
+                                        }
+                                    }
+                                    bs.Position = rback + rsb.rsgp[i].head.part1_Offset;
+                                    using (BinaryStream bs_temp = new BinaryStream())
+                                    {
+                                        bs_temp.WriteBytes(bs.ReadBytes(rsb.rsgp[i].head.part1_ZSize));
+                                        bs_temp.Position = 0;
+                                        try
+                                        {
+                                            using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
                                             {
-                                                using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
-                                                {
-                                                    zLibStream.CopyTo(bs_p1); 
-                                                }
+                                                zLibStream.CopyTo(bs_p1);
                                             }
-                                            catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
-                                            {
-                                                bs_temp.Position = 0;
-                                                bs_p1.Position = 0;
-                                                bs_temp.CopyTo(bs_p1);
-                                            }
+                                        }
+                                        catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
+                                        {
+                                            bs_temp.Position = 0;
+                                            bs_p1.Position = 0;
+                                            bs_temp.CopyTo(bs_p1);
                                         }
                                     }
                                     bs_p0.Position = 0;
                                     bs_p1.Position = 0;
-                                    for (int xhi = 0; xhi < rsb?.rsgp?[i].fileList.Length; xhi++)
+                                    for (int xhi = 0; xhi < rsb.rsgp[i].fileList.Length; xhi++)
                                     {
                                         CompressString str = rsb.rsgp[i].fileList[xhi];
                                         string nname = Dir.FormatPath(outFolder + str.name);
                                         Dir.NewDir(nname, false);
                                         if (str.type == 1)
                                         {
-                                            var p0ex = (RsgpPart0ExtraInfo?)str.extraInfo;
+                                            var p0ex = (RsgpPart0ExtraInfo)str.extraInfo;
                                             if (p0ex == null) throw new Exception();
                                             bs_p0.Position = p0ex.offset;
                                             using (BinaryStream bs4 = BinaryStream.Create(nname))
                                             {
                                                 bs4.WriteBytes(bs_p0.ReadBytes(p0ex.size));
                                             }
-                                            sw.WriteLine("    <Res id=\"" + str?.name?.Replace("&", "&amp;") + "\" />");
+                                            sw.WriteLine("    <Res id=\"" + str.name.Replace("&", "&amp;") + "\" />");
                                         }
                                         else if (str.type == 2)
                                         {
-                                            var p1ex = (RsgpPart1ExtraInfo?)str.extraInfo;
+                                            var p1ex = (RsgpPart1ExtraInfo)str.extraInfo;
                                             if (p1ex == null) throw new Exception();
-                                            var ptx = rsb?.ptxInfo?[(rsb?.rsgpInfo?[i].ptx_BeforeNumber + p1ex.index) ?? -1];
+                                            var ptx = rsb.ptxInfo[rsb.rsgpInfo[i].ptx_BeforeNumber + p1ex.index];
                                             if (ptx == null) throw new Exception();
                                             bs_p1.Position = p1ex.offset;
                                             using (BinaryStream bs4 = BinaryStream.Create(nname))
@@ -597,17 +580,22 @@ namespace PopStudio.Package.Rsb
                                                 bs4.WriteInt32(ptx.alphaFormat);
                                                 bs4.WriteBytes(bs_p1.ReadBytes(p1ex.size));
                                             }
-                                            sw.WriteLine("    <Img id=\"" + str?.name?.Replace("&", "&amp;") + "\" defaultformat=\"" + ptx.format + "\" />");
+                                            if (changeimage)
+                                            {
+                                                Image.Ptx.Ptx.Decode(nname, Path.ChangeExtension(nname, ".PNG"));
+                                                if (delete) File.Delete(nname);
+                                            }
+                                            sw.WriteLine("    <Img id=\"" + str.name.Replace("&", "&amp;") + "\" defaultformat=\"" + ptx.format + "\" />");
                                         }
                                         else
                                         {
                                             throw new Exception();
                                         }
                                     }
-
                                 }
                             }
                             sw.WriteLine("  </Group>");
+                            GC.Collect();
                         }
                         sw.WriteLine("</ResourcesGroupInfo>");
                     }
@@ -616,10 +604,10 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                         sw.WriteLine("<!-- DO NOT EDIT THIS FILE. This file is generated by PopStudio. (unless you want to change the way for pack) -->");
                         sw.WriteLine("<PackInfo version=\"1\">");
-                        sw.WriteLine("    <PackageVersion>" + rsb?.head?.version + "</PackageVersion>");
+                        sw.WriteLine("    <PackageVersion>" + rsb.head.version + "</PackageVersion>");
                         sw.WriteLine("    <UseBigEndian>" + (bs.Endian == Endian.Big) + "</UseBigEndian>");
-                        sw.WriteLine("    <CompressMethod>" + (rsb?.rsgp?[0]?.head?.flags & 0b11) + "</CompressMethod>");
-                        sw.WriteLine("    <PtxInfoLength>" + rsb?.head?.ptxInfo_EachLength + "</PtxInfoLength>");
+                        sw.WriteLine("    <CompressMethod>" + (rsb.rsgp.Length > 0 ? (rsb.rsgp[0].head.flags & 0b11) : 1) + "</CompressMethod>");
+                        sw.WriteLine("    <PtxInfoLength>" + rsb.head.ptxInfo_EachLength + "</PtxInfoLength>");
                         sw.WriteLine("    <ZlibAll>" + usesmf + "</ZlibAll>");
                         sw.WriteLine("</PackInfo>");
                     }

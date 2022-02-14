@@ -2,7 +2,7 @@
 {
     internal class RsgpInfo
     {
-        public RsgpHeadInfo? head;
+        public RsgpHeadInfo head;
         public CompressStringList fileList = new CompressStringList(1);
 
         public RsgpInfo Read(BinaryStream bs)

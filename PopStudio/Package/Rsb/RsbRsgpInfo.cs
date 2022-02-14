@@ -2,7 +2,7 @@
 {
     internal class RsbRsgpInfo
     {
-        public string? ID = null;
+        public string ID;
         public int offset;
         public int size;
         public int index;

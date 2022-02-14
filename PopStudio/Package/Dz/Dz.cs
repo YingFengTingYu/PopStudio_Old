@@ -64,14 +64,14 @@
             dz.folderNameLibrary = new string[folderPool.Length];
             for (int i = 0; i < folderPool.Length; i++)
             {
-                dz.folderNameLibrary[i] = folderPool[i]?.Value ?? string.Empty;
+                dz.folderNameLibrary[i] = folderPool[i].Value;
             }
             dz.matchInfoLibrary = new MatchInfo[files.Length];
             for (ushort i = 0; i < files.Length; i++)
             {
                 dz.matchInfoLibrary[i] = new MatchInfo();
                 dz.matchInfoLibrary[i].fileIndexForFileInfo = i;
-                dz.matchInfoLibrary[i].folderIndex = (ushort?)(folderPool[pathName[i]]?.Index) ?? 0;
+                dz.matchInfoLibrary[i].folderIndex = (ushort)folderPool[pathName[i]].Index;
             }
             dz.fileInfoLibrary = new FileInfo[files.Length];
             dz.WritePart1(bs);
@@ -158,7 +158,6 @@
             outFolder += Const.PATHSEPARATOR;
             string tempName;
             DtrzInfo dz = new DtrzInfo().Read(bs);
-            if (dz.folderNameLibrary == null || dz.fileNameLibrary == null || dz.matchInfoLibrary == null || dz.fileInfoLibrary == null) return;
             for (int i = 0; i < dz.fileNumber; i++)
             {
                 tempName = outFolder + dz.folderNameLibrary[dz.matchInfoLibrary[i].folderIndex];

@@ -2,15 +2,15 @@
 {
     internal class RsbInfo
     {
-        public RsbHeadInfo? head;
+        public RsbHeadInfo head;
         public CompressStringList fileList = new CompressStringList(0);
         public CompressStringList rsgpList = new CompressStringList(0);
-        public RsbCompositeInfo[]? compositeInfo;
+        public RsbCompositeInfo[] compositeInfo;
         public CompressStringList compositeList = new CompressStringList(0);
-        public RsbRsgpInfo[]? rsgpInfo;
-        public RsbAutoPoolInfo[]? autopoolInfo;
-        public RsbPtxInfo[]? ptxInfo;
-        public RsgpInfo[]? rsgp;
+        public RsbRsgpInfo[] rsgpInfo;
+        public RsbAutoPoolInfo[] autopoolInfo;
+        public RsbPtxInfo[] ptxInfo;
+        public RsgpInfo[] rsgp;
 
         public RsbInfo Read(BinaryStream bs)
         {

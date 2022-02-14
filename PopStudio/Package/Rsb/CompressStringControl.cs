@@ -124,24 +124,24 @@ namespace PopStudio.Package.Rsb
                 //--INFO_LENGTH 写入所属pgsrNum
                 if (INFO_LENGTH == 4)
                 {
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 4, ((RsbExtraInfo?)tls.extraInfo)?.index ?? 0);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 4, ((RsbExtraInfo)tls.extraInfo).index);
                 }
                 else if (INFO_LENGTH == 12)
                 {
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 12, ((RsgpPart0ExtraInfo?)tls.extraInfo)?.type ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 8, ((RsgpPart0ExtraInfo?)tls.extraInfo)?.offset ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 4, ((RsgpPart0ExtraInfo?)tls.extraInfo)?.size ?? 0);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 12, ((RsgpPart0ExtraInfo)tls.extraInfo).type);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 8, ((RsgpPart0ExtraInfo)tls.extraInfo).offset);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 4, ((RsgpPart0ExtraInfo)tls.extraInfo).size);
                 }
                 else
                 {
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 32, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.type ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 28, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.offset ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 24, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.size ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 20, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.index ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 16, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.empty1 ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 12, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.empty2 ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 8, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.width ?? 0);
-                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 4, ((RsgpPart1ExtraInfo?)tls.extraInfo)?.height ?? 0);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 32, ((RsgpPart1ExtraInfo)tls.extraInfo).type);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 28, ((RsgpPart1ExtraInfo)tls.extraInfo).offset);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 24, ((RsgpPart1ExtraInfo)tls.extraInfo).size);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 20, ((RsgpPart1ExtraInfo)tls.extraInfo).index);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 16, ((RsgpPart1ExtraInfo)tls.extraInfo).empty1);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 12, ((RsgpPart1ExtraInfo)tls.extraInfo).empty2);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 8, ((RsgpPart1ExtraInfo)tls.extraInfo).width);
+                    WriteInt32(thisFinishedBytes, thisFinishedBytes.Length - 4, ((RsgpPart1ExtraInfo)tls.extraInfo).height);
                 }
                 //--和已生成的文件组合
                 int l = finishedBytes.Length;
@@ -264,7 +264,7 @@ namespace PopStudio.Package.Rsb
 
     internal class Default
     {
-        public string? name;
+        public string name;
         public int offset;
         public long bsoffset;
 
@@ -289,8 +289,8 @@ namespace PopStudio.Package.Rsb
 
     internal class CompressString
     {
-        public string? name;
-        public ExtraInfo? extraInfo;
+        public string name;
+        public ExtraInfo extraInfo;
         public int type;
 
         public CompressString()
@@ -298,7 +298,7 @@ namespace PopStudio.Package.Rsb
 
         }
 
-        public CompressString(string? name, ExtraInfo extraInfo)
+        public CompressString(string name, ExtraInfo extraInfo)
         {
             this.name = name;
             this.extraInfo = extraInfo;

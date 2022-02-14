@@ -15,5 +15,7 @@
         public string FolderNotFound => "Folder {0} is not exist";
 
         public string XmemCompressInvalid => "Xmem compress is invalid";
+
+        public string UnknownFormat => "Unknown format";
     }
 }

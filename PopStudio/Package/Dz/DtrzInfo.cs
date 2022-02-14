@@ -8,15 +8,14 @@
         public ushort fileNumber;
         public ushort folderNumber;
         public byte version = 0;
-        public string[]? fileNameLibrary;
-        public string[]? folderNameLibrary;
-        public MatchInfo[]? matchInfoLibrary;
+        public string[] fileNameLibrary;
+        public string[] folderNameLibrary;
+        public MatchInfo[] matchInfoLibrary;
         public ushort lastIndex;
-        public FileInfo[]? fileInfoLibrary;
+        public FileInfo[] fileInfoLibrary;
 
         public void WritePart1(BinaryStream bs)
         {
-            if (fileNameLibrary == null || folderNameLibrary == null || matchInfoLibrary == null) return;
             //初始化
             fileNumber = (ushort)fileNameLibrary.Length;
             folderNumber = (ushort)folderNameLibrary.Length;
@@ -44,7 +43,6 @@
 
         public void WritePart2(BinaryStream bs)
         {
-            if (fileInfoLibrary == null) return;
             for (int i = 0; i < fileInfoLibrary.Length; i++)
             {
                 fileInfoLibrary[i].Write(bs);
@@ -69,7 +67,7 @@
                 fileNameLibrary[i] = bs.ReadStringByEmpty();
             }
             folderNameLibrary = new string[folderNumber];
-            folderNameLibrary[0] = "";
+            folderNameLibrary[0] = string.Empty;
             for (ushort i = 1; i < folderNumber; i++)
             {
                 folderNameLibrary[i] = bs.ReadStringByEmpty();

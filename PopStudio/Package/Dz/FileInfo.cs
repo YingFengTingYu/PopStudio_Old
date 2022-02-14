@@ -43,9 +43,9 @@
         /// </summary>
         public class CompareFileInfoByOffsetAndUp : IComparer<FileInfo>
         {
-            public int Compare(FileInfo? x, FileInfo? y)
+            public int Compare(FileInfo x, FileInfo y)
             {
-                return (x?.offset ?? 0) - (y?.offset ?? 0);
+                return x.offset - y.offset;
             }
         }
     }

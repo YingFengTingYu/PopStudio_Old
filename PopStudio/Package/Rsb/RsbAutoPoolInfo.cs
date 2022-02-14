@@ -2,7 +2,7 @@
 {
     internal class RsbAutoPoolInfo
     {
-        public string? ID;
+        public string ID;
         public int part1_Offset_InDecompress;
         public int part1_Size;
         public int type = 0x1;
@@ -28,7 +28,6 @@
             part1_Offset_InDecompress = bs.ReadInt32();
             part1_Size = bs.ReadInt32();
             type = bs.ReadInt32();
-            if (type != 0x1) Console.WriteLine(bs.Position);
             bs.IdInt32(0);
             bs.IdInt32(0);
             bs.IdInt32(0);

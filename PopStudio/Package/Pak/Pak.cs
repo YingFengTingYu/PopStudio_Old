@@ -190,7 +190,7 @@ namespace PopStudio.Package.Pak
             return defaultcompressMethod;
         }
 
-        public static void Unpack(string inFile, string outFolder)
+        public static void Unpack(string inFile, string outFolder, bool changeimage = false, bool delete = false)
         {
             if (!File.Exists(inFile))
             {
@@ -259,6 +259,14 @@ namespace PopStudio.Package.Pak
                         {
                             bs2.WriteBytes(bs.ReadBytes(pak.fileInfoLibrary[i].zsize));
                         }
+                    }
+                    if (changeimage && Path.GetExtension(tempName).ToLower() == ".ptx")
+                    {
+                        if (pak.x360)
+                        {
+                            Image.PtxXbox360.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                        }
+                        if (delete) File.Delete(tempName);
                     }
                 }
                 string lst = outFolder + "popstudioinfo";

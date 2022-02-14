@@ -13,8 +13,7 @@ namespace PopStudio.Package.Rsb
             }
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(xmldata);
-            XmlNode? root = xml.SelectSingleNode("/ResourceManifest");
-            if (root == null) return;
+            XmlNode root = xml.SelectSingleNode("/ResourceManifest");
             XmlNodeList childlist = root.ChildNodes;
             XmlNodeList childchildlist;
             XmlNodeList childchildchildlist;
@@ -43,104 +42,97 @@ namespace PopStudio.Package.Rsb
                         stringPool.Add("", 0);
                         for (int i = 0; i < childlist.Count; i++)
                         {
-                            XmlNode? child = childlist[i];//child是CompositeResources
-                            if (child == null) throw new Exception();
+                            XmlNode child = childlist[i];//child是CompositeResources
                             childchildlist = child.ChildNodes;
                             xmlInfo.Add(new XmlCompositeResourcesInfo());
-                            xmlInfo[i].idOffsetInPart3 = ThrowInPool(child.Attributes?["id"]?.Value ?? string.Empty);
+                            xmlInfo[i].idOffsetInPart3 = ThrowInPool(child.Attributes["id"].Value);
                             xmlInfo[i].rsgpNumber = childchildlist.Count;
                             xmlInfo[i].rsgpInfoLibrary = new XmlRsgpInfo[childchildlist.Count];
                             for (int j = 0; j < childchildlist.Count; j++)
                             {
-                                XmlNode? childchild = childchildlist[j];//childchild是Group
-                                if (childchild == null) throw new Exception();
+                                XmlNode childchild = childchildlist[j];//childchild是Group
                                 childchildchildlist = childchild.ChildNodes;
                                 XmlRsgpInfo xmlRsgpInfo = new XmlRsgpInfo();
-#pragma warning disable
                                 xmlInfo[i].rsgpInfoLibrary[j] = xmlRsgpInfo;
-#pragma warning restore
-                                xmlRsgpInfo.resolutionRatio = Convert.ToInt32(childchild.Attributes?["res"]?.Value);
-                                xmlRsgpInfo.language = childchild.Attributes?["loc"]?.Value ?? string.Empty;
-                                xmlRsgpInfo.idOffsetInPart3 = ThrowInPool(childchild.Attributes?["id"]?.Value ?? string.Empty);
+                                xmlRsgpInfo.resolutionRatio = Convert.ToInt32(childchild.Attributes["res"].Value);
+                                xmlRsgpInfo.language = childchild.Attributes["loc"]?.Value ?? string.Empty;
+                                xmlRsgpInfo.idOffsetInPart3 = ThrowInPool(childchild.Attributes["id"]?.Value);
                                 xmlRsgpInfo.resourcesNumber = childchildchildlist.Count;
                                 xmlRsgpInfo.resourcesInfoLibrary = new XmlResourcesInfo[childchildchildlist.Count];
                                 for (int k = 0; k < childchildchildlist.Count; k++)
                                 {
-                                    XmlNode? childchildchild = childchildchildlist[k];//childchildchild是Res
-                                    if (childchildchild == null) throw new Exception();
-#pragma warning disable
+                                    XmlNode childchildchild = childchildchildlist[k];//childchildchild是Res
                                     XmlResourcesInfo xmlResourcesInfo = xmlInfo[i].rsgpInfoLibrary[j].resourcesInfoLibrary[k] = new XmlResourcesInfo();
-#pragma warning restore
-                                    xmlResourcesInfo.type = Convert.ToUInt16(childchildchild.Attributes?["type"]?.Value);
-                                    xmlResourcesInfo.idOffsetInPart3 = ThrowInPool(childchildchild.Attributes?["id"]?.Value ?? string.Empty);
-                                    xmlResourcesInfo.pathOffsetInPart3 = ThrowInPool(childchildchild.Attributes?["path"]?.Value ?? string.Empty);
-                                    childchildchild?.Attributes?.RemoveNamedItem("type");
-                                    childchildchild?.Attributes?.RemoveNamedItem("id");
-                                    childchildchild?.Attributes?.RemoveNamedItem("path");
+                                    xmlResourcesInfo.type = Convert.ToUInt16(childchildchild.Attributes["type"]?.Value);
+                                    xmlResourcesInfo.idOffsetInPart3 = ThrowInPool(childchildchild.Attributes["id"]?.Value);
+                                    xmlResourcesInfo.pathOffsetInPart3 = ThrowInPool(childchildchild.Attributes["path"]?.Value ?? string.Empty);
+                                    childchildchild.Attributes.RemoveNamedItem("type");
+                                    childchildchild.Attributes.RemoveNamedItem("id");
+                                    childchildchild.Attributes.RemoveNamedItem("path");
                                     //如果type是0那就是图片
                                     if (xmlResourcesInfo.type == 0)
                                     {
                                         xmlResourcesInfo.ptxInfo = new XmlPtxInfo();
-                                        if (childchildchild?.Attributes?["imagetype"] != null)
+                                        if (childchildchild.Attributes["imagetype"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.type = Convert.ToUInt16(childchildchild?.Attributes?["imagetype"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("imagetype");
+                                            xmlResourcesInfo.ptxInfo.type = Convert.ToUInt16(childchildchild.Attributes["imagetype"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("imagetype");
                                         }
-                                        if (childchildchild?.Attributes?["aflags"] != null)
+                                        if (childchildchild.Attributes["aflags"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.aflags = Convert.ToUInt16(childchildchild?.Attributes?["aflags"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("aflags");
+                                            xmlResourcesInfo.ptxInfo.aflags = Convert.ToUInt16(childchildchild.Attributes["aflags"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("aflags");
                                         }
-                                        if (childchildchild?.Attributes?["x"] != null)
+                                        if (childchildchild.Attributes["x"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.x = Convert.ToUInt16(childchildchild?.Attributes?["x"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("x");
+                                            xmlResourcesInfo.ptxInfo.x = Convert.ToUInt16(childchildchild.Attributes["x"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("x");
                                         }
-                                        if (childchildchild?.Attributes?["y"] != null)
+                                        if (childchildchild.Attributes["y"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.y = Convert.ToUInt16(childchildchild?.Attributes?["y"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("y");
+                                            xmlResourcesInfo.ptxInfo.y = Convert.ToUInt16(childchildchild.Attributes["y"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("y");
                                         }
-                                        if (childchildchild?.Attributes?["ax"] != null)
+                                        if (childchildchild.Attributes["ax"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.ax = Convert.ToUInt16(childchildchild?.Attributes?["ax"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("ax");
+                                            xmlResourcesInfo.ptxInfo.ax = Convert.ToUInt16(childchildchild.Attributes["ax"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("ax");
                                         }
-                                        if (childchildchild?.Attributes?["ay"] != null)
+                                        if (childchildchild.Attributes["ay"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.ay = Convert.ToUInt16(childchildchild?.Attributes?["ay"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("ay");
+                                            xmlResourcesInfo.ptxInfo.ay = Convert.ToUInt16(childchildchild.Attributes["ay"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("ay");
                                         }
-                                        if (childchildchild?.Attributes?["aw"] != null)
+                                        if (childchildchild.Attributes["aw"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.aw = Convert.ToUInt16(childchildchild?.Attributes?["aw"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("aw");
+                                            xmlResourcesInfo.ptxInfo.aw = Convert.ToUInt16(childchildchild.Attributes["aw"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("aw");
                                         }
-                                        if (childchildchild?.Attributes?["ah"] != null)
+                                        if (childchildchild.Attributes["ah"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.ah = Convert.ToUInt16(childchildchild?.Attributes?["ah"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("ah");
+                                            xmlResourcesInfo.ptxInfo.ah = Convert.ToUInt16(childchildchild.Attributes["ah"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("ah");
                                         }
-                                        if (childchildchild?.Attributes?["rows"] != null)
+                                        if (childchildchild.Attributes["rows"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.rows = Convert.ToUInt16(childchildchild?.Attributes?["rows"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("rows");
+                                            xmlResourcesInfo.ptxInfo.rows = Convert.ToUInt16(childchildchild.Attributes["rows"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("rows");
                                         }
-                                        if (childchildchild?.Attributes?["cols"] != null)
+                                        if (childchildchild.Attributes["cols"] != null)
                                         {
-                                            xmlResourcesInfo.ptxInfo.cols = Convert.ToUInt16(childchildchild?.Attributes?["cols"]?.Value);
-                                            childchildchild?.Attributes?.RemoveNamedItem("cols");
+                                            xmlResourcesInfo.ptxInfo.cols = Convert.ToUInt16(childchildchild.Attributes["cols"].Value);
+                                            childchildchild.Attributes.RemoveNamedItem("cols");
                                         }
-                                        xmlResourcesInfo.ptxInfo.parentOffsetInPart3 = ThrowInPool(childchildchild?.Attributes?["parent"]?.Value ?? string.Empty);
-                                        childchildchild?.Attributes?.RemoveNamedItem("parent");
+                                        xmlResourcesInfo.ptxInfo.parentOffsetInPart3 = ThrowInPool(childchildchild.Attributes["parent"]?.Value ?? string.Empty);
+                                        childchildchild.Attributes.RemoveNamedItem("parent");
                                     }
-                                    xmlResourcesInfo.propertiesNumber = childchildchild?.Attributes?.Count ?? 0;
+                                    xmlResourcesInfo.propertiesNumber = childchildchild.Attributes.Count;
                                     xmlResourcesInfo.propertiesInfoLibrary = new XmlPropertiesInfo[xmlResourcesInfo.propertiesNumber];
                                     for (int l = 0; l < xmlResourcesInfo.propertiesNumber; l++)
                                     {
                                         xmlResourcesInfo.propertiesInfoLibrary[l] = new XmlPropertiesInfo();
-                                        xmlResourcesInfo.propertiesInfoLibrary[l].keyOffsetInPart3 = ThrowInPool(childchildchild?.Attributes?[l].Name ?? string.Empty);
-                                        xmlResourcesInfo.propertiesInfoLibrary[l].valueOffsetInPart3 = ThrowInPool(childchildchild?.Attributes?[l].Value ?? string.Empty);
+                                        xmlResourcesInfo.propertiesInfoLibrary[l].keyOffsetInPart3 = ThrowInPool(childchildchild.Attributes[l]?.Name ?? string.Empty);
+                                        xmlResourcesInfo.propertiesInfoLibrary[l].valueOffsetInPart3 = ThrowInPool(childchildchild.Attributes[l]?.Value ?? string.Empty);
                                     }
                                     xmlResourcesInfo.infoOffsetInPart2 = (int)bsxmlpart2.Position;
                                     xmlResourcesInfo.WritePart2(bsxmlpart2);
@@ -174,15 +166,15 @@ namespace PopStudio.Package.Rsb
                 sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
                 sw.Write("<!-- DO NOT EDIT THIS FILE. This file is generated by PopStudio. (unless you want to change the cutting method of some pictures) -->\n");
                 sw.Write("<ResourceManifest version=\"3\">\n");
-                for (int i = 0; i < xmlpack?.xmlInfo_Library?.Length; i++)
+                for (int i = 0; i < xmlpack.xmlInfo_Library.Length; i++)
                 {
                     sw.Write("\n<CompositeResources id=\"" + xmlpack.xmlInfo_Library[i].id + "\">\n");
-                    for (int j = 0; j < xmlpack.xmlInfo_Library?[i].rsgpInfoLibrary?.Length; j++)
+                    for (int j = 0; j < xmlpack.xmlInfo_Library[i].rsgpInfoLibrary.Length; j++)
                     {
-                        sw.Write("  <Group id=\"" + xmlpack.xmlInfo_Library[i].rsgpInfoLibrary?[j].id + "\" res=\"" + xmlpack.xmlInfo_Library[i].rsgpInfoLibrary?[j].resolutionRatio + "\" loc=\"" + xmlpack.xmlInfo_Library[i].rsgpInfoLibrary?[j].language + "\">\n");
-                        for (int k = 0; k < xmlpack.xmlInfo_Library?[i].rsgpInfoLibrary?[j].resourcesInfoLibrary?.Length; k++)
+                        sw.Write("  <Group id=\"" + xmlpack.xmlInfo_Library[i].rsgpInfoLibrary[j].id + "\" res=\"" + xmlpack.xmlInfo_Library[i].rsgpInfoLibrary[j].resolutionRatio + "\" loc=\"" + xmlpack.xmlInfo_Library[i].rsgpInfoLibrary[j].language + "\">\n");
+                        for (int k = 0; k < xmlpack.xmlInfo_Library[i].rsgpInfoLibrary[j].resourcesInfoLibrary.Length; k++)
                         {
-                            var k_xml = xmlpack.xmlInfo_Library[i].rsgpInfoLibrary?[j].resourcesInfoLibrary?[k];
+                            var k_xml = xmlpack.xmlInfo_Library[i].rsgpInfoLibrary[j].resourcesInfoLibrary[k];
                             if (k_xml == null) throw new Exception();
                             sw.Write("    <Res type=\"" + k_xml.type + "\" id=\"" + k_xml.id + "\" path=\"" + k_xml.path + "\" ");
                             if (k_xml.ptxInfoBeginOffsetInPart2 * k_xml.ptxInfoEndOffsetInPart2 != 0)
@@ -201,7 +193,7 @@ namespace PopStudio.Package.Rsb
                                 if (k_xml_ptx.cols != 1) sw.Write("cols=\"" + k_xml_ptx.cols + "\" ");
                                 sw.Write("parent=\"" + k_xml_ptx.parent + "\" ");
                             }
-                            for (int l = 0; l < k_xml?.propertiesInfoLibrary?.Length; l++)
+                            for (int l = 0; l < k_xml.propertiesInfoLibrary.Length; l++)
                             {
                                 sw.Write(k_xml.propertiesInfoLibrary[l].key + "=\"" + k_xml.propertiesInfoLibrary[l].value + "\" ");
                             }
@@ -223,7 +215,7 @@ namespace PopStudio.Package.Rsb
         public int xmlPart1_BeginOffset;
         public int xmlPart2_BeginOffset;
         public int xmlPart3_BeginOffset;
-        public XmlCompositeResourcesInfo[]? xmlInfo_Library;
+        public XmlCompositeResourcesInfo[] xmlInfo_Library;
 
         public XmlPack Read(BinaryStream bs)
         {
@@ -240,10 +232,10 @@ namespace PopStudio.Package.Rsb
                 long tempOffset = bs.Position;
                 for (int j = 0; j < xmlInfo_Library[i].rsgpNumber; j++)
                 {
-                    for (int k = 0; k < xmlInfo_Library[i]?.rsgpInfoLibrary?[j].resourcesNumber; k++)
+                    for (int k = 0; k < xmlInfo_Library[i].rsgpInfoLibrary[j].resourcesNumber; k++)
                     {
-                        bs.Position = (xmlPart2_BeginOffset + (xmlInfo_Library[i].rsgpInfoLibrary?[j].resourcesInfoLibrary?[k].infoOffsetInPart2 ?? 0));
-                        xmlInfo_Library[i].rsgpInfoLibrary?[j].resourcesInfoLibrary?[k].ReadPart2(bs, xmlPart3_BeginOffset);
+                        bs.Position = xmlPart2_BeginOffset + xmlInfo_Library[i].rsgpInfoLibrary[j].resourcesInfoLibrary[k].infoOffsetInPart2;
+                        xmlInfo_Library[i].rsgpInfoLibrary[j].resourcesInfoLibrary[k].ReadPart2(bs, xmlPart3_BeginOffset);
                     }
                 }
                 bs.Position = (tempOffset);
@@ -260,7 +252,7 @@ namespace PopStudio.Package.Rsb
         public int idOffsetInPart3 = 0x0;
         public int rsgpNumber = 0x0;
         public int rsgpInfoLength = 0x10;
-        public XmlRsgpInfo[]? rsgpInfoLibrary;
+        public XmlRsgpInfo[] rsgpInfoLibrary;
 
         public string id = string.Empty;
 
@@ -271,7 +263,7 @@ namespace PopStudio.Package.Rsb
             bs.WriteInt32(rsgpInfoLength);
             for (int i = 0; i < rsgpNumber; i++)
             {
-                rsgpInfoLibrary?[i].Write(bs);
+                rsgpInfoLibrary[i].Write(bs);
             }
         }
 
@@ -299,7 +291,7 @@ namespace PopStudio.Package.Rsb
         public string language = string.Empty;
         public int idOffsetInPart3 = 0x0;
         public int resourcesNumber = 0x0;
-        public XmlResourcesInfo[]? resourcesInfoLibrary;
+        public XmlResourcesInfo[] resourcesInfoLibrary;
 
         public string id = string.Empty;
 
@@ -318,7 +310,7 @@ namespace PopStudio.Package.Rsb
             bs.WriteInt32(resourcesNumber);
             for (int i = 0; i < resourcesNumber; i++)
             {
-                resourcesInfoLibrary?[i].WritePart1(bs);
+                resourcesInfoLibrary[i].WritePart1(bs);
             }
         }
 
@@ -363,11 +355,11 @@ namespace PopStudio.Package.Rsb
         public int idOffsetInPart3 = 0x0;
         public int pathOffsetInPart3 = 0x0;
         public int propertiesNumber = 0x0;
-        public XmlPtxInfo? ptxInfo;
-        public XmlPropertiesInfo[]? propertiesInfoLibrary;
+        public XmlPtxInfo ptxInfo;
+        public XmlPropertiesInfo[] propertiesInfoLibrary;
 
-        public string? id;
-        public string? path;
+        public string id;
+        public string path;
 
         public void WritePart2(BinaryStream bs)
         {
@@ -382,7 +374,7 @@ namespace PopStudio.Package.Rsb
             if (type == 0)
             {
                 ptxInfoBeginOffsetInPart2 = (int)bs.Position;
-                ptxInfo?.Write(bs);
+                ptxInfo.Write(bs);
                 ptxInfoEndOffsetInPart2 = (int)bs.Position;
                 bs.Position = (offsetBak1);
                 bs.WriteInt32(ptxInfoEndOffsetInPart2);
@@ -391,7 +383,7 @@ namespace PopStudio.Package.Rsb
             }
             for (int i = 0; i < propertiesNumber; i++)
             {
-                propertiesInfoLibrary?[i].Wtire(bs);
+                propertiesInfoLibrary[i].Wtire(bs);
             }
         }
 
@@ -440,7 +432,7 @@ namespace PopStudio.Package.Rsb
         public ushort cols = 0x1;
         public int parentOffsetInPart3 = 0x0;
 
-        public string? parent;
+        public string parent;
 
         public void Write(BinaryStream bs)
         {
@@ -481,8 +473,8 @@ namespace PopStudio.Package.Rsb
         public int empty = 0x0;
         public int valueOffsetInPart3 = 0x0;
 
-        public string? key;
-        public string? value;
+        public string key;
+        public string value;
 
         public void Wtire(BinaryStream bs)
         {
