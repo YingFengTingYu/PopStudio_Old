@@ -1,4 +1,5 @@
 ﻿using SkiaSharp;
+using System.Numerics;
 
 namespace PopStudio.Texture
 {
@@ -20,7 +21,7 @@ namespace PopStudio.Texture
                 t = true;
             }
             int S = newwidth * newheight;
-            SKColor[] pixels = new SKColor[S]; //这奇葩SKColor居然是只读的，那我引用一下之前的Color得了
+            SKColor[] pixels = new SKColor[S];
             SKColor[] color = new SKColor[16];
             int[] tempa = new int[2];
             int[] tempalpha = new int[8];
@@ -124,7 +125,88 @@ namespace PopStudio.Texture
 
         public static int Write(BinaryStream bs, SKBitmap image)
         {
-            throw new NotImplementedException();
+            bool t = false;
+            int newwidth = image.Width;
+            int newheight = image.Height;
+            if (newwidth % 4 != 0)
+            {
+                newwidth += 4 - newwidth % 4;
+                t = true;
+            }
+            if (newheight % 4 != 0)
+            {
+                newheight += 4 - newheight % 4;
+                t = true;
+            }
+            if (t)
+            {
+                SKBitmap image2 = new SKBitmap(newwidth, newheight);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
+                }
+                image = image2;
+            }
+            SKColor[] pixels = image.Pixels;
+            ushort[] temp = new ushort[4];
+            SKColor[] color = new SKColor[16];
+            byte maxalpha, minalpha;
+            for (int i = 0; i < newheight; i += 4)
+            {
+                for (int w = 0; w < newwidth; w += 4)
+                {
+                    maxalpha = 0;
+                    minalpha = 255;
+                    //Copy color
+                    for (int j = 0; j < 4; j++)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            int n = (j << 2) | k;
+                            color[n] = pixels[(i + j) * newwidth + w + k];
+                            byte a = color[n].Alpha;
+                            if (a > maxalpha) maxalpha = a;
+                            if (a < minalpha) minalpha = a;
+                        }
+                    }
+                    //Alpha code, only use a1 > a2 mode
+                    temp[0] = (ushort)((minalpha << 8) | maxalpha);
+                    if (minalpha == maxalpha)
+                    {
+                        temp[1] = 0;
+                        temp[2] = 0;
+                        temp[3] = 0;
+                    }
+                    else
+                    {
+                        long flag = 0;
+                        int pos = 0;
+                        float a1 = (maxalpha - minalpha) / 8F; //each part length
+                        for (int ii = 0; ii < 16; ii++)
+                        {
+                            flag |= ((long)((color[ii].Alpha - minalpha) / a1)) << pos;
+                            pos += 3;
+                        }
+                        temp[1] = (ushort)(flag & 0xFFFF);
+                        temp[2] = (ushort)((flag >> 16) & 0xFFFF);
+                        temp[3] = (ushort)(flag >> 32);
+                    }
+                    //Color code
+                    //I need help
+                    throw new NotImplementedException();
+                    
+                    //Write
+                    for (int ii = 0; ii < 4; ii++)
+                    {
+                        bs.WriteUInt16(temp[ii]);
+                    }
+                }
+            }
+            if (t)
+            {
+                image.Dispose();
+            }
+            return newwidth;
         }
     }
 }

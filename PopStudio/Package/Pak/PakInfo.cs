@@ -6,7 +6,7 @@
         public static readonly int version = 0x0;
         public static readonly byte infoEnd = 0x80;
 
-        public List<FileInfo>? fileInfoLibrary;
+        public List<FileInfo> fileInfoLibrary;
         public bool? compress = null; //0x10 is ps3, 0xC is PC or Xbox360
         public bool x360 = false; //true is x360 0x1000 for ptx (not mean the pak is from Xbox360!!!)
         public bool pc = false; //true is pc version
@@ -67,12 +67,12 @@
             }
             foreach (FileInfo file in fileInfoLibrary)
             {
-                if (file?.fileName?.IndexOf('/') > -1)
+                if (file.fileName.IndexOf('/') > -1)
                 {
                     win = false;
                     break;
                 }
-                if (file?.fileName?.IndexOf('\\') > -1)
+                if (file.fileName.IndexOf('\\') > -1)
                 {
                     break;
                 }

@@ -2,6 +2,18 @@
 {
     public class Dir
     {
+        public static void FormatAndDeleteEndPathSeparator(ref string str)
+        {
+            str = FormatPath(str);
+            char t = str[str.Length - 1];
+            if (t == '/' || t == '\\') str = str[0..^1];
+        }
+
+        public static void DeleteEndPathSeparator(ref string str)
+        {
+            char t = str[str.Length - 1];
+            if (t == '/' || t == '\\') str = str[0..^1];
+        }
         /// <summary>
         /// 新建文件夹，若上级目录不存在则会新建上级目录
         /// </summary>

@@ -12,6 +12,8 @@ namespace PopStudio.Package.Pak
 
         public static void Pack(string inFolder, string outFile)
         {
+            Dir.FormatAndDeleteEndPathSeparator(ref inFolder);
+            Dir.FormatAndDeleteEndPathSeparator(ref outFile);
             if (!Directory.Exists(inFolder))
             {
                 throw new Exception(string.Format(Str.Obj.FolderNotFound, inFolder));
@@ -69,13 +71,36 @@ namespace PopStudio.Package.Pak
             }
             string[] a = Dir.GetFiles(inFolder);
             int temp = inFolder.Length + 1;
-            bool firstx360align = false;
-            using (BinaryStream bs_files = new BinaryStream())
+            using TempFilePool tempFilePool = new TempFilePool();
+            string tempFile = outFile;
+            if (pak.pc) tempFile = tempFilePool.Add();
+            using (BinaryStream bs_files = new BinaryStream(tempFile, FileMode.Create))
             {
+                //write head
                 for (int i = 0; i < a.Length; i++)
                 {
                     if (a[i] == xmlpath) continue;
-                    if (i != 0 && (!pak.pc))
+                    FileInfo info = new FileInfo();
+                    pak.fileInfoLibrary.Add(info);
+                    if (pak.win)
+                    {
+                        info.fileName = Dir.FormatWindowsPath(a[i][temp..]);
+                    }
+                    else
+                    {
+                        info.fileName = Dir.FormatLinuxPath(a[i][temp..]);
+                    }
+                }
+                pak.Write(bs_files);
+                int jian = 0;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a[i] == xmlpath)
+                    {
+                        jian++;
+                        continue;
+                    }
+                    if (!pak.pc)
                     {
                         if (pak.x360 && Path.GetExtension(a[i]).ToLower() == ".ptx")
                         {
@@ -86,11 +111,7 @@ namespace PopStudio.Package.Pak
                             PakInfo.Fill(bs_files);
                         }
                     }
-                    if (i == 0 && (!pak.pc))
-                    {
-                        firstx360align = pak.x360 && (Path.GetExtension(a[i]).ToLower() == ".ptx");
-                    }
-                    FileInfo info = new FileInfo();
+                    FileInfo info = pak.fileInfoLibrary[i - jian];
                     using (BinaryStream bs_thisfile = new BinaryStream(a[i], FileMode.Open))
                     {
                         if (pak.compress == true)
@@ -123,59 +144,24 @@ namespace PopStudio.Package.Pak
                             info.zsize = (int)bs_thisfile.Length;
                         }
                     }
-                    if (pak.win)
-                    {
-                        info.fileName = Dir.FormatWindowsPath(a[i][temp..]);
-                    }
-                    else
-                    {
-                        info.fileName = Dir.FormatLinuxPath(a[i][temp..]);
-                    }
-                    pak.fileInfoLibrary.Add(info);
                 }
+                bs_files.Position = 0;
+                pak.Write(bs_files);
                 if (pak.pc)
-                {
-                    using (BinaryStream bs_head = new BinaryStream())
-                    {
-                        pak.Write(bs_head);
-                        int l1 = (int)bs_head.Length;
-                        int l2 = (int)bs_files.Length;
-                        bs_head.Position = 0;
-                        bs_files.Position = 0;
-                        using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
-                        {
-                            for (int i = 0; i < l1; i++)
-                            {
-                                bs.WriteUInt8((byte)(bs_head.ReadUInt8() ^ 0xF7));
-                            }
-                            for (int i = 0; i < l2; i++)
-                            {
-                                bs.WriteUInt8((byte)(bs_files.ReadUInt8() ^ 0xF7));
-                            }
-                        }
-                    }
-                    
-                }
-                else if (pak.xmem)
-                {
-                    throw new Exception(Str.Obj.XmemCompressInvalid);
-                }
-                else
                 {
                     using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
                     {
-                        pak.Write(bs);
-                        if (pak.x360 && firstx360align)
-                        {
-                            PakInfo.Fill0x1000(bs);
-                        }
-                        else
-                        {
-                            PakInfo.Fill(bs);
-                        }
+                        int endlength = (int)bs_files.Length;
                         bs_files.Position = 0;
-                        bs_files.CopyTo(bs);
+                        for (int i = 0; i < endlength; i++)
+                        {
+                            bs.WriteUInt8((byte)(bs_files.ReadUInt8() ^ 0xF7));
+                        }
                     }
+                }
+                else
+                {
+                    if (pak.xmem) throw new Exception(Str.Obj.XmemCompressInvalid);
                 }
             }
         }
@@ -192,6 +178,8 @@ namespace PopStudio.Package.Pak
 
         public static void Unpack(string inFile, string outFolder, bool changeimage = false, bool delete = false)
         {
+            Dir.FormatAndDeleteEndPathSeparator(ref inFile);
+            Dir.FormatAndDeleteEndPathSeparator(ref outFolder);
             if (!File.Exists(inFile))
             {
                 throw new Exception(string.Format(Str.Obj.FileNotFound, inFile));

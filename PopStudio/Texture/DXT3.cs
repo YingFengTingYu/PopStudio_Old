@@ -20,7 +20,7 @@ namespace PopStudio.Texture
                 t = true;
             }
             int S = newwidth * newheight;
-            SKColor[] pixels = new SKColor[S]; //这奇葩SKColor居然是只读的，那我引用一下之前的Color得了
+            SKColor[] pixels = new SKColor[S];
             SKColor[] color = new SKColor[16];
             ushort[] tempa = new ushort[4];
             ushort[] tempc = new ushort[2];

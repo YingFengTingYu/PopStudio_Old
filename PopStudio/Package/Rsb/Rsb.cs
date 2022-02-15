@@ -8,6 +8,8 @@ namespace PopStudio.Package.Rsb
 
         public static void Pack(string inFolder, string outFile)
         {
+            Dir.FormatAndDeleteEndPathSeparator(ref inFolder);
+            Dir.FormatAndDeleteEndPathSeparator(ref outFile);
             if (!Directory.Exists(inFolder))
             {
                 throw new Exception(string.Format(Str.Obj.FolderNotFound, inFolder));
@@ -401,6 +403,8 @@ namespace PopStudio.Package.Rsb
 
         public static void Unpack(string inFile, string outFolder, bool changeimage = false, bool delete = false)
         {
+            Dir.FormatAndDeleteEndPathSeparator(ref inFile);
+            Dir.FormatAndDeleteEndPathSeparator(ref outFolder);
             if (!File.Exists(inFile))
             {
                 throw new Exception(string.Format(Str.Obj.FileNotFound, inFile));
