@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class PVRTC2BPP
+    internal static class PVRTC4BPP_RGBA
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
@@ -35,7 +35,7 @@ namespace PopStudio.Texture
                 t = true;
             }
             Pvrtc.PvrtcDecoder decoder = new();
-            SKColor[] pixels = decoder.DecompressPVRTC(bs.ReadBytes((newwidth * newheight) >> 2), newwidth, newheight, true);
+            SKColor[] pixels = decoder.DecompressPVRTC(bs.ReadBytes((newwidth * newheight) >> 1), newwidth, newheight, false);
             SKBitmap image = new SKBitmap(newwidth, newheight);
             image.Pixels = pixels;
             if (t)

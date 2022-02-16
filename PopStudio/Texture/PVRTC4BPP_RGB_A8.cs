@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class PVRTC4BPPA8
+    internal static class PVRTC4BPP_RGB_A8
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {

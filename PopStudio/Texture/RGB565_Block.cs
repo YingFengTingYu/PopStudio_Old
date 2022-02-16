@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class RGBA4444Block
+    internal static class RGB565_Block
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
@@ -22,7 +22,6 @@ namespace PopStudio.Texture
             int S = newwidth * newheight;
             SKColor[] pixels = new SKColor[S];
             ushort temp;
-            int r, g, b, a;
             for (int i = 0; i < newheight; i += 32)
             {
                 for (int w = 0; w < newwidth; w += 32)
@@ -32,11 +31,7 @@ namespace PopStudio.Texture
                         for (int k = 0; k < 32; k++)
                         {
                             temp = bs.ReadUInt16();
-                            r = (temp & 0xF000) >> 12;
-                            g = (temp & 0xF00) >> 8;
-                            b = (temp & 0xF0) >> 4;
-                            a = temp & 0xF;
-                            pixels[(i + j) * newwidth + w + k] = new SKColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 4) | b), (byte)((a << 4) | a));
+                            pixels[(i + j) * newwidth + w + k] = new SKColor((byte)((temp & 0xF800) >> 8), (byte)((temp & 0x7E0) >> 3), (byte)((temp & 0x1F) << 3), 255);
                         }
                     }
                 }
@@ -91,7 +86,7 @@ namespace PopStudio.Texture
                         for (int k = 0; k < 32; k++)
                         {
                             temp = (i + j) * newwidth + w + k;
-                            bs.WriteUInt16((ushort)((pixels[temp].Alpha >> 4) | (pixels[temp].Blue & 0xF0) | ((pixels[temp].Green & 0xF0) << 4) | ((pixels[temp].Red & 0xF0) << 8)));
+                            bs.WriteUInt16((ushort)(((pixels[temp].Blue & 0xF8) >> 3) | ((pixels[temp].Green & 0xFC) << 3) | ((pixels[temp].Red & 0xF8) << 8)));
                         }
                     }
                 }

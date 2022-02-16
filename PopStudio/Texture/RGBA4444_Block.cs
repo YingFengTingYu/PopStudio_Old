@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class RGBA5551Block
+    internal static class RGBA4444_Block
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
@@ -22,7 +22,7 @@ namespace PopStudio.Texture
             int S = newwidth * newheight;
             SKColor[] pixels = new SKColor[S];
             ushort temp;
-            int r, g, b;
+            int r, g, b, a;
             for (int i = 0; i < newheight; i += 32)
             {
                 for (int w = 0; w < newwidth; w += 32)
@@ -32,10 +32,11 @@ namespace PopStudio.Texture
                         for (int k = 0; k < 32; k++)
                         {
                             temp = bs.ReadUInt16();
-                            r = (temp & 0xF800) >> 11;
-                            g = (temp & 0x7C0) >> 6;
-                            b = (temp & 0x3E) >> 1;
-                            pixels[(i + j) * newwidth + w + k] = new SKColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)), (byte)((temp & 0x1) == 0 ? 0 : 255));
+                            r = (temp & 0xF000) >> 12;
+                            g = (temp & 0xF00) >> 8;
+                            b = (temp & 0xF0) >> 4;
+                            a = temp & 0xF;
+                            pixels[(i + j) * newwidth + w + k] = new SKColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 4) | b), (byte)((a << 4) | a));
                         }
                     }
                 }
@@ -90,7 +91,7 @@ namespace PopStudio.Texture
                         for (int k = 0; k < 32; k++)
                         {
                             temp = (i + j) * newwidth + w + k;
-                            bs.WriteUInt16((ushort)(((pixels[temp].Alpha & 0b10000000) >> 7) | ((pixels[temp].Blue & 0xF8) >> 2) | ((pixels[temp].Green & 0xF8) << 3) | ((pixels[temp].Red & 0xF8) << 8)));
+                            bs.WriteUInt16((ushort)((pixels[temp].Alpha >> 4) | (pixels[temp].Blue & 0xF0) | ((pixels[temp].Green & 0xF0) << 4) | ((pixels[temp].Red & 0xF0) << 8)));
                         }
                     }
                 }

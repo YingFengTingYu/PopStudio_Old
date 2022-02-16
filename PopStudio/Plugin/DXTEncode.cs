@@ -5,7 +5,7 @@ namespace PopStudio.Plugin
     /// <summary>
     /// reference: https://www.researchgate.net/publication/259000525_Real-Time_DXT_Compression
     /// </summary>
-    internal class BlockCompressionMethod
+    internal class DXTEncode
     {
         public static ushort ColorTo565(SKColor color)
         {
@@ -84,6 +84,32 @@ namespace PopStudio.Plugin
             }
         }
 
+        public static void GetMinMaxColorsByEuclideanDistanceForDXT1RGBA(SKColor[] colorBlock, out SKColor minColor, out SKColor maxColor)
+        {
+            minColor = SKColor.Empty;
+            maxColor = SKColor.Empty;
+            int maxDistance = -1;
+            for (int i = 0; i < 15; i++)
+            {
+                if (colorBlock[i].Alpha < 0x80) continue;
+                for (int j = i + 1; j < 16; j++)
+                {
+                    if (colorBlock[j].Alpha < 0x80) continue;
+                    int distance = ColorDistance(colorBlock[i], colorBlock[j]);
+                    if (distance > maxDistance)
+                    {
+                        maxDistance = distance;
+                        minColor = colorBlock[i];
+                        maxColor = colorBlock[j];
+                    }
+                }
+            }
+            if (ColorTo565(maxColor) < ColorTo565(minColor))
+            {
+                SwapColors(ref minColor, ref maxColor);
+            }
+        }
+
         static int abs(int v)
         {
             if (v < 0) return -v;
@@ -124,6 +150,50 @@ namespace PopStudio.Plugin
                 int x1 = b0 & b3;
                 int x2 = b0 & b4;
                 result |= (x2 | ((x0 | x1) << 1)) << (i << 1);
+            }
+            colors = null;
+            return result;
+        }
+
+        public static int EmitColorIndicesForDXT1RGBA(SKColor[] colorBlock, SKColor minColor, SKColor maxColor)
+        {
+            int[,] colors = new int[4, 4];
+            int result = 0;
+            colors[0, 0] = (maxColor.Red & 0xF8) | (maxColor.Red >> 5);
+            colors[0, 1] = (maxColor.Green & 0xFC) | (maxColor.Green >> 6);
+            colors[0, 2] = (maxColor.Blue & 0xF8) | (maxColor.Blue >> 5);
+            colors[1, 0] = (minColor.Red & 0xF8) | (minColor.Red >> 5);
+            colors[1, 1] = (minColor.Green & 0xFC) | (minColor.Green >> 6);
+            colors[1, 2] = (minColor.Blue & 0xF8) | (minColor.Blue >> 5);
+            colors[2, 0] = (colors[0, 0] + colors[1, 0]) >> 1;
+            colors[2, 1] = (colors[0, 1] + colors[1, 1]) >> 1;
+            colors[2, 2] = (colors[0, 2] + colors[1, 2]) >> 1;
+            colors[3, 0] = 0;
+            colors[3, 1] = 0;
+            colors[3, 2] = 0;
+            for (int i = 15; i >= 0; i--)
+            {
+                if (colorBlock[i].Alpha < 0x80)
+                {
+                    result |= (0b11) << (i << 1);
+                }
+                else
+                {
+                    int c0 = colorBlock[i].Red;
+                    int c1 = colorBlock[i].Green;
+                    int c2 = colorBlock[i].Blue;
+                    int d0 = abs(colors[0, 0] - c0) + abs(colors[0, 1] - c1) + abs(colors[0, 2] - c2);
+                    int d1 = abs(colors[1, 0] - c0) + abs(colors[1, 1] - c1) + abs(colors[1, 2] - c2);
+                    int d2 = abs(colors[2, 0] - c0) + abs(colors[2, 1] - c1) + abs(colors[2, 2] - c2);
+                    if (d0 > d2 && d1 > d2)
+                    {
+                        result |= (0b10) << (i << 1);
+                    }
+                    else if (d1 > d0)
+                    {
+                        result |= (0b01) << (i << 1);
+                    }
+                }
             }
             colors = null;
             return result;

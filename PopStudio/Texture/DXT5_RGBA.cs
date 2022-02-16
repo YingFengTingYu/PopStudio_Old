@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class DXT5
+    internal static class DXT5_RGBA
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
@@ -192,7 +192,7 @@ namespace PopStudio.Texture
                         tempvalue = (maxalpha - minalpha) >> 4;
                         maxalpha = C(maxalpha - tempvalue);
                         minalpha = C(minalpha + tempvalue);
-                        byte[] alphabytes = BlockCompressionMethod.EmitAlphaIndices(color, minalpha, maxalpha);
+                        byte[] alphabytes = DXTEncode.EmitAlphaIndices(color, minalpha, maxalpha);
                         long flag = 0;
                         int pos = 0;
                         for (int ii = 0; ii < 16; ii++)
@@ -209,11 +209,11 @@ namespace PopStudio.Texture
                         bs.WriteUInt16(temp[ii]);
                     }
                     //Color code
-                    BlockCompressionMethod.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
-                    result = BlockCompressionMethod.EmitColorIndices(color, min, max);
+                    DXTEncode.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
+                    result = DXTEncode.EmitColorIndices(color, min, max);
                     //Write
-                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(max));
-                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(min));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(max));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(min));
                     bs.WriteUInt16((ushort)(result & 0xFFFF));
                     bs.WriteUInt16((ushort)(result >> 16));
                 }

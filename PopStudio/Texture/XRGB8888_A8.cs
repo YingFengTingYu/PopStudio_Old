@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class XRGB8888A8
+    internal static class XRGB8888_A8
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {

@@ -2,9 +2,9 @@
 
 namespace PopStudio.Texture
 {
-    internal static class DXT5Padding
+    internal static class DXT3_RGBA
     {
-        public static SKBitmap Read(BinaryStream bs, int width, int height, int blockSize)
+        public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
             bool t = false;
             int newwidth = width;
@@ -22,52 +22,29 @@ namespace PopStudio.Texture
             int S = newwidth * newheight;
             SKColor[] pixels = new SKColor[S];
             SKColor[] color = new SKColor[16];
-            int[] tempa = new int[2];
-            int[] tempalpha = new int[8];
-            long AlphaUInt48;
+            ushort[] tempa = new ushort[4];
             ushort[] tempc = new ushort[2];
             SKColor[] tempcolor = new SKColor[4];
             byte[] ColorByte = new byte[4];
             byte[] alpha = new byte[16];
             int temp;
             int r, g, b;
-            long off = bs.Position;
-            int times = 0;
             for (int y = 0; y < newheight; y += 4)
             {
                 for (int x = 0; x < newwidth; x += 4)
                 {
-                    temp = bs.ReadUInt16();
-                    tempa[0] = temp & 0xFF;
-                    tempa[1] = temp >> 8;
-                    AlphaUInt48 = bs.ReadUInt16() | (((long)bs.ReadUInt16()) << 16) | (((long)bs.ReadUInt16()) << 32);
-                    //计算alpha值
-                    if (tempa[0] > tempa[1])
+                    for (int i = 0; i < 4; i++)
                     {
-                        tempalpha[0] = tempa[0];
-                        tempalpha[1] = tempa[1];
-                        tempalpha[2] = (6 * tempa[0] + tempa[1]) / 7;
-                        tempalpha[3] = (5 * tempa[0] + (tempa[1] << 1)) / 7;
-                        tempalpha[4] = ((tempa[0] << 2) + 3 * tempa[1]) / 7;
-                        tempalpha[5] = (3 * tempa[0] + (tempa[1] << 2)) / 7;
-                        tempalpha[6] = ((tempa[0] << 1) + 5 * tempa[1]) / 7;
-                        tempalpha[7] = (tempa[0] + 6 * tempa[1]) / 7;
+                        tempa[i] = bs.ReadUInt16();
                     }
-                    else
+                    for (int j = 0; j < 4; j++)
                     {
-                        tempalpha[0] = tempa[0];
-                        tempalpha[1] = tempa[1];
-                        tempalpha[2] = ((tempa[0] << 2) + tempa[1]) / 5;
-                        tempalpha[3] = (3 * tempa[0] + (tempa[1] << 1)) / 5;
-                        tempalpha[4] = ((tempa[0] << 1) + 3 * tempa[1]) / 5;
-                        tempalpha[5] = (tempa[0] + (tempa[1] << 2)) / 5;
-                        tempalpha[6] = 0;
-                        tempalpha[7] = 255;
-                    }
-                    for (int i = 0; i < 16; i++)
-                    {
-                        alpha[i] = (byte)tempalpha[AlphaUInt48 & 0b111];
-                        AlphaUInt48 >>= 3;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            temp = tempa[j] & 0xF;
+                            alpha[(j << 2) | i] = (byte)((temp << 4) | temp);
+                            tempa[j] >>= 4;
+                        }
                     }
                     //计算color值
                     tempc[0] = bs.ReadUInt16();
@@ -88,7 +65,7 @@ namespace PopStudio.Texture
                     r = (tempc[1] & 0xF800) >> 11;
                     tempcolor[1] = new SKColor((byte)(r << 3 | r >> 2), (byte)(g << 2 | g >> 3), (byte)(b << 3 | b >> 2));
                     tempcolor[2] = new SKColor((byte)(((tempcolor[0].Red << 1) + tempcolor[1].Red + 1) / 3), (byte)(((tempcolor[0].Green << 1) + tempcolor[1].Green + 1) / 3), (byte)(((tempcolor[0].Blue << 1) + tempcolor[1].Blue + 1) / 3));
-                    tempcolor[3] = new SKColor((byte)((tempcolor[0].Red + (tempcolor[1].Red << 1) + 1) / 3), (byte)((tempcolor[0].Green + (tempcolor[1].Green << 1) + 1) / 3), (byte)((tempcolor[0].Blue + (tempcolor[1].Blue << 1) + 1) / 3)); 
+                    tempcolor[3] = new SKColor((byte)((tempcolor[0].Red + (tempcolor[1].Red << 1) + 1) / 3), (byte)((tempcolor[0].Green + (tempcolor[1].Green << 1) + 1) / 3), (byte)((tempcolor[0].Blue + (tempcolor[1].Blue << 1) + 1) / 3));
                     for (int i = 0; i < 4; i++)
                     {
                         for (int j = 0; j < 4; j++)
@@ -108,9 +85,7 @@ namespace PopStudio.Texture
                         }
                     }
                 }
-                bs.Position = off + (++times) * blockSize;
             }
-            bs.Position = off + (++times) * blockSize;
             SKBitmap image = new SKBitmap(newwidth, newheight);
             image.Pixels = pixels;
             if (t)
@@ -126,14 +101,7 @@ namespace PopStudio.Texture
             return image;
         }
 
-        static byte C(int v)
-        {
-            if (v >= 255) return 255;
-            if (v <= 0) return 0;
-            return (byte)v;
-        }
-
-        public static int Write(BinaryStream bs, SKBitmap image, int blockSize)
+        public static int Write(BinaryStream bs, SKBitmap image)
         {
             bool t = false;
             int newwidth = image.Width;
@@ -158,78 +126,35 @@ namespace PopStudio.Texture
                 image = image2;
             }
             SKColor[] pixels = image.Pixels;
-            ushort[] temp = new ushort[4];
+            ushort temp;
             SKColor[] color = new SKColor[16];
-            byte maxalpha, minalpha;
             SKColor min, max;
             int result;
-            int tempvalue;
-            int CDSize = blockSize - (newwidth << 2);
             for (int i = 0; i < newheight; i += 4)
             {
                 for (int w = 0; w < newwidth; w += 4)
                 {
-                    maxalpha = 0;
-                    minalpha = 255;
                     //Copy color
                     for (int j = 0; j < 4; j++)
                     {
+                        temp = 0;
                         for (int k = 0; k < 4; k++)
                         {
                             int n = (j << 2) | k;
                             color[n] = pixels[(i + j) * newwidth + w + k];
-                            byte a = color[n].Alpha;
-                            if (a > maxalpha) maxalpha = a;
-                            if (a < minalpha) minalpha = a;
+                            temp |= (ushort)((color[n].Alpha >> 4) << (k << 2));
                         }
-                    }
-                    //Alpha code, only use a1 > a2 mode
-                    if (minalpha == maxalpha)
-                    {
-                        temp[0] = 255;
-                        temp[1] = 37449;
-                        temp[2] = 18724;
-                        temp[3] = 9362;
-                    }
-                    else
-                    {
-                        temp[0] = (ushort)((minalpha << 8) | maxalpha);
-                        tempvalue = (maxalpha - minalpha) >> 4;
-                        maxalpha = C(maxalpha - tempvalue);
-                        minalpha = C(minalpha + tempvalue);
-                        byte[] alphabytes = BlockCompressionMethod.EmitAlphaIndices(color, minalpha, maxalpha);
-                        long flag = 0;
-                        int pos = 0;
-                        for (int ii = 0; ii < 16; ii++)
-                        {
-                            flag |= ((long)alphabytes[ii]) << pos;
-                            pos += 3;
-                        }
-                        temp[1] = (ushort)(flag & 0xFFFF);
-                        temp[2] = (ushort)((flag >> 16) & 0xFFFF);
-                        temp[3] = (ushort)(flag >> 32);
-                    }
-                    for (int ii = 0; ii < 4; ii++)
-                    {
-                        bs.WriteUInt16(temp[ii]);
+                        bs.WriteUInt16(temp);
                     }
                     //Color code
-                    BlockCompressionMethod.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
-                    result = BlockCompressionMethod.EmitColorIndices(color, min, max);
+                    DXTEncode.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
+                    result = DXTEncode.EmitColorIndices(color, min, max);
                     //Write
-                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(max));
-                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(min));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(max));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(min));
                     bs.WriteUInt16((ushort)(result & 0xFFFF));
                     bs.WriteUInt16((ushort)(result >> 16));
                 }
-                for (int j = 0; j < CDSize; j++)
-                {
-                    bs.WriteByte(0xCD);
-                }
-            }
-            for (int j = 0; j < blockSize; j++)
-            {
-                bs.WriteByte(0xCD);
             }
             if (t)
             {

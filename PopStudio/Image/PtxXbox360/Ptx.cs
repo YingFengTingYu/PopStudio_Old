@@ -19,7 +19,7 @@ namespace PopStudio.Image.PtxXbox360
                         height = sKBitmap.Height,
                         blockSize = newwidth << 2
                     };
-                    Texture.DXT5Padding.Write(bs, sKBitmap, head.blockSize);
+                    Texture.DXT5_RGBA_Padding.Write(bs, sKBitmap, head.blockSize);
                     head.Write(bs);
                 }
             }
@@ -35,7 +35,7 @@ namespace PopStudio.Image.PtxXbox360
                 PtxHead head = new PtxHead().Read(bs);
                 bs.Position = 0;
                 //Console.WriteLine("width:{0} blocksize:{1} storewidth:{2}", head.width, head.blockSize, head.blockSize >> 2);
-                using (SKBitmap sKBitmap = Texture.DXT5Padding.Read(bs, head.width, head.height, head.blockSize))
+                using (SKBitmap sKBitmap = Texture.DXT5_RGBA_Padding.Read(bs, head.width, head.height, head.blockSize))
                 {
                     sKBitmap.Save(outFile);
                 }

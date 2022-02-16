@@ -1,4 +1,3 @@
-#pragma warning disable
 //#define Trace
 
 // BZip2OutputStream.cs

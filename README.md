@@ -17,6 +17,7 @@ This project has used:
   
 reference:
 [Real-Time DXT Compression](https://www.researchgate.net/publication/259000525_Real-Time_DXT_Compression) to encode DXT texture.  
+[EveryFileExplorer](https://github.com/Gericom/EveryFileExplorer) to encode ETC1 texture.  
 ___
 In Chinese:  
   
@@ -36,3 +37,4 @@ ___
   
 参考：
 [Real-Time DXT Compression](https://www.researchgate.net/publication/259000525_Real-Time_DXT_Compression)用于编码DXT纹理。  
+[EveryFileExplorer](https://github.com/Gericom/EveryFileExplorer)用于编码ETC1纹理。  

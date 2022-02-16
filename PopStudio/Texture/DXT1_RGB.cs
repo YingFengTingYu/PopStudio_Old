@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class DXT3
+    internal static class DXT1_RGB
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
@@ -22,30 +22,15 @@ namespace PopStudio.Texture
             int S = newwidth * newheight;
             SKColor[] pixels = new SKColor[S];
             SKColor[] color = new SKColor[16];
-            ushort[] tempa = new ushort[4];
             ushort[] tempc = new ushort[2];
             SKColor[] tempcolor = new SKColor[4];
             byte[] ColorByte = new byte[4];
-            byte[] alpha = new byte[16];
             int temp;
             int r, g, b;
             for (int y = 0; y < newheight; y += 4)
             {
                 for (int x = 0; x < newwidth; x += 4)
                 {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        tempa[i] = bs.ReadUInt16();
-                    }
-                    for (int j = 0; j < 4; j++)
-                    {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            temp = tempa[j] & 0xF;
-                            alpha[(j << 2) | i] = (byte)((temp << 4) | temp);
-                            tempa[j] >>= 4;
-                        }
-                    }
                     //计算color值
                     tempc[0] = bs.ReadUInt16();
                     tempc[1] = bs.ReadUInt16();
@@ -64,15 +49,23 @@ namespace PopStudio.Texture
                     g = (tempc[1] & 0x7E0) >> 5;
                     r = (tempc[1] & 0xF800) >> 11;
                     tempcolor[1] = new SKColor((byte)(r << 3 | r >> 2), (byte)(g << 2 | g >> 3), (byte)(b << 3 | b >> 2));
-                    tempcolor[2] = new SKColor((byte)(((tempcolor[0].Red << 1) + tempcolor[1].Red + 1) / 3), (byte)(((tempcolor[0].Green << 1) + tempcolor[1].Green + 1) / 3), (byte)(((tempcolor[0].Blue << 1) + tempcolor[1].Blue + 1) / 3));
-                    tempcolor[3] = new SKColor((byte)((tempcolor[0].Red + (tempcolor[1].Red << 1) + 1) / 3), (byte)((tempcolor[0].Green + (tempcolor[1].Green << 1) + 1) / 3), (byte)((tempcolor[0].Blue + (tempcolor[1].Blue << 1) + 1) / 3));
+                    if (tempc[0] > tempc[1])
+                    {
+                        tempcolor[2] = new SKColor((byte)(((tempcolor[0].Red << 1) + tempcolor[1].Red + 1) / 3), (byte)(((tempcolor[0].Green << 1) + tempcolor[1].Green + 1) / 3), (byte)(((tempcolor[0].Blue << 1) + tempcolor[1].Blue + 1) / 3));
+                        tempcolor[3] = new SKColor((byte)((tempcolor[0].Red + (tempcolor[1].Red << 1) + 1) / 3), (byte)((tempcolor[0].Green + (tempcolor[1].Green << 1) + 1) / 3), (byte)((tempcolor[0].Blue + (tempcolor[1].Blue << 1) + 1) / 3));
+                    }
+                    else
+                    {
+                        tempcolor[2] = new SKColor((byte)((tempcolor[0].Red + tempcolor[1].Red) >> 1), (byte)((tempcolor[0].Green + tempcolor[1].Green) >> 1), (byte)((tempcolor[0].Blue + tempcolor[1].Blue) >> 1));
+                        tempcolor[3] = SKColor.Empty;
+                    }
                     for (int i = 0; i < 4; i++)
                     {
                         for (int j = 0; j < 4; j++)
                         {
                             int k = (i << 2) | j;
                             int bb = ColorByte[i] & 0b11;
-                            color[k] = new SKColor(tempcolor[bb].Red, tempcolor[bb].Green, tempcolor[bb].Blue, alpha[k]);
+                            color[k] = new SKColor(tempcolor[bb].Red, tempcolor[bb].Green, tempcolor[bb].Blue, tempcolor[bb].Alpha);
                             ColorByte[i] >>= 2;
                         }
                     }
@@ -103,6 +96,7 @@ namespace PopStudio.Texture
 
         public static int Write(BinaryStream bs, SKBitmap image)
         {
+            //Do not support alpha
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
@@ -126,7 +120,6 @@ namespace PopStudio.Texture
                 image = image2;
             }
             SKColor[] pixels = image.Pixels;
-            ushort temp;
             SKColor[] color = new SKColor[16];
             SKColor min, max;
             int result;
@@ -137,21 +130,17 @@ namespace PopStudio.Texture
                     //Copy color
                     for (int j = 0; j < 4; j++)
                     {
-                        temp = 0;
                         for (int k = 0; k < 4; k++)
                         {
-                            int n = (j << 2) | k;
-                            color[n] = pixels[(i + j) * newwidth + w + k];
-                            temp |= (ushort)((color[n].Alpha >> 4) << (k << 2));
+                            color[(j << 2) | k] = pixels[(i + j) * newwidth + w + k];
                         }
-                        bs.WriteUInt16(temp);
                     }
                     //Color code
-                    BlockCompressionMethod.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
-                    result = BlockCompressionMethod.EmitColorIndices(color, min, max);
+                    DXTEncode.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
+                    result = DXTEncode.EmitColorIndices(color, min, max);
                     //Write
-                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(max));
-                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(min));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(max));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(min));
                     bs.WriteUInt16((ushort)(result & 0xFFFF));
                     bs.WriteUInt16((ushort)(result >> 16));
                 }
@@ -160,7 +149,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return newwidth;
+            return newwidth >> 1;
         }
     }
 }

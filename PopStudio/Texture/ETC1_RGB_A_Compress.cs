@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class ETC1AIndex
+    internal static class ETC1_RGB_A_Compress
     {
         private static readonly int[,] ETC1Modifiers =
         {
@@ -138,6 +138,67 @@ namespace PopStudio.Texture
                 return image2;
             }
             return image;
+        }
+
+        public static int Write(BinaryStream bs, SKBitmap image)
+        {
+            bool t = false;
+            int newwidth = image.Width;
+            int newheight = image.Height;
+            if (newwidth % 4 != 0)
+            {
+                newwidth += 4 - newwidth % 4;
+                t = true;
+            }
+            if (newheight % 4 != 0)
+            {
+                newheight += 4 - newheight % 4;
+                t = true;
+            }
+            if (t)
+            {
+                SKBitmap image2 = new SKBitmap(newwidth, newheight);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
+                }
+                image = image2;
+            }
+            SKColor[] pixels = image.Pixels;
+            SKColor[] color = new SKColor[16];
+            Endian etcendian = bs.Endian == Endian.Small ? Endian.Big : Endian.Small;
+            for (int i = 0; i < newheight; i += 4)
+            {
+                for (int w = 0; w < newwidth; w += 4)
+                {
+                    //Copy color
+                    for (int j = 0; j < 4; j++)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            color[(j << 2) | k] = pixels[(i + j) * newwidth + w + k];
+                        }
+                    }
+                    //Write
+                    bs.WriteUInt64(ETCEncode.GenETC1(color), etcendian);
+                }
+            }
+            //I need help for 16-bits palette encode
+            int S = pixels.Length;
+            bs.WriteByte(0x10);
+            for (int i = 0; i < 16; i++)
+            {
+                bs.WriteByte((byte)(i | (i << 4)));
+            }
+            for (int i = 0; i < S; i += 2)
+            {
+                bs.WriteByte((byte)((pixels[i].Alpha << 4) | pixels[i | 1].Alpha));
+            }
+            if (t)
+            {
+                image.Dispose();
+            }
+            return newwidth << 2;
         }
     }
 }

@@ -2,27 +2,8 @@
 
 namespace PopStudio.Texture
 {
-    internal static class ETC1
+    internal static class ETC1_RGB_A8
     {
-        private static readonly int[,] ETC1Modifiers =
-        {
-            { 2, 8 },
-            { 5, 17 },
-            { 9, 29 },
-            { 13, 42 },
-            { 18, 60 },
-            { 24, 80 },
-            { 33, 106 },
-            { 47, 183 }
-        };
-
-        private static byte ColorClamp(int Color) //加颜色可能加出来超过结果的
-        {
-            if (Color > 255) return 255;
-            if (Color < 0) return 0;
-            return (byte)Color;
-        }
-
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
             bool t = false;
@@ -87,17 +68,21 @@ namespace PopStudio.Texture
                             neg = ((temp >> (((j << 2) | i) + 16)) & 0x1) == 1;
                             if ((flipbit && i < 2) || (!flipbit && j < 2))
                             {
-                                add = ETC1Modifiers[Table1, val] * (neg ? -1 : 1);
-                                pixels[(i + y) * newwidth + x + j] = new SKColor(ColorClamp(r1 + add), ColorClamp(g1 + add), ColorClamp(b1 + add));
+                                add = ETCEncode.ETC1Modifiers[Table1, val] * (neg ? -1 : 1);
+                                pixels[(i + y) * newwidth + x + j] = new SKColor(ETCEncode.ColorClamp(r1 + add), ETCEncode.ColorClamp(g1 + add), ETCEncode.ColorClamp(b1 + add));
                             }
                             else
                             {
-                                add = ETC1Modifiers[Table2, val] * (neg ? -1 : 1);
-                                pixels[(i + y) * newwidth + x + j] = new SKColor(ColorClamp(r2 + add), ColorClamp(g2 + add), ColorClamp(b2 + add));
+                                add = ETCEncode.ETC1Modifiers[Table2, val] * (neg ? -1 : 1);
+                                pixels[(i + y) * newwidth + x + j] = new SKColor(ETCEncode.ColorClamp(r2 + add), ETCEncode.ColorClamp(g2 + add), ETCEncode.ColorClamp(b2 + add));
                             }
                         }
                     }
                 }
+            }
+            for (int i = 0; i < S; i++)
+            {
+                pixels[i] = pixels[i].WithAlpha(bs.ReadByte());
             }
             SKBitmap image = new SKBitmap(newwidth, newheight);
             image.Pixels = pixels;
@@ -112,6 +97,61 @@ namespace PopStudio.Texture
                 return image2;
             }
             return image;
+        }
+
+        public static int Write(BinaryStream bs, SKBitmap image)
+        {
+            bool t = false;
+            int newwidth = image.Width;
+            int newheight = image.Height;
+            if (newwidth % 4 != 0)
+            {
+                newwidth += 4 - newwidth % 4;
+                t = true;
+            }
+            if (newheight % 4 != 0)
+            {
+                newheight += 4 - newheight % 4;
+                t = true;
+            }
+            if (t)
+            {
+                SKBitmap image2 = new SKBitmap(newwidth, newheight);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
+                }
+                image = image2;
+            }
+            SKColor[] pixels = image.Pixels;
+            int S = pixels.Length;
+            SKColor[] color = new SKColor[16];
+            Endian etcendian = bs.Endian == Endian.Small ? Endian.Big : Endian.Small;
+            for (int i = 0; i < newheight; i += 4)
+            {
+                for (int w = 0; w < newwidth; w += 4)
+                {
+                    //Copy color
+                    for (int j = 0; j < 4; j++)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            color[(j << 2) | k] = pixels[(i + j) * newwidth + w + k];
+                        }
+                    }
+                    //Write
+                    bs.WriteUInt64(ETCEncode.GenETC1(color), etcendian);
+                }
+            }
+            for (int i = 0; i < S; i++)
+            {
+                bs.WriteByte(pixels[i].Alpha);
+            }
+            if (t)
+            {
+                image.Dispose();
+            }
+            return newwidth << 2;
         }
     }
 }

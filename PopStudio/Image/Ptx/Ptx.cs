@@ -44,23 +44,27 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.RGBA5551;
                             break;
                         case 6:
-                            head.check = Texture.RGBA4444Block.Write(bs, sKBitmap);
-                            head.format = PtxFormat.RGBA4444Block;
+                            head.check = Texture.RGBA4444_Block.Write(bs, sKBitmap);
+                            head.format = PtxFormat.RGBA4444_Block;
                             break;
                         case 7:
-                            head.check = Texture.RGB565Block.Write(bs, sKBitmap);
-                            head.format = PtxFormat.RGB565Block;
+                            head.check = Texture.RGB565_Block.Write(bs, sKBitmap);
+                            head.format = PtxFormat.RGB565_Block;
                             break;
                         case 8:
-                            head.check = Texture.RGBA5551Block.Write(bs, sKBitmap);
-                            head.format = PtxFormat.RGBA5551Block;
+                            head.check = Texture.RGBA5551_Block.Write(bs, sKBitmap);
+                            head.format = PtxFormat.RGBA5551_Block;
                             break;
                         case 9:
+                            head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
+                            head.format = PtxFormat.XRGB8888_A8;
+                            break;
+                        case 10:
                             bs.Endian = Endian.Big;
                             head.check = Texture.ARGB8888.Write(bs, sKBitmap);
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 10:
+                        case 11:
                             bs.Endian = Endian.Big;
                             if (head.width % 64 == 0)
                             {
@@ -80,26 +84,46 @@ namespace PopStudio.Image.Ptx
                             }
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 11:
-                            head.check = Texture.DXT1.Write(bs, sKBitmap);
-                            head.format = PtxFormat.BC1;
-                            break;
                         case 12:
-                            head.check = Texture.DXT3.Write(bs, sKBitmap);
-                            head.format = PtxFormat.BC2;
+                            head.check = Texture.DXT1_RGB.Write(bs, sKBitmap);
+                            head.format = PtxFormat.DXT1_RGB;
                             break;
                         case 13:
-                            head.check = Texture.DXT5.Write(bs, sKBitmap);
-                            head.format = PtxFormat.BC3;
+                            head.check = Texture.DXT3_RGBA.Write(bs, sKBitmap);
+                            head.format = PtxFormat.DXT3_RGBA;
                             break;
                         case 14:
-                            head.check = Texture.DXT5.Write(bs, sKBitmap);
-                            head.format = PtxFormat.DXT5;
+                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
+                            head.format = PtxFormat.DXT5_RGBA;
                             break;
                         case 15:
-                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
+                            head.format = PtxFormat.DXT5;
+                            break;
+                        case 16:
+                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT5; //the texture is also small endian
                             bs.Endian = Endian.Big; //but the info is big endian
+                            break;
+                        case 17:
+                            head.check = Texture.ETC1_RGB.Write(bs, sKBitmap);
+                            head.format = PtxFormat.ETC1_RGB;
+                            break;
+                        case 18:
+                            head.check = Texture.ETC1_RGB_A8.Write(bs, sKBitmap);
+                            head.format = PtxFormat.ETC1_RGB_A8;
+                            break;
+                        case 19:
+                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                            head.format = PtxFormat.ETC1_RGB_A8; //Also 147
+                            head.alphaFormat = 0x64;
+                            head.alphaSize = 17 + ((head.width * head.height) >> 1);
+                            break;
+                        case 20:
+                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                            head.format = PtxFormat.ETC1_RGB_A_Compress;
+                            head.alphaFormat = 0x64;
+                            head.alphaSize = 17 + ((head.width * head.height) >> 1);
                             break;
                         default:
                             throw new Exception(Str.Obj.UnknownFormat);
@@ -110,7 +134,7 @@ namespace PopStudio.Image.Ptx
             }
         }
 
-        public static void Encode(string inFile, string outFile, PtxFormat format, Endian encodeendian = Endian.Null)
+        public static void Encode(string inFile, string outFile, PtxFormat format, Endian encodeendian = Endian.Null, bool chinesemode = false)
         {
             if (encodeendian == Endian.Null) encodeendian = endian;
             using (BinaryStream bs = BinaryStream.Create(outFile))
@@ -162,26 +186,47 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.DXT5:
                             Endian backendian = bs.Endian;
                             bs.Endian = Endian.Small;
-                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             bs.Endian = backendian;
                             break;
-                        case PtxFormat.RGBA4444Block:
-                            head.check = Texture.RGBA4444Block.Write(bs, sKBitmap);
+                        case PtxFormat.RGBA4444_Block:
+                            head.check = Texture.RGBA4444_Block.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.RGB565Block:
-                            head.check = Texture.RGB565Block.Write(bs, sKBitmap);
+                        case PtxFormat.RGB565_Block:
+                            head.check = Texture.RGB565_Block.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.RGBA5551Block:
-                            head.check = Texture.RGBA5551Block.Write(bs, sKBitmap);
+                        case PtxFormat.RGBA5551_Block:
+                            head.check = Texture.RGBA5551_Block.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.BC1:
-                            head.check = Texture.DXT1.Write(bs, sKBitmap);
+                        case PtxFormat.ETC1_RGB:
+                            head.check = Texture.ETC1_RGB.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.BC2:
-                            head.check = Texture.DXT3.Write(bs, sKBitmap);
+                        case PtxFormat.DXT1_RGB:
+                            head.check = Texture.DXT1_RGB.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.BC3:
-                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                        case PtxFormat.DXT3_RGBA:
+                            head.check = Texture.DXT3_RGBA.Write(bs, sKBitmap);
+                            break;
+                        case PtxFormat.DXT5_RGBA:
+                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
+                            break;
+                        case PtxFormat.ETC1_RGB_A8:
+                            if (chinesemode)
+                            {
+                                head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                                head.alphaFormat = 0x64;
+                                head.alphaSize = 17 + ((head.width * head.height) >> 1);
+                            }
+                            else
+                            {
+                                head.check = Texture.ETC1_RGB_A8.Write(bs, sKBitmap);
+                            }
+                            break;
+                        case PtxFormat.XRGB8888_A8:
+                            head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
+                            break;
+                        case PtxFormat.ETC1_RGB_A_Compress:
+                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
                             break;
                         default:
                             throw new Exception(Str.Obj.UnknownFormat);
@@ -251,95 +296,95 @@ namespace PopStudio.Image.Ptx
                         break;
                     case PtxFormat.DXT5:
                         bs.Endian = Endian.Small;
-                        using (SKBitmap sKBitmap = Texture.DXT5.Read(bs, head.width, head.height))
+                        using (SKBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.RGBA4444Block:
-                        using (SKBitmap sKBitmap = Texture.RGBA4444Block.Read(bs, head.width, head.height))
+                    case PtxFormat.RGBA4444_Block:
+                        using (SKBitmap sKBitmap = Texture.RGBA4444_Block.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.RGB565Block:
-                        using (SKBitmap sKBitmap = Texture.RGB565Block.Read(bs, head.width, head.height))
+                    case PtxFormat.RGB565_Block:
+                        using (SKBitmap sKBitmap = Texture.RGB565_Block.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.RGBA5551Block:
-                        using (SKBitmap sKBitmap = Texture.RGBA5551Block.Read(bs, head.width, head.height))
+                    case PtxFormat.RGBA5551_Block:
+                        using (SKBitmap sKBitmap = Texture.RGBA5551_Block.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.PVRTC4BPP:
-                        using (SKBitmap sKBitmap = Texture.PVRTC4BPP.Read(bs, head.width, head.height))
+                    case PtxFormat.PVRTC4BPP_RGBA:
+                        using (SKBitmap sKBitmap = Texture.PVRTC4BPP_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.PVRTC2BPP:
-                        using (SKBitmap sKBitmap = Texture.PVRTC2BPP.Read(bs, head.width, head.height))
+                    case PtxFormat.PVRTC2BPP_RGBA:
+                        using (SKBitmap sKBitmap = Texture.PVRTC2BPP_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.ETC1:
-                        using (SKBitmap sKBitmap = Texture.ETC1.Read(bs, head.width, head.height))
+                    case PtxFormat.ETC1_RGB:
+                        using (SKBitmap sKBitmap = Texture.ETC1_RGB.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.BC1:
-                        using (SKBitmap sKBitmap = Texture.DXT1.Read(bs, head.width, head.height))
+                    case PtxFormat.DXT1_RGB:
+                        using (SKBitmap sKBitmap = Texture.DXT1_RGB.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.BC2:
-                        using (SKBitmap sKBitmap = Texture.DXT3.Read(bs, head.width, head.height))
+                    case PtxFormat.DXT3_RGBA:
+                        using (SKBitmap sKBitmap = Texture.DXT3_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.BC3:
-                        using (SKBitmap sKBitmap = Texture.DXT5.Read(bs, head.width, head.height))
+                    case PtxFormat.DXT5_RGBA:
+                        using (SKBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.ETC1A8:
+                    case PtxFormat.ETC1_RGB_A8:
                         if (head.alphaFormat == 0x64)
                         {
-                            using (SKBitmap sKBitmap = Texture.ETC1AIndex.Read(bs, head.width, head.height))
+                            using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Compress.Read(bs, head.width, head.height))
                             {
                                 sKBitmap.Save(outFile);
                             }
                         }
                         else
                         {
-                            using (SKBitmap sKBitmap = Texture.ETC1A8.Read(bs, head.width, head.height))
+                            using (SKBitmap sKBitmap = Texture.ETC1_RGB_A8.Read(bs, head.width, head.height))
                             {
                                 sKBitmap.Save(outFile);
                             }
                         }
                         break;
-                    case PtxFormat.PVRTC4BPPA8:
-                        using (SKBitmap sKBitmap = Texture.PVRTC4BPPA8.Read(bs, head.width, head.height))
+                    case PtxFormat.PVRTC4BPP_RGB_A8:
+                        using (SKBitmap sKBitmap = Texture.PVRTC4BPP_RGB_A8.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.XRGB8888A8:
-                        using (SKBitmap sKBitmap = Texture.XRGB8888A8.Read(bs, head.width, head.height))
+                    case PtxFormat.XRGB8888_A8:
+                        using (SKBitmap sKBitmap = Texture.XRGB8888_A8.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.ETC1AIndex:
-                        using (SKBitmap sKBitmap = Texture.ETC1AIndex.Read(bs, head.width, head.height))
+                    case PtxFormat.ETC1_RGB_A_Compress:
+                        using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Compress.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
