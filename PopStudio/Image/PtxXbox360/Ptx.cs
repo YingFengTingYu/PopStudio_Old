@@ -19,15 +19,8 @@ namespace PopStudio.Image.PtxXbox360
                         height = sKBitmap.Height,
                         blockSize = newwidth << 2
                     };
-                    using (SKBitmap image2 = new SKBitmap(newwidth, head.height))
-                    {
-                        using (SKCanvas canvas = new SKCanvas(image2))
-                        {
-                            canvas.DrawBitmap(sKBitmap, new SKRect(0, 0, head.width, head.height));
-                        }
-                        Texture.DXT5.Write(bs, image2);
-                        head.Write(bs);
-                    }
+                    Texture.DXT5Padding.Write(bs, sKBitmap, head.blockSize);
+                    head.Write(bs);
                 }
             }
         }
@@ -42,16 +35,9 @@ namespace PopStudio.Image.PtxXbox360
                 PtxHead head = new PtxHead().Read(bs);
                 bs.Position = 0;
                 //Console.WriteLine("width:{0} blocksize:{1} storewidth:{2}", head.width, head.blockSize, head.blockSize >> 2);
-                using (SKBitmap sKBitmap = Texture.DXT5.Read(bs, head.blockSize >> 2, head.height))
+                using (SKBitmap sKBitmap = Texture.DXT5Padding.Read(bs, head.width, head.height, head.blockSize))
                 {
-                    using (SKBitmap image2 = new SKBitmap(head.width, head.height))
-                    {
-                        using (SKCanvas canvas = new SKCanvas(image2))
-                        {
-                            canvas.DrawBitmap(sKBitmap, new SKRect(0, 0, head.blockSize >> 2, head.height));
-                        }
-                        image2.Save(outFile);
-                    }
+                    sKBitmap.Save(outFile);
                 }
             }
         }

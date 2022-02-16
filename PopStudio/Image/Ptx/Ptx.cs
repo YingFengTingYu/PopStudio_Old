@@ -80,6 +80,27 @@ namespace PopStudio.Image.Ptx
                             }
                             head.format = PtxFormat.ARGB8888;
                             break;
+                        case 11:
+                            head.check = Texture.DXT1.Write(bs, sKBitmap);
+                            head.format = PtxFormat.BC1;
+                            break;
+                        case 12:
+                            head.check = Texture.DXT3.Write(bs, sKBitmap);
+                            head.format = PtxFormat.BC2;
+                            break;
+                        case 13:
+                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                            head.format = PtxFormat.BC3;
+                            break;
+                        case 14:
+                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                            head.format = PtxFormat.DXT5;
+                            break;
+                        case 15:
+                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                            head.format = PtxFormat.DXT5; //the texture is also small endian
+                            bs.Endian = Endian.Big; //but the info is big endian
+                            break;
                         default:
                             throw new Exception(Str.Obj.UnknownFormat);
                     }
@@ -138,6 +159,12 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.RGBA5551:
                             head.check = Texture.RGBA5551.Write(bs, sKBitmap);
                             break;
+                        case PtxFormat.DXT5:
+                            Endian backendian = bs.Endian;
+                            bs.Endian = Endian.Small;
+                            head.check = Texture.DXT5.Write(bs, sKBitmap);
+                            bs.Endian = backendian;
+                            break;
                         case PtxFormat.RGBA4444Block:
                             head.check = Texture.RGBA4444Block.Write(bs, sKBitmap);
                             break;
@@ -146,6 +173,15 @@ namespace PopStudio.Image.Ptx
                             break;
                         case PtxFormat.RGBA5551Block:
                             head.check = Texture.RGBA5551Block.Write(bs, sKBitmap);
+                            break;
+                        case PtxFormat.BC1:
+                            head.check = Texture.DXT1.Write(bs, sKBitmap);
+                            break;
+                        case PtxFormat.BC2:
+                            head.check = Texture.DXT3.Write(bs, sKBitmap);
+                            break;
+                        case PtxFormat.BC3:
+                            head.check = Texture.DXT5.Write(bs, sKBitmap);
                             break;
                         default:
                             throw new Exception(Str.Obj.UnknownFormat);

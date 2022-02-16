@@ -100,5 +100,67 @@ namespace PopStudio.Texture
             }
             return image;
         }
+
+        public static int Write(BinaryStream bs, SKBitmap image)
+        {
+            bool t = false;
+            int newwidth = image.Width;
+            int newheight = image.Height;
+            if (newwidth % 4 != 0)
+            {
+                newwidth += 4 - newwidth % 4;
+                t = true;
+            }
+            if (newheight % 4 != 0)
+            {
+                newheight += 4 - newheight % 4;
+                t = true;
+            }
+            if (t)
+            {
+                SKBitmap image2 = new SKBitmap(newwidth, newheight);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
+                }
+                image = image2;
+            }
+            SKColor[] pixels = image.Pixels;
+            ushort temp;
+            SKColor[] color = new SKColor[16];
+            SKColor min, max;
+            int result;
+            for (int i = 0; i < newheight; i += 4)
+            {
+                for (int w = 0; w < newwidth; w += 4)
+                {
+                    //Copy color
+                    for (int j = 0; j < 4; j++)
+                    {
+                        temp = 0;
+                        for (int k = 0; k < 4; k++)
+                        {
+                            int n = (j << 2) | k;
+                            color[n] = pixels[(i + j) * newwidth + w + k];
+                            temp |= (ushort)((color[n].Alpha >> 4) << (k << 2));
+                        }
+                        bs.WriteUInt16(temp);
+                    }
+                    //Color code
+                    BlockCompressionMethod.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
+                    result = BlockCompressionMethod.EmitColorIndices(color, min, max);
+                    //Write
+                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(max));
+                    bs.WriteUInt16(BlockCompressionMethod.ColorTo565(min));
+                    bs.WriteUInt16((ushort)(result & 0xFFFF));
+                    bs.WriteUInt16((ushort)(result >> 16));
+                }
+            }
+            if (t)
+            {
+                image.Dispose();
+            }
+            return newwidth;
+        }
     }
 }

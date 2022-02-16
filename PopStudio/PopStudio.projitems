@@ -57,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsgpHeadInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\RsgpInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Rsb\XmlConvert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\BlockCompressionMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Dir.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />
@@ -70,7 +71,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB4444.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB8888.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT4.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5Padding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1A8.cs" />

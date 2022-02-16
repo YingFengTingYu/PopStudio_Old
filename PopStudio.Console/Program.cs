@@ -140,13 +140,13 @@ while (true)
         Console.WriteLine("If you want to decode \".tex\"(iOS version), please enter 3.");
         Console.WriteLine("If you want to decode \".txz\", please enter 4.");
         Console.WriteLine("If you want to decode \".tex\"(Android TV version), please enter 5.");
-        Console.WriteLine("If you want to decode \".ptx\"(in PVZ Xbox360), please enter 7.");
+        Console.WriteLine("If you want to decode \".ptx\"(in PVZ Xbox360), please enter 6.");
         Console.WriteLine("如果你想解码.ptx（rsb中的），请输入1.");
         Console.WriteLine("如果你想解码.cdat，请输入2.");
         Console.WriteLine("如果你想解码.tex（iOS版），请输入3.");
         Console.WriteLine("如果你想解码.txz，请输入4.");
         Console.WriteLine("如果你想解码.tex（安卓TV版），请输入5.");
-        Console.WriteLine("如果你想解码.ptx（植物大战僵尸Xbox360中的），请输入7.");
+        Console.WriteLine("如果你想解码.ptx（植物大战僵尸Xbox360中的），请输入6.");
         mode = Convert.ToInt32(Console.ReadLine());
         if (mode == 1)
         {
@@ -218,7 +218,7 @@ while (true)
             PopStudio.Image.TexTV.Tex.Decode(filepath, filepath + ".png");
             continue;
         }
-        else if (mode == 7)
+        else if (mode == 6)
         {
             Console.WriteLine("Please choose ptx file");
             Console.WriteLine("请选择ptx文件");
@@ -240,13 +240,13 @@ while (true)
         Console.WriteLine("If you want to encode \".tex\"(iOS version), please enter 3.");
         Console.WriteLine("If you want to encode \".txz\", please enter 4.");
         Console.WriteLine("If you want to encode \".tex\"(Android TV version), please enter 5.");
-        Console.WriteLine("If you want to decode \".ptx\"(in PVZ Xbox360), please enter 7.(Not invalid, and I need help with DXT5 encode)");
+        Console.WriteLine("If you want to encode \".ptx\"(in PVZ Xbox360), please enter 6.");
         Console.WriteLine("如果你想编码.ptx（rsb中的），请输入1.");
         Console.WriteLine("如果你想编码.cdat，请输入2.");
         Console.WriteLine("如果你想编码.tex（iOS版），请输入3.");
         Console.WriteLine("如果你想编码.txz，请输入4.");
         Console.WriteLine("如果你想编码.tex（安卓TV版），请输入5.");
-        Console.WriteLine("如果你想解码.ptx（植物大战僵尸Xbox360中的），请输入7.（未实现，我需要帮助完成DXT5编码）");
+        Console.WriteLine("如果你想编码.ptx（植物大战僵尸Xbox360中的），请输入6.");
         mode = Convert.ToInt32(Console.ReadLine());
         if (mode == 1)
         {
@@ -270,6 +270,11 @@ while (true)
             Console.WriteLine("enter 8 to use RGBA5551Block texture");
             Console.WriteLine("enter 9 to use ARGB8888 big endian texture");
             Console.WriteLine("enter 10 to use ARGB8888 big endian and padding texture");
+            Console.WriteLine("enter 11 to use BC1 texture");
+            Console.WriteLine("enter 12 to use BC2 texture");
+            Console.WriteLine("enter 13 to use BC3 texture");
+            Console.WriteLine("enter 14 to use DXT5 texture");
+            Console.WriteLine("enter 15 to use DXT5 big endian texture");
             Console.WriteLine("请选择模式");
             Console.WriteLine("输入1使用ARGB8888纹理");
             Console.WriteLine("输入2使用ABGR8888纹理");
@@ -281,6 +286,11 @@ while (true)
             Console.WriteLine("输入8使用RGBA5551Block纹理");
             Console.WriteLine("输入9使用ARGB8888大端序纹理");
             Console.WriteLine("输入10使用ARGB8888大端序补码纹理");
+            Console.WriteLine("输入11使用BC1纹理");
+            Console.WriteLine("输入12使用BC2纹理");
+            Console.WriteLine("输入13使用BC3纹理");
+            Console.WriteLine("输入14使用DXT5纹理");
+            Console.WriteLine("输入15使用DXT5大端序纹理");
             PopStudio.Image.Ptx.Ptx.Encode(filepath, filepath + ".PTX", Convert.ToInt32(Console.ReadLine()));
             continue;
         }
@@ -378,6 +388,20 @@ while (true)
             Console.WriteLine("输入8使用XRGB8888纹理");
             Console.WriteLine("输入9使用LA88纹理");
             PopStudio.Image.TexTV.Tex.Encode(filepath, filepath + ".tex", Convert.ToInt32(Console.ReadLine()));
+            continue;
+        }
+        else if (mode == 6)
+        {
+            Console.WriteLine("Please choose png file");
+            Console.WriteLine("请选择png文件");
+            string filepath = Console.ReadLine();
+            if (string.IsNullOrEmpty(filepath))
+            {
+                Console.WriteLine("Please choose png file!!!");
+                Console.WriteLine("请选择png文件！！！");
+                continue;
+            }
+            PopStudio.Image.PtxXbox360.Ptx.Encode(filepath, filepath + ".ptx");
             continue;
         }
     }

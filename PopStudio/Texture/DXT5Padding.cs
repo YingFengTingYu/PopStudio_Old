@@ -2,9 +2,9 @@
 
 namespace PopStudio.Texture
 {
-    internal static class DXT5
+    internal static class DXT5Padding
     {
-        public static SKBitmap Read(BinaryStream bs, int width, int height)
+        public static SKBitmap Read(BinaryStream bs, int width, int height, int blockSize)
         {
             bool t = false;
             int newwidth = width;
@@ -31,6 +31,8 @@ namespace PopStudio.Texture
             byte[] alpha = new byte[16];
             int temp;
             int r, g, b;
+            long off = bs.Position;
+            int times = 0;
             for (int y = 0; y < newheight; y += 4)
             {
                 for (int x = 0; x < newwidth; x += 4)
@@ -106,7 +108,9 @@ namespace PopStudio.Texture
                         }
                     }
                 }
+                bs.Position = off + (++times) * blockSize;
             }
+            bs.Position = off + (++times) * blockSize;
             SKBitmap image = new SKBitmap(newwidth, newheight);
             image.Pixels = pixels;
             if (t)
@@ -129,7 +133,7 @@ namespace PopStudio.Texture
             return (byte)v;
         }
 
-        public static int Write(BinaryStream bs, SKBitmap image)
+        public static int Write(BinaryStream bs, SKBitmap image, int blockSize)
         {
             bool t = false;
             int newwidth = image.Width;
@@ -160,6 +164,7 @@ namespace PopStudio.Texture
             SKColor min, max;
             int result;
             int tempvalue;
+            int CDSize = blockSize - (newwidth << 2);
             for (int i = 0; i < newheight; i += 4)
             {
                 for (int w = 0; w < newwidth; w += 4)
@@ -217,6 +222,14 @@ namespace PopStudio.Texture
                     bs.WriteUInt16((ushort)(result & 0xFFFF));
                     bs.WriteUInt16((ushort)(result >> 16));
                 }
+                for (int j = 0; j < CDSize; j++)
+                {
+                    bs.WriteByte(0xCD);
+                }
+            }
+            for (int j = 0; j < blockSize; j++)
+            {
+                bs.WriteByte(0xCD);
             }
             if (t)
             {
