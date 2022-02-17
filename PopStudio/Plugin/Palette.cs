@@ -25,18 +25,13 @@ namespace PopStudio.Plugin
 				{
 					for (int c = a + 1; c < UniqueColors.Count; c++)
 					{
-						//if (a == c) continue;
 						int diff = abs(UniqueColors[a] - UniqueColors[c]);
 						if (diff < mindiff)
 						{
 							mindiff = diff;
 							amin = a;
 							bmin = c;
-							//if (diff < 2) goto go;
-							//if (diff < 30) goto go;
 							if (diff < 14) goto go;
-							//if (diff < 650) goto go;
-							//if (diff < 900) goto go;//30) goto go;
 						}
 					}
 				}
@@ -83,18 +78,13 @@ namespace PopStudio.Plugin
 				{
 					for (int c = a + 1; c < UniqueColors.Count; c++)
 					{
-						//if (a == c) continue;
 						float diff = ColorDifference(UniqueColors[a], UniqueColors[c]);
 						if (diff < mindiff)
 						{
 							mindiff = diff;
 							amin = a;
 							bmin = c;
-							//if (diff < 2) goto go;
-							//if (diff < 30) goto go;
 							if (diff < 700) goto go;
-							//if (diff < 650) goto go;
-							//if (diff < 900) goto go;//30) goto go;
 						}
 					}
 				}

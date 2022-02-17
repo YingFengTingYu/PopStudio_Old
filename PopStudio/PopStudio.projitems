@@ -67,6 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\TempFilePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RTON\RTON.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ABGR8888.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB1555.cs" />

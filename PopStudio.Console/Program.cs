@@ -1,9 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-//If you want to use English mode, please change this setting. (ZHCN to ENUS)
+﻿//If you want to use English mode, please change this setting. (ZHCN to ENUS)
 //如果你想转为英文模式，请改变这个设置。（ZHCN改为ENUS）
 Str.Obj = new ENUS();
-PopStudio.Console.Constant.Str.Obj = new PopStudio.Console.Constant.ENUS();
-string[] Lng = PopStudio.Console.Constant.Str.Obj.All;
+PopStudio.ConsoleProject.Constant.Str.Obj = new PopStudio.ConsoleProject.Constant.ENUS();
+string[] Lng = PopStudio.ConsoleProject.Constant.Str.Obj.All;
 Console.WriteLine(Lng[0], Str.Obj.AppName, Str.Obj.AppVersion);
 Console.WriteLine(Lng[1], Str.Obj.AppAuthor);
 Console.WriteLine(Lng[2]);
@@ -15,6 +14,8 @@ while (true)
         Console.WriteLine(Lng[4]);
         Console.WriteLine(Lng[5]);
         Console.WriteLine(Lng[6]);
+        Console.WriteLine(Lng[77]);
+        Console.WriteLine(Lng[78]);
         int mode = Convert.ToInt32(Console.ReadLine());
         if (mode == 1)
         {
@@ -64,6 +65,11 @@ while (true)
                 PopStudio.Package.Pak.Pak.Unpack(filepath, filepath + ".out");
                 continue;
             }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
         }
         else if (mode == 2)
         {
@@ -111,6 +117,11 @@ while (true)
                     continue;
                 }
                 PopStudio.Package.Pak.Pak.Pack(filepath, filepath + ".out");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
                 continue;
             }
         }
@@ -193,6 +204,11 @@ while (true)
                     continue;
                 }
                 PopStudio.Image.PtxXbox360.Ptx.Decode(filepath, filepath + ".png");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
                 continue;
             }
         }
@@ -318,6 +334,47 @@ while (true)
                     continue;
                 }
                 PopStudio.Image.PtxXbox360.Ptx.Encode(filepath, filepath + ".ptx");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
+        }
+        else if (mode == 5)
+        {
+            Console.WriteLine(Lng[79]);
+            Console.WriteLine(Lng[80]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[83]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[83]);
+                    continue;
+                }
+                PopStudio.RTON.RTON.Decode(filepath, filepath + ".json");
+                continue;
+            }
+        }
+        else if (mode == 6)
+        {
+            Console.WriteLine(Lng[81]);
+            Console.WriteLine(Lng[82]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[84]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[84]);
+                    continue;
+                }
+                PopStudio.RTON.RTON.Encode(filepath, filepath + ".RTON");
                 continue;
             }
         }

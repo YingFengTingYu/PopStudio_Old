@@ -1,4 +1,4 @@
-﻿namespace PopStudio.Console.Constant
+﻿namespace PopStudio.ConsoleProject.Constant
 {
     internal class ZHCN : ILanguage
     {
@@ -80,6 +80,14 @@
             "输入9使用XRGB8888纹理（格式9）",
             "输入10使用LA88纹理（格式10）",
             "无效模式！",
+            "输入5以运行RTON解码模式",
+            "输入6以运行RTON编码模式",
+            "如果你想解码普通.RTON，请输入1.",
+            "如果你想解码加密.RTON，请输入2.（明天支持，需要自行输入密钥）",
+            "如果你想编码普通.RTON，请输入1.",
+            "如果你想编码加密.RTON，请输入2.（明天支持，需要自行输入密钥）",
+            "请选择RTON文件",
+            "请选择json文件",
         };
 
         public string[] All => all;

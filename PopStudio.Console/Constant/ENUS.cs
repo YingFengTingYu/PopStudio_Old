@@ -1,4 +1,4 @@
-﻿namespace PopStudio.Console.Constant
+﻿namespace PopStudio.ConsoleProject.Constant
 {
     internal class ENUS : ILanguage
     {
@@ -80,6 +80,14 @@
             "enter 9 to use XRGB8888 texture(format 9)",
             "enter 10 to use LA88 texture(format 10)",
             "Invalid mode!",
+            "enter 5 to run RTON decode mode",
+            "enter 6 to run RTON encode mode",
+            "If you want to decode simple \".RTON\", please enter 1.",
+            "If you want to decode encrypt \".RTON\", please enter 2.(Tomorrow it'll be supported, and you must enter the key by yourself)",
+            "If you want to encode simple \".RTON\", please enter 1.",
+            "If you want to encode encrypt \".RTON\", please enter 2.(Tomorrow it'll be supported, and you must enter the key by yourself)",
+            "Please choose RTON file",
+            "Please choose json file",
         };
 
         public string[] All => all;

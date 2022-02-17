@@ -1,4 +1,4 @@
-﻿namespace PopStudio.Console.Constant
+﻿namespace PopStudio.ConsoleProject.Constant
 {
     internal interface ILanguage
     {

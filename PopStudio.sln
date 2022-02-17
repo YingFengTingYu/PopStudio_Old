@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.Shared", "PopStudio\PopStudio.Shared.shproj", "{5162DEBA-202F-485F-8B68-0C1C2212382A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopStudio.Console", "PopStudio.Console\PopStudio.Console.csproj", "{10E6AB75-5798-4601-8688-26C6C7870181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.ConsoleProject", "PopStudio.Console\PopStudio.ConsoleProject.csproj", "{10E6AB75-5798-4601-8688-26C6C7870181}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
