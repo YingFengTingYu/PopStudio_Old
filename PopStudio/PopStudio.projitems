@@ -61,6 +61,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Dir.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\ETCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\Palette.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\StringPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
@@ -84,9 +85,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\L8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\LA44.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\LA88.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC2BPP_RGBA.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC4BPP_RGBA.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC4BPP_RGB_A8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_2BPP_RGBA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_4BPP_RGBA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_4BPP_RGB_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB565.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB565_Block.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB888.cs" />

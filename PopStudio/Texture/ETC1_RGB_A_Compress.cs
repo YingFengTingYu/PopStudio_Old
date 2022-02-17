@@ -107,7 +107,7 @@ namespace PopStudio.Texture
                 for (int i = 0; i < S; i++)
                 {
                     if (ind == 0) temp2 = bs.ReadByte();
-                    pixels[i] = (byte)(((temp2 >> ind) & 0b1) == 0 ? 0 : 255);
+                    pixels[i] = pixels[i].WithAlpha((byte)(((temp2 >> ind) & 0b1) == 0 ? 0 : 255)); //2022.2.17 fix this bug
                     ind = (ind + 1) % 8;
                 }
             }
@@ -140,7 +140,7 @@ namespace PopStudio.Texture
             return image;
         }
 
-        public static int Write(BinaryStream bs, SKBitmap image)
+        public static int Write(BinaryStream bs, SKBitmap image, out int AlphaSize)
         {
             bool t = false;
             int newwidth = image.Width;
@@ -183,17 +183,81 @@ namespace PopStudio.Texture
                     bs.WriteUInt64(ETCEncode.GenETC1(color), etcendian);
                 }
             }
-            //I need help for 16-bits palette encode
             int S = pixels.Length;
-            bs.WriteByte(0x10);
-            for (int i = 0; i < 16; i++)
+            List<byte> ary = Palette.GeneratePalette_A8(pixels, 16);
+            ary.Sort();
+            if ((ary[13] <= 13 && ary[14] >= 245) || (ary[1] <= 10 && ary[2] >= 242))
             {
-                bs.WriteByte((byte)(i | (i << 4)));
+                AlphaSize = (S >> 3) + 1;
+                bs.WriteByte(0);
+                int flags;
+                for (int i = 0; i < S; i += 8)
+                {
+                    flags = 0;
+                    for (int j = 0; j < 8; j++)
+                    {
+                        flags |= ((pixels[i | j].Alpha & 0b10000000) >> 7) << j;
+                    }
+                    bs.WriteByte((byte)flags);
+                }
             }
-            for (int i = 0; i < S; i += 2)
+            else
             {
-                bs.WriteByte((byte)((pixels[i].Alpha << 4) | pixels[i | 1].Alpha));
+                AlphaSize = (S >> 1) + 17;
+                bs.WriteByte(0x10);
+                for (int i = 0; i < 16; i++)
+                {
+                    bs.WriteByte(ary[i]);
+                }
+                int flags;
+                for (int i = 0; i < S; i += 2)
+                {
+                    flags = 0;
+                    for (int j = 0; j < 2; j++)
+                    {
+                        int iorj = i | j;
+                        int delta = pixels[iorj].Alpha;
+                        if (delta == ary[0])
+                        {
+                            continue;
+                        }
+                        else if (delta == ary[15])
+                        {
+                            flags |= 240 >> (j << 2);
+                            continue;
+                        }
+                        for (int k = 1; k < 16; k++)
+                        {
+                            int d = pixels[iorj].Alpha - ary[k];
+                            if (d <= 0)
+                            {
+                                if (delta + d >= 0)
+                                {
+                                    flags |= (k << 4) >> (j << 2);
+                                }
+                                else
+                                {
+                                    flags |= ((k - 1) << 4) >> (j << 2);
+                                }
+                                break;
+                            }
+                            delta = d;
+                        }
+                    }
+                    bs.WriteByte((byte)flags);
+                }
             }
+            //If you really need fast encoding, you can use A4 "compress"
+            //AlphaSize = (S >> 1) + 17;
+            //bs.WriteByte(0x10);
+            //for (int i = 0; i < 16; i++)
+            //{
+            //    bs.WriteByte((byte)(i | (i << 4)));
+            //}
+            //for (int i = 0; i < S; i += 2)
+            //{
+            //    bs.WriteByte((byte)((pixels[i].Alpha << 4) | pixels[i | 1].Alpha));
+            //}
             if (t)
             {
                 image.Dispose();

@@ -114,16 +114,14 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.ETC1_RGB_A8;
                             break;
                         case 19:
-                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
                             head.format = PtxFormat.ETC1_RGB_A8; //Also 147
                             head.alphaFormat = 0x64;
-                            head.alphaSize = 17 + ((head.width * head.height) >> 1);
                             break;
                         case 20:
-                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
                             head.format = PtxFormat.ETC1_RGB_A_Compress;
                             head.alphaFormat = 0x64;
-                            head.alphaSize = 17 + ((head.width * head.height) >> 1);
                             break;
                         default:
                             throw new Exception(Str.Obj.UnknownFormat);
@@ -213,9 +211,8 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.ETC1_RGB_A8:
                             if (chinesemode)
                             {
-                                head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                                head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
                                 head.alphaFormat = 0x64;
-                                head.alphaSize = 17 + ((head.width * head.height) >> 1);
                             }
                             else
                             {
@@ -226,7 +223,8 @@ namespace PopStudio.Image.Ptx
                             head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
                             break;
                         case PtxFormat.ETC1_RGB_A_Compress:
-                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap);
+                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
+                            head.alphaFormat = 0x64;
                             break;
                         default:
                             throw new Exception(Str.Obj.UnknownFormat);
@@ -319,14 +317,14 @@ namespace PopStudio.Image.Ptx
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.PVRTC4BPP_RGBA:
-                        using (SKBitmap sKBitmap = Texture.PVRTC4BPP_RGBA.Read(bs, head.width, head.height))
+                    case PtxFormat.PVRTC_4BPP_RGBA:
+                        using (SKBitmap sKBitmap = Texture.PVRTC_4BPP_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.PVRTC2BPP_RGBA:
-                        using (SKBitmap sKBitmap = Texture.PVRTC2BPP_RGBA.Read(bs, head.width, head.height))
+                    case PtxFormat.PVRTC_2BPP_RGBA:
+                        using (SKBitmap sKBitmap = Texture.PVRTC_2BPP_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
@@ -371,8 +369,8 @@ namespace PopStudio.Image.Ptx
                             }
                         }
                         break;
-                    case PtxFormat.PVRTC4BPP_RGB_A8:
-                        using (SKBitmap sKBitmap = Texture.PVRTC4BPP_RGB_A8.Read(bs, head.width, head.height))
+                    case PtxFormat.PVRTC_4BPP_RGB_A8:
+                        using (SKBitmap sKBitmap = Texture.PVRTC_4BPP_RGB_A8.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }

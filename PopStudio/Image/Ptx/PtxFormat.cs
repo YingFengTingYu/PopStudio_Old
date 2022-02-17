@@ -10,8 +10,8 @@
         RGBA4444_Block = 21,
         RGB565_Block,
         RGBA5551_Block,
-        PVRTC4BPP_RGBA = 30,
-        PVRTC2BPP_RGBA,
+        PVRTC_4BPP_RGBA = 30,
+        PVRTC_2BPP_RGBA,
         ETC1_RGB,
         ETC2_RGB,
         ETC2_RGBA,
@@ -21,7 +21,7 @@
         ATITC_RGB,
         ATITC_RGBA,
         ETC1_RGB_A8 = 147, //ETC1_RGB_A_Compress
-        PVRTC4BPP_RGB_A8,
+        PVRTC_4BPP_RGB_A8,
         XRGB8888_A8,
         ETC1_RGB_A_Compress
     }
