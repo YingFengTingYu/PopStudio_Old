@@ -5,7 +5,7 @@
         static readonly string[] all = {
             "{0} {1}",
             "Author:{0}",
-            "Hello! This is the program to convert files used in PopCap Games. Now it can unpack and pack dz, rsb (including small version in Android and iOS, big endian version in ps3 and xbox360 and Chinese version) and pak (including Windows, MacOS, PS3 and Xbox360 version).",
+            "Hello! This is the program to convert files used in PopCap Games.",
             "enter 1 to run unpack mode",
             "enter 2 to run pack mode",
             "enter 3 to run image decode mode",
@@ -89,6 +89,23 @@
             "Please choose RTON file",
             "Please choose json file",
             "Please enter the key",
+            "enter 7 to run reanim decode mode(decode to json)",
+            "enter 8 to run reanim encode mode(encode from json)",
+            "If you want to decode PC version(Windows and MacOS), please enter 1.",
+            "If you want to decode Phone32 version(Android and iOS), please enter 2.",
+            "If you want to decode Phone64 version(Android and iOS), please enter 3.",
+            "If you want to decode WP version(WindowsPhone), please enter 4.",
+            "If you want to decode GameConsole version(PS3 and Xbox360), please enter 5.",
+            "If you want to decode TV version(AndroidTV), please enter 6.",
+            "If you want to encode PC version(Windows and MacOS), please enter 1.",
+            "If you want to encode Phone32 version(Android and iOS), please enter 2.",
+            "If you want to encode Phone64 version(Android and iOS), please enter 3.",
+            "If you want to encode WP version(WindowsPhone), please enter 4.",
+            "If you want to encode GameConsole version(PS3 and Xbox360), please enter 5.",
+            "If you want to encode TV version(AndroidTV), please enter 6.",
+            "Please choose reanim.compiled file",
+            "Please choose xnb file",
+            "Please choose reanim file",
         };
 
         public string[] All => all;

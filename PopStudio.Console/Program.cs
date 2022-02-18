@@ -16,6 +16,8 @@ while (true)
         Console.WriteLine(Lng[6]);
         Console.WriteLine(Lng[77]);
         Console.WriteLine(Lng[78]);
+        Console.WriteLine(Lng[86]);
+        Console.WriteLine(Lng[87]);
         int mode = Convert.ToInt32(Console.ReadLine());
         if (mode == 1)
         {
@@ -377,6 +379,11 @@ while (true)
                 PopStudio.RTON.RTON.DecodeAndDecrypt(filepath, filepath + ".json", key);
                 continue;
             }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
         }
         else if (mode == 6)
         {
@@ -411,6 +418,185 @@ while (true)
                     key = Console.ReadLine();
                 }
                 PopStudio.RTON.RTON.EncodeAndEncrypt(filepath, filepath + ".RTON", key);
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
+        }
+        else if (mode == 7)
+        {
+            Console.WriteLine(Lng[88]);
+            Console.WriteLine(Lng[89]);
+            Console.WriteLine(Lng[90]);
+            Console.WriteLine(Lng[91]);
+            Console.WriteLine(Lng[92]);
+            Console.WriteLine(Lng[93]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                PopStudio.Reanim.PC.Decode(filepath, filepath + ".reanim");
+                continue;
+            }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                PopStudio.Reanim.Phone32.Decode(filepath, filepath + ".reanim");
+                continue;
+            }
+            else if (mode == 3)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                PopStudio.Reanim.Phone64.Decode(filepath, filepath + ".reanim");
+                continue;
+            }
+            else if (mode == 4)
+            {
+                Console.WriteLine(Lng[101]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[101]);
+                    continue;
+                }
+                PopStudio.Reanim.WP.Decode(filepath, filepath + ".reanim");
+                continue;
+            }
+            else if (mode == 5)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                PopStudio.Reanim.GameConsole.Decode(filepath, filepath + ".reanim");
+                continue;
+            }
+            else if (mode == 6)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                PopStudio.Reanim.TV.Decode(filepath, filepath + ".reanim");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
+        }
+        else if (mode == 8)
+        {
+            Console.WriteLine(Lng[94]);
+            Console.WriteLine(Lng[95]);
+            Console.WriteLine(Lng[96]);
+            Console.WriteLine(Lng[97]);
+            Console.WriteLine(Lng[98]);
+            Console.WriteLine(Lng[99]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[102]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[102]);
+                    continue;
+                }
+                PopStudio.Reanim.PC.Encode(filepath, filepath + ".reanim.compiled");
+                continue;
+            }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[102]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[102]);
+                    continue;
+                }
+                PopStudio.Reanim.Phone32.Encode(filepath, filepath + ".reanim.compiled");
+                continue;
+            }
+            else if (mode == 3)
+            {
+                Console.WriteLine(Lng[102]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[102]);
+                    continue;
+                }
+                PopStudio.Reanim.Phone64.Encode(filepath, filepath + ".reanim.compiled");
+                continue;
+            }
+            else if (mode == 4)
+            {
+                Console.WriteLine(Lng[102]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[102]);
+                    continue;
+                }
+                PopStudio.Reanim.WP.Encode(filepath, filepath + ".xnb");
+                continue;
+            }
+            else if (mode == 5)
+            {
+                Console.WriteLine(Lng[102]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[102]);
+                    continue;
+                }
+                PopStudio.Reanim.GameConsole.Encode(filepath, filepath + ".reanim.compiled");
+                continue;
+            }
+            else if (mode == 6)
+            {
+                Console.WriteLine(Lng[102]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[102]);
+                    continue;
+                }
+                PopStudio.Reanim.TV.Encode(filepath, filepath + ".reanim.compiled");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
                 continue;
             }
         }

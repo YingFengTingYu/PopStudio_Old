@@ -74,6 +74,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\TempFilePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\GameConsole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\WP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\Phone64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\TV.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\Phone32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\PC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\Reanim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimTrack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RTON\RTON.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ABGR8888.cs" />

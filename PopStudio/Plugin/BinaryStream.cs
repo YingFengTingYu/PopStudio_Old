@@ -118,6 +118,13 @@ namespace PopStudio.Plugin
             if (ReadInt32(endian) != h) throw new Exception(Str.Obj.DataMisMatch);
         }
 
+        public void IdBytes(byte[] h, Endian _ = Endian.Null)
+        {
+            int length = h.Length;
+            byte[] r = ReadBytes(length);
+            for (int i = 0; i < length; i++) if (r[i] != h[i]) throw new Exception(Str.Obj.DataMisMatch);
+        }
+
         public void IdString(string h, Endian endian = Endian.Null)
         {
             if (ReadString(h.Length, endian) != h) throw new Exception(Str.Obj.DataMisMatch);

@@ -5,7 +5,7 @@
         static readonly string[] all = {
             "{0} {1}",
             "作者：{0}",
-            "你好！这是一个用于转换宝开游戏中使用的格式的项目。现在他可以解包打包dz、rsb（包括小端序，大端序和中国版本）和pak（包括Windows，MacOS，PS3和Xbox360版本）。",
+            "你好！这是一个用于转换宝开游戏中使用的格式的项目。",
             "输入1以运行解包模式",
             "输入2以运行打包模式",
             "输入3以运行图像解码模式",
@@ -89,6 +89,23 @@
             "请选择RTON文件",
             "请选择json文件",
             "请输入密钥",
+            "输入7以运行reanim解码模式（解码为json）",
+            "输入8以运行reanim编码模式（从json编码）",
+            "如果你想解码PC版（Windows和MacOS），请输入1.",
+            "如果你想解码Phone32版（安卓和iOS），请输入2.",
+            "如果你想解码Phone64版（安卓和iOS），请输入3.",
+            "如果你想解码WP版（WindowsPhone），请输入4.",
+            "如果你想解码GameConsole版（PS3和Xbox360），请输入5.",
+            "如果你想解码TV版（AndroidTV），请输入6.",
+            "如果你想编码PC版（Windows和MacOS），请输入1.",
+            "如果你想编码Phone32版（安卓和iOS），请输入2.",
+            "如果你想编码Phone64版（安卓和iOS），请输入3.",
+            "如果你想编码WP版（WindowsPhone），请输入4.",
+            "如果你想编码GameConsole版（PS3和Xbox360），请输入5.",
+            "如果你想编码TV版（AndroidTV），请输入6.",
+            "请选择reanim.compiled文件",
+            "请选择xnb文件",
+            "请选择reanim文件",
         };
 
         public string[] All => all;
