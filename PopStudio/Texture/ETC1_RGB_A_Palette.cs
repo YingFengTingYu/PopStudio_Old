@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class ETC1_RGB_A_Compress
+    internal static class ETC1_RGB_A_Palette
     {
         private static readonly int[,] ETC1Modifiers =
         {

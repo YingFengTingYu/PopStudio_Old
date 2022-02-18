@@ -103,6 +103,11 @@ namespace PopStudio.Plugin
             if (ReadUInt8() != h) throw new Exception(Str.Obj.DataMisMatch);
         }
 
+        public void IdInt16(short h, Endian endian = Endian.Null)
+        {
+            if (ReadInt16(endian) != h) throw new Exception(Str.Obj.DataMisMatch);
+        }
+
         public void IdUInt16(ushort h, Endian endian = Endian.Null)
         {
             if (ReadUInt16(endian) != h) throw new Exception(Str.Obj.DataMisMatch);

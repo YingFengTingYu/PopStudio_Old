@@ -20,9 +20,9 @@
         DXT5_RGBA,
         ATITC_RGB,
         ATITC_RGBA,
-        ETC1_RGB_A8 = 147, //ETC1_RGB_A_Compress
+        ETC1_RGB_A8 = 147, //ETC1_RGB_A_Palette
         PVRTC_4BPP_RGB_A8,
         XRGB8888_A8,
-        ETC1_RGB_A_Compress
+        ETC1_RGB_A_Palette
     }
 }

@@ -60,8 +60,8 @@
             "enter 16 to use DXT5 big endian texture(format 5)",
             "enter 17 to use ETC1_RGB texture(format 32)",
             "enter 18 to use ETC1_RGB_A8 texture(format 147)",
-            "enter 19 to use ETC1_RGB_A_Compress texture(format 147)",
-            "enter 20 to use ETC1_RGB_A_Compress texture(format 150)",
+            "enter 19 to use ETC1_RGB_A_Palette texture(format 147)",
+            "enter 20 to use ETC1_RGB_A_Palette texture(format 150)",
             "enter 21 to use PVRTC_4BPP_RGBA texture(format 30)",
             "enter 22 to use PVRTC_4BPP_RGB_A8 texture(format 148)",
             "enter 23 to use PVRTC_2BPP_RGBA texture(format 31)",
@@ -83,11 +83,12 @@
             "enter 5 to run RTON decode mode",
             "enter 6 to run RTON encode mode",
             "If you want to decode simple \".RTON\", please enter 1.",
-            "If you want to decode encrypt \".RTON\", please enter 2.(Tomorrow it'll be supported, and you must enter the key by yourself)",
+            "If you want to decode encrypt \".RTON\", please enter 2.(You must enter the key by yourself)",
             "If you want to encode simple \".RTON\", please enter 1.",
-            "If you want to encode encrypt \".RTON\", please enter 2.(Tomorrow it'll be supported, and you must enter the key by yourself)",
+            "If you want to encode encrypt \".RTON\", please enter 2.(You must enter the key by yourself)",
             "Please choose RTON file",
             "Please choose json file",
+            "Please enter the key",
         };
 
         public string[] All => all;

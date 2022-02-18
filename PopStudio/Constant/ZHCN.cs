@@ -17,5 +17,7 @@
         public string XmemCompressInvalid => "不支持Xmem压缩";
 
         public string UnknownFormat => "不支持的格式";
+
+        public string TypeMisMatch => "类型不匹配";
     }
 }

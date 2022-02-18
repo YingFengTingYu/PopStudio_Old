@@ -1,7 +1,7 @@
 ﻿//If you want to use English mode, please change this setting. (ZHCN to ENUS)
 //如果你想转为英文模式，请改变这个设置。（ZHCN改为ENUS）
-Str.Obj = new ENUS();
-PopStudio.ConsoleProject.Constant.Str.Obj = new PopStudio.ConsoleProject.Constant.ENUS();
+Str.Obj = new ZHCN();
+PopStudio.ConsoleProject.Constant.Str.Obj = new PopStudio.ConsoleProject.Constant.ZHCN();
 string[] Lng = PopStudio.ConsoleProject.Constant.Str.Obj.All;
 Console.WriteLine(Lng[0], Str.Obj.AppName, Str.Obj.AppVersion);
 Console.WriteLine(Lng[1], Str.Obj.AppAuthor);
@@ -359,6 +359,24 @@ while (true)
                 PopStudio.RTON.RTON.Decode(filepath, filepath + ".json");
                 continue;
             }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[83]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[83]);
+                    continue;
+                }
+                string key = PopStudio.RTON.RTON.KEY;
+                if (key == null)
+                {
+                    Console.WriteLine(Lng[85]);
+                    key = Console.ReadLine();
+                }
+                PopStudio.RTON.RTON.DecodeAndDecrypt(filepath, filepath + ".json", key);
+                continue;
+            }
         }
         else if (mode == 6)
         {
@@ -377,6 +395,24 @@ while (true)
                 PopStudio.RTON.RTON.Encode(filepath, filepath + ".RTON");
                 continue;
             }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[84]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[84]);
+                    continue;
+                }
+                string key = PopStudio.RTON.RTON.KEY;
+                if (key == null)
+                {
+                    Console.WriteLine(Lng[85]);
+                    key = Console.ReadLine();
+                }
+                PopStudio.RTON.RTON.EncodeAndEncrypt(filepath, filepath + ".RTON", key);
+                continue;
+            }
         }
         else
         {
@@ -387,6 +423,8 @@ while (true)
     catch (Exception ex)
     {
         Console.WriteLine(ex.Message);
-        //throw;
+#if DEBUG
+        throw;
+#endif
     }
 }

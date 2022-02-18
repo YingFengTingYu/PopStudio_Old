@@ -14,6 +14,7 @@ This project has used:
 [LZMA-SDK](https://github.com/monemihir/LZMA-SDK) to decompress and compress Lzma files.  
 [Pvrtc](https://github.com/mafaca/Pvrtc) to decode PvrTC texture.  
 [SkiaSharp](https://github.com/mono/SkiaSharp) to read and write PNG files.  
+[bc-sharp](https://github.com/novotnyllc/bc-csharp) to encrypt and decrypt Rijndael files.  
   
 reference:
 [Real-Time DXT Compression](https://www.researchgate.net/publication/259000525_Real-Time_DXT_Compression) to encode DXT texture.  
@@ -34,6 +35,7 @@ ___
 [LZMA-SDK](https://github.com/monemihir/LZMA-SDK)用于解压和压缩Lzma文件。  
 [Pvrtc](https://github.com/mafaca/Pvrtc)用于解码PvrTC纹理。  
 [SkiaSharp](https://github.com/mono/SkiaSharp)用于读写PNG图像。  
+[bc-sharp](https://github.com/novotnyllc/bc-csharp)用于加密和解密Rijndael文件。  
   
 参考：
 [Real-Time DXT Compression](https://www.researchgate.net/publication/259000525_Real-Time_DXT_Compression)用于编码DXT纹理。  

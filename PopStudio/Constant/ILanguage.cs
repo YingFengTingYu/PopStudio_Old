@@ -12,5 +12,7 @@
         public string FolderNotFound { get; }
         public string XmemCompressInvalid { get; }
         public string UnknownFormat { get; }
+
+        public string TypeMisMatch { get; }
     }
 }

@@ -18,7 +18,7 @@
             return defaultcompressMethod;
         }
 
-        public static void Unpack(string inFile, string outFolder)
+        public static void Unpack(string inFile, string outFolder, bool changeimage = false, bool delete = false)
         {
             Dir.FormatAndDeleteEndPathSeparator(ref inFile);
             Dir.FormatAndDeleteEndPathSeparator(ref outFolder);
@@ -28,7 +28,7 @@
             }
             using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
             {
-                DzipDecoder(bs, outFolder);
+                DzipDecoder(bs, outFolder, changeimage, delete);
             }
         }
 
@@ -157,7 +157,7 @@
             dz.WritePart2(bs);
         }
 
-        public static void DzipDecoder(BinaryStream bs, string outFolder)
+        public static void DzipDecoder(BinaryStream bs, string outFolder, bool changeimage = false, bool delete = false)
         {
             outFolder += Const.PATHSEPARATOR;
             string tempName;
@@ -178,7 +178,7 @@
                         {
                             bs2.WriteBytes(bs.ReadBytes(dz.fileInfoLibrary[dz.matchInfoLibrary[i].fileIndexForFileInfo].zsize));
                             bs2.Position = 0;
-                            DzipDecoder(bs2, tempName);
+                            DzipDecoder(bs2, tempName, changeimage, delete);
                         }
                         break;
                     case CompressFlags.ZLIB:
@@ -241,6 +241,20 @@
                             bs2.WriteBytes(bs.ReadBytes(dz.fileInfoLibrary[dz.matchInfoLibrary[i].fileIndexForFileInfo].zsize));
                         }
                         break;
+                }
+                if (changeimage)
+                {
+                    string ex = Path.GetExtension(tempName).ToLower();
+                    if (ex == ".tex")
+                    {
+                        Image.Tex.Tex.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                        if (delete) File.Delete(tempName);
+                    }
+                    else if (ex == ".txz")
+                    {
+                        Image.Txz.Txz.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                        if (delete) File.Delete(tempName);
+                    }
                 }
             }
         }

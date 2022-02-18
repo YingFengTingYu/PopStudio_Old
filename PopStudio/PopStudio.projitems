@@ -9,6 +9,12 @@
     <Import_RootNamespace>PopStudio</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)API.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compress\Brotli.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compress\Deflate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compress\Gzip.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compress\Lzma.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Compress\Zlib.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Const.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ENUS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ILanguage.cs" />
@@ -62,6 +68,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\ETCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Palette.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\RijndaelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\StringPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
@@ -82,7 +89,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5_RGBA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1_RGB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1_RGB_A8.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1_RGB_A_Compress.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ETC1_RGB_A_Palette.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\L8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\LA44.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\LA88.cs" />

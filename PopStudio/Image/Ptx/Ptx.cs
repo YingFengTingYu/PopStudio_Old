@@ -114,13 +114,13 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.ETC1_RGB_A8;
                             break;
                         case 19:
-                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
+                            head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
                             head.format = PtxFormat.ETC1_RGB_A8; //Also 147
                             head.alphaFormat = 0x64;
                             break;
                         case 20:
-                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
-                            head.format = PtxFormat.ETC1_RGB_A_Compress;
+                            head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
+                            head.format = PtxFormat.ETC1_RGB_A_Palette;
                             head.alphaFormat = 0x64;
                             break;
                         default:
@@ -211,7 +211,7 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.ETC1_RGB_A8:
                             if (chinesemode)
                             {
-                                head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
+                                head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
                                 head.alphaFormat = 0x64;
                             }
                             else
@@ -222,8 +222,8 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.XRGB8888_A8:
                             head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.ETC1_RGB_A_Compress:
-                            head.check = Texture.ETC1_RGB_A_Compress.Write(bs, sKBitmap, out head.alphaSize);
+                        case PtxFormat.ETC1_RGB_A_Palette:
+                            head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
                             head.alphaFormat = 0x64;
                             break;
                         default:
@@ -356,7 +356,7 @@ namespace PopStudio.Image.Ptx
                     case PtxFormat.ETC1_RGB_A8:
                         if (head.alphaFormat == 0x64)
                         {
-                            using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Compress.Read(bs, head.width, head.height))
+                            using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
                             {
                                 sKBitmap.Save(outFile);
                             }
@@ -381,8 +381,8 @@ namespace PopStudio.Image.Ptx
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.ETC1_RGB_A_Compress:
-                        using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Compress.Read(bs, head.width, head.height))
+                    case PtxFormat.ETC1_RGB_A_Palette:
+                        using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }

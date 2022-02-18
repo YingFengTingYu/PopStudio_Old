@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace PopStudio.RTON
 {
@@ -10,42 +10,64 @@ namespace PopStudio.RTON
         public static string EOF = "DONE";
         public static StringPool R0x90 = new StringPool();
         public static StringPool R0x92 = new StringPool();
+        public static string KEY = null; //If you know the key, you can change it into your key
 
         public static void Decode(string inFile, string outFile)
         {
             R0x90.Clear();
             R0x92.Clear();
-            string tempFile = null;
-            try
+            using (Stream stream = new FileStream(outFile, FileMode.Create))
             {
-                using (Stream stream = new FileStream(outFile, FileMode.Create))
+                using (StreamWriter sw = new StreamWriter(stream))
                 {
-                    using (StreamWriter sw = new StreamWriter(stream))
+                    using (BinaryStream bs = BinaryStream.Open(inFile))
                     {
-                        using (BinaryStream bs = BinaryStream.Open(inFile))
-                        {
-                            bs.IdString(magic);
-                            bs.IdInt32(version);
-                            ReadJObject(bs, sw);
-                            bs.IdString(EOF);
-                        }
+                        bs.IdString(magic);
+                        bs.IdInt32(version);
+                        ReadJObject(bs, sw);
+                        bs.IdString(EOF);
                     }
-                    //stream.Position = 0;
-                    //using (StreamReader sr = new StreamReader(stream))
-                    //{
-
-                    //}
                 }
-            }
-            finally
-            {
-                if (File.Exists(tempFile)) File.Delete(tempFile);
             }
             R0x90.Clear();
             R0x92.Clear();
         }
 
-        public static void ReadJArray(BinaryStream bs, StreamWriter sw, string space = "")
+        public static void DecodeAndDecrypt(string inFile, string outFile, string key)
+        {
+            R0x90.Clear();
+            R0x92.Clear();
+            //The key for Rijndael is the MD5 of the enterred key
+            byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(key))).ToLower().Replace("-", ""));
+            byte[] ivbytes = new byte[24];
+            //The iv for Rijndael is part of the key for Rijndael
+            Array.Copy(keybytes, 4, ivbytes, 0, 24);
+            byte[] source;
+            using (Stream stream = new FileStream(outFile, FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(stream))
+                {
+                    using (BinaryStream bs = BinaryStream.Open(inFile))
+                    {
+                        bs.IdInt16(0x10);
+                        source = bs.ReadBytes((int)(bs.Length - 2));
+                    }
+                    using (BinaryStream bs = new BinaryStream())
+                    {
+                        bs.WriteBytes(RijndaelHelper.Decrypt(source, keybytes, ivbytes, new Org.BouncyCastle.Crypto.Paddings.ZeroBytePadding()));
+                        bs.Position = 0;
+                        bs.IdString(magic);
+                        bs.IdInt32(version);
+                        ReadJObject(bs, sw);
+                        bs.IdString(EOF);
+                    }
+                }
+            }
+            R0x90.Clear();
+            R0x92.Clear();
+        }
+
+        static void ReadJArray(BinaryStream bs, StreamWriter sw, string space = "")
         {
             string space2 = space + "    ";
             bs.IdByte(0xFD);
@@ -247,7 +269,7 @@ namespace PopStudio.RTON
             sw.Write(']');
         }
 
-        public static void ReadJObject(BinaryStream bs, StreamWriter sw, string space = "")
+        static void ReadJObject(BinaryStream bs, StreamWriter sw, string space = "")
         {
             string space2 = space + "    ";
             sw.Write('{');
@@ -524,6 +546,41 @@ namespace PopStudio.RTON
             }
         }
 
+        public static void EncodeAndEncrypt(string inFile, string outFile, string key)
+        {
+            R0x90.Clear();
+            R0x92.Clear();
+            string jsondata;
+            using (StreamReader sr = new StreamReader(inFile))
+            {
+                jsondata = sr.ReadToEnd();
+            }
+            using JsonDocument json = JsonDocument.Parse(jsondata);
+            JsonElement root = json.RootElement;
+            byte[] source;
+            using (BinaryStream bs = new BinaryStream())
+            {
+                bs.WriteString(magic);
+                bs.WriteInt32(version);
+                WriteJObject(bs, root);
+                bs.WriteString(EOF);
+                bs.Position = 0;
+                source = bs.ReadBytes((int)bs.Length);
+            }
+            //The key for Rijndael is the MD5 of the enterred key
+            byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(key))).ToLower().Replace("-", ""));
+            byte[] ivbytes = new byte[24];
+            //The iv for Rijndael is part of the key for Rijndael
+            Array.Copy(keybytes, 4, ivbytes, 0, 24);
+            using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
+            {
+                bs.WriteInt16(0x10);
+                bs.WriteBytes(RijndaelHelper.Encrypt(source, keybytes, ivbytes, new Org.BouncyCastle.Crypto.Paddings.ZeroBytePadding()));
+            }
+            R0x90.Clear();
+            R0x92.Clear();
+        }
+
         public static void Encode(string inFile, string outFile)
         {
             R0x90.Clear();
@@ -546,7 +603,7 @@ namespace PopStudio.RTON
             R0x92.Clear();
         }
 
-        public static bool IsASCII(string str)
+        static bool IsASCII(string str)
         {
             for (int i = 0; i < str.Length; i++)
             {
@@ -555,7 +612,7 @@ namespace PopStudio.RTON
             return true;
         }
 
-        public static void WriteJArray(BinaryStream bs, JsonElement json)
+        static void WriteJArray(BinaryStream bs, JsonElement json)
         {
             bs.WriteByte(0xFD);
             int n = json.GetArrayLength();
@@ -701,7 +758,7 @@ namespace PopStudio.RTON
             bs.WriteByte(0xFE);
         }
 
-        public static void WriteJObject(BinaryStream bs, JsonElement json)
+        static void WriteJObject(BinaryStream bs, JsonElement json)
         {
             foreach (JsonProperty property in json.EnumerateObject())
             {

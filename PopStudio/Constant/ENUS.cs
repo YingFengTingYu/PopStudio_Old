@@ -17,5 +17,7 @@
         public string XmemCompressInvalid => "Xmem compress is invalid";
 
         public string UnknownFormat => "Unknown format";
+
+        public string TypeMisMatch => "The type is mismatched";
     }
 }
