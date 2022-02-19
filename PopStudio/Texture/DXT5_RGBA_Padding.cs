@@ -184,9 +184,9 @@ namespace PopStudio.Texture
                         }
                     }
                     //Alpha code, only use a1 > a2 mode
-                    temp[0] = (ushort)((minalpha << 8) | maxalpha);
                     if (minalpha == maxalpha)
                     {
+                        temp[0] = (ushort)((minalpha << 8) | maxalpha);
                         temp[1] = 0;
                         temp[2] = 0;
                         temp[3] = 0;
@@ -196,6 +196,7 @@ namespace PopStudio.Texture
                         tempvalue = (maxalpha - minalpha) >> 4;
                         maxalpha = C(maxalpha - tempvalue);
                         minalpha = C(minalpha + tempvalue);
+                        temp[0] = (ushort)((minalpha << 8) | maxalpha);
                         byte[] alphabytes = DXTEncode.EmitAlphaIndices(color, minalpha, maxalpha);
                         long flag = 0;
                         int pos = 0;
