@@ -179,16 +179,15 @@ namespace PopStudio.Texture
                         }
                     }
                     //Alpha code, only use a1 > a2 mode
+                    temp[0] = (ushort)((minalpha << 8) | maxalpha);
                     if (minalpha == maxalpha)
                     {
-                        temp[0] = 255;
-                        temp[1] = 37449;
-                        temp[2] = 18724;
-                        temp[3] = 9362;
+                        temp[1] = 0;
+                        temp[2] = 0;
+                        temp[3] = 0;
                     }
                     else
                     {
-                        temp[0] = (ushort)((minalpha << 8) | maxalpha);
                         tempvalue = (maxalpha - minalpha) >> 4;
                         maxalpha = C(maxalpha - tempvalue);
                         minalpha = C(minalpha + tempvalue);
