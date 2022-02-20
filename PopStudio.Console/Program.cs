@@ -137,6 +137,7 @@ while (true)
             Console.WriteLine(Lng[22]);
             Console.WriteLine(Lng[23]);
             Console.WriteLine(Lng[24]);
+            Console.WriteLine(Lng[108]);
             mode = Convert.ToInt32(Console.ReadLine());
             if (mode == 1)
             {
@@ -210,6 +211,18 @@ while (true)
                 PopStudio.Image.PtxXbox360.Ptx.Decode(filepath, filepath + ".png");
                 continue;
             }
+            else if (mode == 8)
+            {
+                Console.WriteLine(Lng[26]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[26]);
+                    continue;
+                }
+                PopStudio.Image.PtxPSV.Ptx.Decode(filepath, filepath + ".png");
+                continue;
+            }
             else
             {
                 Console.WriteLine(Lng[76]);
@@ -225,6 +238,7 @@ while (true)
             Console.WriteLine(Lng[33]);
             Console.WriteLine(Lng[34]);
             Console.WriteLine(Lng[35]);
+            //Console.WriteLine(Lng[109]);
             mode = Convert.ToInt32(Console.ReadLine());
             if (mode == 1)
             {
@@ -340,6 +354,18 @@ while (true)
                 PopStudio.Image.PtxXbox360.Ptx.Encode(filepath, filepath + ".ptx");
                 continue;
             }
+            //else if (mode == 8)
+            //{
+            //    Console.WriteLine(Lng[37]);
+            //    string filepath = Console.ReadLine();
+            //    if (string.IsNullOrEmpty(filepath))
+            //    {
+            //        Console.WriteLine(Lng[37]);
+            //        continue;
+            //    }
+            //    PopStudio.Image.PtxPSV.Ptx.Encode(filepath, filepath + ".ptx");
+            //    continue;
+            //}
             else
             {
                 Console.WriteLine(Lng[76]);
@@ -782,11 +808,15 @@ while (true)
             continue;
         }
     }
+#if !DEBUG
     catch (Exception ex)
     {
         Console.WriteLine(ex.Message);
-#if DEBUG
         throw;
+    }
 #endif
+    finally
+    {
+
     }
 }

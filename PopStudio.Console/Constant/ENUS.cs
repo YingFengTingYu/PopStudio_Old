@@ -95,13 +95,13 @@
             "If you want to decode Phone32 version(Android and iOS), please enter 2.",
             "If you want to decode Phone64 version(Android and iOS), please enter 3.",
             "If you want to decode WP version(WindowsPhone), please enter 4.",
-            "If you want to decode GameConsole version(PS3 and Xbox360), please enter 5.",
+            "If you want to decode GameConsole version(PS3, PSV and Xbox360), please enter 5.",
             "If you want to decode TV version(AndroidTV), please enter 6.",
             "If you want to encode PC version(Windows and MacOS), please enter 1.",
             "If you want to encode Phone32 version(Android and iOS), please enter 2.",
             "If you want to encode Phone64 version(Android and iOS), please enter 3.",
             "If you want to encode WP version(WindowsPhone), please enter 4.",
-            "If you want to encode GameConsole version(PS3 and Xbox360), please enter 5.",
+            "If you want to encode GameConsole version(PS3, PSV and Xbox360), please enter 5.",
             "If you want to encode TV version(AndroidTV), please enter 6.",
             "Please choose reanim.compiled file",
             "Please choose xnb file",
@@ -111,6 +111,8 @@
             "Please choose trail.compiled file",
             "Please choose xnb file",
             "Please choose trail file",
+            "If you want to decode \".ptx\"(in PVZ PSV), please enter 8.",
+            "If you want to encode \".ptx\"(in PVZ PSV), please enter 8.",
         };
 
         public string[] All => all;

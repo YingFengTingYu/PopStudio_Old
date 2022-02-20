@@ -95,13 +95,13 @@
             "如果你想解码Phone32版（安卓和iOS），请输入2.",
             "如果你想解码Phone64版（安卓和iOS），请输入3.",
             "如果你想解码WP版（WindowsPhone），请输入4.",
-            "如果你想解码GameConsole版（PS3和Xbox360），请输入5.",
+            "如果你想解码GameConsole版（PS3，PSV和Xbox360），请输入5.",
             "如果你想解码TV版（AndroidTV），请输入6.",
             "如果你想编码PC版（Windows和MacOS），请输入1.",
             "如果你想编码Phone32版（安卓和iOS），请输入2.",
             "如果你想编码Phone64版（安卓和iOS），请输入3.",
             "如果你想编码WP版（WindowsPhone），请输入4.",
-            "如果你想编码GameConsole版（PS3和Xbox360），请输入5.",
+            "如果你想编码GameConsole版（PS3，PSV和Xbox360），请输入5.",
             "如果你想编码TV版（AndroidTV），请输入6.",
             "请选择reanim.compiled文件",
             "请选择xnb文件",
@@ -111,6 +111,8 @@
             "请选择trail.compiled文件",
             "请选择xnb文件",
             "请选择trail文件",
+            "如果你想解码.ptx（植物大战僵尸PSV中的），请输入8.",
+            "如果你想编码.ptx（植物大战僵尸PSV中的），请输入8.",
         };
 
         public string[] All => all;

@@ -3,9 +3,9 @@ In English:
   
 A project to convert many kinds of files used in PopCap Games.  
 By using C# and .Net 6, this project can easily be used in Linux, MacOS, Windows and Android.  
-Now this project supports unpack and pack dz, rsb(including Android, iOS, PS3, Xbox360 and Android Chinese version) and pak(including Windows, MacOS, PS3 and Xbox360 version), and decode and encode ptx(encode does not support PVRTC texture), tex(including iOS and Android TV version), txz, cdat, RTON, reanim.compiled.  
+Now this project supports unpack and pack dz, rsb(including Android, iOS, PS3, Xbox360 and Android Chinese version) and pak(including Windows, MacOS, PS3, PSV and Xbox360 version), and decode and encode ptx(encode does not support PVRTC texture), tex(including iOS and Android TV version), txz, cdat, RTON, reanim.compiled, trail.compiled.  
 ___
-The author also knows other file structures such as xml.compiled, trail.compiled, and these files will be supported soon. If you know other file sturctures such as pam and pax, you can communicate with the author.  
+The author also knows other file structures such as xml.compiled, and these files will be supported soon. If you know other file sturctures such as pam and pax, you can communicate with the author.  
 ___
 If you want to communicate with the author, you can download QQ(a chatting software) in Google Play, App Store or Microsoft Store, and then register a QQ account number and enter our QQ group numbered 1017246977(The answer is "Github").
 ___
@@ -24,9 +24,9 @@ In Chinese:
   
 一个用于转换很多宝开游戏使用的文件的项目。  
 通过使用C#和.Net 6，这个项目可以很轻松地在Linux，MacOS，Windows和Android上使用。  
-现在这个项目支持解包打包dz，rsb（包括Android，iOS，PS3，Xbox360和Android中文版）和pak（包括Windows，MacOS，PS3和Xbox360版），和解码编码ptx（编码仅支持RGBA和DXT纹理），tex（包括iOS版和Android TV版），txz，cdat，RTON，reanim.compiled。  
+现在这个项目支持解包打包dz，rsb（包括Android，iOS，PS3，Xbox360和Android中文版）和pak（包括Windows，MacOS，PS3，PSV和Xbox360版），和解码编码ptx（编码仅支持RGBA和DXT纹理），tex（包括iOS版和Android TV版），txz，cdat，RTON，reanim.compiled，trail.compiled。  
 ___
-作者也知道其他文件结构，例如xml.compiled，trail.compiled。这些文件不久之后会被支持。如果你知道其他文件结构，例如pam和pax，你可以和作者交流。  
+作者也知道其他文件结构，例如xml.compiled。这些文件不久之后会被支持。如果你知道其他文件结构，例如pam和pax，你可以和作者交流。  
 ___
 如果你想和作者交流，你可以使用QQ，加入群聊1017246977（备注“GitHub”）。
 ___
