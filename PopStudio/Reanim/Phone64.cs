@@ -84,7 +84,7 @@
                     {
                         bs_source.Position += 8;
                         int size = bs_source.ReadInt32();
-                        bs_source.IdInt32(0);
+                        bs_source.Position += 4;
                         //zlib
                         using (ZLibStream zLibStream = new ZLibStream(bs_source, CompressionMode.Decompress))
                         {
@@ -97,9 +97,7 @@
                     }
                 }
                 Reanim reanim = new Reanim();
-                bs.Position = 0;
-                bs.IdInt32(-1069095568);
-                bs.Position += 8;
+                bs.Position = 12;
                 int tracksNumber = bs.ReadInt32();
                 reanim.tracks = new ReanimTrack[tracksNumber];
                 reanim.fps = bs.ReadFloat32();

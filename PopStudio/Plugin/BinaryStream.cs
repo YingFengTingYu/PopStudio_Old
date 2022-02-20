@@ -152,7 +152,11 @@ namespace PopStudio.Plugin
         /// </summary>
         /// <param name="_">大端序或小端序（无效） | Big endian or small endian (invalid)</param>
         /// <returns>读取到的内容 | Value which you read</returns>
-        public sbyte ReadSByte(Endian _ = Endian.Null) => ReadInt8();
+        public sbyte ReadSByte(Endian _ = Endian.Null)
+        {
+            FillBuffer(1);
+            return (sbyte)m_buffer[0];
+        }
 
         /// <summary>
         /// 读取有符号字节
@@ -278,7 +282,11 @@ namespace PopStudio.Plugin
         /// </summary>
         /// <param name="_">大端序或小端序（无效） | Big endian or small endian (invalid)</param>
         /// <returns>读取到的内容 | Value which you read</returns>
-        public byte ReadByte(Endian endian = Endian.Null) => ReadUInt8(endian);
+        public byte ReadByte(Endian endian = Endian.Null)
+        {
+            FillBuffer(1);
+            return m_buffer[0];
+        }
 
         /// <summary>
         /// 读取字节
@@ -769,7 +777,10 @@ namespace PopStudio.Plugin
         }
 
         //写入数据
-        public void WriteSByte(sbyte value, Endian _ = Endian.Null) => WriteInt8(value);
+        public void WriteSByte(sbyte value, Endian _ = Endian.Null)
+        {
+            BaseStream.WriteByte((byte)value);
+        }
 
         public void WriteInt8(sbyte value, Endian _ = Endian.Null)
         {

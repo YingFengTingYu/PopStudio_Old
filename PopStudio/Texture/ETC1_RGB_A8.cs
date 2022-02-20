@@ -9,14 +9,14 @@ namespace PopStudio.Texture
             bool t = false;
             int newwidth = width;
             int newheight = height;
-            if (newwidth % 4 != 0)
+            if ((newwidth & (newwidth - 1)) != 0)
             {
-                newwidth += 4 - newwidth % 4;
+                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
                 t = true;
             }
-            if (newheight % 4 != 0)
+            if ((newheight & (newheight - 1)) != 0)
             {
-                newheight += 4 - newheight % 4;
+                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
                 t = true;
             }
             int S = newwidth * newheight;
@@ -104,14 +104,14 @@ namespace PopStudio.Texture
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
-            if (newwidth % 4 != 0)
+            if ((newwidth & (newwidth - 1)) != 0)
             {
-                newwidth += 4 - newwidth % 4;
+                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
                 t = true;
             }
-            if (newheight % 4 != 0)
+            if ((newheight & (newheight - 1)) != 0)
             {
-                newheight += 4 - newheight % 4;
+                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
                 t = true;
             }
             if (t)

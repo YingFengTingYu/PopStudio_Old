@@ -115,6 +115,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA5551_Block.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888_A8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\GameConsole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\WP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\TV.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\Phone64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\Phone32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\PC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\Trail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailTrackNode.cs" />
     <Compile Include="..\PopStudio\Plugin\BinaryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
   </ItemGroup>

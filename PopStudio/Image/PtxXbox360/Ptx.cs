@@ -34,7 +34,7 @@ namespace PopStudio.Image.PtxXbox360
                 bs.Position = bs.Length - 0x10;
                 PtxHead head = new PtxHead().Read(bs);
                 bs.Position = 0;
-                //Console.WriteLine("width:{0} blocksize:{1} storewidth:{2}", head.width, head.blockSize, head.blockSize >> 2);
+                //Console.WriteLine("name:{4} width:{0} height:{1} storewidth:{2} wrong:{3}", head.width, head.height, head.blockSize >> 2, (head.width % 4 == 0 && head.height % 4 == 0), inFile);
                 using (SKBitmap sKBitmap = Texture.DXT5_RGBA_Padding.Read(bs, head.width, head.height, head.blockSize))
                 {
                     sKBitmap.Save(outFile);

@@ -84,9 +84,7 @@
                     }
                 }
                 Reanim reanim = new Reanim();
-                bs.Position = 0;
-                bs.IdInt32(-1282165568);
-                bs.Position += 4;
+                bs.Position = 8;
                 int tracksNumber = bs.ReadInt32();
                 reanim.tracks = new ReanimTrack[tracksNumber];
                 reanim.fps = bs.ReadFloat32();

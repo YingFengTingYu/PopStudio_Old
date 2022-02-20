@@ -106,6 +106,11 @@
             "Please choose reanim.compiled file",
             "Please choose xnb file",
             "Please choose reanim file",
+            "enter 9 to run reanim decode mode(decode to json)",
+            "enter 10 to run reanim encode mode(encode from json)",
+            "Please choose trail.compiled file",
+            "Please choose xnb file",
+            "Please choose trail file",
         };
 
         public string[] All => all;

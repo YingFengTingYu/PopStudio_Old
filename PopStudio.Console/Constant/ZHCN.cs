@@ -106,6 +106,11 @@
             "请选择reanim.compiled文件",
             "请选择xnb文件",
             "请选择reanim文件",
+            "输入9以运行trail解码模式（解码为json）",
+            "输入10以运行trail编码模式（从json编码）",
+            "请选择trail.compiled文件",
+            "请选择xnb文件",
+            "请选择trail文件",
         };
 
         public string[] All => all;
