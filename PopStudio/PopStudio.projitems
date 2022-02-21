@@ -21,6 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Cdat\Cdat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Cdat\CdatHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\PtxPS3\Ptx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\PtxPS3\PtxHead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\PtxPSV\Ptx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\PtxPSV\PtxHead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\PtxXbox360\Ptx.cs" />

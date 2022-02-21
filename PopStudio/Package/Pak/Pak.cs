@@ -217,6 +217,10 @@ namespace PopStudio.Package.Pak
                         pak.compress = false;
                         throw new Exception(Str.Obj.XmemCompressInvalid);
                     }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 bs.Position = 0;
                 pak.Read(bs);
@@ -226,6 +230,7 @@ namespace PopStudio.Package.Pak
                     if (!pak.pc) pak.x360 |= PakInfo.Jump(bs);
                     tempName = Dir.FormatPath(outFolder + pak.fileInfoLibrary[i].fileName);
                     Dir.NewDir(tempName, false);
+                    byte firstbyte = 0;
                     if (pak.fileInfoLibrary[i].size != 0)
                     {
                         using (BinaryStream bs2 = new BinaryStream())
@@ -237,6 +242,8 @@ namespace PopStudio.Package.Pak
                                 using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
                                 {
                                     zLibStream.CopyTo(bs3);
+                                    bs3.Position = 0;
+                                    firstbyte = bs3.ReadByte();
                                 }
                             }
                         }
@@ -246,6 +253,8 @@ namespace PopStudio.Package.Pak
                         using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
                         {
                             bs2.WriteBytes(bs.ReadBytes(pak.fileInfoLibrary[i].zsize));
+                            bs2.Position = 0;
+                            firstbyte = bs2.ReadByte();
                         }
                     }
                     if (changeimage && Path.GetExtension(tempName).ToLower() == ".ptx")
@@ -253,8 +262,21 @@ namespace PopStudio.Package.Pak
                         if (pak.x360)
                         {
                             Image.PtxXbox360.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                            if (delete) File.Delete(tempName);
                         }
-                        if (delete) File.Delete(tempName);
+                        else
+                        {
+                            if (firstbyte == 0x44)
+                            {
+                                Image.PtxPS3.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                if (delete) File.Delete(tempName);
+                            }
+                            else if (firstbyte == 0x47)
+                            {
+                                Image.PtxPSV.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                if (delete) File.Delete(tempName);
+                            }
+                        }
                     }
                 }
                 string lst = outFolder + "popstudioinfo";

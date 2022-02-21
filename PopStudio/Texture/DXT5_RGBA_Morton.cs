@@ -34,8 +34,8 @@ namespace PopStudio.Texture
             int temp;
             int r, g, b;
             int pixelOffset = 0;
-            int min = newwidth > newheight ? newheight : newwidth;
-            int mink = (int)Math.Log(min, 2);
+            int minwh = newwidth > newheight ? newheight : newwidth;
+            int mink = (int)Math.Log(minwh, 2);
             bool bigwidth = newwidth > newheight;
             for (int y = 0; y < newheight; y += 4)
             {
@@ -106,7 +106,7 @@ namespace PopStudio.Texture
                     //赋值
                     for (int i = 0; i < 16; i++)
                     {
-                        pixels[DecodeGetIndex(pixelOffset + Order[i], min, mink, bigwidth, newwidth)] = color[i];
+                        pixels[GetIndex(pixelOffset + Order[i], minwh, mink, bigwidth, newwidth)] = color[i];
                     }
                     pixelOffset += 16;
                 }
@@ -126,7 +126,7 @@ namespace PopStudio.Texture
             return image;
         }
 
-        static int DecodeGetIndex(int i, int min, int k, bool bw, int width)
+        static int GetIndex(int i, int min, int k, bool bw, int width)
         {
             int x, y;
             int mx = 0, my = 0;
@@ -151,119 +151,108 @@ namespace PopStudio.Texture
             return (y * width) + x;
         }
 
-        //Coming soon...
-        //static int Morton(int x, int y)
-        //{
-        //    int ans = 0;
-        //    for (int i = 0; i < 16; i++)
-        //    {
-        //        ans |= (y & 1 << i) << (i + 1) | (x & 1 << i) << i;
-        //    }
-        //    return ans;
-        //}
-        //
-        //static byte C(int v)
-        //{
-        //    if (v >= 255) return 255;
-        //    if (v <= 0) return 0;
-        //    return (byte)v;
-        //}
-        //
-        //public static int Write(BinaryStream bs, SKBitmap image)
-        //{
-        //    bool t = false;
-        //    int newwidth = image.Width;
-        //    int newheight = image.Height;
-        //    if ((newwidth & (newwidth - 1)) != 0)
-        //    {
-        //        newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
-        //        t = true;
-        //    }
-        //    if ((newheight & (newheight - 1)) != 0)
-        //    {
-        //        newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
-        //        t = true;
-        //    }
-        //    if (t)
-        //    {
-        //        SKBitmap image2 = new SKBitmap(newwidth, newheight);
-        //        using (SKCanvas canvas = new SKCanvas(image2))
-        //        {
-        //            canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
-        //        }
-        //        image = image2;
-        //    }
-        //    SKColor[] pixels = image.Pixels;
-        //    ushort[] temp = new ushort[4];
-        //    SKColor[] color = new SKColor[16];
-        //    byte maxalpha, minalpha;
-        //    SKColor min, max;
-        //    int result;
-        //    int tempvalue;
-        //    for (int i = 0; i < newheight; i += 4)
-        //    {
-        //        for (int w = 0; w < newwidth; w += 4)
-        //        {
-        //            maxalpha = 0;
-        //            minalpha = 255;
-        //            //Copy color
-        //            for (int j = 0; j < 4; j++)
-        //            {
-        //                for (int k = 0; k < 4; k++)
-        //                {
-        //                    int n = (j << 2) | k;
-        //                    color[n] = pixels[(i + j) * newwidth + w + k];
-        //                    byte a = color[n].Alpha;
-        //                    if (a > maxalpha) maxalpha = a;
-        //                    if (a < minalpha) minalpha = a;
-        //                }
-        //            }
-        //            //Alpha code, only use a1 > a2 mode
-                    
-        //            if (minalpha == maxalpha)
-        //            {
-        //                temp[0] = (ushort)((minalpha << 8) | maxalpha);
-        //                temp[1] = 0;
-        //                temp[2] = 0;
-        //                temp[3] = 0;
-        //            }
-        //            else
-        //            {
-        //                tempvalue = (maxalpha - minalpha) >> 4;
-        //                maxalpha = C(maxalpha - tempvalue);
-        //                minalpha = C(minalpha + tempvalue);
-        //                temp[0] = (ushort)((minalpha << 8) | maxalpha);
-        //                byte[] alphabytes = DXTEncode.EmitAlphaIndices(color, minalpha, maxalpha);
-        //                long flag = 0;
-        //                int pos = 0;
-        //                for (int ii = 0; ii < 16; ii++)
-        //                {
-        //                    flag |= ((long)alphabytes[ii]) << pos;
-        //                    pos += 3;
-        //                }
-        //                temp[1] = (ushort)(flag & 0xFFFF);
-        //                temp[2] = (ushort)((flag >> 16) & 0xFFFF);
-        //                temp[3] = (ushort)(flag >> 32);
-        //            }
-        //            for (int ii = 0; ii < 4; ii++)
-        //            {
-        //                bs.WriteUInt16(temp[ii]);
-        //            }
-        //            //Color code
-        //            DXTEncode.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
-        //            result = DXTEncode.EmitColorIndices(color, min, max);
-        //            //Write
-        //            bs.WriteUInt16(DXTEncode.ColorTo565(max));
-        //            bs.WriteUInt16(DXTEncode.ColorTo565(min));
-        //            bs.WriteUInt16((ushort)(result & 0xFFFF));
-        //            bs.WriteUInt16((ushort)(result >> 16));
-        //        }
-        //    }
-        //    if (t)
-        //    {
-        //        image.Dispose();
-        //    }
-        //    return newwidth;
-        //}
+        static byte C(int v)
+        {
+            if (v >= 255) return 255;
+            if (v <= 0) return 0;
+            return (byte)v;
+        }
+
+        public static int Write(BinaryStream bs, SKBitmap image)
+        {
+            bool t = false;
+            int newwidth = image.Width;
+            int newheight = image.Height;
+            if ((newwidth & (newwidth - 1)) != 0)
+            {
+                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                t = true;
+            }
+            if ((newheight & (newheight - 1)) != 0)
+            {
+                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                t = true;
+            }
+            if (t)
+            {
+                SKBitmap image2 = new SKBitmap(newwidth, newheight);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
+                }
+                image = image2;
+            }
+            SKColor[] pixels = image.Pixels;
+            ushort[] temp = new ushort[4];
+            SKColor[] color = new SKColor[16];
+            byte maxalpha, minalpha;
+            SKColor min, max;
+            int result;
+            int tempvalue;
+            int pixelOffset = 0;
+            int minwh = newwidth > newheight ? newheight : newwidth;
+            int mink = (int)Math.Log(minwh, 2);
+            bool bigwidth = newwidth > newheight;
+            for (int i = 0; i < newheight; i += 4)
+            {
+                for (int w = 0; w < newwidth; w += 4)
+                {
+                    maxalpha = 0;
+                    minalpha = 255;
+                    //Copy color
+                    for (int n = 0; n < 16; n++)
+                    {
+                        color[n] = pixels[GetIndex(pixelOffset + Order[n], minwh, mink, bigwidth, newwidth)];
+                        byte a = color[n].Alpha;
+                        if (a > maxalpha) maxalpha = a;
+                        if (a < minalpha) minalpha = a;
+                    }
+                    pixelOffset += 16;
+                    //Alpha code, only use a1 > a2 mode
+                    if (minalpha == maxalpha)
+                    {
+                        temp[0] = (ushort)((minalpha << 8) | maxalpha);
+                        temp[1] = 0;
+                        temp[2] = 0;
+                        temp[3] = 0;
+                    }
+                    else
+                    {
+                        tempvalue = (maxalpha - minalpha) >> 4;
+                        maxalpha = C(maxalpha - tempvalue);
+                        minalpha = C(minalpha + tempvalue);
+                        temp[0] = (ushort)((minalpha << 8) | maxalpha);
+                        byte[] alphabytes = DXTEncode.EmitAlphaIndices(color, minalpha, maxalpha);
+                        long flag = 0;
+                        int pos = 0;
+                        for (int ii = 0; ii < 16; ii++)
+                        {
+                            flag |= ((long)alphabytes[ii]) << pos;
+                            pos += 3;
+                        }
+                        temp[1] = (ushort)(flag & 0xFFFF);
+                        temp[2] = (ushort)((flag >> 16) & 0xFFFF);
+                        temp[3] = (ushort)(flag >> 32);
+                    }
+                    for (int ii = 0; ii < 4; ii++)
+                    {
+                        bs.WriteUInt16(temp[ii]);
+                    }
+                    //Color code
+                    DXTEncode.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
+                    result = DXTEncode.EmitColorIndices(color, min, max);
+                    //Write
+                    bs.WriteUInt16(DXTEncode.ColorTo565(max));
+                    bs.WriteUInt16(DXTEncode.ColorTo565(min));
+                    bs.WriteUInt16((ushort)(result & 0xFFFF));
+                    bs.WriteUInt16((ushort)(result >> 16));
+                }
+            }
+            if (t)
+            {
+                image.Dispose();
+            }
+            return newwidth;
+        }
     }
 }

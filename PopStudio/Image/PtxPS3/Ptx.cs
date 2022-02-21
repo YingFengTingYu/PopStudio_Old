@@ -1,9 +1,9 @@
 ﻿using SkiaSharp;
 
-namespace PopStudio.Image.PtxPSV
+namespace PopStudio.Image.PtxPS3
 {
     /// <summary>
-    /// It's gxt used DXT5_RGBA_Morton Texture
+    /// It's dds used DXT5_RGBA Texture
     /// </summary>
     internal static class Ptx
     {
@@ -19,7 +19,7 @@ namespace PopStudio.Image.PtxPSV
                         height = (ushort)sKBitmap.Height
                     };
                     head.Write(bs);
-                    Texture.DXT5_RGBA_Morton.Write(bs, sKBitmap);
+                    Texture.DXT5_RGBA.Write(bs, sKBitmap);
                     bs.Position = 0;
                     head.Write(bs);
                 }
@@ -31,7 +31,7 @@ namespace PopStudio.Image.PtxPSV
             using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
             {
                 PtxHead head = new PtxHead().Read(bs);
-                using (SKBitmap sKBitmap = Texture.DXT5_RGBA_Morton.Read(bs, head.width, head.height))
+                using (SKBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
                 {
                     sKBitmap.Save(outFile);
                 }

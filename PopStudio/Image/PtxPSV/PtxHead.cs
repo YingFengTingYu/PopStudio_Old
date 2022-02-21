@@ -8,7 +8,6 @@
         public int size;
         public ushort width;
         public ushort height;
-        public int empty = 0;
 
         public PtxHead Read(BinaryStream bs)
         {

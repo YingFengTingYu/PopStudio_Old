@@ -19,5 +19,7 @@
         public string UnknownFormat => "Unknown format";
 
         public string TypeMisMatch => "The type is mismatched";
+
+        public string EncryptPSVPak => "The data is mismatched. If you unpack encrypt pak in PSV, you should use other tools to decrypt it.";
     }
 }

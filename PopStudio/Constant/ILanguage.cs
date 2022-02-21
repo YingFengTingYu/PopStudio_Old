@@ -14,5 +14,7 @@
         public string UnknownFormat { get; }
 
         public string TypeMisMatch { get; }
+
+        public string EncryptPSVPak { get; }
     }
 }

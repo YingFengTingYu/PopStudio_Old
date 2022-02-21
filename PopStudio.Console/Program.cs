@@ -66,7 +66,7 @@ while (true)
                     Console.WriteLine(Lng[12]);
                     continue;
                 }
-                PopStudio.Package.Pak.Pak.Unpack(filepath, filepath + ".out");
+                PopStudio.Package.Pak.Pak.Unpack(filepath, filepath + ".out", true, true);
                 continue;
             }
             else
@@ -137,6 +137,7 @@ while (true)
             Console.WriteLine(Lng[22]);
             Console.WriteLine(Lng[23]);
             Console.WriteLine(Lng[24]);
+            Console.WriteLine(Lng[25]);
             Console.WriteLine(Lng[108]);
             mode = Convert.ToInt32(Console.ReadLine());
             if (mode == 1)
@@ -211,6 +212,18 @@ while (true)
                 PopStudio.Image.PtxXbox360.Ptx.Decode(filepath, filepath + ".png");
                 continue;
             }
+            else if (mode == 7)
+            {
+                Console.WriteLine(Lng[26]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[26]);
+                    continue;
+                }
+                PopStudio.Image.PtxPS3.Ptx.Decode(filepath, filepath + ".png");
+                continue;
+            }
             else if (mode == 8)
             {
                 Console.WriteLine(Lng[26]);
@@ -238,7 +251,8 @@ while (true)
             Console.WriteLine(Lng[33]);
             Console.WriteLine(Lng[34]);
             Console.WriteLine(Lng[35]);
-            //Console.WriteLine(Lng[109]);
+            Console.WriteLine(Lng[36]);
+            Console.WriteLine(Lng[109]);
             mode = Convert.ToInt32(Console.ReadLine());
             if (mode == 1)
             {
@@ -354,18 +368,30 @@ while (true)
                 PopStudio.Image.PtxXbox360.Ptx.Encode(filepath, filepath + ".ptx");
                 continue;
             }
-            //else if (mode == 8)
-            //{
-            //    Console.WriteLine(Lng[37]);
-            //    string filepath = Console.ReadLine();
-            //    if (string.IsNullOrEmpty(filepath))
-            //    {
-            //        Console.WriteLine(Lng[37]);
-            //        continue;
-            //    }
-            //    PopStudio.Image.PtxPSV.Ptx.Encode(filepath, filepath + ".ptx");
-            //    continue;
-            //}
+            else if (mode == 7)
+            {
+                Console.WriteLine(Lng[37]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[37]);
+                    continue;
+                }
+                PopStudio.Image.PtxPS3.Ptx.Encode(filepath, filepath + ".ptx");
+                continue;
+            }
+            else if (mode == 8)
+            {
+                Console.WriteLine(Lng[37]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[37]);
+                    continue;
+                }
+                PopStudio.Image.PtxPSV.Ptx.Encode(filepath, filepath + ".ptx");
+                continue;
+            }
             else
             {
                 Console.WriteLine(Lng[76]);
