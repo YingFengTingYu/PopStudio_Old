@@ -46,7 +46,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\CRC32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\ParallelBZip2OutputStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\Rand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)OtherProject\PvrTC\PvrtcDecoder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\ETCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Palette.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\PVRTCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\RijndaelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\StringPool.cs" />
@@ -109,6 +109,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\LA44.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\LA88.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_2BPP_RGBA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_4BPP_RGB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_4BPP_RGBA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\PVRTC_4BPP_RGB_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGB565.cs" />

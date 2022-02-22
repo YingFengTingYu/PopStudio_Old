@@ -2,7 +2,7 @@
 
 namespace PopStudio.Texture
 {
-    internal static class PVRTC_4BPP_RGB_A8
+    internal static class PVRTC_4BPP_RGB
     {
         public static SKBitmap Read(BinaryStream bs, int width, int height)
         {
@@ -34,18 +34,13 @@ namespace PopStudio.Texture
                 newwidth = newheight = Math.Max(newwidth, newheight);
                 t = true;
             }
-            int S = newwidth * newheight;
-            PVRTCEncode.PvrTcPacket[] packets = new PVRTCEncode.PvrTcPacket[S >> 4];
+            PVRTCEncode.PvrTcPacket[] packets = new PVRTCEncode.PvrTcPacket[(newwidth * newwidth) >> 4];
             int index = packets.Length;
             for (int i = 0; i < index; i++)
             {
                 packets[i] = new PVRTCEncode.PvrTcPacket(bs.ReadUInt64());
             }
             SKColor[] pixels = PVRTCEncode.Decode4Bpp(packets, newwidth);
-            for (int i = 0; i < S; i++)
-            {
-                pixels[i] = pixels[i].WithAlpha(bs.ReadByte());
-            }
             SKBitmap image = new SKBitmap(newwidth, newheight);
             image.Pixels = pixels;
             if (t)
@@ -107,16 +102,11 @@ namespace PopStudio.Texture
             {
                 bs.WriteUInt64(words[i].PvrTcWord);
             }
-            index = newwidth * newheight;
-            for (int i = 0; i < index; i++)
-            {
-                bs.WriteByte(pixels[i].Alpha);
-            }
             if (t)
             {
                 image.Dispose();
             }
-            return newwidth << 2;
+            return newwidth >> 1;
         }
     }
 }

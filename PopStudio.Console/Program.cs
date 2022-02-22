@@ -66,7 +66,7 @@ while (true)
                     Console.WriteLine(Lng[12]);
                     continue;
                 }
-                PopStudio.Package.Pak.Pak.Unpack(filepath, filepath + ".out", true, true);
+                PopStudio.Package.Pak.Pak.Unpack(filepath, filepath + ".out");
                 continue;
             }
             else
@@ -284,6 +284,8 @@ while (true)
                 Console.WriteLine(Lng[56]);
                 Console.WriteLine(Lng[57]);
                 Console.WriteLine(Lng[58]);
+                Console.WriteLine(Lng[59]);
+                Console.WriteLine(Lng[60]);
                 PopStudio.Image.Ptx.Ptx.Encode(filepath, filepath + ".PTX", Convert.ToInt32(Console.ReadLine()));
                 continue;
             }
