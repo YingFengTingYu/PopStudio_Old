@@ -10,7 +10,7 @@
             </Style>
 
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="White" />
+                <Setter Property="TextColor" Value="Black" />
                 <Setter Property="FontFamily" Value="OpenSansRegular" />
                 <Setter Property="FontSize" Value="20" />
             </Style>
@@ -20,10 +20,6 @@
                 <Setter Property="FontFamily" Value="OpenSansRegular" />
                 <Setter Property="BackgroundColor" Value="CornflowerBlue" />
                 <Setter Property="Padding" Value="14,10" />
-            </Style>
-
-            <Style TargetType="Switch">
-                <Setter Property="ThumbColor" Value="CornflowerBlue" />
             </Style>
 
             <Style TargetType="Entry">

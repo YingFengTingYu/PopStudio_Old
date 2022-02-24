@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Compress"
              Title="压缩解压"
-             BackgroundColor="Black">
+             BackgroundColor="LightBlue">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过压缩解压功能，实现单个文件的压缩解压操作！" FontSize="16"/>
@@ -19,9 +19,9 @@
                 <Label Grid.Column="2" Text="压缩模式" VerticalOptions="Center" />
             </Grid>
             <Label x:Name="text1" Text="请填写被解压的文件路径" />
-            <Entry x:Name="textbox1"/>
+            <Entry x:Name="textbox1" />
             <Label x:Name="text2" Text="请填写解压生成文件存放路径" />
-            <Entry x:Name="textbox2"/>
+            <Entry x:Name="textbox2" />
             <Label x:Name="text3" Text="请选择解压模式" />
             <Picker x:Name="CB_CMode" />
             <Button Text="执行" Clicked="Button_Click" />

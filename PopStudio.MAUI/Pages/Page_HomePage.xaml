@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_HomePage"
              Title="主页"
-             BackgroundColor="Black">
+             BackgroundColor="LightBlue">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-            <Label Text="PopStudio" HorizontalTextAlignment="Center" HeightRequest="100" VerticalTextAlignment="Center" FontSize="30" TextColor="White" FontAttributes="Bold"/>
+            <Label Text="PopStudio" Margin="0,10,0,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="30" FontAttributes="Bold"/>
             <Label Text="开始你的创造之旅吧！" HorizontalTextAlignment="Center" FontSize="Title" />
-            <Label Text="通过PopStudio修改PVZ的动作、粒子特效、拖尾特效、图像等各种内容！" FontSize="16" />
+            <Label Text="通过PopStudio修改宝开游戏的数据包、图像、动作、拖尾特效等各种内容！" FontSize="16" />
             <Label Text="若您使用本工具制作作品，请务必在醒目位置注明使用此工具，否则视为侵权！" FontSize="16" />
+            <Label Text="商用本工具必须得到作者许可，否则视为侵权！" FontSize="16" />
             <Label Text="关于" />
             <Label Text="PopStudio" FontSize="16"/>
             <Label x:Name="label_ver" FontSize="16"/>

@@ -50,8 +50,8 @@ namespace PopStudio.MAUI
         {
             if (((Switch)sender).IsToggled)
             {
-                text1.Text = "请填写被编码的图像路径";
-                text2.Text = "请填写编码所得纹理存放路径";
+                text1.Text = "请填写被编码的png图像路径";
+                text2.Text = "请填写编码所得特殊图像存放路径";
                 text3.Text = "请选择编码模式";
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
@@ -60,8 +60,8 @@ namespace PopStudio.MAUI
             }
             else
             {
-                text1.Text = "请填写被解码的纹理路径";
-                text2.Text = "请填写解码所得图像存放路径";
+                text1.Text = "请填写被解码的特殊图像路径";
+                text2.Text = "请填写解码所得png图像存放路径";
                 text3.Text = "请选择解码模式";
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;

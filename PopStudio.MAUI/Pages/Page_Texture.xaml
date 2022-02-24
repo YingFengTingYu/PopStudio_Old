@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Texture"
-             Title="纹理转码"
-             BackgroundColor="Black">
+             Title="图像转码"
+             BackgroundColor="LightBlue">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-            <Label Text="通过纹理转码功能获取和修改游戏特殊图像内容！" FontSize="16"/>
+            <Label Text="通过图像转码功能获取和修改游戏特殊图像内容！" FontSize="16"/>
             <Label Text="请选择运行模式" />
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -18,9 +18,9 @@
                 <Switch x:Name="TB_Mode" Grid.Column="1" Toggled="ToggleButton_Checked" />
                 <Label Grid.Column="2" Text="编码模式" VerticalOptions="Center" />
             </Grid>
-            <Label x:Name="text1" Text="请填写被解码的纹理路径" />
+            <Label x:Name="text1" Text="请填写被解码的特殊图像路径" />
             <Entry x:Name="textbox1"/>
-            <Label x:Name="text2" Text="请填写解码所得图像存放路径" />
+            <Label x:Name="text2" Text="请填写解码所得png图像存放路径" />
             <Entry x:Name="textbox2"/>
             <Label x:Name="text3" Text="请选择解码模式" />
             <Picker x:Name="CB_CMode" SelectedIndexChanged="CB_CMode_Selected" />

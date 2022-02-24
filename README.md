@@ -3,6 +3,8 @@ In English:
   
 A project to convert many kinds of files used in PopCap Games.  
 By using C# and .Net 6, this project can easily be used in Linux, MacOS, Windows and Android.  
+Choose PopStudio.ConsoleProject to use PopStudio in Windows, Linux and MacOS with console.  
+Choose PopStudio.MAUI to use PopStudio in Windows, MacOS and Android with GUI.  
 Now this project supports unpack and pack dz, rsb(including Android, iOS, PS3, Xbox360 and Android Chinese version) and pak(including Windows, MacOS, PS3, PSV and Xbox360 version), and decode and encode ptx(including rsb, PS3, Xbox360 and PSV version), tex(including iOS and Android TV version), txz, cdat, RTON, reanim.compiled, trail.compiled.  
 ___
 The author also knows other file structures such as xml.compiled, and these files will be supported soon. If you know other file sturctures such as pam and pax, you can communicate with the author.  
@@ -25,6 +27,8 @@ In Chinese:
   
 一个用于转换很多宝开游戏使用的文件的项目。  
 通过使用C#和.Net 6，这个项目可以很轻松地在Linux，MacOS，Windows和Android上使用。  
+选择PopStudio.ConsoleProject以在Windows，Linux和MacOS使用控制台版本。  
+选择PopStudio.MAUI以在Windows，MacOS和Android使用GUI版本。  
 现在这个项目支持解包打包dz，rsb（包括Android，iOS，PS3，Xbox360和Android中文版）和pak（包括Windows，MacOS，PS3，PSV和Xbox360版），和解码编码ptx（包括rsb中的版本，PS3版，Xbox360版和PSV版），tex（包括iOS版和Android TV版），txz，cdat，RTON，reanim.compiled，trail.compiled。  
 ___
 作者也知道其他文件结构，例如xml.compiled。这些文件不久之后会被支持。如果你知道其他文件结构，例如pam和pax，你可以和作者交流。  

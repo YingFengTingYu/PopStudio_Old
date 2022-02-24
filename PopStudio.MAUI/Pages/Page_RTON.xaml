@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_RTON"
              Title="RTON转码"
-             BackgroundColor="Black">
+             BackgroundColor="LightBlue">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过RTON转码功能，实现二代RTON文件和json文件的互相转换操作，来修改二代游戏内容！" FontSize="16"/>
@@ -22,6 +22,12 @@
             <Entry x:Name="textbox1"/>
             <Label x:Name="text2" Text="请填写解码生成文件存放路径" />
             <Entry x:Name="textbox2"/>
+            <Label x:Name="text3" Text="请选择解码模式" />
+            <Picker x:Name="CB_CMode" SelectedIndexChanged="CB_CMode_SelectedIndexChanged" />
+            <StackLayout x:Name="keyitem">
+                <Label Text="请填写密钥" />
+                <Entry x:Name="textbox3"/>
+            </StackLayout>
             <Button Text="执行" Clicked="Button_Click" />
             <Label Text="执行状态：" />
             <Label x:Name="text4" Text="等待中......" />

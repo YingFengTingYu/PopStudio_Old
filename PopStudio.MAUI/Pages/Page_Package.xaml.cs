@@ -11,9 +11,9 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
 			CB_CMode.Items.Clear();
-			CB_CMode.Items.Add("dz£¨°²×¿£¬ºÚÝ®£©");
-			CB_CMode.Items.Add("rsb£¨°²×¿£¬iOS£¬PS3£¬PS4£¬Xbox360£©");
-			CB_CMode.Items.Add("pak£¨Windows£¬MacOS£¬PS3£¬PSV£¬Xbox360£©");
+			CB_CMode.Items.Add("dz");
+			CB_CMode.Items.Add("rsb");
+			CB_CMode.Items.Add("pak");
 			CB_CMode.SelectedIndex = 0;
 		}
 

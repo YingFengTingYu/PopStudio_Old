@@ -14,9 +14,10 @@ namespace PopStudio.MAUI
             CB_CMode.Items.Add("ZLib");
             CB_CMode.Items.Add("Gzip");
             CB_CMode.Items.Add("Deflate");
-            CB_CMode.Items.Add("LZMA");
             CB_CMode.Items.Add("Brotli");
-            CB_CMode.Items.Add("Smf");
+            CB_CMode.Items.Add("LZMA");
+            CB_CMode.Items.Add("LZ4");
+            CB_CMode.Items.Add("Bzip2");
             CB_CMode.SelectedIndex = 0;
         }
 
@@ -47,7 +48,7 @@ namespace PopStudio.MAUI
             Button b = (Button)sender;
             b.IsEnabled = false;
             text4.Text = "执行中......";
-            bool? mode = TB_Mode.IsToggled;
+            bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
             int cmode = CB_CMode.SelectedIndex;
@@ -60,13 +61,13 @@ namespace PopStudio.MAUI
                     {
                         throw new FileNotFoundException("文件" + inFile + "不存在！");
                     }
-                    if (mode == true)
+                    if (mode)
                     {
-                        //Class.API.Compress(inFile, outFile, cmode);
+                        API.Compress(inFile, outFile, cmode);
                     }
                     else
                     {
-                        //Class.API.Decompress(inFile, outFile, cmode);
+                        API.Decompress(inFile, outFile, cmode);
                     }
                 }
                 catch (Exception ex)

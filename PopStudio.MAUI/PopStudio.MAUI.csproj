@@ -58,7 +58,7 @@
 	  <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
 	  <PackageReference Include="LZMA-SDK" Version="19.0.0" />
 	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-	  <PackageReference Include="SkiaSharp" Version="2.80.3" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -94,5 +94,27 @@
 	</PropertyGroup>
 
 	<Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
+
+	<PropertyGroup>
+	  <AndroidPackageFormats>apk</AndroidPackageFormats>
+	  <AssemblyVersion>2.1.0.0</AssemblyVersion>
+	  <FileVersion>2.1.0.0</FileVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;MAC</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
+	</PropertyGroup>
 	
 </Project>

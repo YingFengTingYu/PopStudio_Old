@@ -46,21 +46,6 @@
             }
         }
 
-        public static void Decompress(string inFile, string outFile, int format)
-        {
-            switch (format)
-            {
-                case 0: P_Compress.Zlib.Decompress(inFile, outFile); return;
-                case 1: P_Compress.Gzip.Decompress(inFile, outFile); return;
-                case 2: P_Compress.Deflate.Decompress(inFile, outFile); return;
-                case 3: P_Compress.Brotli.Decompress(inFile, outFile); return;
-                case 4: P_Compress.Lzma.Decompress(inFile, outFile); return;
-                case 5: P_Compress.Lz4.Decompress(inFile, outFile); return;
-                case 6: P_Compress.Bzip2.Decompress(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
-            }
-        }
-
         public static void DecodeImage(string inFile, string outFile, int format)
         {
             switch (format)
@@ -89,6 +74,97 @@
                 case 5: Image.PtxXbox360.Ptx.Encode(inFile, outFile); return;
                 case 6: Image.PtxPS3.Ptx.Encode(inFile, outFile); return;
                 case 7: Image.PtxPSV.Ptx.Encode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void DecodeReanim(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Reanim.PC.Decode(inFile, outFile); return;
+                case 1: Reanim.Phone32.Decode(inFile, outFile); return;
+                case 2: Reanim.Phone64.Decode(inFile, outFile); return;
+                case 3: Reanim.WP.Decode(inFile, outFile); return;
+                case 4: Reanim.GameConsole.Decode(inFile, outFile); return;
+                case 5: Reanim.TV.Decode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void EncodeReanim(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Reanim.PC.Encode(inFile, outFile); return;
+                case 1: Reanim.Phone32.Encode(inFile, outFile); return;
+                case 2: Reanim.Phone64.Encode(inFile, outFile); return;
+                case 3: Reanim.WP.Encode(inFile, outFile); return;
+                case 4: Reanim.GameConsole.Encode(inFile, outFile); return;
+                case 5: Reanim.TV.Encode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void DecodeTrail(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Trail.PC.Decode(inFile, outFile); return;
+                case 1: Trail.Phone32.Decode(inFile, outFile); return;
+                case 2: Trail.Phone64.Decode(inFile, outFile); return;
+                case 3: Trail.WP.Decode(inFile, outFile); return;
+                case 4: Trail.GameConsole.Decode(inFile, outFile); return;
+                case 5: Trail.TV.Decode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void EncodeTrail(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Trail.PC.Encode(inFile, outFile); return;
+                case 1: Trail.Phone32.Encode(inFile, outFile); return;
+                case 2: Trail.Phone64.Encode(inFile, outFile); return;
+                case 3: Trail.WP.Encode(inFile, outFile); return;
+                case 4: Trail.GameConsole.Encode(inFile, outFile); return;
+                case 5: Trail.TV.Encode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void DecodeRTON(string inFile, string outFile, int format, string key = null)
+        {
+            switch (format)
+            {
+                case 0: RTON.RTON.Decode(inFile, outFile); return;
+                case 1: RTON.RTON.DecodeAndDecrypt(inFile, outFile, key); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void EncodeRTON(string inFile, string outFile, int format, string key = null)
+        {
+            switch (format)
+            {
+                case 0: RTON.RTON.Encode(inFile, outFile); return;
+                case 1: RTON.RTON.EncodeAndEncrypt(inFile, outFile, key); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void Decompress(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: P_Compress.Zlib.Decompress(inFile, outFile); return;
+                case 1: P_Compress.Gzip.Decompress(inFile, outFile); return;
+                case 2: P_Compress.Deflate.Decompress(inFile, outFile); return;
+                case 3: P_Compress.Brotli.Decompress(inFile, outFile); return;
+                case 4: P_Compress.Lzma.Decompress(inFile, outFile); return;
+                case 5: P_Compress.Lz4.Decompress(inFile, outFile); return;
+                case 6: P_Compress.Bzip2.Decompress(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }

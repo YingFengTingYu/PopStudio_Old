@@ -2,17 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.MainPage"
              xmlns:local="clr-namespace:PopStudio.MAUI"
-             Title="主页"
+       Title="主页"
              FlyoutWidth="200"
              FlyoutBehavior="Flyout"
-             FlyoutBackgroundColor="Black"
+             FlyoutBackgroundColor="LightYellow"
              BackgroundColor="{DynamicResource SecondaryColor}">
-    <!--I wonder why Microsoft use Unicode encoding in editting xaml but use UTF8 encoding in compiling xaml...-->
+    <!--I wonder why Microsoft use Unicode encoding by default in editting xaml but use UTF8 encoding in compiling xaml...-->
     <Shell.ItemTemplate>
         <DataTemplate>
-            <Grid ColumnDefinitions="Auto,*">
+            <Grid ColumnDefinitions="*">
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
+                       HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center" HeightRequest="45" />
             </Grid>
         </DataTemplate>
@@ -28,15 +29,15 @@
     <FlyoutItem Title="解包打包">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Package}"/>
     </FlyoutItem>
-    <FlyoutItem Title="纹理转码">
+    <FlyoutItem Title="图像转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Texture}"/>
     </FlyoutItem>
     <FlyoutItem Title="reanim转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}"/>
     </FlyoutItem>
-    <FlyoutItem Title="particles转码">
+    <!--<FlyoutItem Title="particles转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}"/>
-    </FlyoutItem>
+    </FlyoutItem>-->
     <FlyoutItem Title="trail转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}"/>
     </FlyoutItem>

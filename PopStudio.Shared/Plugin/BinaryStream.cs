@@ -282,7 +282,7 @@ namespace PopStudio.Plugin
         /// </summary>
         /// <param name="_">大端序或小端序（无效） | Big endian or small endian (invalid)</param>
         /// <returns>读取到的内容 | Value which you read</returns>
-        public byte ReadByte(Endian endian = Endian.Null)
+        public byte ReadByte(Endian _ = Endian.Null)
         {
             FillBuffer(1);
             return m_buffer[0];
@@ -493,7 +493,7 @@ namespace PopStudio.Plugin
         /// </summary>
         /// <param name="_">大端序或小端序（无效） | Big endian or small endian (invalid)</param>
         /// <returns>读取到的内容 | Value which you read</returns>
-        public int ReadZigZag32()
+        public int ReadZigZag32(Endian _ = Endian.Null)
         {
             uint n = (uint)ReadVarInt32();
             if ((n & 0b1) == 0)
@@ -510,7 +510,7 @@ namespace PopStudio.Plugin
         /// </summary>
         /// <param name="_">大端序或小端序（无效） | Big endian or small endian (invalid)</param>
         /// <returns>读取到的内容 | Value which you read</returns>
-        public long ReadZigZag64()
+        public long ReadZigZag64(Endian _ = Endian.Null)
         {
             ulong n = (ulong)ReadVarInt64();
             if ((n & 0b1) == 0)

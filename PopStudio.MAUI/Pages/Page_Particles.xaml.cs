@@ -11,13 +11,12 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
             CB_CMode.Items.Clear();
-            CB_CMode.Items.Add("PC");
-            CB_CMode.Items.Add("Phone32位");
-            CB_CMode.Items.Add("安卓64位");
-            CB_CMode.Items.Add("iOS64位");
+            CB_CMode.Items.Add("Windows,MacOS");
+            CB_CMode.Items.Add("Android,iOS,Bada,BlackBerry");
+            CB_CMode.Items.Add("Android,iOS");
             CB_CMode.Items.Add("WindowsPhone");
-            CB_CMode.Items.Add("TV");
-            CB_CMode.Items.Add("TV上古版本");
+            CB_CMode.Items.Add("PS3,PSV,Xbox360");
+            CB_CMode.Items.Add("AndroidTV");
             CB_CMode.SelectedIndex = 0;
         }
 
@@ -48,7 +47,7 @@ namespace PopStudio.MAUI
             Button b = (Button)sender;
             b.IsEnabled = false;
             text4.Text = "执行中......";
-            bool? mode = TB_Mode.IsToggled;
+            bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
             int cmode = CB_CMode.SelectedIndex;
@@ -61,7 +60,7 @@ namespace PopStudio.MAUI
                     {
                         throw new FileNotFoundException("文件" + inFile + "不存在！");
                     }
-                    if (mode == true)
+                    if (mode)
                     {
                         //Class.API.ParticlesCompiled(inFile, outFile, cmode);
                     }

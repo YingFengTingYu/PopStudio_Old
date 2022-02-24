@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Trail"
              Title="trail转码"
-             BackgroundColor="Black">
+             BackgroundColor="LightBlue">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过trail转码功能获取和修改游戏拖尾特效内容（仅PVZ内测版游戏内实际生效）！" FontSize="16"/>
