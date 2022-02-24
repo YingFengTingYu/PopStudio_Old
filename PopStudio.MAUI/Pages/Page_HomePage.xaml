@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PopStudio.MAUI.Page_HomePage"
+             Title="主页"
+             BackgroundColor="Black">
+    <ScrollView>
+        <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
+            <Label Text="PopStudio" HorizontalTextAlignment="Center" HeightRequest="100" VerticalTextAlignment="Center" FontSize="30" TextColor="White" FontAttributes="Bold"/>
+            <Label Text="开始你的创造之旅吧！" HorizontalTextAlignment="Center" FontSize="Title" />
+            <Label Text="通过PopStudio修改PVZ的动作、粒子特效、拖尾特效、图像等各种内容！" FontSize="16" />
+            <Label Text="若您使用本工具制作作品，请务必在醒目位置注明使用此工具，否则视为侵权！" FontSize="16" />
+            <Label Text="关于" />
+            <Label Text="PopStudio" FontSize="16"/>
+            <Label x:Name="label_ver" FontSize="16"/>
+            <Label Text="作者：" FontSize="16"/>
+            <Label Text="萌新迎风听雨" FontSize="16"/>
+            <Label Text="特别感谢：" FontSize="16"/>
+            <Label Text="补补23456 僵学者 唐舞 鹿野御幸 伊特 AS魇梦蚀 An-Haze 天天" FontSize="16"/>
+            <Label Text="讨论QQ群：" FontSize="16"/>
+            <Label Text="1017246977" FontSize="16"/>
+            <Label Text="作者B站：" FontSize="16"/>
+            <Label Text="https://space.bilibili.com/411256864" FontSize="16"/>
+            <Label Text="更新公告" />
+            <Label x:Name="label_notice" FontSize="16"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

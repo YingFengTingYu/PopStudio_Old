@@ -1,0 +1,49 @@
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PopStudio.MAUI.MainPage"
+             xmlns:local="clr-namespace:PopStudio.MAUI"
+             Title="主页"
+             FlyoutWidth="200"
+             FlyoutBehavior="Flyout"
+             FlyoutBackgroundColor="Black"
+             BackgroundColor="{DynamicResource SecondaryColor}">
+    <!--I wonder why Microsoft use Unicode encoding in editting xaml but use UTF8 encoding in compiling xaml...-->
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="Auto,*">
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" HeightRequest="45" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <Shell.FlyoutHeader>
+        <Grid>
+            <Label FontSize="22" Margin="30 0 30 0" Text="PopStudio" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+        </Grid>
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="主页">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_HomePage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="解包打包">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Package}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="纹理转码">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Texture}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="reanim转码">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="particles转码">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="trail转码">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="RTON转码">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_RTON}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="压缩解压">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Compress}"/>
+    </FlyoutItem>
+</Shell>

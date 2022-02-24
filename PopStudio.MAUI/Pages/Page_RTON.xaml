@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PopStudio.MAUI.Page_RTON"
+             Title="RTON转码"
+             BackgroundColor="Black">
+    <ScrollView>
+        <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
+            <Label Text="通过RTON转码功能，实现二代RTON文件和json文件的互相转换操作，来修改二代游戏内容！" FontSize="16"/>
+            <Label Text="请选择运行模式" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="解码模式" VerticalOptions="Center" />
+                <Switch x:Name="TB_Mode" Grid.Column="1" Toggled="ToggleButton_Checked" />
+                <Label Grid.Column="2" Text="编码模式" VerticalOptions="Center" />
+            </Grid>
+            <Label x:Name="text1" Text="请填写被解码的文件路径" />
+            <Entry x:Name="textbox1"/>
+            <Label x:Name="text2" Text="请填写解码生成文件存放路径" />
+            <Entry x:Name="textbox2"/>
+            <Button Text="执行" Clicked="Button_Click" />
+            <Label Text="执行状态：" />
+            <Label x:Name="text4" Text="等待中......" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
