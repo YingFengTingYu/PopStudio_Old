@@ -113,6 +113,10 @@
             "Please choose trail file",
             "If you want to decode \".ptx\"(in PVZ PSV), please enter 8.",
             "If you want to encode \".ptx\"(in PVZ PSV), please enter 8.",
+            "enter 11 to run particles decode mode(decode to json)",
+            "enter 12 to run particles encode mode(encode from json)",
+            "Please choose xml file",
+            "Please choose xml.compiled file",
         };
 
         public string[] All => all;

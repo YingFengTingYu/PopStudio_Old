@@ -97,8 +97,6 @@
 
 	<PropertyGroup>
 	  <AndroidPackageFormats>apk</AndroidPackageFormats>
-	  <AssemblyVersion>2.1.0.0</AssemblyVersion>
-	  <FileVersion>2.1.0.0</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">

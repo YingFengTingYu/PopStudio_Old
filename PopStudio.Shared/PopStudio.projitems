@@ -10,6 +10,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)API.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\Particles.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesEmitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesTrackNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\GameConsole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\WP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\Phone64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\Phone32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\TV.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\PC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)P_Compress\Brotli.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)P_Compress\Lz4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)P_Compress\Bzip2.cs" />

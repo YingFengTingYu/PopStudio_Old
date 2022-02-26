@@ -20,6 +20,8 @@ while (true)
         Console.WriteLine(Lng[87]);
         Console.WriteLine(Lng[103]);
         Console.WriteLine(Lng[104]);
+        Console.WriteLine(Lng[110]);
+        Console.WriteLine(Lng[111]);
         int mode = Convert.ToInt32(Console.ReadLine());
         if (mode == 1)
         {
@@ -822,6 +824,180 @@ while (true)
                     continue;
                 }
                 PopStudio.Trail.TV.Encode(filepath, filepath + ".trail.compiled");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
+        }
+        else if (mode == 11)
+        {
+            Console.WriteLine(Lng[88]);
+            Console.WriteLine(Lng[89]);
+            Console.WriteLine(Lng[90]);
+            Console.WriteLine(Lng[91]);
+            Console.WriteLine(Lng[92]);
+            Console.WriteLine(Lng[93]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[113]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[113]);
+                    continue;
+                }
+                PopStudio.Particles.PC.Decode(filepath, filepath + ".xml");
+                continue;
+            }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[113]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[113]);
+                    continue;
+                }
+                PopStudio.Particles.Phone32.Decode(filepath, filepath + ".xml");
+                continue;
+            }
+            else if (mode == 3)
+            {
+                Console.WriteLine(Lng[113]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[113]);
+                    continue;
+                }
+                PopStudio.Particles.Phone64.Decode(filepath, filepath + ".xml");
+                continue;
+            }
+            else if (mode == 4)
+            {
+                Console.WriteLine(Lng[106]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[106]);
+                    continue;
+                }
+                PopStudio.Particles.WP.Decode(filepath, filepath + ".xml");
+                continue;
+            }
+            else if (mode == 5)
+            {
+                Console.WriteLine(Lng[113]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[113]);
+                    continue;
+                }
+                PopStudio.Particles.GameConsole.Decode(filepath, filepath + ".xml");
+                continue;
+            }
+            else if (mode == 6)
+            {
+                Console.WriteLine(Lng[113]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[113]);
+                    continue;
+                }
+                PopStudio.Particles.TV.Decode(filepath, filepath + ".xml");
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
+        }
+        else if (mode == 12)
+        {
+            Console.WriteLine(Lng[94]);
+            Console.WriteLine(Lng[95]);
+            Console.WriteLine(Lng[96]);
+            Console.WriteLine(Lng[97]);
+            Console.WriteLine(Lng[98]);
+            Console.WriteLine(Lng[99]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[112]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[112]);
+                    continue;
+                }
+                PopStudio.Particles.PC.Encode(filepath, filepath + ".xml.compiled");
+                continue;
+            }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[112]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[112]);
+                    continue;
+                }
+                PopStudio.Particles.Phone32.Encode(filepath, filepath + ".xml.compiled");
+                continue;
+            }
+            else if (mode == 3)
+            {
+                Console.WriteLine(Lng[112]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[112]);
+                    continue;
+                }
+                PopStudio.Particles.Phone64.Encode(filepath, filepath + ".xml.compiled");
+                continue;
+            }
+            else if (mode == 4)
+            {
+                Console.WriteLine(Lng[112]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[112]);
+                    continue;
+                }
+                PopStudio.Particles.WP.Encode(filepath, filepath + ".xnb");
+                continue;
+            }
+            else if (mode == 5)
+            {
+                Console.WriteLine(Lng[112]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[112]);
+                    continue;
+                }
+                PopStudio.Particles.GameConsole.Encode(filepath, filepath + ".xml.compiled");
+                continue;
+            }
+            else if (mode == 6)
+            {
+                Console.WriteLine(Lng[112]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[112]);
+                    continue;
+                }
+                PopStudio.Particles.TV.Encode(filepath, filepath + ".xml.compiled");
                 continue;
             }
             else

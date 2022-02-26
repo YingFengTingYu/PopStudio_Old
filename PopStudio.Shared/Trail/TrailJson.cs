@@ -65,7 +65,7 @@ namespace PopStudio.Trail
             return trail;
         }
 
-        public static TrailTrackNode[] ReadTrackNode(JsonElement root)
+        static TrailTrackNode[] ReadTrackNode(JsonElement root)
         {
             int count = root.GetArrayLength();
             TrailTrackNode[] track = new TrailTrackNode[count];

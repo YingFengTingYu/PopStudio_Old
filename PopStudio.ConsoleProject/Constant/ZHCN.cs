@@ -113,6 +113,10 @@
             "请选择trail文件",
             "如果你想解码.ptx（植物大战僵尸PSV中的），请输入8.",
             "如果你想编码.ptx（植物大战僵尸PSV中的），请输入8.",
+            "输入11以运行particles解码模式（解码为json）",
+            "输入12以运行particles编码模式（从json编码）",
+            "请选择xml文件",
+            "请选择xml.compiled文件",
         };
 
         public string[] All => all;
