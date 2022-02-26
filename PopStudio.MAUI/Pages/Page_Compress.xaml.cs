@@ -89,5 +89,205 @@ namespace PopStudio.MAUI
             }))
             { IsBackground = true }.Start();
         }
-    }
+
+		public async Task<string> ChooseOpenFile()
+		{
+#if ANDROID
+			string file = "/sdcard";
+			string createnew = "新建文件夹\0";
+			string back = "返回上级目录\0";
+			string ok = "确定\0";
+			string choosenow = "返回\0";
+			string cancel = "取消\0";
+			while (true)
+			{
+				string[] rawary = Directory.GetDirectories(file);
+				string[] rawary2 = Directory.GetFiles(file);
+				Array.Sort(rawary);
+				Array.Sort(rawary2);
+				string[] showary;
+				int ary1 = rawary.Length;
+				int ary2 = rawary2.Length;
+				if (file.Length <= 7)
+				{
+					showary = new string[ary1 + ary2 + 1];
+					showary[0] = createnew;
+					for (int i = 0; i < ary1; i++)
+					{
+						showary[i + 1] = Path.GetFileName(rawary[i]);
+					}
+					for (int i = 0; i < ary2; i++)
+					{
+						showary[i + ary1 + 1] = Path.GetFileName(rawary2[i]);
+					}
+				}
+				else
+				{
+					showary = new string[ary1 + rawary2.Length + 2];
+					showary[0] = createnew;
+					showary[1] = back;
+					for (int i = 0; i < ary1; i++)
+					{
+						showary[i + 2] = Path.GetFileName(rawary[i]);
+					}
+					for (int i = 0; i < ary2; i++)
+					{
+						showary[i + ary1 + 2] = Path.GetFileName(rawary2[i]);
+					}
+				}
+				string ans = await DisplayActionSheet(file + Const.PATHSEPARATOR, choosenow, cancel, showary);
+				if (string.IsNullOrEmpty(ans) || ans == cancel || ans == choosenow)
+				{
+					return null;
+				}
+				else if (ans == createnew)
+				{
+					string newname = await DisplayPromptAsync("新建文件夹", "请输入文件夹名", ok, cancel, initialValue: "新建文件夹");
+					if (!string.IsNullOrEmpty(newname))
+					{
+						try
+						{
+							Directory.CreateDirectory(file + Const.PATHSEPARATOR + newname);
+						}
+						catch (Exception)
+						{
+							await DisplayAlert("创建错误", "新建文件夹失败", ok, cancel);
+						}
+					}
+				}
+				else if (ans == back)
+				{
+					if (file.Length > 7) file = Path.GetDirectoryName(file);
+				}
+				else
+				{
+					file += Const.PATHSEPARATOR + ans;
+					if (File.Exists(file))
+					{
+						return file;
+					}
+				}
+			}
+#elif WINDOWS
+			return await new PopStudio.MAUI.Platforms.Windows.OpenFilePicker().PickFile();
+#else
+return null;
+#endif
+		}
+
+		public async Task<string> ChooseSaveFile()
+		{
+#if ANDROID
+			string file = "/sdcard";
+			string createnew = "新建文件夹\0";
+			string back = "返回上级目录\0";
+			string ok = "确定\0";
+			string choosenow = "保存到此目录\0";
+			string cancel = "取消\0";
+			while (true)
+			{
+				string[] rawary = Directory.GetDirectories(file);
+				string[] rawary2 = Directory.GetFiles(file);
+				Array.Sort(rawary);
+				Array.Sort(rawary2);
+				string[] showary;
+				int ary1 = rawary.Length;
+				int ary2 = rawary2.Length;
+				if (file.Length <= 7)
+				{
+					showary = new string[ary1 + ary2 + 1];
+					showary[0] = createnew;
+					for (int i = 0; i < ary1; i++)
+					{
+						showary[i + 1] = Path.GetFileName(rawary[i]);
+					}
+					for (int i = 0; i < ary2; i++)
+					{
+						showary[i + ary1 + 1] = Path.GetFileName(rawary2[i]);
+					}
+				}
+				else
+				{
+					showary = new string[ary1 + rawary2.Length + 2];
+					showary[0] = createnew;
+					showary[1] = back;
+					for (int i = 0; i < ary1; i++)
+					{
+						showary[i + 2] = Path.GetFileName(rawary[i]);
+					}
+					for (int i = 0; i < ary2; i++)
+					{
+						showary[i + ary1 + 2] = Path.GetFileName(rawary2[i]);
+					}
+				}
+				string ans = await DisplayActionSheet(file + Const.PATHSEPARATOR, choosenow, cancel, showary);
+				if (string.IsNullOrEmpty(ans) || ans == cancel)
+				{
+					return null;
+				}
+				else if (ans == choosenow)
+				{
+					string val = await DisplayPromptAsync("保存文件", "请输入文件名", "确定", "取消");
+					if (string.IsNullOrEmpty(val)) return null;
+					return file + Const.PATHSEPARATOR + val;
+				}
+				else if (ans == createnew)
+				{
+					string newname = await DisplayPromptAsync("新建文件夹", "请输入文件夹名", ok, cancel, initialValue: "新建文件夹");
+					if (!string.IsNullOrEmpty(newname))
+					{
+						try
+						{
+							Directory.CreateDirectory(file + Const.PATHSEPARATOR + newname);
+						}
+						catch (Exception)
+						{
+							await DisplayAlert("创建错误", "新建文件夹失败", ok, cancel);
+						}
+					}
+				}
+				else if (ans == back)
+				{
+					if (file.Length > 7) file = Path.GetDirectoryName(file);
+				}
+				else
+				{
+					file += Const.PATHSEPARATOR + ans;
+					if (File.Exists(file))
+					{
+						return file;
+					}
+				}
+			}
+#elif WINDOWS
+			return await new PopStudio.MAUI.Platforms.Windows.SaveFilePicker().PickFile();
+#else
+return null;
+#endif
+		}
+
+		private async void Button_Clicked(object sender, EventArgs e)
+		{
+			try
+			{
+				string val = await ChooseOpenFile();
+				if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		private async void Button2_Clicked(object sender, EventArgs e)
+		{
+			try
+			{
+				string val = await ChooseSaveFile();
+				if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
+			}
+			catch (Exception)
+			{
+			}
+		}
+	}
 }

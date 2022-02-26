@@ -10,18 +10,34 @@
             <Label Text="请选择运行模式" />
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label Text="解包模式" VerticalOptions="Center" />
                 <Switch x:Name="switchmode" Grid.Column="1" Toggled="ModeChange" />
                 <Label Grid.Column="2" Text="打包模式" VerticalOptions="Center" />
             </Grid>
             <Label x:Name="label1" Text="请填写被解包的文件路径" />
-            <Entry x:Name="textbox1"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="textbox1" />
+                <Button Grid.Column="2" Text="选择" Clicked="Button_Clicked" />
+            </Grid>
             <Label x:Name="label2" Text="请填写解包所得文件存放路径" />
-            <Entry x:Name="textbox2"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="textbox2" />
+                <Button Grid.Column="2" Text="选择" Clicked="Button2_Clicked" />
+            </Grid>
             <Label x:Name="label3" Text="请选择解包模式" />
             <Picker x:Name="CB_CMode" />
             <Grid x:Name="change">

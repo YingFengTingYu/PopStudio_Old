@@ -35,9 +35,9 @@
     <FlyoutItem Title="reanim转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}"/>
     </FlyoutItem>
-    <!--<FlyoutItem Title="particles转码">
+    <FlyoutItem Title="particles转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}"/>
-    </FlyoutItem>-->
+    </FlyoutItem>
     <FlyoutItem Title="trail转码">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}"/>
     </FlyoutItem>

@@ -134,6 +134,34 @@
             }
         }
 
+        public static void DecodeParticles(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Particles.PC.Decode(inFile, outFile); return;
+                case 1: Particles.Phone32.Decode(inFile, outFile); return;
+                case 2: Particles.Phone64.Decode(inFile, outFile); return;
+                case 3: Particles.WP.Decode(inFile, outFile); return;
+                case 4: Particles.GameConsole.Decode(inFile, outFile); return;
+                case 5: Particles.TV.Decode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public static void EncodeParticles(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Particles.PC.Encode(inFile, outFile); return;
+                case 1: Particles.Phone32.Encode(inFile, outFile); return;
+                case 2: Particles.Phone64.Encode(inFile, outFile); return;
+                case 3: Particles.WP.Encode(inFile, outFile); return;
+                case 4: Particles.GameConsole.Encode(inFile, outFile); return;
+                case 5: Particles.TV.Encode(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
         public static void DecodeRTON(string inFile, string outFile, int format, string key = null)
         {
             switch (format)

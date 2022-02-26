@@ -53,8 +53,6 @@
         /// 从dz中读取DTRZ所有信息
         /// </summary>
         /// <param name="bs"></param>
-        /// <exception cref="WrongFileMagicException"></exception>
-        /// <exception cref="FileCorruptionException"></exception>
         public DtrzInfo Read(BinaryStream bs)
         {
             bs.IdString(magic);

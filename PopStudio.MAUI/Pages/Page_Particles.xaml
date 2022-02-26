@@ -19,9 +19,25 @@
                 <Label Grid.Column="2" Text="编码模式" VerticalOptions="Center" />
             </Grid>
             <Label x:Name="text1" Text="请填写被解码的文件路径" />
-            <Entry x:Name="textbox1"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="textbox1" />
+                <Button Grid.Column="2" Text="选择" Clicked="Button_Clicked" />
+            </Grid>
             <Label x:Name="text2" Text="请填写解码所得文件存放路径" />
-            <Entry x:Name="textbox2"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="textbox2" />
+                <Button Grid.Column="2" Text="选择" Clicked="Button2_Clicked" />
+            </Grid>
             <Label x:Name="text3" Text="请选择解码模式" />
             <Picker x:Name="CB_CMode" />
             <Button Text="执行" Clicked="Button_Click" />
