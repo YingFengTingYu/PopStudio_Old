@@ -15,6 +15,7 @@ ___
 This project has used:  
 [DotNetZip](https://github.com/eropple/dotnetzip) to decompress and compress BZip2 files.  
 [LZMA-SDK](https://github.com/monemihir/LZMA-SDK) to decompress and compress Lzma files.  
+[K4os.Compression.LZ4](https://github.com/MiloszKrajewski/K4os.Compression.LZ4) to decompress and compress Lz4 files.  
 [SkiaSharp](https://github.com/mono/SkiaSharp) to read and write PNG files.  
 [bc-sharp](https://github.com/novotnyllc/bc-csharp) to encrypt and decrypt Rijndael files.  
   
@@ -39,6 +40,7 @@ ___
 这个项目使用了：  
 [DotNetZip](https://github.com/eropple/dotnetzip)用于解压和压缩BZip2文件。  
 [LZMA-SDK](https://github.com/monemihir/LZMA-SDK)用于解压和压缩Lzma文件。  
+[K4os.Compression.LZ4](https://github.com/MiloszKrajewski/K4os.Compression.LZ4)用于解压和压缩Lz4文件。  
 [SkiaSharp](https://github.com/mono/SkiaSharp)用于读写PNG图像。  
 [bc-sharp](https://github.com/novotnyllc/bc-csharp)用于加密和解密Rijndael文件。  
   

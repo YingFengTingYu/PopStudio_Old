@@ -162,22 +162,22 @@
             }
         }
 
-        public static void DecodeRTON(string inFile, string outFile, int format, string key = null)
+        public static void DecodeRTON(string inFile, string outFile, int format)
         {
             switch (format)
             {
                 case 0: RTON.RTON.Decode(inFile, outFile); return;
-                case 1: RTON.RTON.DecodeAndDecrypt(inFile, outFile, key); return;
+                case 1: RTON.RTON.DecodeAndDecrypt(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
 
-        public static void EncodeRTON(string inFile, string outFile, int format, string key = null)
+        public static void EncodeRTON(string inFile, string outFile, int format)
         {
             switch (format)
             {
                 case 0: RTON.RTON.Encode(inFile, outFile); return;
-                case 1: RTON.RTON.EncodeAndEncrypt(inFile, outFile, key); return;
+                case 1: RTON.RTON.EncodeAndEncrypt(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }

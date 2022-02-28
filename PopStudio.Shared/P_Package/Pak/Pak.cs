@@ -7,8 +7,8 @@ namespace PopStudio.P_Package.Pak
     /// </summary>
     internal static class Pak
     {
-        public static Dictionary<string, CompressFlags> compressDictionary = new Dictionary<string, CompressFlags> { { ".ptx", CompressFlags.ZLIB }, { ".compiled", CompressFlags.ZLIB }, { ".txt", CompressFlags.ZLIB }, { ".xml", CompressFlags.ZLIB }, { ".reanim", CompressFlags.ZLIB } };
-        public static CompressFlags defaultcompressMethod = CompressFlags.STORE;
+        public static Dictionary<string, CompressFlags> compressDictionary;
+        public static CompressFlags defaultcompressMethod;
 
         public static void Pack(string inFolder, string outFile)
         {
@@ -93,6 +93,8 @@ namespace PopStudio.P_Package.Pak
                 }
                 pak.Write(bs_files);
                 int jian = 0;
+                compressDictionary = Setting.PakPS3CompressDictionary;
+                defaultcompressMethod = Setting.PakPS3DefaultCompressMethod;
                 for (int i = 0; i < a.Length; i++)
                 {
                     if (a[i] == xmlpath)
@@ -163,6 +165,7 @@ namespace PopStudio.P_Package.Pak
                 {
                     if (pak.xmem) throw new Exception(Str.Obj.XmemCompressInvalid);
                 }
+                compressDictionary = null;
             }
         }
 
@@ -213,6 +216,7 @@ namespace PopStudio.P_Package.Pak
                     {
                         //xmem compress file in xbox360
                         //Invalid
+                        bs_origin.Endian = Endian.Big;
                         pak.xmem = true;
                         pak.compress = false;
                         throw new Exception(Str.Obj.XmemCompressInvalid);

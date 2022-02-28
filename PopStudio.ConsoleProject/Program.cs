@@ -288,7 +288,7 @@ while (true)
                 Console.WriteLine(Lng[58]);
                 Console.WriteLine(Lng[59]);
                 Console.WriteLine(Lng[60]);
-                PopStudio.Image.Ptx.Ptx.Encode(filepath, filepath + ".PTX", Convert.ToInt32(Console.ReadLine()));
+                PopStudio.Image.Ptx.Ptx.Encode(filepath, filepath + ".PTX", Convert.ToInt32(Console.ReadLine()) - 1);
                 continue;
             }
             else if (mode == 2)
@@ -317,7 +317,7 @@ while (true)
                 Console.WriteLine(Lng[63]);
                 Console.WriteLine(Lng[64]);
                 Console.WriteLine(Lng[65]);
-                PopStudio.Image.Tex.Tex.Encode(filepath, filepath + ".tex", Convert.ToInt32(Console.ReadLine()));
+                PopStudio.Image.Tex.Tex.Encode(filepath, filepath + ".tex", Convert.ToInt32(Console.ReadLine()) - 1);
                 continue;
             }
             else if (mode == 4)
@@ -334,7 +334,7 @@ while (true)
                 Console.WriteLine(Lng[63]);
                 Console.WriteLine(Lng[64]);
                 Console.WriteLine(Lng[65]);
-                PopStudio.Image.Txz.Txz.Encode(filepath, filepath + ".txz", Convert.ToInt32(Console.ReadLine()));
+                PopStudio.Image.Txz.Txz.Encode(filepath, filepath + ".txz", Convert.ToInt32(Console.ReadLine()) - 1);
                 continue;
             }
             else if (mode == 5)
@@ -357,7 +357,7 @@ while (true)
                 Console.WriteLine(Lng[73]);
                 Console.WriteLine(Lng[74]);
                 Console.WriteLine(Lng[75]);
-                PopStudio.Image.TexTV.Tex.Encode(filepath, filepath + ".tex", Convert.ToInt32(Console.ReadLine()));
+                PopStudio.Image.TexTV.Tex.Encode(filepath, filepath + ".tex", Convert.ToInt32(Console.ReadLine()) - 1);
                 continue;
             }
             else if (mode == 6)
@@ -428,13 +428,7 @@ while (true)
                     Console.WriteLine(Lng[83]);
                     continue;
                 }
-                string key = PopStudio.RTON.RTON.KEY;
-                if (key == null)
-                {
-                    Console.WriteLine(Lng[85]);
-                    key = Console.ReadLine();
-                }
-                PopStudio.RTON.RTON.DecodeAndDecrypt(filepath, filepath + ".json", key);
+                PopStudio.RTON.RTON.DecodeAndDecrypt(filepath, filepath + ".json");
                 continue;
             }
             else
@@ -469,13 +463,7 @@ while (true)
                     Console.WriteLine(Lng[84]);
                     continue;
                 }
-                string key = PopStudio.RTON.RTON.KEY;
-                if (key == null)
-                {
-                    Console.WriteLine(Lng[85]);
-                    key = Console.ReadLine();
-                }
-                PopStudio.RTON.RTON.EncodeAndEncrypt(filepath, filepath + ".RTON", key);
+                PopStudio.RTON.RTON.EncodeAndEncrypt(filepath, filepath + ".RTON");
                 continue;
             }
             else

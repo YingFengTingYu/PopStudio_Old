@@ -5,12 +5,11 @@ namespace PopStudio.RTON
 {
     internal class RTON
     {
-        public static string magic = "RTON";
-        public static int version = 0x1;
-        public static string EOF = "DONE";
-        public static StringPool R0x90 = new StringPool();
-        public static StringPool R0x92 = new StringPool();
-        public static string KEY = null; //If you know the key, you can change it into your key
+        public static readonly string magic = "RTON";
+        public static readonly int version = 0x1;
+        public static readonly string EOF = "DONE";
+        public static readonly StringPool R0x90 = new StringPool();
+        public static readonly StringPool R0x92 = new StringPool();
 
         public static void Decode(string inFile, string outFile)
         {
@@ -33,12 +32,12 @@ namespace PopStudio.RTON
             R0x92.Clear();
         }
 
-        public static void DecodeAndDecrypt(string inFile, string outFile, string key)
+        public static void DecodeAndDecrypt(string inFile, string outFile)
         {
             R0x90.Clear();
             R0x92.Clear();
             //The key for Rijndael is the MD5 of the enterred key
-            byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(key))).ToLower().Replace("-", ""));
+            byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Setting.RTONKey))).ToLower().Replace("-", ""));
             byte[] ivbytes = new byte[24];
             //The iv for Rijndael is part of the key for Rijndael
             Array.Copy(keybytes, 4, ivbytes, 0, 24);
@@ -546,7 +545,7 @@ namespace PopStudio.RTON
             }
         }
 
-        public static void EncodeAndEncrypt(string inFile, string outFile, string key)
+        public static void EncodeAndEncrypt(string inFile, string outFile)
         {
             R0x90.Clear();
             R0x92.Clear();
@@ -568,7 +567,7 @@ namespace PopStudio.RTON
                 source = bs.ReadBytes((int)bs.Length);
             }
             //The key for Rijndael is the MD5 of the enterred key
-            byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(key))).ToLower().Replace("-", ""));
+            byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Setting.RTONKey))).ToLower().Replace("-", ""));
             byte[] ivbytes = new byte[24];
             //The iv for Rijndael is part of the key for Rijndael
             Array.Copy(keybytes, 4, ivbytes, 0, 24);

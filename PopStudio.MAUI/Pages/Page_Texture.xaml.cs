@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
@@ -11,14 +11,14 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
             CB_CMode.Items.Clear();
-            CB_CMode.Items.Add("PTX£¨rsb£©");
-            CB_CMode.Items.Add("cdat£¨°²×¿ºÍiOS£©");
-            CB_CMode.Items.Add("tex£¨iOS£©");
-            CB_CMode.Items.Add("txz£¨°²×¿ºÍiOS£©");
-            CB_CMode.Items.Add("tex£¨TV£©");
-            CB_CMode.Items.Add("ptx£¨Xbox360£©");
-            CB_CMode.Items.Add("ptx£¨PS3£©");
-            CB_CMode.Items.Add("ptx£¨PSV£©");
+            CB_CMode.Items.Add("PTXï¼ˆrsbï¼‰");
+            CB_CMode.Items.Add("cdatï¼ˆå®‰å“å’ŒiOSï¼‰");
+            CB_CMode.Items.Add("texï¼ˆiOSï¼‰");
+            CB_CMode.Items.Add("txzï¼ˆå®‰å“å’ŒiOSï¼‰");
+            CB_CMode.Items.Add("texï¼ˆTVï¼‰");
+            CB_CMode.Items.Add("ptxï¼ˆXbox360ï¼‰");
+            CB_CMode.Items.Add("ptxï¼ˆPS3ï¼‰");
+            CB_CMode.Items.Add("ptxï¼ˆPSVï¼‰");
             CB_CMode.SelectedIndex = 0;
             CB_FMode.Items.Clear();
             CB_FMode.Items.Add("ARGB8888(0)");
@@ -30,13 +30,13 @@ namespace PopStudio.MAUI
             CB_FMode.Items.Add("RGB565_Block(22)");
             CB_FMode.Items.Add("RGBA5551_Block(23)");
             CB_FMode.Items.Add("XRGB8888_A8(149)");
-            CB_FMode.Items.Add("ARGB8888´ó¶ËĞò(0)");
-            CB_FMode.Items.Add("ARGB8888_Padding´ó¶ËĞò(0)");
+            CB_FMode.Items.Add("ARGB8888å¤§ç«¯åº(0)");
+            CB_FMode.Items.Add("ARGB8888_Paddingå¤§ç«¯åº(0)");
             CB_FMode.Items.Add("DXT1_RGB(35)");
             CB_FMode.Items.Add("DXT3_RGBA(36)");
             CB_FMode.Items.Add("DXT5_RGBA(37)");
             CB_FMode.Items.Add("DXT5(5)");
-            CB_FMode.Items.Add("DXT5´ó¶ËĞò(5)");
+            CB_FMode.Items.Add("DXT5å¤§ç«¯åº(5)");
             CB_FMode.Items.Add("ETC1_RGB(32)");
             CB_FMode.Items.Add("ETC1_RGB_A8(147)");
             CB_FMode.Items.Add("ETC1_RGB_A_Palette(147)");
@@ -50,9 +50,9 @@ namespace PopStudio.MAUI
         {
             if (((Switch)sender).IsToggled)
             {
-                text1.Text = "ÇëÌîĞ´±»±àÂëµÄpngÍ¼ÏñÂ·¾¶";
-                text2.Text = "ÇëÌîĞ´±àÂëËùµÃÌØÊâÍ¼Ïñ´æ·ÅÂ·¾¶";
-                text3.Text = "ÇëÑ¡Ôñ±àÂëÄ£Ê½";
+                text1.Text = "è¯·å¡«å†™è¢«ç¼–ç çš„pngå›¾åƒè·¯å¾„";
+                text2.Text = "è¯·å¡«å†™ç¼–ç æ‰€å¾—ç‰¹æ®Šå›¾åƒå­˜æ”¾è·¯å¾„";
+                text3.Text = "è¯·é€‰æ‹©ç¼–ç æ¨¡å¼";
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
                 textbox2.Text = temp;
@@ -60,9 +60,9 @@ namespace PopStudio.MAUI
             }
             else
             {
-                text1.Text = "ÇëÌîĞ´±»½âÂëµÄÌØÊâÍ¼ÏñÂ·¾¶";
-                text2.Text = "ÇëÌîĞ´½âÂëËùµÃpngÍ¼Ïñ´æ·ÅÂ·¾¶";
-                text3.Text = "ÇëÑ¡Ôñ½âÂëÄ£Ê½";
+                text1.Text = "è¯·å¡«å†™è¢«è§£ç çš„ç‰¹æ®Šå›¾åƒè·¯å¾„";
+                text2.Text = "è¯·å¡«å†™è§£ç æ‰€å¾—pngå›¾åƒå­˜æ”¾è·¯å¾„";
+                text3.Text = "è¯·é€‰æ‹©è§£ç æ¨¡å¼";
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
                 textbox2.Text = temp;
@@ -74,7 +74,7 @@ namespace PopStudio.MAUI
         {
             Button b = (Button)sender;
             b.IsEnabled = false;
-            text4.Text = "Ö´ĞĞÖĞ......";
+            text4.Text = "æ‰§è¡Œä¸­......";
             bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
@@ -87,11 +87,11 @@ namespace PopStudio.MAUI
                 {
                     if (!File.Exists(inFile))
                     {
-                        throw new FileNotFoundException("ÎÄ¼ş" + inFile + "²»´æÔÚ£¡");
+                        throw new FileNotFoundException("æ–‡ä»¶" + inFile + "ä¸å­˜åœ¨ï¼");
                     }
                     if (mode)
                     {
-                        API.EncodeImage(inFile, outFile, cmode, fmode + 1);
+                        API.EncodeImage(inFile, outFile, cmode, fmode);
                     }
                     else
                     {
@@ -106,11 +106,11 @@ namespace PopStudio.MAUI
                 {
                     if (err == null)
                     {
-                        text4.Text = "Ö´ĞĞÍê³É";
+                        text4.Text = "æ‰§è¡Œå®Œæˆ";
                     }
                     else
                     {
-                        text4.Text = "Ö´ĞĞÒì³££º" + err;
+                        text4.Text = "æ‰§è¡Œå¼‚å¸¸ï¼š" + err;
                     }
                     b.IsEnabled = true;
                 });
@@ -133,13 +133,13 @@ namespace PopStudio.MAUI
                 CB_FMode.Items.Add("RGB565_Block(22)");
                 CB_FMode.Items.Add("RGBA5551_Block(23)");
                 CB_FMode.Items.Add("XRGB8888_A8(149)");
-                CB_FMode.Items.Add("ARGB8888´ó¶ËĞò(0)");
-                CB_FMode.Items.Add("ARGB8888_Padding´ó¶ËĞò(0)");
+                CB_FMode.Items.Add("ARGB8888å¤§ç«¯åº(0)");
+                CB_FMode.Items.Add("ARGB8888_Paddingå¤§ç«¯åº(0)");
                 CB_FMode.Items.Add("DXT1_RGB(35)");
                 CB_FMode.Items.Add("DXT3_RGBA(36)");
                 CB_FMode.Items.Add("DXT5_RGBA(37)");
                 CB_FMode.Items.Add("DXT5(5)");
-                CB_FMode.Items.Add("DXT5´ó¶ËĞò(5)");
+                CB_FMode.Items.Add("DXT5å¤§ç«¯åº(5)");
                 CB_FMode.Items.Add("ETC1_RGB(32)");
                 CB_FMode.Items.Add("ETC1_RGB_A8(147)");
                 CB_FMode.Items.Add("ETC1_RGB_A_Palette(147)");
@@ -160,7 +160,8 @@ namespace PopStudio.MAUI
             }
             else if (index == 4)
             {
-                CB_FMode.Items.Add("ARGB8888(2)");
+				CB_FMode.Items.Add("LUT8(1)(Invalid)");
+				CB_FMode.Items.Add("ARGB8888(2)");
                 CB_FMode.Items.Add("ARGB4444(3)");
                 CB_FMode.Items.Add("ARGB1555(4)");
                 CB_FMode.Items.Add("RGB565(5)");
@@ -185,188 +186,12 @@ namespace PopStudio.MAUI
             CB_FMode.SelectedIndex = 0;
         }
 
-		public async Task<string> ChooseOpenFile()
-		{
-#if ANDROID
-			string file = "/sdcard";
-			string createnew = "ĞÂ½¨ÎÄ¼ş¼Ğ\0";
-			string back = "·µ»ØÉÏ¼¶Ä¿Â¼\0";
-			string ok = "È·¶¨\0";
-			string choosenow = "·µ»Ø\0";
-			string cancel = "È¡Ïû\0";
-			while (true)
-			{
-				string[] rawary = Directory.GetDirectories(file);
-				string[] rawary2 = Directory.GetFiles(file);
-				Array.Sort(rawary);
-				Array.Sort(rawary2);
-				string[] showary;
-				int ary1 = rawary.Length;
-				int ary2 = rawary2.Length;
-				if (file.Length <= 7)
-				{
-					showary = new string[ary1 + ary2 + 1];
-					showary[0] = createnew;
-					for (int i = 0; i < ary1; i++)
-					{
-						showary[i + 1] = Path.GetFileName(rawary[i]);
-					}
-					for (int i = 0; i < ary2; i++)
-					{
-						showary[i + ary1 + 1] = Path.GetFileName(rawary2[i]);
-					}
-				}
-				else
-				{
-					showary = new string[ary1 + rawary2.Length + 2];
-					showary[0] = createnew;
-					showary[1] = back;
-					for (int i = 0; i < ary1; i++)
-					{
-						showary[i + 2] = Path.GetFileName(rawary[i]);
-					}
-					for (int i = 0; i < ary2; i++)
-					{
-						showary[i + ary1 + 2] = Path.GetFileName(rawary2[i]);
-					}
-				}
-				string ans = await DisplayActionSheet(file + Const.PATHSEPARATOR, choosenow, cancel, showary);
-				if (string.IsNullOrEmpty(ans) || ans == cancel || ans == choosenow)
-				{
-					return null;
-				}
-				else if (ans == createnew)
-				{
-					string newname = await DisplayPromptAsync("ĞÂ½¨ÎÄ¼ş¼Ğ", "ÇëÊäÈëÎÄ¼ş¼ĞÃû", ok, cancel, initialValue: "ĞÂ½¨ÎÄ¼ş¼Ğ");
-					if (!string.IsNullOrEmpty(newname))
-					{
-						try
-						{
-							Directory.CreateDirectory(file + Const.PATHSEPARATOR + newname);
-						}
-						catch (Exception)
-						{
-							await DisplayAlert("´´½¨´íÎó", "ĞÂ½¨ÎÄ¼ş¼ĞÊ§°Ü", ok, cancel);
-						}
-					}
-				}
-				else if (ans == back)
-				{
-					if (file.Length > 7) file = Path.GetDirectoryName(file);
-				}
-				else
-				{
-					file += Const.PATHSEPARATOR + ans;
-					if (File.Exists(file))
-					{
-						return file;
-					}
-				}
-			}
-#elif WINDOWS
-			return await new PopStudio.MAUI.Platforms.Windows.OpenFilePicker().PickFile();
-#else
-return null;
-#endif
-		}
-
-		public async Task<string> ChooseSaveFile()
-		{
-#if ANDROID
-			string file = "/sdcard";
-			string createnew = "ĞÂ½¨ÎÄ¼ş¼Ğ\0";
-			string back = "·µ»ØÉÏ¼¶Ä¿Â¼\0";
-			string ok = "È·¶¨\0";
-			string choosenow = "±£´æµ½´ËÄ¿Â¼\0";
-			string cancel = "È¡Ïû\0";
-			while (true)
-			{
-				string[] rawary = Directory.GetDirectories(file);
-				string[] rawary2 = Directory.GetFiles(file);
-				Array.Sort(rawary);
-				Array.Sort(rawary2);
-				string[] showary;
-				int ary1 = rawary.Length;
-				int ary2 = rawary2.Length;
-				if (file.Length <= 7)
-				{
-					showary = new string[ary1 + ary2 + 1];
-					showary[0] = createnew;
-					for (int i = 0; i < ary1; i++)
-					{
-						showary[i + 1] = Path.GetFileName(rawary[i]);
-					}
-					for (int i = 0; i < ary2; i++)
-					{
-						showary[i + ary1 + 1] = Path.GetFileName(rawary2[i]);
-					}
-				}
-				else
-				{
-					showary = new string[ary1 + rawary2.Length + 2];
-					showary[0] = createnew;
-					showary[1] = back;
-					for (int i = 0; i < ary1; i++)
-					{
-						showary[i + 2] = Path.GetFileName(rawary[i]);
-					}
-					for (int i = 0; i < ary2; i++)
-					{
-						showary[i + ary1 + 2] = Path.GetFileName(rawary2[i]);
-					}
-				}
-				string ans = await DisplayActionSheet(file + Const.PATHSEPARATOR, choosenow, cancel, showary);
-				if (string.IsNullOrEmpty(ans) || ans == cancel)
-				{
-					return null;
-				}
-				else if (ans == choosenow)
-				{
-					string val = await DisplayPromptAsync("±£´æÎÄ¼ş", "ÇëÊäÈëÎÄ¼şÃû", "È·¶¨", "È¡Ïû");
-					if (string.IsNullOrEmpty(val)) return null;
-					return file + Const.PATHSEPARATOR + val;
-				}
-				else if (ans == createnew)
-				{
-					string newname = await DisplayPromptAsync("ĞÂ½¨ÎÄ¼ş¼Ğ", "ÇëÊäÈëÎÄ¼ş¼ĞÃû", ok, cancel, initialValue: "ĞÂ½¨ÎÄ¼ş¼Ğ");
-					if (!string.IsNullOrEmpty(newname))
-					{
-						try
-						{
-							Directory.CreateDirectory(file + Const.PATHSEPARATOR + newname);
-						}
-						catch (Exception)
-						{
-							await DisplayAlert("´´½¨´íÎó", "ĞÂ½¨ÎÄ¼ş¼ĞÊ§°Ü", ok, cancel);
-						}
-					}
-				}
-				else if (ans == back)
-				{
-					if (file.Length > 7) file = Path.GetDirectoryName(file);
-				}
-				else
-				{
-					file += Const.PATHSEPARATOR + ans;
-					if (File.Exists(file))
-					{
-						return file;
-					}
-				}
-			}
-#elif WINDOWS
-			return await new PopStudio.MAUI.Platforms.Windows.SaveFilePicker().PickFile();
-#else
-return null;
-#endif
-		}
-
 		private async void Button_Clicked(object sender, EventArgs e)
 		{
 			try
 			{
-				string val = await ChooseOpenFile();
-				if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
+				string val = await this.ChooseOpenFile(); //Can't default this
+                if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
 			}
 			catch (Exception)
 			{
@@ -377,8 +202,8 @@ return null;
 		{
 			try
 			{
-				string val = await ChooseSaveFile();
-				if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
+				string val = await this.ChooseSaveFile(); //Can't default this
+                if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
 			}
 			catch (Exception)
 			{

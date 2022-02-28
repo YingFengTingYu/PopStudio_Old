@@ -1,14 +1,12 @@
-﻿namespace PopStudio.Image.Cdat
+﻿using System.Text;
+
+namespace PopStudio.Image.Cdat
 {
     internal static class Cdat
     {
-        /// <summary>
-        /// xor encrypt key
-        /// </summary>
-        static byte[] code = new byte[0x1F] { 0x41, 0x53, 0x32, 0x33, 0x44, 0x53, 0x52, 0x45, 0x50, 0x4C, 0x4B, 0x4C, 0x33, 0x33, 0x35, 0x4B, 0x4F, 0x34, 0x34, 0x33, 0x39, 0x30, 0x33, 0x32, 0x4E, 0x38, 0x33, 0x34, 0x35, 0x4E, 0x46 };
-
         public static void Encode(string inFile, string outFile)
         {
+            byte[] code = Encoding.UTF8.GetBytes(Setting.CdatKey);
             using (BinaryStream bs2 = BinaryStream.Create(outFile))
             {
                 using (BinaryStream bs = BinaryStream.Open(inFile))
@@ -35,6 +33,7 @@
 
         public static void Decode(string inFile, string outFile)
         {
+            byte[] code = Encoding.UTF8.GetBytes(Setting.CdatKey);
             using (BinaryStream bs = BinaryStream.Open(inFile))
             {
                 CdatHead head = new CdatHead().Read(bs);

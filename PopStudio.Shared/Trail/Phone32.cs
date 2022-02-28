@@ -17,7 +17,7 @@
                     bs.WriteInt32(0x0);
                     bs.WriteInt32(0x0);
                 }
-                bs.WriteInt32((int)(trail.Image ?? -1));
+                bs.WriteInt32((int)Setting.GetImageIntegerFromString(trail.Image));
                 if (trail.WidthOverLength == null)
                 {
                     bs.WriteInt32(0x0);
@@ -151,7 +151,7 @@
                 trail.TrailFlags = bs.ReadInt32();
                 bs.Position += 40;
                 ti = bs.ReadInt32();
-                if (ti != -1) trail.Image = ti;
+                if (ti != -1) trail.Image = Setting.GetImageStringFromInteger(ti);
                 int count = bs.ReadInt32();
                 trail.WidthOverLength = new TrailTrackNode[count];
                 for (int i = 0; i < count; i++)

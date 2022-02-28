@@ -54,7 +54,7 @@
                     for (int j = 0; j < transformNum; j++)
                     {
                         ReanimTransform transform = track.transforms[j];
-                        bs.WriteInt32((int)(transform.i ?? -1));
+                        bs.WriteInt32((int)Setting.GetImageIntegerFromString(transform.i));
                         bs.WriteStringByInt32Head(transform.font);
                         bs.WriteStringByInt32Head(transform.text);
                     }
@@ -171,7 +171,7 @@
                         int tempint = bs.ReadInt32();
                         if (tempint != -1)
                         {
-                            ts.i = tempint;
+                            ts.i = Setting.GetImageStringFromInteger(tempint);
                         }
                         string tempstring = bs.ReadStringByInt32Head();
                         if (!string.IsNullOrEmpty(tempstring))

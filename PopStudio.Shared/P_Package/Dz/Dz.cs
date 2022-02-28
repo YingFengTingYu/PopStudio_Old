@@ -5,8 +5,8 @@
     /// </summary>
     internal static class Dz
     {
-        public static Dictionary<string, CompressFlags> compressDictionary = new Dictionary<string, CompressFlags> { { ".png", CompressFlags.STORE }, { ".jpg", CompressFlags.STORE }, { ".compiled", CompressFlags.STORE }, { ".txt", CompressFlags.ZLIB } };
-        public static CompressFlags defaultcompressMethod = CompressFlags.LZMA;
+        public static Dictionary<string, CompressFlags> compressDictionary;
+        public static CompressFlags defaultcompressMethod;
 
         public static CompressFlags GetCompressMethod(string fileName)
         {
@@ -42,7 +42,10 @@
             }
             using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
             {
+                compressDictionary = Setting.DzCompressDictionary;
+                defaultcompressMethod = Setting.DzDefaultCompressMethod;
                 DzipEncoder(bs, inFolder);
+                compressDictionary = null;
             }
         }
 

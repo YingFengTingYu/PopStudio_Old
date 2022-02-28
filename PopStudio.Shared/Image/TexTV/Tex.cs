@@ -20,39 +20,39 @@ namespace PopStudio.Image.TexTV
                     {
                         switch (format)
                         {
-                            case 2:
+                            case 1:
                                 Texture.ARGB8888.Write(bs2, sKBitmap);
                                 head.format =  TexFormat.ARGB8888;
                                 break;
-                            case 3:
+                            case 2:
                                 Texture.ARGB4444.Write(bs2, sKBitmap);
                                 head.format = TexFormat.ARGB4444;
                                 break;
-                            case 4:
+                            case 3:
                                 Texture.ARGB1555.Write(bs2, sKBitmap);
                                 head.format = TexFormat.ARGB1555;
                                 break;
-                            case 5:
+                            case 4:
                                 Texture.RGB565.Write(bs2, sKBitmap);
                                 head.format = TexFormat.RGB565;
                                 break;
-                            case 6:
+                            case 5:
                                 Texture.ABGR8888.Write(bs2, sKBitmap);
                                 head.format = TexFormat.ABGR8888;
                                 break;
-                            case 7:
+                            case 6:
                                 Texture.RGBA4444.Write(bs2, sKBitmap);
                                 head.format = TexFormat.RGBA4444;
                                 break;
-                            case 8:
+                            case 7:
                                 Texture.RGBA5551.Write(bs2, sKBitmap);
                                 head.format = TexFormat.RGBA5551;
                                 break;
-                            case 9:
+                            case 8:
                                 Texture.XRGB8888.Write(bs2, sKBitmap);
                                 head.format = TexFormat.XRGB8888;
                                 break;
-                            case 10:
+                            case 9:
                                 Texture.LA88.Write(bs2, sKBitmap);
                                 head.format = TexFormat.LA88;
                                 break;

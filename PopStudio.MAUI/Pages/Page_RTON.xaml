@@ -39,11 +39,7 @@
                 <Button Grid.Column="2" Text="选择" Clicked="Button2_Clicked" />
             </Grid>
             <Label x:Name="text3" Text="请选择解码模式" />
-            <Picker x:Name="CB_CMode" SelectedIndexChanged="CB_CMode_SelectedIndexChanged" />
-            <StackLayout x:Name="keyitem">
-                <Label Text="请填写密钥" />
-                <Entry x:Name="textbox3"/>
-            </StackLayout>
+            <Picker x:Name="CB_CMode" />
             <Button Text="执行" Clicked="Button_Click" />
             <Label Text="执行状态：" />
             <Label x:Name="text4" Text="等待中......" />

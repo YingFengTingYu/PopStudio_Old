@@ -4,10 +4,6 @@ namespace PopStudio.Image.Ptx
 {
     internal static class Ptx
     {
-        public static bool abgrmode = false;
-        static Endian endian = Endian.Small;
-        public static bool fullwidth = false;
-
         public static void Encode(string inFile, string outFile, int format)
         {
             using (BinaryStream bs = BinaryStream.Create(outFile))
@@ -23,48 +19,48 @@ namespace PopStudio.Image.Ptx
                     head.Write(bs);
                     switch (format)
                     {
-                        case 1:
+                        case 0:
                             head.check = Texture.ARGB8888.Write(bs, sKBitmap);
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 2:
+                        case 1:
                             head.check = Texture.ABGR8888.Write(bs, sKBitmap);
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 3:
+                        case 2:
                             head.check = Texture.RGBA4444.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA4444;
                             break;
-                        case 4:
+                        case 3:
                             head.check = Texture.RGB565.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGB565;
                             break;
-                        case 5:
+                        case 4:
                             head.check = Texture.RGBA5551.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA5551;
                             break;
-                        case 6:
+                        case 5:
                             head.check = Texture.RGBA4444_Block.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA4444_Block;
                             break;
-                        case 7:
+                        case 6:
                             head.check = Texture.RGB565_Block.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGB565_Block;
                             break;
-                        case 8:
+                        case 7:
                             head.check = Texture.RGBA5551_Block.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA5551_Block;
                             break;
-                        case 9:
+                        case 8:
                             head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
                             head.format = PtxFormat.XRGB8888_A8;
                             break;
-                        case 10:
+                        case 9:
                             bs.Endian = Endian.Big;
                             head.check = Texture.ARGB8888.Write(bs, sKBitmap);
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 11:
+                        case 10:
                             bs.Endian = Endian.Big;
                             if (head.width % 64 == 0)
                             {
@@ -84,50 +80,50 @@ namespace PopStudio.Image.Ptx
                             }
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 12:
+                        case 11:
                             head.check = Texture.DXT1_RGB.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT1_RGB;
                             break;
-                        case 13:
+                        case 12:
                             head.check = Texture.DXT3_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT3_RGBA;
                             break;
-                        case 14:
+                        case 13:
                             head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT5_RGBA;
                             break;
-                        case 15:
+                        case 14:
                             head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT5;
                             break;
-                        case 16:
+                        case 15:
                             head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT5; //the texture is also small endian
                             bs.Endian = Endian.Big; //but the info is big endian
                             break;
-                        case 17:
+                        case 16:
                             head.check = Texture.ETC1_RGB.Write(bs, sKBitmap);
                             head.format = PtxFormat.ETC1_RGB;
                             break;
-                        case 18:
+                        case 17:
                             head.check = Texture.ETC1_RGB_A8.Write(bs, sKBitmap);
                             head.format = PtxFormat.ETC1_RGB_A8;
                             break;
-                        case 19:
+                        case 18:
                             head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
                             head.format = PtxFormat.ETC1_RGB_A8; //Also 147
                             head.alphaFormat = 0x64;
                             break;
-                        case 20:
+                        case 19:
                             head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
                             head.format = PtxFormat.ETC1_RGB_A_Palette;
                             head.alphaFormat = 0x64;
                             break;
-                        case 21:
+                        case 20:
                             head.check = Texture.PVRTC_4BPP_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.PVRTC_4BPP_RGBA;
                             break;
-                        case 22:
+                        case 21:
                             head.check = Texture.PVRTC_4BPP_RGB_A8.Write(bs, sKBitmap);
                             head.format = PtxFormat.PVRTC_4BPP_RGB_A8;
                             break;
@@ -140,9 +136,8 @@ namespace PopStudio.Image.Ptx
             }
         }
 
-        public static void Encode(string inFile, string outFile, PtxFormat format, Endian encodeendian = Endian.Null, bool chinesemode = false)
+        public static void Encode(string inFile, string outFile, PtxFormat format, Endian encodeendian, bool chinesemode)
         {
-            if (encodeendian == Endian.Null) encodeendian = endian;
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {
                 bs.Endian = encodeendian;
@@ -159,11 +154,11 @@ namespace PopStudio.Image.Ptx
                     switch (format)
                     {
                         case PtxFormat.ARGB8888:
-                            if (abgrmode)
+                            if (Setting.RsbPtxABGR8888Mode)
                             {
                                 head.check = Texture.ABGR8888.Write(bs, sKBitmap);
                             }
-                            else if (fullwidth && (head.width % 64 != 0))
+                            else if (Setting.RsbPtxARGB8888PaddingMode && (head.width % 64 != 0))
                             {
                                 using (SKBitmap image2 = new SKBitmap(head.width / 64 * 64 + 64, head.height))
                                 {
@@ -249,7 +244,7 @@ namespace PopStudio.Image.Ptx
             }
         }
 
-        public static void Decode(string inFile, string outFile)
+        public static void Decode(string inFile, string outFile, bool fromrsb = false)
         {
             using (BinaryStream bs = BinaryStream.Open(inFile))
             {
@@ -258,7 +253,7 @@ namespace PopStudio.Image.Ptx
                 {
                     case PtxFormat.ARGB8888:
                         {
-                            if (abgrmode)
+                            if ((fromrsb && Setting.RsbPtxABGR8888Mode) || ((!fromrsb) && Setting.PtxABGR8888Mode))
                             {
                                 using (SKBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
                                 {

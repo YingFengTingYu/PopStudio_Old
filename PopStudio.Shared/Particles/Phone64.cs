@@ -55,7 +55,7 @@
                 for (int i = 0; i < count; i++)
                 {
                     ParticlesEmitter emitter = particles.Emitters[i];
-                    bs.WriteInt32((int)(emitter.Image ?? -1));
+                    bs.WriteInt32((int)Setting.GetImageIntegerFromString(emitter.Image));
                     bs.WriteStringByInt32Head(emitter.Name);
                     WriteTrackNodes(bs, emitter.SystemDuration);
                     bs.WriteStringByInt32Head(emitter.OnDuration);
@@ -222,7 +222,7 @@
                 {
                     ParticlesEmitter emitter = particles.Emitters[i];
                     int tempint = bs.ReadInt32();
-                    if (tempint != -1) emitter.Image = tempint;
+                    if (tempint != -1) emitter.Image = Setting.GetImageStringFromInteger(tempint);
                     string tempstr = bs.ReadStringByInt32Head();
                     if (!string.IsNullOrEmpty(tempstr)) emitter.Name = tempstr;
                     emitter.SystemDuration = ReadTrackNodes(bs);

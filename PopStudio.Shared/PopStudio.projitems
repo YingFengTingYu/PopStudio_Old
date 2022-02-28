@@ -102,6 +102,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimTrack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RTON\RTON.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Setting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ABGR8888.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB1555.cs" />

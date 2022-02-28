@@ -17,22 +17,22 @@ namespace PopStudio.Image.Tex
                     };
                     switch (format)
                     {
-                        case 1:
+                        case 0:
                             head.format = TexFormat.ABGR8888;
                             head.Write(bs);
                             Texture.ABGR8888.Write(bs, sKBitmap);
                             break;
-                        case 2:
+                        case 1:
                             head.format = TexFormat.RGBA4444;
                             head.Write(bs);
                             Texture.RGBA4444.Write(bs, sKBitmap);
                             break;
-                        case 3:
+                        case 2:
                             head.format = TexFormat.RGBA5551;
                             head.Write(bs);
                             Texture.RGBA5551.Write(bs, sKBitmap);
                             break;
-                        case 4:
+                        case 3:
                             head.format = TexFormat.RGB565;
                             head.Write(bs);
                             Texture.RGB565.Write(bs, sKBitmap);

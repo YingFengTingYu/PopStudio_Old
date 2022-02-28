@@ -47,4 +47,7 @@
     <FlyoutItem Title="压缩解压">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Compress}"/>
     </FlyoutItem>
+    <FlyoutItem Title="设置">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Setting}"/>
+    </FlyoutItem>
 </Shell>
