@@ -5,8 +5,13 @@
     <Application.Resources>
         <ResourceDictionary>
 
+            <Style TargetType="Switch">
+                <Setter Property="ThumbColor" Value="CornflowerBlue" />
+            </Style>
+
             <Style TargetType="Picker">
-                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#EEEEEE" />
+                <Setter Property="TextColor" Value="Black" />
             </Style>
 
             <Style TargetType="Label">
@@ -23,7 +28,8 @@
             </Style>
 
             <Style TargetType="Entry">
-                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#EEEEEE" />
+                <Setter Property="TextColor" Value="Black" />
             </Style>
 
         </ResourceDictionary>

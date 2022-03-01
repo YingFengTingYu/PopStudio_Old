@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Setting"
              Title="设置"
-             BackgroundColor="LightBlue">
+             BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过设置功能，改变工具的默认行为！" FontSize="16"/>
             <Label Text="Dz打包文件压缩方式" />
+            <Label Text="Dz数据包打包时对每种格式的文件可以选择不同的压缩方式，目前支持Store，Lzma，Gzip和Bzip2压缩。若未指定某格式的压缩方式则采取默认压缩方式。" FontSize="16" />
             <CollectionView x:Name="Setting_Dz" SelectionMode="Single" SelectionChanged="Setting_Dz_SelectionChanged" ItemsSource="{Binding DzPackInfo}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid BackgroundColor="White">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
@@ -32,10 +33,11 @@
                 <Button Margin="0,7,0,7" Grid.Column="3" Text="清空所有" Clicked="Button_Dz_2_Clicked" />
             </Grid>
             <Label Text="PakPS3打包文件压缩方式" />
+            <Label Text="Pak数据包对于PS3平台打包时对每种格式的文件可以选择是否进行压缩，目前支持Store和Zlib压缩。若未指定某格式的压缩方式则采取默认压缩方式。" FontSize="16" />
             <CollectionView x:Name="Setting_PakPS3" SelectionMode="Single" SelectionChanged="Setting_PakPS3_SelectionChanged" ItemsSource="{Binding PakPS3PackInfo}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid BackgroundColor="White">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
@@ -56,6 +58,7 @@
                 <Button Margin="0,7,0,7" Grid.Column="3" Text="清空所有" Clicked="Button_PakPS3_2_Clicked" />
             </Grid>
             <Label Text="Rsb解包打包PTX0格式" />
+            <Label Text="Rsb解包打包时，若需同时进行解码编码PTX，需规定对PTX0解码编码的方式，两者都不勾选即为ARGB8888方式。" FontSize="16" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -71,6 +74,7 @@
                 <Switch x:Name="rsbptx2" Grid.Row="1" Grid.Column="1" Toggled="Switch_RsbPtx_2_Toggled" />
             </Grid>
             <Label Text="PTX0图像解码格式" />
+            <Label Text="PTX0解码时，需规定对PTX0解码的方式，不勾选即为ARGB8888(Padding)方式。" FontSize="16" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -80,13 +84,14 @@
                 <Switch x:Name="ptx" Grid.Column="1" Toggled="Switch_Ptx_1_Toggled" />
             </Grid>
             <Label Text="Cdat加密解密密钥" />
+            <Label Text="Cdat是PVZ Free的加密png格式，程序默认提供密钥，你也可以自行更改。" FontSize="16" />
             <Entry x:Name="cdat" TextChanged="Entry_CdatKey_TextChanged" />
             <Label Text="RTON加密解密密钥" />
+            <Label Text="部分RTON为加密格式，程序不提供密钥，需要你自行提供密钥来解密加密。" FontSize="16" />
             <Entry x:Name="rton" TextChanged="Entry_RTONKey_TextChanged" />
             <Label Text="compiled自动转换数字i标签" />
-            <Grid BackgroundColor="White">
-                <Label x:Name="imagestring" Margin="0 10 0 10" />
-            </Grid>
+            <Label Text="PVZ在部分平台compiled文件中Image标签由标准字符串形式变为数字形式，你可以自行在so中找到对应关系并提供给程序，来将数字变为字符串。" FontSize="16" />
+            <Label x:Name="imagestring" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

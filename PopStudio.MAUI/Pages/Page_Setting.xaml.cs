@@ -256,10 +256,8 @@ public partial class Page_Setting : ContentPage
 			if (ans == choose1)
 			{
 				string item1 = "Store";
-				string item2 = "Lzma";
-				string item3 = "Gzip";
-				string item4 = "Bzip2";
-				ans = await DisplayActionSheet("请选择压缩模式", cancel, ok, item1, item2, item3, item4);
+				string item2 = "Zlib";
+				ans = await DisplayActionSheet("请选择压缩模式", cancel, ok, item1, item2);
 				if (ans != cancel && ans != ok)
 				{
 					if (itemname == "default")

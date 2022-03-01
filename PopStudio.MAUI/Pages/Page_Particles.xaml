@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Particles"
              Title="particles转码"
-             BackgroundColor="LightBlue">
+             BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过particles转码功能获取和修改游戏粒子特效内容！" FontSize="16"/>

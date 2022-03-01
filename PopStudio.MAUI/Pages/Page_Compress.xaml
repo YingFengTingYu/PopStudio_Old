@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Compress"
              Title="压缩解压"
-             BackgroundColor="LightBlue">
+             BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过压缩解压功能，实现单个文件的压缩解压操作！" FontSize="16"/>

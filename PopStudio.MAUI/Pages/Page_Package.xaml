@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Package"
              Title="解包打包"
-             BackgroundColor="LightBlue">
+             BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="通过解包打包功能获取游戏素材、修改游戏图像等内容！" FontSize="16"/>

@@ -2,17 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.MainPage"
              xmlns:local="clr-namespace:PopStudio.MAUI"
-       Title="主页"
+             Title="主页"
              FlyoutWidth="200"
              FlyoutBehavior="Flyout"
-             FlyoutBackgroundColor="LightYellow"
-             BackgroundColor="{DynamicResource SecondaryColor}">
+             FlyoutBackgroundColor="CornflowerBlue"
+             BackgroundColor="CornflowerBlue">
     <!--I wonder why Microsoft use Unicode encoding by default in editting xaml but use UTF8 encoding in compiling xaml...-->
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid ColumnDefinitions="*">
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
+                       TextColor="White"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center" HeightRequest="45" />
             </Grid>
@@ -20,7 +21,7 @@
     </Shell.ItemTemplate>
     <Shell.FlyoutHeader>
         <Grid>
-            <Label FontSize="22" Margin="30 0 30 0" Text="PopStudio" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Label FontSize="28" Margin="30 0 30 0" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
         </Grid>
     </Shell.FlyoutHeader>
     <FlyoutItem Title="主页">

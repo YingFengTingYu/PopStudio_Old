@@ -11,7 +11,7 @@
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 
 		<!-- Display name -->
-		<ApplicationTitle>PopStudio.MAUI</ApplicationTitle>
+		<ApplicationTitle>PopStudio</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.yingfengtingyu.popstudio</ApplicationId>
@@ -32,10 +32,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
+		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#6495ED" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

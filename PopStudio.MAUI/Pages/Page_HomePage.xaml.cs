@@ -12,13 +12,22 @@ namespace PopStudio.MAUI
 			InitializeComponent();
             label_ver.Text = "版本号3.2";
             label_notice.Text = "1.更新设置功能；\n2.制作了更精美的文件选取器。";
-            this.CheckAndRequestPermissionAsync();
+			LoadXml();
+		}
+
+		async void LoadXml()
+        {
+			if (!await this.CheckAndRequestPermissionAsync())
+            {
+				Thread.Sleep(1000);
+				Environment.Exit(0);
+            }
 			string settingxml = Permission.GetSettingPath();
 			if (!File.Exists(settingxml))
-            {
+			{
 				Dir.NewDir(settingxml, false);
 				Setting.SaveAsXml(settingxml);
-            }
+			}
 			Setting.LoadFromXml(settingxml);
 		}
     }
