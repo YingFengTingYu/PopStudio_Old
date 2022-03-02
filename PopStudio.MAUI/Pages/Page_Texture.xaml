@@ -2,23 +2,22 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Texture"
-             Title="图像转码"
              BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-            <Label Text="通过图像转码功能获取和修改游戏特殊图像内容！" FontSize="16"/>
-            <Label Text="请选择运行模式" />
+            <Label x:Name="label_introduction" FontSize="16"/>
+            <Label x:Name="label_choosemode" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Text="解码模式" VerticalOptions="Center" />
+                <Label x:Name="label_mode1" VerticalOptions="Center" />
                 <Switch x:Name="TB_Mode" Grid.Column="1" Toggled="ToggleButton_Checked" />
-                <Label Grid.Column="2" Text="编码模式" VerticalOptions="Center" />
+                <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
             </Grid>
-            <Label x:Name="text1" Text="请填写被解码的特殊图像路径" />
+            <Label x:Name="text1" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
@@ -26,9 +25,9 @@
                     <ColumnDefinition Width="15*" />
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox1" />
-                <Button Grid.Column="2" Text="选择" Clicked="Button_Clicked" />
+                <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
             </Grid>
-            <Label x:Name="text2" Text="请填写解码所得png图像存放路径" />
+            <Label x:Name="text2" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
@@ -36,17 +35,17 @@
                     <ColumnDefinition Width="15*" />
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox2" />
-                <Button Grid.Column="2" Text="选择" Clicked="Button2_Clicked" />
+                <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
             </Grid>
-            <Label x:Name="text3" Text="请选择解码模式" />
+            <Label x:Name="text3" />
             <Picker x:Name="CB_CMode" SelectedIndexChanged="CB_CMode_Selected" />
             <StackLayout x:Name="SP_FMode" IsVisible="false">
-                <Label Text="请选择编码格式" />
+                <Label x:Name="textN" />
                 <Picker x:Name="CB_FMode" />
             </StackLayout>
-            <Button Text="执行" Clicked="Button_Click" />
-            <Label Text="执行状态：" />
-            <Label x:Name="text4" Text="等待中......" />
+            <Button x:Name="button_run" Clicked="Button_Click" />
+            <Label x:Name="label_statue" />
+            <Label x:Name="text4" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -108,6 +108,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB1555.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB4444.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB8888.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\ARGB8888_Padding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT1_RGBA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT1_RGB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT2_RGBA.cs" />

@@ -235,7 +235,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return newwidth;
+            return blockSize >> 2;
         }
     }
 }

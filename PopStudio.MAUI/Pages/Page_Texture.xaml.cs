@@ -2,6 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -10,15 +11,29 @@ namespace PopStudio.MAUI
 		public Page_Texture()
 		{
 			InitializeComponent();
+            Title = MAUIStr.Obj.Texture_Title;
+            label_introduction.Text = MAUIStr.Obj.Texture_Introduction;
+            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
+            label_mode1.Text = MAUIStr.Obj.Texture_Mode1;
+            label_mode2.Text = MAUIStr.Obj.Texture_Mode2;
+            text1.Text = MAUIStr.Obj.Texture_Choose1;
+            text2.Text = MAUIStr.Obj.Texture_Choose2;
+            text3.Text = MAUIStr.Obj.Texture_Choose3;
+            textN.Text = MAUIStr.Obj.Texture_Choose7;
+            button1.Text = MAUIStr.Obj.Share_Choose;
+            button2.Text = MAUIStr.Obj.Share_Choose;
+            button_run.Text = MAUIStr.Obj.Share_Run;
+            label_statue.Text = MAUIStr.Obj.Share_RunStatue;
+            text4.Text = MAUIStr.Obj.Share_Waiting;
             CB_CMode.Items.Clear();
-            CB_CMode.Items.Add("PTX（rsb）");
-            CB_CMode.Items.Add("cdat（安卓和iOS）");
-            CB_CMode.Items.Add("tex（iOS）");
-            CB_CMode.Items.Add("txz（安卓和iOS）");
-            CB_CMode.Items.Add("tex（TV）");
-            CB_CMode.Items.Add("ptx（Xbox360）");
-            CB_CMode.Items.Add("ptx（PS3）");
-            CB_CMode.Items.Add("ptx（PSV）");
+            CB_CMode.Items.Add("PTX(rsb)");
+            CB_CMode.Items.Add("cdat(Android,iOS)");
+            CB_CMode.Items.Add("tex(iOS)");
+            CB_CMode.Items.Add("txz(Android,iOS)");
+            CB_CMode.Items.Add("tex(TV)");
+            CB_CMode.Items.Add("ptx(Xbox360)");
+            CB_CMode.Items.Add("ptx(PS3)");
+            CB_CMode.Items.Add("ptx(PSV)");
             CB_CMode.SelectedIndex = 0;
             CB_FMode.Items.Clear();
             CB_FMode.Items.Add("ARGB8888(0)");
@@ -30,13 +45,13 @@ namespace PopStudio.MAUI
             CB_FMode.Items.Add("RGB565_Block(22)");
             CB_FMode.Items.Add("RGBA5551_Block(23)");
             CB_FMode.Items.Add("XRGB8888_A8(149)");
-            CB_FMode.Items.Add("ARGB8888大端序(0)");
-            CB_FMode.Items.Add("ARGB8888_Padding大端序(0)");
+            CB_FMode.Items.Add("ARGB8888(BE)(0)");
+            CB_FMode.Items.Add("ARGB8888_Padding(BE)(0)");
             CB_FMode.Items.Add("DXT1_RGB(35)");
             CB_FMode.Items.Add("DXT3_RGBA(36)");
             CB_FMode.Items.Add("DXT5_RGBA(37)");
             CB_FMode.Items.Add("DXT5(5)");
-            CB_FMode.Items.Add("DXT5大端序(5)");
+            CB_FMode.Items.Add("DXT5(BE)(5)");
             CB_FMode.Items.Add("ETC1_RGB(32)");
             CB_FMode.Items.Add("ETC1_RGB_A8(147)");
             CB_FMode.Items.Add("ETC1_RGB_A_Palette(147)");
@@ -50,9 +65,9 @@ namespace PopStudio.MAUI
         {
             if (((Switch)sender).IsToggled)
             {
-                text1.Text = "请填写被编码的png图像路径";
-                text2.Text = "请填写编码所得特殊图像存放路径";
-                text3.Text = "请选择编码模式";
+                text1.Text = MAUIStr.Obj.Texture_Choose4;
+                text2.Text = MAUIStr.Obj.Texture_Choose5;
+                text3.Text = MAUIStr.Obj.Texture_Choose6;
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
                 textbox2.Text = temp;
@@ -60,9 +75,9 @@ namespace PopStudio.MAUI
             }
             else
             {
-                text1.Text = "请填写被解码的特殊图像路径";
-                text2.Text = "请填写解码所得png图像存放路径";
-                text3.Text = "请选择解码模式";
+                text1.Text = MAUIStr.Obj.Texture_Choose1;
+                text2.Text = MAUIStr.Obj.Texture_Choose2;
+                text3.Text = MAUIStr.Obj.Texture_Choose3;
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
                 textbox2.Text = temp;
@@ -74,7 +89,7 @@ namespace PopStudio.MAUI
         {
             Button b = (Button)sender;
             b.IsEnabled = false;
-            text4.Text = "执行中......";
+            text4.Text = MAUIStr.Obj.Share_Running;
             bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
@@ -87,7 +102,7 @@ namespace PopStudio.MAUI
                 {
                     if (!File.Exists(inFile))
                     {
-                        throw new FileNotFoundException("文件" + inFile + "不存在！");
+                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
                     if (mode)
                     {
@@ -106,11 +121,11 @@ namespace PopStudio.MAUI
                 {
                     if (err == null)
                     {
-                        text4.Text = "执行完成";
+                        text4.Text = MAUIStr.Obj.Share_Finish;
                     }
                     else
                     {
-                        text4.Text = "执行异常：" + err;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Wrong, err);
                     }
                     b.IsEnabled = true;
                 });
@@ -133,13 +148,13 @@ namespace PopStudio.MAUI
                 CB_FMode.Items.Add("RGB565_Block(22)");
                 CB_FMode.Items.Add("RGBA5551_Block(23)");
                 CB_FMode.Items.Add("XRGB8888_A8(149)");
-                CB_FMode.Items.Add("ARGB8888大端序(0)");
-                CB_FMode.Items.Add("ARGB8888_Padding大端序(0)");
+                CB_FMode.Items.Add("ARGB8888(BE)(0)");
+                CB_FMode.Items.Add("ARGB8888_Padding(BE)(0)");
                 CB_FMode.Items.Add("DXT1_RGB(35)");
                 CB_FMode.Items.Add("DXT3_RGBA(36)");
                 CB_FMode.Items.Add("DXT5_RGBA(37)");
                 CB_FMode.Items.Add("DXT5(5)");
-                CB_FMode.Items.Add("DXT5大端序(5)");
+                CB_FMode.Items.Add("DXT5(BE)(5)");
                 CB_FMode.Items.Add("ETC1_RGB(32)");
                 CB_FMode.Items.Add("ETC1_RGB_A8(147)");
                 CB_FMode.Items.Add("ETC1_RGB_A_Palette(147)");
@@ -173,7 +188,7 @@ namespace PopStudio.MAUI
             }
             else if (index == 5)
             {
-                CB_FMode.Items.Add("DXT5_RGBA_Padding");
+                CB_FMode.Items.Add("DXT5_RGBA_Padding(BE)");
             }
             else if (index == 6)
             {

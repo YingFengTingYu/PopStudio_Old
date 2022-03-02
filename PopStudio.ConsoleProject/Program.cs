@@ -1,6 +1,6 @@
 ﻿//If you want to use English mode, please change this setting. (ZHCN to ENUS)
 //如果你想转为英文模式，请改变这个设置。（ZHCN改为ENUS）
-Str.Obj = new ZHCN();
+Str.SetLanguage(Language.ZHCN);
 PopStudio.ConsoleProject.Constant.Str.Obj = new PopStudio.ConsoleProject.Constant.ZHCN();
 string[] Lng = PopStudio.ConsoleProject.Constant.Str.Obj.All;
 Console.WriteLine(Lng[0], Str.Obj.AppName, Str.Obj.AppVersion);

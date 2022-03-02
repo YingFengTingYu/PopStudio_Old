@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI;
 
@@ -7,8 +8,34 @@ public partial class Page_Setting : ContentPage
 	public Page_Setting()
 	{
 		InitializeComponent();
+		Title = MAUIStr.Obj.Setting_Title;
+		label_introduction.Text = MAUIStr.Obj.Setting_Introduction;
+		label_itemlanguage.Text = string.Format(MAUIStr.Obj.Setting_ItemLanguage, Setting.LanguageName[Setting.AppLanguage]);
+		button_chooselanguage.Text = MAUIStr.Obj.Setting_SetLanguage;
+		label_itemdz.Text = MAUIStr.Obj.Setting_ItemDz;
+		label_introdz.Text = MAUIStr.Obj.Setting_IntroDz;
+		button_dz_1.Text = MAUIStr.Obj.Setting_Add;
+		button_dz_2.Text = MAUIStr.Obj.Setting_Clear;
+		label_itempak.Text = MAUIStr.Obj.Setting_ItemPak;
+		label_intropak.Text = MAUIStr.Obj.Setting_IntroPak;
+		button_pak_1.Text = MAUIStr.Obj.Setting_Add;
+		button_pak_2.Text = MAUIStr.Obj.Setting_Clear;
+		label_itemrsb.Text = MAUIStr.Obj.Setting_ItemRsb;
+		label_introrsb.Text = MAUIStr.Obj.Setting_IntroRsb;
+		label_itemptx.Text = MAUIStr.Obj.Setting_ItemPtx;
+		label_introptx.Text = MAUIStr.Obj.Setting_IntroPtx;
+		label_itemcdat.Text = MAUIStr.Obj.Setting_ItemCdat;
+		label_introcdat.Text = MAUIStr.Obj.Setting_IntroCdat;
+		label_itemrton.Text = MAUIStr.Obj.Setting_ItemRTON;
+		label_introrton.Text = MAUIStr.Obj.Setting_IntroRTON;
+		label_itemcompiled.Text = MAUIStr.Obj.Setting_ItemCompiled;
+		label_introcompiled.Text = MAUIStr.Obj.Setting_IntroCompiled;
+		button_compiled_1.Text = MAUIStr.Obj.Setting_Load;
+		button_compiled_2.Text = MAUIStr.Obj.Setting_Unload;
+		button_recover.Text = MAUIStr.Obj.Setting_Recover;
 		Setting_Dz.ItemsSource = dzpackinfo;
 		Setting_PakPS3.ItemsSource = pakps3packinfo;
+		
 		InitDzPackSetting();
 		InitPakPS3PackSetting();
 		InitRsbPackSetting();
@@ -57,9 +84,9 @@ public partial class Page_Setting : ContentPage
     {
 		try
 		{
-			string cancel = "取消\0";
-			string ok = "确定\0";
-			string ans = await DisplayPromptAsync("请填写文件后缀名", "请填写文件后缀名，相同后缀文件采用相同压缩方式", ok, cancel);
+			string cancel = MAUIStr.Obj.Setting_Cancel;
+			string ok = MAUIStr.Obj.Setting_OK;
+			string ans = await DisplayPromptAsync(MAUIStr.Obj.Setting_EnterExtension, MAUIStr.Obj.Setting_EnterExtensionText, ok, cancel);
 			if (!string.IsNullOrEmpty(ans))
 			{
 				string itemname = ans;
@@ -71,7 +98,7 @@ public partial class Page_Setting : ContentPage
 				string item2 = "Lzma";
 				string item3 = "Gzip";
 				string item4 = "Bzip2";
-				ans = await DisplayActionSheet("请选择压缩模式", cancel, ok, item1, item2, item3, item4);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
 				if (ans != cancel && ans != ok)
 				{
 					Dictionary<string, P_Package.Dz.CompressFlags> tempdic = Setting.DzCompressDictionary;
@@ -105,18 +132,18 @@ public partial class Page_Setting : ContentPage
     {
         try
         {
-			string cancel = "取消\0";
-			string ok = "确定\0";
-			string choose1 = "修改压缩方式";
-			string choose2 = "删除此项目";
+			string cancel = MAUIStr.Obj.Setting_Cancel;
+			string ok = MAUIStr.Obj.Setting_OK;
+			string choose1 = MAUIStr.Obj.Setting_CompressItem1;
+			string choose2 = MAUIStr.Obj.Setting_CompressItem2;
 			string ans;
 			if (itemname == "default")
             {
-				ans = await DisplayActionSheet("请选择执行项", cancel, ok, choose1);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1);
 			}
             else
             {
-				ans = await DisplayActionSheet("请选择执行项", cancel, ok, choose1, choose2);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1, choose2);
 			}
 			if (ans == choose1)
 			{
@@ -124,7 +151,7 @@ public partial class Page_Setting : ContentPage
 				string item2 = "Lzma";
 				string item3 = "Gzip";
 				string item4 = "Bzip2";
-				ans = await DisplayActionSheet("请选择压缩模式", cancel, ok, item1, item2, item3, item4);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
 				if (ans != cancel && ans != ok)
                 {
 					if (itemname == "default")
@@ -194,9 +221,9 @@ public partial class Page_Setting : ContentPage
 	{
 		try
 		{
-			string cancel = "取消\0";
-			string ok = "确定\0";
-			string ans = await DisplayPromptAsync("请填写文件后缀名", "请填写文件后缀名，相同后缀文件采用相同压缩方式", ok, cancel);
+			string cancel = MAUIStr.Obj.Setting_Cancel;
+			string ok = MAUIStr.Obj.Setting_OK;
+			string ans = await DisplayPromptAsync(MAUIStr.Obj.Setting_EnterExtension, MAUIStr.Obj.Setting_EnterExtensionText, ok, cancel);
 			if (!string.IsNullOrEmpty(ans))
 			{
 				string itemname = ans;
@@ -206,7 +233,7 @@ public partial class Page_Setting : ContentPage
 				}
 				string item1 = "Store";
 				string item2 = "Zlib";
-				ans = await DisplayActionSheet("请选择压缩模式", cancel, ok, item1, item2);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
 				if (ans != cancel && ans != ok)
 				{
 					Dictionary<string, P_Package.Pak.CompressFlags> tempdic = Setting.PakPS3CompressDictionary;
@@ -240,24 +267,24 @@ public partial class Page_Setting : ContentPage
 	{
 		try
 		{
-			string cancel = "取消\0";
-			string ok = "确定\0";
-			string choose1 = "修改压缩方式";
-			string choose2 = "删除此项目";
+			string cancel = MAUIStr.Obj.Setting_Cancel;
+			string ok = MAUIStr.Obj.Setting_OK;
+			string choose1 = MAUIStr.Obj.Setting_CompressItem1;
+			string choose2 = MAUIStr.Obj.Setting_CompressItem2;
 			string ans;
 			if (itemname == "default")
 			{
-				ans = await DisplayActionSheet("请选择执行项", cancel, ok, choose1);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1);
 			}
 			else
 			{
-				ans = await DisplayActionSheet("请选择执行项", cancel, ok, choose1, choose2);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1, choose2);
 			}
 			if (ans == choose1)
 			{
 				string item1 = "Store";
 				string item2 = "Zlib";
-				ans = await DisplayActionSheet("请选择压缩模式", cancel, ok, item1, item2);
+				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
 				if (ans != cancel && ans != ok)
 				{
 					if (itemname == "default")
@@ -384,11 +411,13 @@ public partial class Page_Setting : ContentPage
 
 	private async void Button_ResetSetting_Clicked(object sender, EventArgs e)
 	{
-		bool sure = await DisplayAlert("你确定要恢复吗", "你确定要恢复默认设置吗？该操作将不可逆！", "确定", "取消");
+		string cancel = MAUIStr.Obj.Setting_Cancel;
+		string ok = MAUIStr.Obj.Setting_OK;
+		bool sure = await DisplayAlert(MAUIStr.Obj.Setting_SureRecover, MAUIStr.Obj.Setting_SureRecoverText, ok, cancel);
 		if (sure)
         {
 			Setting.ResetXml(Permission.GetSettingPath());
-			await DisplayAlert("恢复完成", "恢复默认设置完成，需要立即重启程序", "确定");
+			await DisplayAlert(MAUIStr.Obj.Setting_FinishRecover, MAUIStr.Obj.Setting_FinishRecoverText, ok);
 			Environment.Exit(0);
         }
 	}
@@ -410,5 +439,31 @@ public partial class Page_Setting : ContentPage
         }
     }
 
-    
+	async void ChangeLanguageSetting()
+	{
+        try
+        {
+			string cancel = MAUIStr.Obj.Setting_Cancel;
+			string ok = MAUIStr.Obj.Setting_OK;
+			string item1 = "简体中文";
+			string item2 = "English";
+			string ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseLanguage, cancel, ok, item1, item2);
+			if (ans != cancel && ans != ok && Setting.LanguageEnum[ans] != Setting.AppLanguage)
+			{
+				Setting.AppLanguage = Setting.LanguageEnum[ans];
+				Setting.SaveAsXml(Permission.GetSettingPath());
+				await DisplayAlert(MAUIStr.Obj.Setting_FinishChooseLanguage, MAUIStr.Obj.Setting_FinishChooseLanguageText, ok);
+				Environment.Exit(0);
+			}
+		}
+		catch (Exception)
+        {
+
+        }
+	}
+
+	private void button_chooselanguage_Clicked(object sender, EventArgs e)
+    {
+		ChangeLanguageSetting();
+	}
 }

@@ -2,6 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -10,25 +11,31 @@ namespace PopStudio.MAUI
 		public Page_HomePage()
 		{
 			InitializeComponent();
-            label_ver.Text = "版本号3.2";
-            label_notice.Text = "1.更新设置功能；\n2.制作了更精美的文件选取器。";
-			LoadXml();
+			Title = MAUIStr.Obj.HomePage_Title;
+			label_begin.Text = MAUIStr.Obj.HomePage_Begin;
+			label_function.Text = MAUIStr.Obj.HomePage_Function;
+			label_agreement.Text = MAUIStr.Obj.HomePage_Agreement;
+			label_ver.Text = string.Format(MAUIStr.Obj.HomePage_Version, 3.3);
+			label_author_string.Text = MAUIStr.Obj.HomePage_Author_String;
+			label_author.Text = MAUIStr.Obj.HomePage_Author;
+			label_thanks_string.Text = MAUIStr.Obj.HomePage_Thanks_String;
+			label_thanks.Text = MAUIStr.Obj.HomePage_Thanks;
+			label_qqgroup_string.Text = MAUIStr.Obj.HomePage_QQGroup_String;
+			label_qqgroup.Text = MAUIStr.Obj.HomePage_QQGroup;
+			label_course_string.Text = MAUIStr.Obj.HomePage_Course_String;
+			label_course.Text = MAUIStr.Obj.HomePage_Course;
+			label_appnewnotice_string.Text = MAUIStr.Obj.HomePage_AppNewNotice_String;
+			label_appnewnotice.Text = MAUIStr.Obj.HomePage_AppNewNotice;
+			Request();
 		}
 
-		async void LoadXml()
+		async void Request()
         {
 			if (!await this.CheckAndRequestPermissionAsync())
-            {
+			{
 				Thread.Sleep(1000);
 				Environment.Exit(0);
-            }
-			string settingxml = Permission.GetSettingPath();
-			if (!File.Exists(settingxml))
-			{
-				Dir.NewDir(settingxml, false);
-				Setting.SaveAsXml(settingxml);
 			}
-			Setting.LoadFromXml(settingxml);
 		}
     }
 }

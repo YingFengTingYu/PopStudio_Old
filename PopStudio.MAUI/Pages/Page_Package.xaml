@@ -2,23 +2,22 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Package"
-             Title="解包打包"
              BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-            <Label Text="通过解包打包功能获取游戏素材、修改游戏图像等内容！" FontSize="16"/>
-            <Label Text="请选择运行模式" />
+            <Label x:Name="label_introduction" FontSize="16"/>
+            <Label x:Name="label_choosemode" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label Text="解包模式" VerticalOptions="Center" />
+                <Label x:Name="label_mode1" VerticalOptions="Center" />
                 <Switch x:Name="switchmode" Grid.Column="1" Toggled="ModeChange" />
-                <Label Grid.Column="2" Text="打包模式" VerticalOptions="Center" />
+                <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
             </Grid>
-            <Label x:Name="label1" Text="请填写被解包的文件路径" />
+            <Label x:Name="label1" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
@@ -26,9 +25,9 @@
                     <ColumnDefinition Width="15*" />
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox1" />
-                <Button Grid.Column="2" Text="选择" Clicked="Button_Clicked" />
+                <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
             </Grid>
-            <Label x:Name="label2" Text="请填写解包所得文件存放路径" />
+            <Label x:Name="label2" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
@@ -36,9 +35,9 @@
                     <ColumnDefinition Width="15*" />
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox2" />
-                <Button Grid.Column="2" Text="选择" Clicked="Button2_Clicked" />
+                <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
             </Grid>
-            <Label x:Name="label3" Text="请选择解包模式" />
+            <Label x:Name="label3" />
             <Picker x:Name="CB_CMode" />
             <Grid x:Name="change">
                 <Grid.ColumnDefinitions>
@@ -49,14 +48,14 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Label Text="将所有纹理图像转为png图像" FontSize="17" VerticalOptions="Center"/>
+                <Label x:Name="label_changeimage" FontSize="17" VerticalOptions="Center"/>
                 <Switch x:Name="switchchange1" Grid.Column="1" />
-                <Label Text="纹理转为png后删除原文件" Grid.Row="1" FontSize="17" VerticalOptions="Center"/>
+                <Label x:Name="label_deleteimage" Grid.Row="1" FontSize="17" VerticalOptions="Center"/>
                 <Switch x:Name="switchchange2" Grid.Row="1" Grid.Column="1" />
             </Grid>
-            <Button Text="执行" Clicked="Do"/>
-            <Label Text="执行状态：" />
-            <Label x:Name="text4" Text="等待中......" />
+            <Button x:Name="button_run" Clicked="Do"/>
+            <Label x:Name="label_statue" />
+            <Label x:Name="text4" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

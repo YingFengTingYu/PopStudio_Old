@@ -2,6 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -10,9 +11,22 @@ namespace PopStudio.MAUI
 		public Page_RTON()
 		{
 			InitializeComponent();
+            Title = MAUIStr.Obj.RTON_Title;
+            label_introduction.Text = MAUIStr.Obj.RTON_Introduction;
+            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
+            label_mode1.Text = MAUIStr.Obj.RTON_Mode1;
+            label_mode2.Text = MAUIStr.Obj.RTON_Mode2;
+            text1.Text = MAUIStr.Obj.RTON_Choose1;
+            text2.Text = MAUIStr.Obj.RTON_Choose2;
+            text3.Text = MAUIStr.Obj.RTON_Choose3;
+            button1.Text = MAUIStr.Obj.Share_Choose;
+            button2.Text = MAUIStr.Obj.Share_Choose;
+            button_run.Text = MAUIStr.Obj.Share_Run;
+            label_statue.Text = MAUIStr.Obj.Share_RunStatue;
+            text4.Text = MAUIStr.Obj.Share_Waiting;
             CB_CMode.Items.Clear();
-            CB_CMode.Items.Add("普通RTON");
-            CB_CMode.Items.Add("加密RTON");
+            CB_CMode.Items.Add("Simple RTON");
+            CB_CMode.Items.Add("Encrypted RTON");
             CB_CMode.SelectedIndex = 0;
         }
 
@@ -20,16 +34,16 @@ namespace PopStudio.MAUI
 		{
             if (((Switch)sender).IsToggled)
             {
-                text1.Text = "请填写被编码的文件路径";
-                text2.Text = "请填写编码生成文件存放路径";
-                text3.Text = "请选择编码模式";
+                text1.Text = MAUIStr.Obj.RTON_Choose4;
+                text2.Text = MAUIStr.Obj.RTON_Choose5;
+                text3.Text = MAUIStr.Obj.RTON_Choose6;
                 (textbox2.Text, textbox1.Text) = (textbox1.Text, textbox2.Text);
             }
             else
             {
-                text1.Text = "请填写被解码的文件路径";
-                text2.Text = "请填写解码生成文件存放路径";
-                text3.Text = "请选择解码模式";
+                text1.Text = MAUIStr.Obj.RTON_Choose1;
+                text2.Text = MAUIStr.Obj.RTON_Choose2;
+                text3.Text = MAUIStr.Obj.RTON_Choose3;
                 (textbox2.Text, textbox1.Text) = (textbox1.Text, textbox2.Text);
             }
         }
@@ -38,7 +52,7 @@ namespace PopStudio.MAUI
         {
             Button b = (Button)sender;
             b.IsEnabled = false;
-            text4.Text = "执行中......";
+            text4.Text = MAUIStr.Obj.Share_Running;
             bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
@@ -50,7 +64,7 @@ namespace PopStudio.MAUI
                 {
                     if (!File.Exists(inFile))
                     {
-                        throw new FileNotFoundException("文件" + inFile + "不存在！");
+                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
                     if (mode == true)
                     {
@@ -69,11 +83,11 @@ namespace PopStudio.MAUI
                 {
                     if (err == null)
                     {
-                        text4.Text = "执行完成";
+                        text4.Text = MAUIStr.Obj.Share_Finish;
                     }
                     else
                     {
-                        text4.Text = "执行异常：" + err;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Wrong, err);
                     }
                     b.IsEnabled = true;
                 });

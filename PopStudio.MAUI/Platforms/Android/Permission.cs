@@ -1,8 +1,10 @@
-﻿namespace PopStudio.MAUI
+﻿using PopStudio.MAUI.Languages;
+
+namespace PopStudio.MAUI
 {
     internal static partial class Permission
     {
-        static string androidpath = "/sdcard/PopStudio/setting.xml";
+        static readonly string androidpath = Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath + "/setting.xml";
 
         public static partial string GetSettingPath() => androidpath;
 
@@ -13,7 +15,7 @@
             bool HavePermission = true;
             if (status != PermissionStatus.Granted)
             {
-                if (await page.DisplayAlert("权限申请", "在Android6及以上系统版本中，请授予程序存储权限，否则程序将无权读写文件！", "前往授权", "取消"))
+                if (await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_Request1, MAUIStr.Obj.Permission_GoTo, MAUIStr.Obj.Permission_Cancel))
                 {
                     HavePermission = (await readwritepermission.RequestAsync()) == PermissionStatus.Granted;
                 }
@@ -30,7 +32,7 @@
             }
             catch (Exception)
             {
-                if (await page.DisplayAlert("权限申请", "在Android11及以上系统版本中，请授予程序所有文件访问权限，否则程序将只能读写程序内部文件夹中的文件！", "前往授权", "取消"))
+                if (await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_Request2, MAUIStr.Obj.Permission_GoTo, MAUIStr.Obj.Permission_Cancel))
                 {
                     var bb = new Android.Content.Intent(Android.Provider.Settings.ActionManageAllFilesAccessPermission);
                     bb.SetFlags(Android.Content.ActivityFlags.NewTask);

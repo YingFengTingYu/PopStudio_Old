@@ -1,14 +1,16 @@
-﻿namespace PopStudio.MAUI
+﻿using PopStudio.MAUI.Languages;
+
+namespace PopStudio.MAUI
 {
     internal static partial class PickFile
     {
 		public static partial async Task<string> ChooseOpenFile(this ContentPage page)
 		{
 			string file = "/sdcard";
-			string createnew = "新建文件夹\0";
-			string back = "↩️返回上级目录\0";
-			string ok = "确定\0";
-			string cancel = "取消\0";
+			string createnew = MAUIStr.Obj.PickFile_NewFolder;
+			string back = MAUIStr.Obj.PickFile_Back;
+			string ok = MAUIStr.Obj.PickFile_OK;
+			string cancel = MAUIStr.Obj.PickFile_Cancel;
 			while (true)
 			{
 				try
@@ -52,7 +54,7 @@
 					}
 					else if (ans == createnew)
 					{
-						string newname = await page.DisplayPromptAsync("新建文件夹", "请输入文件夹名", ok, cancel, initialValue: "新建文件夹");
+						string newname = await page.DisplayPromptAsync(createnew, MAUIStr.Obj.PickFile_EnterFolderName, ok, cancel, initialValue: createnew[..5]);
 						if (!string.IsNullOrEmpty(newname))
 						{
 							try
@@ -62,7 +64,7 @@
 							}
 							catch (Exception)
 							{
-								await page.DisplayAlert("创建错误", "新建文件夹失败", ok, cancel);
+								await page.DisplayAlert(MAUIStr.Obj.PickFile_CreateWrong, MAUIStr.Obj.PickFile_CreateWrong, ok, cancel);
 							}
 						}
 					}
@@ -81,7 +83,7 @@
 				}
 				catch (UnauthorizedAccessException)
 				{
-					await page.DisplayAlert("无权限", "进入文件夹失败，程序无访问权限！", ok, cancel);
+					await page.DisplayAlert(MAUIStr.Obj.PickFile_NoPermission, MAUIStr.Obj.PickFile_NoPermissionToEnter, ok, cancel);
 					return null;
 				}
 			}
@@ -90,11 +92,11 @@
 		public static partial async Task<string> ChooseSaveFile(this ContentPage page)
 		{
 			string file = "/sdcard";
-			string createnew = "新建文件夹\0";
-			string back = "↩️返回上级目录\0";
-			string ok = "确定\0";
-			string choosenow = "保存到此目录\0";
-			string cancel = "取消\0";
+			string createnew = MAUIStr.Obj.PickFile_NewFolder;
+			string back = MAUIStr.Obj.PickFile_Back;
+			string ok = MAUIStr.Obj.PickFile_OK;
+			string choosenow = MAUIStr.Obj.PickFlie_SaveThere;
+			string cancel = MAUIStr.Obj.PickFile_Cancel;
 			while (true)
 			{
 				try
@@ -138,13 +140,13 @@
 					}
 					else if (ans == choosenow)
 					{
-						string val = await page.DisplayPromptAsync("保存文件", "请输入文件名", ok, cancel);
+						string val = await page.DisplayPromptAsync(MAUIStr.Obj.PickFlie_SaveFile, MAUIStr.Obj.PickFile_EnterFileName, ok, cancel);
 						if (string.IsNullOrEmpty(val)) return null;
 						return file + Const.PATHSEPARATOR + val;
 					}
 					else if (ans == createnew)
 					{
-						string newname = await page.DisplayPromptAsync("新建文件夹", "请输入文件夹名", ok, cancel, initialValue: "新建文件夹");
+						string newname = await page.DisplayPromptAsync(createnew, MAUIStr.Obj.PickFile_EnterFolderName, ok, cancel, initialValue: createnew[..5]);
 						if (!string.IsNullOrEmpty(newname))
 						{
 							try
@@ -154,7 +156,7 @@
 							}
 							catch (Exception)
 							{
-								await page.DisplayAlert("创建错误", "新建文件夹失败", ok, cancel);
+								await page.DisplayAlert(MAUIStr.Obj.PickFile_CreateWrong, MAUIStr.Obj.PickFile_CreateWrong, ok, cancel);
 							}
 						}
 					}
@@ -173,7 +175,7 @@
 				}
 				catch (UnauthorizedAccessException)
 				{
-					await page.DisplayAlert("无权限", "进入文件夹失败，程序无访问权限！", ok, cancel);
+					await page.DisplayAlert(MAUIStr.Obj.PickFile_NoPermission, MAUIStr.Obj.PickFile_NoPermissionToEnter, ok, cancel);
 					return null;
 				}
 			}
@@ -182,11 +184,11 @@
 		public static partial async Task<string> ChooseFolder(this ContentPage page)
 		{
 			string file = "/sdcard";
-			string createnew = "新建文件夹\0";
-			string back = "↩️返回上级目录\0";
-			string ok = "确定\0";
-			string choosenow = "选择当前文件夹\0";
-			string cancel = "取消\0";
+			string createnew = MAUIStr.Obj.PickFile_NewFolder;
+			string back = MAUIStr.Obj.PickFile_Back;
+			string ok = MAUIStr.Obj.PickFile_OK;
+			string choosenow = MAUIStr.Obj.PickFile_ChooseThisFolder;
+			string cancel = MAUIStr.Obj.PickFile_Cancel;
 			while (true)
 			{
 				try
@@ -222,7 +224,7 @@
 					}
 					else if (ans == createnew)
 					{
-						string newname = await page.DisplayPromptAsync("新建文件夹", "请输入文件夹名", ok, cancel, initialValue: "新建文件夹");
+						string newname = await page.DisplayPromptAsync(createnew, MAUIStr.Obj.PickFile_EnterFolderName, ok, cancel, initialValue: createnew[..5]);
 						if (!string.IsNullOrEmpty(newname))
 						{
 							try
@@ -232,7 +234,7 @@
 							}
 							catch (Exception)
 							{
-								await page.DisplayAlert("创建错误", "新建文件夹失败", ok, cancel);
+								await page.DisplayAlert(MAUIStr.Obj.PickFile_CreateWrong, MAUIStr.Obj.PickFile_CreateWrong, ok, cancel);
 							}
 						}
 					}
@@ -247,7 +249,7 @@
 				}
 				catch (UnauthorizedAccessException)
 				{
-					await page.DisplayAlert("无权限", "进入文件夹失败，程序无访问权限！", ok, cancel);
+					await page.DisplayAlert(MAUIStr.Obj.PickFile_NoPermission, MAUIStr.Obj.PickFile_NoPermissionToEnter, ok, cancel);
 					return null;
 				}
 			}

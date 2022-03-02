@@ -4,9 +4,16 @@ namespace PopStudio
 {
     internal static class Setting
     {
-        public static readonly string DefaultXml = @"<?xml version=""1.0"" encoding=""utf-8""?>
+        public static Language AppLanguage = Language.ZHCN;
+
+        public static readonly Dictionary<string, Language> LanguageEnum = new Dictionary<string, Language> { { "English", Language.ENUS }, { "简体中文", Language.ZHCN } };
+        public static readonly Dictionary<Language, string> LanguageName = new Dictionary<Language, string> { { Language.ENUS, "English" }, { Language.ZHCN, "简体中文" } };
+
+        public static readonly string DefaultXml_P1 = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <!--Describe some default behaviour-->
 <Description version=""2"">
+    <Language>";
+        public static readonly string DefaultXml_P2 = @"</Language>
     <Dz>
         <!--The compressing method to pack dz-->
         <CompressMethod>
@@ -64,7 +71,9 @@ namespace PopStudio
         {
             using (StreamWriter sw = new StreamWriter(xmlPath, false))
             {
-                sw.Write(DefaultXml);
+                sw.Write(DefaultXml_P1);
+                sw.Write(LanguageName[AppLanguage]);
+                sw.Write(DefaultXml_P2);
             }
             LoadFromXml(xmlPath);
         }
@@ -86,6 +95,11 @@ namespace PopStudio
                 {
                     switch (child.Name)
                     {
+                        case "Language":
+                            {
+                                AppLanguage = LanguageEnum[child.InnerText];
+                            }
+                            break;
                         case "Dz":
                             {
                                 XmlNodeList childchildlist = child.ChildNodes;
@@ -255,7 +269,9 @@ namespace PopStudio
         {
             using (StreamWriter sw = new StreamWriter(xmlPath, false))
             {
-                sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--Describe some default behaviour-->\n<Description version=\"2\">\n    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
+                sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--Describe some default behaviour-->\n<Description version=\"2\">\n    <Language>");
+                sw.Write(LanguageName[AppLanguage]);
+                sw.Write("</Language>    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
                 sw.Write(DzCompressMethodName[DzDefaultCompressMethod]);
                 sw.Write("\" />");
                 foreach (KeyValuePair<string, P_Package.Dz.CompressFlags> keyValuePair in DzCompressDictionary)

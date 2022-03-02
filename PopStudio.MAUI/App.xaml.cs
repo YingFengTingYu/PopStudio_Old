@@ -5,7 +5,12 @@
         public App()
         {
             InitializeComponent();
-
+            string settingxml = Permission.GetSettingPath();
+            if (!File.Exists(settingxml))
+            {
+                Setting.SaveAsXml(settingxml);
+            }
+            Setting.LoadFromXml(settingxml);
             MainPage = new MainPage();
         }
     }

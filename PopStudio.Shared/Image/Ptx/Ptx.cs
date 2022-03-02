@@ -62,22 +62,9 @@ namespace PopStudio.Image.Ptx
                             break;
                         case 10:
                             bs.Endian = Endian.Big;
-                            if (head.width % 64 == 0)
-                            {
-                                head.check = Texture.ARGB8888.Write(bs, sKBitmap);
-                            }
-                            else
-                            {
-                                using (SKBitmap image2 = new SKBitmap(head.width / 64 * 64 + 64, head.height))
-                                {
-                                    using (SKCanvas canvas = new SKCanvas(image2))
-                                    {
-                                        SKRect t = new SKRect(0, 0, head.width, head.height);
-                                        canvas.DrawBitmap(sKBitmap, t, t);
-                                    }
-                                    head.check = Texture.ARGB8888.Write(bs, image2);
-                                }
-                            }
+                            int w = sKBitmap.Width;
+                            if ((w % 64) != 0) w = (w / 64) * 64 + 64;
+                            head.check = Texture.ARGB8888_Padding.Write(bs, sKBitmap, w << 2);
                             head.format = PtxFormat.ARGB8888;
                             break;
                         case 11:
@@ -158,17 +145,11 @@ namespace PopStudio.Image.Ptx
                             {
                                 head.check = Texture.ABGR8888.Write(bs, sKBitmap);
                             }
-                            else if (Setting.RsbPtxARGB8888PaddingMode && (head.width % 64 != 0))
+                            else if (Setting.RsbPtxARGB8888PaddingMode)
                             {
-                                using (SKBitmap image2 = new SKBitmap(head.width / 64 * 64 + 64, head.height))
-                                {
-                                    using (SKCanvas canvas = new SKCanvas(image2))
-                                    {
-                                        SKRect t = new SKRect(0, 0, head.width, head.height);
-                                        canvas.DrawBitmap(sKBitmap, t, t);
-                                    }
-                                    head.check = Texture.ARGB8888.Write(bs, image2);
-                                }
+                                int w = sKBitmap.Width;
+                                if ((w % 64) != 0) w = (w / 64) * 64 + 64;
+                                head.check = Texture.ARGB8888_Padding.Write(bs, sKBitmap, w << 2);
                             }
                             else
                             {
@@ -269,16 +250,9 @@ namespace PopStudio.Image.Ptx
                             }
                             else
                             {
-                                using (SKBitmap sKBitmap = Texture.ARGB8888.Read(bs, head.check >> 2, head.height))
+                                using (SKBitmap sKBitmap = Texture.ARGB8888_Padding.Read(bs, head.width, head.height, head.check))
                                 {
-                                    using (SKBitmap image2 = new SKBitmap(head.width, head.height))
-                                    {
-                                        using (SKCanvas canvas = new SKCanvas(image2))
-                                        {
-                                            canvas.DrawBitmap(sKBitmap, new SKRect(0, 0, head.check >> 2, head.height));
-                                        }
-                                        image2.Save(outFile);
-                                    }
+                                    sKBitmap.Save(outFile);
                                 }
                             }
                         }

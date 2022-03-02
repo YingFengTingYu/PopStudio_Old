@@ -2,6 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -10,6 +11,21 @@ namespace PopStudio.MAUI
 		public Page_Package()
 		{
 			InitializeComponent();
+			Title = MAUIStr.Obj.Package_Title;
+			label_mode1.Text = MAUIStr.Obj.Package_Mode1;
+			label_mode2.Text = MAUIStr.Obj.Package_Mode2;
+			label_introduction.Text = MAUIStr.Obj.Package_Introduction;
+			label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
+			label1.Text = MAUIStr.Obj.Package_Choose1;
+			label2.Text = MAUIStr.Obj.Package_Choose2;
+			label3.Text = MAUIStr.Obj.Package_Choose3;
+			label_changeimage.Text = MAUIStr.Obj.Package_ChangeImage;
+			label_deleteimage.Text = MAUIStr.Obj.Package_DeleteImage;
+			button1.Text = MAUIStr.Obj.Share_Choose;
+			button2.Text = MAUIStr.Obj.Share_Choose;
+			label_statue.Text = MAUIStr.Obj.Share_RunStatue;
+			text4.Text = MAUIStr.Obj.Share_Waiting;
+			button_run.Text = MAUIStr.Obj.Share_Run;
 			CB_CMode.Items.Clear();
 			CB_CMode.Items.Add("dz");
 			CB_CMode.Items.Add("rsb");
@@ -21,6 +37,7 @@ namespace PopStudio.MAUI
         {
 			Button b = (Button)sender;
 			b.IsEnabled = false;
+			text4.Text = MAUIStr.Obj.Share_Running;
 			bool mode = switchmode.IsToggled;
 			string inFile = textbox1.Text;
 			string outFile = textbox2.Text;
@@ -36,7 +53,7 @@ namespace PopStudio.MAUI
 					{
 						if (!Directory.Exists(inFile))
 						{
-							throw new FileNotFoundException("文件夹" + inFile + "不存在！");
+							throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
 						}
 						API.Pack(inFile, outFile, pmode);
 					}
@@ -44,7 +61,7 @@ namespace PopStudio.MAUI
 					{
 						if (!File.Exists(inFile))
 						{
-							throw new FileNotFoundException("文件" + inFile + "不存在！");
+							throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
 						}
 						API.Unpack(inFile, outFile, pmode, c1, c2);
 					}
@@ -57,11 +74,11 @@ namespace PopStudio.MAUI
 				{
 					if (err == null)
 					{
-						text4.Text = "执行完成";
+						text4.Text = MAUIStr.Obj.Share_Finish;
 					}
 					else
 					{
-						text4.Text = "执行异常：" + err;
+						text4.Text = string.Format(MAUIStr.Obj.Share_Wrong, err);
 					}
 					b.IsEnabled = true;
 				});
@@ -73,16 +90,16 @@ namespace PopStudio.MAUI
         {
 			if (((Switch)sender).IsToggled)
             {
-				label1.Text = "请填写被打包的文件夹路径";
-				label2.Text = "请填写打包生成文件路径";
-				label3.Text = "请选择打包模式";
+				label1.Text = MAUIStr.Obj.Package_Choose4;
+				label2.Text = MAUIStr.Obj.Package_Choose5;
+				label3.Text = MAUIStr.Obj.Package_Choose6;
 				change.IsVisible = false;
 			}
             else
             {
-				label1.Text = "请填写被解包的文件路径";
-				label2.Text = "请填写解包生成文件夹路径";
-				label3.Text = "请选择解包模式";
+				label1.Text = MAUIStr.Obj.Package_Choose1;
+				label2.Text = MAUIStr.Obj.Package_Choose2;
+				label3.Text = MAUIStr.Obj.Package_Choose3;
 				change.IsVisible = true;
 			}
 			//交换文本框内容

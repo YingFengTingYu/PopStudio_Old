@@ -2,6 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
+using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -10,12 +11,25 @@ namespace PopStudio.MAUI
 		public Page_Trail()
 		{
 			InitializeComponent();
+            Title = MAUIStr.Obj.Trail_Title;
+            label_introduction.Text = MAUIStr.Obj.Trail_Introduction;
+            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
+            label_mode1.Text = MAUIStr.Obj.Trail_Mode1;
+            label_mode2.Text = MAUIStr.Obj.Trail_Mode2;
+            text1.Text = MAUIStr.Obj.Trail_Choose1;
+            text2.Text = MAUIStr.Obj.Trail_Choose2;
+            text3.Text = MAUIStr.Obj.Trail_Choose3;
+            button1.Text = MAUIStr.Obj.Share_Choose;
+            button2.Text = MAUIStr.Obj.Share_Choose;
+            button_run.Text = MAUIStr.Obj.Share_Run;
+            label_statue.Text = MAUIStr.Obj.Share_RunStatue;
+            text4.Text = MAUIStr.Obj.Share_Waiting;
             CB_CMode.Items.Clear();
             CB_CMode.Items.Add("PC");
             CB_CMode.Items.Add("Phone32");
             CB_CMode.Items.Add("Phone64");
             CB_CMode.Items.Add("WP");
-            CB_CMode.Items.Add("主机");
+            CB_CMode.Items.Add("GameConsole");
             CB_CMode.Items.Add("TV");
             CB_CMode.SelectedIndex = 0;
         }
@@ -24,18 +38,18 @@ namespace PopStudio.MAUI
         {
             if (((Switch)sender).IsToggled)
             {
-                text1.Text = "请填写被编码的文件路径";
-                text2.Text = "请填写编码所得文件存放路径";
-                text3.Text = "请选择编码模式";
+                text1.Text = MAUIStr.Obj.Trail_Choose4;
+                text2.Text = MAUIStr.Obj.Trail_Choose5;
+                text3.Text = MAUIStr.Obj.Trail_Choose6;
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
                 textbox2.Text = temp;
             }
             else
             {
-                text1.Text = "请填写被解码的文件路径";
-                text2.Text = "请填写解码所得文件存放路径";
-                text3.Text = "请选择解码模式";
+                text1.Text = MAUIStr.Obj.Trail_Choose1;
+                text2.Text = MAUIStr.Obj.Trail_Choose2;
+                text3.Text = MAUIStr.Obj.Trail_Choose3;
                 string temp = textbox1.Text;
                 textbox1.Text = textbox2.Text;
                 textbox2.Text = temp;
@@ -46,7 +60,7 @@ namespace PopStudio.MAUI
         {
             Button b = (Button)sender;
             b.IsEnabled = false;
-            text4.Text = "执行中......";
+            text4.Text = MAUIStr.Obj.Share_Running;
             bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
@@ -58,7 +72,7 @@ namespace PopStudio.MAUI
                 {
                     if (!File.Exists(inFile))
                     {
-                        throw new FileNotFoundException("文件" + inFile + "不存在！");
+                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
                     if (mode)
                     {
@@ -77,11 +91,11 @@ namespace PopStudio.MAUI
                 {
                     if (err == null)
                     {
-                        text4.Text = "执行完成";
+                        text4.Text = MAUIStr.Obj.Share_Finish;
                     }
                     else
                     {
-                        text4.Text = "执行异常：" + err;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Wrong, err);
                     }
                     b.IsEnabled = true;
                 });
