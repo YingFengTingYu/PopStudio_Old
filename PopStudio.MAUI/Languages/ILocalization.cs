@@ -8,6 +8,12 @@ namespace PopStudio.MAUI.Languages
 {
     internal interface ILocalization
     {
+        //Shell
+        public string Shell_OK { get; }
+        public string Shell_Cancel { get; }
+        public string Shell_ExitTitle { get; }
+        public string Shell_ExitText { get; }
+
         //Setting
         public string Setting_Title { get; }
         public string Setting_Introduction { get; }

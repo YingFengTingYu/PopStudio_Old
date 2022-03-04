@@ -113,6 +113,7 @@ namespace PopStudio.Texture
 
         public static int Write(BinaryStream bs, SKBitmap image)
         {
+            int ans = image.Width;
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
@@ -172,7 +173,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return newwidth;
+            return ans;
         }
     }
 }

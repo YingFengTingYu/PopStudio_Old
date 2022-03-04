@@ -9,14 +9,14 @@ namespace PopStudio.Texture
             bool t = false;
             int newwidth = width;
             int newheight = height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (newwidth % 4 != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth += 4 - newwidth % 4;
                 t = true;
             }
-            if ((newheight & (newheight - 1)) != 0)
+            if (newheight % 4 != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight += 4 - newheight % 4;
                 t = true;
             }
             int S = newwidth * newheight;
@@ -80,38 +80,43 @@ namespace PopStudio.Texture
                     }
                 }
             }
+            if (t)
+            {
+                SKBitmap image1 = new SKBitmap(newwidth, newheight);
+                image1.Pixels = pixels;
+                SKBitmap image2 = new SKBitmap(width, height);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image1, new SKRect(0, 0, newwidth, newheight));
+                }
+                pixels = image2.Pixels;
+                image1.Dispose();
+                image2.Dispose();
+            }
+            S = pixels.Length;
             for (int i = 0; i < S; i++)
             {
                 pixels[i] = pixels[i].WithAlpha(bs.ReadByte());
             }
-            SKBitmap image = new SKBitmap(newwidth, newheight);
+            SKBitmap image = new SKBitmap(width, height);
             image.Pixels = pixels;
-            if (t)
-            {
-                SKBitmap image2 = new SKBitmap(width, height);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, newwidth, newheight));
-                }
-                image.Dispose();
-                return image2;
-            }
             return image;
         }
 
         public static int Write(BinaryStream bs, SKBitmap image)
         {
+            SKBitmap imagein = image;
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (newwidth % 4 != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth += 4 - newwidth % 4;
                 t = true;
             }
-            if ((newheight & (newheight - 1)) != 0)
+            if (newheight % 4 != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight += 4 - newheight % 4;
                 t = true;
             }
             if (t)
@@ -124,7 +129,6 @@ namespace PopStudio.Texture
                 image = image2;
             }
             SKColor[] pixels = image.Pixels;
-            int S = pixels.Length;
             SKColor[] color = new SKColor[16];
             Endian etcendian = bs.Endian == Endian.Small ? Endian.Big : Endian.Small;
             for (int i = 0; i < newheight; i += 4)
@@ -143,6 +147,8 @@ namespace PopStudio.Texture
                     bs.WriteUInt64(ETCEncode.GenETC1(color), etcendian);
                 }
             }
+            if (t) pixels = imagein.Pixels;
+            int S = pixels.Length;
             for (int i = 0; i < S; i++)
             {
                 bs.WriteByte(pixels[i].Alpha);
@@ -151,7 +157,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return newwidth << 2;
+            return imagein.Width << 2;
         }
     }
 }

@@ -9,14 +9,14 @@ namespace PopStudio.Texture
             bool t = false;
             int newwidth = width;
             int newheight = height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (newwidth % 4 != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth += 4 - newwidth % 4;
                 t = true;
             }
-            if ((newheight & (newheight - 1)) != 0)
+            if (newheight % 4 != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight += 4 - newheight % 4;
                 t = true;
             }
             int S = newwidth * newheight;
@@ -97,17 +97,18 @@ namespace PopStudio.Texture
 
         public static int Write(BinaryStream bs, SKBitmap image)
         {
+            int ans = image.Width;
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (newwidth % 4 != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth += 4 - newwidth % 4;
                 t = true;
             }
-            if ((newheight & (newheight - 1)) != 0)
+            if (newheight % 4 != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight += 4 - newheight % 4;
                 t = true;
             }
             if (t)
@@ -142,7 +143,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return newwidth >> 1;
+            return ans >> 1;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace PopStudio.MAUI
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                if (await DisplayAlert("确定要退出吗", "确定要退出吗？", "确定", "取消")) Environment.Exit(0);
+                if (await DisplayAlert(MAUIStr.Obj.Shell_ExitTitle, MAUIStr.Obj.Shell_ExitText, MAUIStr.Obj.Shell_OK, MAUIStr.Obj.Shell_Cancel)) Environment.Exit(0);
             });
             return true;
         }

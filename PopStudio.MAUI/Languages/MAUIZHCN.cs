@@ -8,6 +8,12 @@ namespace PopStudio.MAUI.Languages
 {
     internal class MAUIZHCN : ILocalization
     {
+        //Shell
+        public string Shell_OK => "确定\0";
+        public string Shell_Cancel => "取消\0";
+        public string Shell_ExitTitle => "确定要退出吗";
+        public string Shell_ExitText => "确定要退出吗？";
+
         //Setting
         public string Setting_Title => "设置";
         public string Setting_Introduction => "通过设置功能，改变工具的默认行为！";
@@ -144,13 +150,13 @@ namespace PopStudio.MAUI.Languages
         public string HomePage_Author_String => "作者：";
         public string HomePage_Author => "萌新迎风听雨";
         public string HomePage_Thanks_String => "特别感谢：";
-        public string HomePage_Thanks => "2508 和风唐舞 补补23456 AS魇梦蚀 伊特 僵学者 An-Haze";
+        public string HomePage_Thanks => "2508 和风唐舞 补补23456 63enjoy AS魇梦蚀 伊特 僵学者 An-Haze";
         public string HomePage_QQGroup_String => "交流QQ群：";
         public string HomePage_QQGroup => "1017246977";
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持多语言。";
+        public string HomePage_AppNewNotice => "1.支持多语言；\n2.修复PTX解码编码bug；\n3.修复部分rsb解包异常bug。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

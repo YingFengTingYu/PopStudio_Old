@@ -8,6 +8,7 @@
             string settingxml = Permission.GetSettingPath();
             if (!File.Exists(settingxml))
             {
+                Setting.AppLanguage = Permission.GetDefaultLanguage();
                 Setting.SaveAsXml(settingxml);
             }
             Setting.LoadFromXml(settingxml);

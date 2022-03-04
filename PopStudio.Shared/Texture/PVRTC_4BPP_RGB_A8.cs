@@ -42,27 +42,32 @@ namespace PopStudio.Texture
                 packets[i] = new PVRTCEncode.PvrTcPacket(bs.ReadUInt64());
             }
             SKColor[] pixels = PVRTCEncode.Decode4Bpp(packets, newwidth);
+            if (t)
+            {
+                SKBitmap image1 = new SKBitmap(newwidth, newheight);
+                image1.Pixels = pixels;
+                SKBitmap image2 = new SKBitmap(width, height);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image1, new SKRect(0, 0, newwidth, newheight));
+                }
+                pixels = image2.Pixels;
+                image1.Dispose();
+                image2.Dispose();
+            }
+            S = pixels.Length;
             for (int i = 0; i < S; i++)
             {
                 pixels[i] = pixels[i].WithAlpha(bs.ReadByte());
             }
-            SKBitmap image = new SKBitmap(newwidth, newheight);
+            SKBitmap image = new SKBitmap(width, height);
             image.Pixels = pixels;
-            if (t)
-            {
-                SKBitmap image2 = new SKBitmap(width, height);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, newwidth, newheight));
-                }
-                image.Dispose();
-                return image2;
-            }
             return image;
         }
 
         public static int Write(BinaryStream bs, SKBitmap image)
         {
+            SKBitmap imagein = image;
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
@@ -107,7 +112,8 @@ namespace PopStudio.Texture
             {
                 bs.WriteUInt64(words[i].PvrTcWord);
             }
-            index = newwidth * newheight;
+            if (t) pixels = imagein.Pixels;
+            index = pixels.Length;
             for (int i = 0; i < index; i++)
             {
                 bs.WriteByte(pixels[i].Alpha);
@@ -116,7 +122,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return newwidth << 2;
+            return imagein.Width << 2;
         }
     }
 }

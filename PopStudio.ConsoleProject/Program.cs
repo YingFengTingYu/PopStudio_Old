@@ -54,7 +54,7 @@ while (true)
                     Console.WriteLine(Lng[11]);
                     continue;
                 }
-                PopStudio.P_Package.Rsb.Rsb.Unpack(filepath, filepath + ".out");
+                PopStudio.P_Package.Rsb.Rsb.Unpack(filepath, filepath + ".out",true);
                 continue;
             }
             else if (mode == 3)

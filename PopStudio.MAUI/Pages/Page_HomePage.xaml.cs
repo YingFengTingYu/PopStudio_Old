@@ -26,16 +26,7 @@ namespace PopStudio.MAUI
 			label_course.Text = MAUIStr.Obj.HomePage_Course;
 			label_appnewnotice_string.Text = MAUIStr.Obj.HomePage_AppNewNotice_String;
 			label_appnewnotice.Text = MAUIStr.Obj.HomePage_AppNewNotice;
-			Request();
-		}
-
-		async void Request()
-        {
-			if (!await this.CheckAndRequestPermissionAsync())
-			{
-				Thread.Sleep(1000);
-				Environment.Exit(0);
-			}
+			this.CheckAndRequestPermissionAsync();
 		}
     }
 }

@@ -40,14 +40,20 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.RGBA5551;
                             break;
                         case 5:
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.RGBA4444_Block.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA4444_Block;
                             break;
                         case 6:
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.RGB565_Block.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGB565_Block;
                             break;
                         case 7:
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.RGBA5551_Block.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA5551_Block;
                             break;
@@ -172,12 +178,18 @@ namespace PopStudio.Image.Ptx
                             bs.Endian = backendian;
                             break;
                         case PtxFormat.RGBA4444_Block:
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.RGBA4444_Block.Write(bs, sKBitmap);
                             break;
                         case PtxFormat.RGB565_Block:
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.RGB565_Block.Write(bs, sKBitmap);
                             break;
                         case PtxFormat.RGBA5551_Block:
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.RGBA5551_Block.Write(bs, sKBitmap);
                             break;
                         case PtxFormat.PVRTC_4BPP_RGBA:
@@ -346,6 +358,7 @@ namespace PopStudio.Image.Ptx
                         }
                         else
                         {
+                            if (head.alphaFormat != 0x0) throw new Exception();
                             using (SKBitmap sKBitmap = Texture.ETC1_RGB_A8.Read(bs, head.width, head.height))
                             {
                                 sKBitmap.Save(outFile);

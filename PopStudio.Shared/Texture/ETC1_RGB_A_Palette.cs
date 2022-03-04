@@ -28,14 +28,14 @@ namespace PopStudio.Texture
             bool t = false;
             int newwidth = width;
             int newheight = height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (newwidth % 4 != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth += 4 - newwidth % 4;
                 t = true;
             }
-            if ((newheight & (newheight - 1)) != 0)
+            if (newheight % 4 != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight += 4 - newheight % 4;
                 t = true;
             }
             int S = newwidth * newheight;
@@ -99,6 +99,20 @@ namespace PopStudio.Texture
                     }
                 }
             }
+            if (t)
+            {
+                SKBitmap image1 = new SKBitmap(newwidth, newheight);
+                image1.Pixels = pixels;
+                SKBitmap image2 = new SKBitmap(width, height);
+                using (SKCanvas canvas = new SKCanvas(image2))
+                {
+                    canvas.DrawBitmap(image1, new SKRect(0, 0, newwidth, newheight));
+                }
+                pixels = image2.Pixels;
+                image1.Dispose();
+                image2.Dispose();
+            }
+            S = pixels.Length;
             byte indexNumber = bs.ReadByte();
             if (indexNumber == 0)
             {
@@ -125,34 +139,25 @@ namespace PopStudio.Texture
                     ind = (ind + 4) % 8;
                 }
             }
-            SKBitmap image = new SKBitmap(newwidth, newheight);
+            SKBitmap image = new SKBitmap(width, height);
             image.Pixels = pixels;
-            if (t)
-            {
-                SKBitmap image2 = new SKBitmap(width, height);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, newwidth, newheight));
-                }
-                image.Dispose();
-                return image2;
-            }
             return image;
         }
 
         public static int Write(BinaryStream bs, SKBitmap image, out int AlphaSize)
         {
+            SKBitmap imagein = image;
             bool t = false;
             int newwidth = image.Width;
             int newheight = image.Height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (newwidth % 4 != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth += 4 - newwidth % 4;
                 t = true;
             }
-            if ((newheight & (newheight - 1)) != 0)
+            if (newheight % 4 != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight += 4 - newheight % 4;
                 t = true;
             }
             if (t)
@@ -183,6 +188,7 @@ namespace PopStudio.Texture
                     bs.WriteUInt64(ETCEncode.GenETC1(color), etcendian);
                 }
             }
+            if (t) pixels = imagein.Pixels;
             int S = pixels.Length;
             List<byte> ary = Palette.GeneratePalette_A8(pixels, 16);
             ary.Sort();
@@ -247,22 +253,11 @@ namespace PopStudio.Texture
                     bs.WriteByte((byte)flags);
                 }
             }
-            //If you really need fast encoding, you can use A4 "compress"
-            //AlphaSize = (S >> 1) + 17;
-            //bs.WriteByte(0x10);
-            //for (int i = 0; i < 16; i++)
-            //{
-            //    bs.WriteByte((byte)(i | (i << 4)));
-            //}
-            //for (int i = 0; i < S; i += 2)
-            //{
-            //    bs.WriteByte((byte)((pixels[i].Alpha << 4) | pixels[i | 1].Alpha));
-            //}
             if (t)
             {
                 image.Dispose();
             }
-            return newwidth << 2;
+            return imagein.Width << 2;
         }
     }
 }

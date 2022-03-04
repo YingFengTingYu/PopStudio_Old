@@ -174,7 +174,7 @@ namespace PopStudio.P_Package.Rsb
                                             if (File.Exists(name2))
                                             {
                                                 Image.Ptx.PtxFormat format = (Image.Ptx.PtxFormat)Convert.ToInt32(childchildlist[j].Attributes["defaultformat"].Value);
-                                                Image.Ptx.Ptx.Encode(name2, name, format, bs_rsgpfile.Endian, ptxEachLength == 0x18);
+                                                Image.Ptx.Ptx.Encode(name2, name, format, bs_rsgpfile.Endian, ptxEachLength != 0x10);
                                                 delete = true;
                                             }
                                         }

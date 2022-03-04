@@ -8,6 +8,12 @@ namespace PopStudio.MAUI.Languages
 {
     internal class MAUIENUS : ILocalization
     {
+        //Shell
+        public string Shell_OK => "Yes\0";
+        public string Shell_Cancel => "No\0";
+        public string Shell_ExitTitle => "Exit";
+        public string Shell_ExitText => "Are you sure you want to exit?";
+
         //Setting
         public string Setting_Title => "Setting";
         public string Setting_Introduction => "Change the default behavior of the tool by setting!";
@@ -144,13 +150,13 @@ namespace PopStudio.MAUI.Languages
         public string HomePage_Author_String => "Author:";
         public string HomePage_Author => "YingFengTingYu";
         public string HomePage_Thanks_String => "Thanks:";
-        public string HomePage_Thanks => "2508, Japonisme Toumai, 补补23456, AS魇梦蚀, 伊特, 僵学者, An-Haze";
+        public string HomePage_Thanks => "2508, Japonisme Toumai, 补补23456, 63enjoy, AS魇梦蚀, 伊特, 僵学者, An-Haze";
         public string HomePage_QQGroup_String => "QQ group:";
         public string HomePage_QQGroup => "1017246977";
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support multiple languages. ";
+        public string HomePage_AppNewNotice => "1.Support multiple languages. \n2.Fix the bug of PTX. \n3.Fix the bug of some rsb. ";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";
