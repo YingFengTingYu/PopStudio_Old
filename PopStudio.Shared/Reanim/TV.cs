@@ -2,11 +2,10 @@
 {
     internal static class TV
     {
-        public static void Encode(string inFile, string outFile)
+        public static void Encode(Reanim reanim, string outFile)
         {
             using (BinaryStream bs = new BinaryStream())
             {
-                Reanim reanim = ReanimJson.Read(inFile);
                 bs.WriteInt32(0);
                 bs.WriteInt32(0);
                 int trackNum = reanim.tracks.Length;
@@ -68,7 +67,7 @@
             }
         }
 
-        public static void Decode(string inFile, string outFile)
+        public static Reanim Decode(string inFile)
         {
             using (BinaryStream bs = new BinaryStream())
             {
@@ -193,7 +192,7 @@
                         }
                     }
                 }
-                ReanimJson.Write(reanim, outFile);
+                return reanim;
             }
         }
     }

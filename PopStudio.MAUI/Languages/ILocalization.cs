@@ -35,6 +35,10 @@ namespace PopStudio.MAUI.Languages
         public string Setting_IntroRTON { get; }
         public string Setting_ItemCompiled { get; }
         public string Setting_IntroCompiled { get; }
+        public string Setting_ItemXfl { get; }
+        public string Setting_IntroXfl { get; }
+        public string Setting_XflWidth { get; }
+        public string Setting_XflHeight { get; }
         public string Setting_Load { get; }
         public string Setting_Unload { get; }
         public string Setting_Recover { get; }
@@ -94,14 +98,10 @@ namespace PopStudio.MAUI.Languages
         //Reanim
         public string Reanim_Title { get; }
         public string Reanim_Introduction { get; }
-        public string Reanim_Mode1 { get; }
-        public string Reanim_Mode2 { get; }
         public string Reanim_Choose1 { get; }
         public string Reanim_Choose2 { get; }
-        public string Reanim_Choose3 { get; }
-        public string Reanim_Choose4 { get; }
-        public string Reanim_Choose5 { get; }
-        public string Reanim_Choose6 { get; }
+        public string Reanim_InFormat { get; }
+        public string Reanim_OutFormat { get; }
 
         //Particles
         public string Particles_Title { get; }

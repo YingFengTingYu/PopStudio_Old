@@ -35,6 +35,10 @@ namespace PopStudio.MAUI.Languages
         public string Setting_IntroRTON => "Some RTON is in encryption format. The tool does not provide a key. You need to provide your own key to decrypt and encrypt.";
         public string Setting_ItemCompiled => "Convert Number Image Label";
         public string Setting_IntroCompiled => "In some platform's compiled files in PVZ, the image label is changed from string to number. You can find the corresponding relationship in so and provide it to the tool to change the number into string.";
+        public string Setting_ItemXfl => "Xfl canvas size";
+        public string Setting_IntroXfl => "When using reanim transcoding to generate Flash_Xfl document to use Adobe Animate to edit it, you need to allocate the canvas size. It can also be allocated in Adobe Animate. ";
+        public string Setting_XflWidth => "Width";
+        public string Setting_XflHeight => "Height";
         public string Setting_Load => "Load";
         public string Setting_Unload => "Unload";
         public string Setting_Recover => "Restore Default Settings";
@@ -94,14 +98,10 @@ namespace PopStudio.MAUI.Languages
         //Reanim
         public string Reanim_Title => "reanim";
         public string Reanim_Introduction => "Obtain and modify the game action content through reanim transcoding! ";
-        public string Reanim_Mode1 => "Decode";
-        public string Reanim_Mode2 => "Encode";
-        public string Reanim_Choose1 => "The decoded file path";
-        public string Reanim_Choose2 => "The path of generated file";
-        public string Reanim_Choose3 => "Decoding Mode";
-        public string Reanim_Choose4 => "The encoded file path";
-        public string Reanim_Choose5 => "The path of generated file";
-        public string Reanim_Choose6 => "Encoding Mode";
+        public string Reanim_Choose1 => "Path of in file";
+        public string Reanim_Choose2 => "Path of out file";
+        public string Reanim_InFormat => "Format of in file";
+        public string Reanim_OutFormat => "Format of out file";
 
         //Particles
         public string Particles_Title => "particles";

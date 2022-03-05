@@ -1,7 +1,6 @@
 ﻿//If you want to use English mode, please change this setting. (ZHCN to ENUS)
 //如果你想转为英文模式，请改变这个设置。（ZHCN改为ENUS）
-Str.SetLanguage(Language.ZHCN);
-PopStudio.ConsoleProject.Constant.Str.Obj = new PopStudio.ConsoleProject.Constant.ZHCN();
+PopStudio.Setting.AppLanguage = Language.ZHCN;
 string[] Lng = PopStudio.ConsoleProject.Constant.Str.Obj.All;
 Console.WriteLine(Lng[0], Str.Obj.AppName, Str.Obj.AppVersion);
 Console.WriteLine(Lng[1], Str.Obj.AppAuthor);
@@ -40,7 +39,7 @@ while (true)
                     Console.WriteLine(Lng[10]);
                     continue;
                 }
-                PopStudio.P_Package.Dz.Dz.Unpack(filepath, filepath + ".out");
+                PopStudio.Package.Dz.Dz.Unpack(filepath, filepath + ".out");
                 continue;
             }
             else if (mode == 2)
@@ -54,7 +53,7 @@ while (true)
                     Console.WriteLine(Lng[11]);
                     continue;
                 }
-                PopStudio.P_Package.Rsb.Rsb.Unpack(filepath, filepath + ".out",true);
+                PopStudio.Package.Rsb.Rsb.Unpack(filepath, filepath + ".out");
                 continue;
             }
             else if (mode == 3)
@@ -68,7 +67,7 @@ while (true)
                     Console.WriteLine(Lng[12]);
                     continue;
                 }
-                PopStudio.P_Package.Pak.Pak.Unpack(filepath, filepath + ".out");
+                PopStudio.Package.Pak.Pak.Unpack(filepath, filepath + ".out");
                 continue;
             }
             else
@@ -94,7 +93,7 @@ while (true)
                     Console.WriteLine(Lng[16]);
                     continue;
                 }
-                PopStudio.P_Package.Dz.Dz.Pack(filepath, filepath + ".out");
+                PopStudio.Package.Dz.Dz.Pack(filepath, filepath + ".out");
                 continue;
             }
             else if (mode == 2)
@@ -108,7 +107,7 @@ while (true)
                     Console.WriteLine(Lng[17]);
                     continue;
                 }
-                PopStudio.P_Package.Rsb.Rsb.Pack(filepath, filepath + ".out");
+                PopStudio.Package.Rsb.Rsb.Pack(filepath, filepath + ".out");
                 continue;
             }
             else if (mode == 3)
@@ -122,7 +121,7 @@ while (true)
                     Console.WriteLine(Lng[18]);
                     continue;
                 }
-                PopStudio.P_Package.Pak.Pak.Pack(filepath, filepath + ".out");
+                PopStudio.Package.Pak.Pak.Pack(filepath, filepath + ".out");
                 continue;
             }
             else
@@ -490,7 +489,7 @@ while (true)
                     Console.WriteLine(Lng[100]);
                     continue;
                 }
-                PopStudio.Reanim.PC.Decode(filepath, filepath + ".reanim");
+                API.Reanim(filepath, filepath + ".reanim", 0, 6);
                 continue;
             }
             else if (mode == 2)
@@ -502,7 +501,7 @@ while (true)
                     Console.WriteLine(Lng[100]);
                     continue;
                 }
-                PopStudio.Reanim.Phone32.Decode(filepath, filepath + ".reanim");
+                API.Reanim(filepath, filepath + ".reanim", 1, 6);
                 continue;
             }
             else if (mode == 3)
@@ -514,7 +513,7 @@ while (true)
                     Console.WriteLine(Lng[100]);
                     continue;
                 }
-                PopStudio.Reanim.Phone64.Decode(filepath, filepath + ".reanim");
+                API.Reanim(filepath, filepath + ".reanim", 2, 6);
                 continue;
             }
             else if (mode == 4)
@@ -526,7 +525,7 @@ while (true)
                     Console.WriteLine(Lng[101]);
                     continue;
                 }
-                PopStudio.Reanim.WP.Decode(filepath, filepath + ".reanim");
+                API.Reanim(filepath, filepath + ".reanim", 3, 6);
                 continue;
             }
             else if (mode == 5)
@@ -538,7 +537,7 @@ while (true)
                     Console.WriteLine(Lng[100]);
                     continue;
                 }
-                PopStudio.Reanim.GameConsole.Decode(filepath, filepath + ".reanim");
+                API.Reanim(filepath, filepath + ".reanim", 4, 6);
                 continue;
             }
             else if (mode == 6)
@@ -550,7 +549,7 @@ while (true)
                     Console.WriteLine(Lng[100]);
                     continue;
                 }
-                PopStudio.Reanim.TV.Decode(filepath, filepath + ".reanim");
+                API.Reanim(filepath, filepath + ".reanim", 5, 6);
                 continue;
             }
             else
@@ -577,7 +576,7 @@ while (true)
                     Console.WriteLine(Lng[102]);
                     continue;
                 }
-                PopStudio.Reanim.PC.Encode(filepath, filepath + ".reanim.compiled");
+                API.Reanim(filepath, filepath + ".reanim.compiled", 6, 0);
                 continue;
             }
             else if (mode == 2)
@@ -589,7 +588,7 @@ while (true)
                     Console.WriteLine(Lng[102]);
                     continue;
                 }
-                PopStudio.Reanim.Phone32.Encode(filepath, filepath + ".reanim.compiled");
+                API.Reanim(filepath, filepath + ".reanim.compiled", 6, 1);
                 continue;
             }
             else if (mode == 3)
@@ -601,7 +600,7 @@ while (true)
                     Console.WriteLine(Lng[102]);
                     continue;
                 }
-                PopStudio.Reanim.Phone64.Encode(filepath, filepath + ".reanim.compiled");
+                API.Reanim(filepath, filepath + ".reanim.compiled", 6, 2);
                 continue;
             }
             else if (mode == 4)
@@ -613,7 +612,7 @@ while (true)
                     Console.WriteLine(Lng[102]);
                     continue;
                 }
-                PopStudio.Reanim.WP.Encode(filepath, filepath + ".xnb");
+                API.Reanim(filepath, filepath + ".xnb", 6, 3);
                 continue;
             }
             else if (mode == 5)
@@ -625,7 +624,7 @@ while (true)
                     Console.WriteLine(Lng[102]);
                     continue;
                 }
-                PopStudio.Reanim.GameConsole.Encode(filepath, filepath + ".reanim.compiled");
+                API.Reanim(filepath, filepath + ".reanim.compiled", 6, 4);
                 continue;
             }
             else if (mode == 6)
@@ -637,7 +636,7 @@ while (true)
                     Console.WriteLine(Lng[102]);
                     continue;
                 }
-                PopStudio.Reanim.TV.Encode(filepath, filepath + ".reanim.compiled");
+                API.Reanim(filepath, filepath + ".reanim.compiled", 6, 5);
                 continue;
             }
             else

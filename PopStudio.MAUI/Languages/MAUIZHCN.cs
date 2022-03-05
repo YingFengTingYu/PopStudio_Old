@@ -35,6 +35,10 @@ namespace PopStudio.MAUI.Languages
         public string Setting_IntroRTON => "部分RTON为加密格式，程序不提供密钥，需要你自行提供密钥来解密加密。";
         public string Setting_ItemCompiled => "compiled自动转换数字i标签";
         public string Setting_IntroCompiled => "PVZ在部分平台compiled文件中Image标签由标准字符串形式变为数字形式，你可以自行在so中找到对应关系并提供给程序，来将数字变为字符串。";
+        public string Setting_ItemXfl => "Xfl生成画布大小";
+        public string Setting_IntroXfl => "当使用reanim转码生成Flash_Xfl文档以供使用Adobe Animate查看时，需要指定画布大小，画布大小也可自行在Adobe Animate更改。";
+        public string Setting_XflWidth => "宽度";
+        public string Setting_XflHeight => "高度";
         public string Setting_Load => "加载文件";
         public string Setting_Unload => "清空项目";
         public string Setting_Recover => "恢复默认设置";
@@ -94,14 +98,10 @@ namespace PopStudio.MAUI.Languages
         //Reanim
         public string Reanim_Title => "reanim转码";
         public string Reanim_Introduction => "通过reanim转码功能获取和修改游戏动作内容！";
-        public string Reanim_Mode1 => "解码模式";
-        public string Reanim_Mode2 => "编码模式";
-        public string Reanim_Choose1 => "请填写被解码的文件路径";
-        public string Reanim_Choose2 => "请填写解码生成文件存放路径";
-        public string Reanim_Choose3 => "请选择解码模式";
-        public string Reanim_Choose4 => "请填写被编码的文件路径";
-        public string Reanim_Choose5 => "请填写编码生成文件存放路径";
-        public string Reanim_Choose6 => "请选择编码模式";
+        public string Reanim_Choose1 => "请填写被转换的文件路径";
+        public string Reanim_Choose2 => "请填写转换生成文件存放路径";
+        public string Reanim_InFormat => "请选择被转换的文件格式";
+        public string Reanim_OutFormat => "请选择转换生成文件格式";
 
         //Particles
         public string Particles_Title => "particles转码";

@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using PopStudio.MAUI.Languages;
+﻿using PopStudio.MAUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -13,47 +9,36 @@ namespace PopStudio.MAUI
 			InitializeComponent();
             Title = MAUIStr.Obj.Reanim_Title;
             label_introduction.Text = MAUIStr.Obj.Reanim_Introduction;
-            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-            label_mode1.Text = MAUIStr.Obj.Reanim_Mode1;
-            label_mode2.Text = MAUIStr.Obj.Reanim_Mode2;
             text1.Text = MAUIStr.Obj.Reanim_Choose1;
             text2.Text = MAUIStr.Obj.Reanim_Choose2;
-            text3.Text = MAUIStr.Obj.Reanim_Choose3;
+            text_in.Text = MAUIStr.Obj.Reanim_InFormat;
+            text_out.Text = MAUIStr.Obj.Reanim_OutFormat;
             button1.Text = MAUIStr.Obj.Share_Choose;
             button2.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;
-            CB_CMode.Items.Clear();
-            CB_CMode.Items.Add("PC");
-            CB_CMode.Items.Add("Phone32");
-            CB_CMode.Items.Add("Phone64");
-            CB_CMode.Items.Add("WP");
-            CB_CMode.Items.Add("GameConsole");
-            CB_CMode.Items.Add("TV");
-            CB_CMode.SelectedIndex = 0;
-        }
-
-        private void ToggleButton_Checked(object sender, EventArgs e)
-        {
-            if (((Switch)sender).IsToggled)
-            {
-                text1.Text = MAUIStr.Obj.Reanim_Choose4;
-                text2.Text = MAUIStr.Obj.Reanim_Choose5;
-                text3.Text = MAUIStr.Obj.Reanim_Choose6;
-                string temp = textbox1.Text;
-                textbox1.Text = textbox2.Text;
-                textbox2.Text = temp;
-            }
-            else
-            {
-                text1.Text = MAUIStr.Obj.Reanim_Choose1;
-                text2.Text = MAUIStr.Obj.Reanim_Choose2;
-                text3.Text = MAUIStr.Obj.Reanim_Choose3;
-                string temp = textbox1.Text;
-                textbox1.Text = textbox2.Text;
-                textbox2.Text = temp;
-            }
+            CB_InMode.Items.Clear();
+            CB_InMode.Items.Add("PC_Compiled");
+            CB_InMode.Items.Add("Phone32_Compiled");
+            CB_InMode.Items.Add("Phone64_Compiled");
+            CB_InMode.Items.Add("WP_Xnb");
+            CB_InMode.Items.Add("GameConsole_Compiled");
+            CB_InMode.Items.Add("TV_Compiled");
+            CB_InMode.Items.Add("Studio_Json");
+            CB_InMode.Items.Add("Raw_Xml");
+            CB_InMode.SelectedIndex = 0;
+            CB_OutMode.Items.Clear();
+            CB_OutMode.Items.Add("PC_Compiled");
+            CB_OutMode.Items.Add("Phone32_Compiled");
+            CB_OutMode.Items.Add("Phone64_Compiled");
+            CB_OutMode.Items.Add("WP_Xnb");
+            CB_OutMode.Items.Add("GameConsole_Compiled");
+            CB_OutMode.Items.Add("TV_Compiled");
+            CB_OutMode.Items.Add("Studio_Json");
+            CB_OutMode.Items.Add("Raw_Xml");
+            CB_OutMode.Items.Add("Flash_Xfl");
+            CB_OutMode.SelectedIndex = 6;
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -61,10 +46,10 @@ namespace PopStudio.MAUI
             Button b = (Button)sender;
             b.IsEnabled = false;
             text4.Text = MAUIStr.Obj.Share_Running;
-            bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
-            int cmode = CB_CMode.SelectedIndex;
+            int inmode = CB_InMode.SelectedIndex;
+            int outmode = CB_OutMode.SelectedIndex;
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
@@ -74,14 +59,7 @@ namespace PopStudio.MAUI
                     {
                         throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
-                    if (mode)
-                    {
-                        API.EncodeReanim(inFile, outFile, cmode);
-                    }
-                    else
-                    {
-                        API.DecodeReanim(inFile, outFile, cmode);
-                    }
+                    API.Reanim(inFile, outFile, inmode, outmode);
                 }
                 catch (Exception ex)
                 {

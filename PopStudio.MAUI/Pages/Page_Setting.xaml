@@ -100,7 +100,25 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button x:Name="button_compiled_1" Margin="0,7,0,7" Clicked="Button_ImageString_1_Clicked" />
-                <Button x:Name="button_compiled_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_ImageString_2_Clicked" />
+                <Button x:Name="button_compiled_2" Margin="0,7,0,7" Grid.Column="2" Clicked="Button_ImageString_2_Clicked" />
+            </Grid>
+            <Label x:Name="label_itemxfl" />
+            <Label x:Name="label_introxfl" FontSize="16" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label x:Name="label_xflwidth" VerticalTextAlignment="Center" />
+                <Entry x:Name="xflwidth" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Width_TextChanged" />
+                <Label x:Name="label_xflheight" VerticalTextAlignment="Center" Grid.Row="2" />
+                <Entry x:Name="xflheight" Grid.Row="2" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Height_TextChanged" />
             </Grid>
             <Button x:Name="button_recover" Clicked="Button_ResetSetting_Clicked" />
         </StackLayout>

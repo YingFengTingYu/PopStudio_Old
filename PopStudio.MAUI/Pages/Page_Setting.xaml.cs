@@ -30,12 +30,16 @@ public partial class Page_Setting : ContentPage
 		label_introrton.Text = MAUIStr.Obj.Setting_IntroRTON;
 		label_itemcompiled.Text = MAUIStr.Obj.Setting_ItemCompiled;
 		label_introcompiled.Text = MAUIStr.Obj.Setting_IntroCompiled;
+		label_itemxfl.Text = MAUIStr.Obj.Setting_ItemXfl;
+		label_introxfl.Text = MAUIStr.Obj.Setting_IntroXfl;
+		label_xflwidth.Text = MAUIStr.Obj.Setting_XflWidth;
+		label_xflheight.Text = MAUIStr.Obj.Setting_XflHeight;
 		button_compiled_1.Text = MAUIStr.Obj.Setting_Load;
 		button_compiled_2.Text = MAUIStr.Obj.Setting_Unload;
 		button_recover.Text = MAUIStr.Obj.Setting_Recover;
 		Setting_Dz.ItemsSource = dzpackinfo;
 		Setting_PakPS3.ItemsSource = pakps3packinfo;
-		
+		Setting.CanSave = false;
 		InitDzPackSetting();
 		InitPakPS3PackSetting();
 		InitRsbPackSetting();
@@ -43,6 +47,8 @@ public partial class Page_Setting : ContentPage
 		InitCdatKeySetting();
 		InitRTONKeySetting();
 		InitImageStringSetting();
+		InitXflSizeSetting();
+		Setting.CanSave = true;
 	}
 
 	/// <summary>
@@ -71,10 +77,10 @@ public partial class Page_Setting : ContentPage
 	void InitDzPackSetting()
     {
 		dzpackinfo.Clear();
-		Dictionary<string, P_Package.Dz.CompressFlags> dzpacksetting = Setting.DzCompressDictionary;
-		Dictionary<P_Package.Dz.CompressFlags, string> dzcompressname = Setting.DzCompressMethodName;
+		Dictionary<string, Package.Dz.CompressFlags> dzpacksetting = Setting.DzCompressDictionary;
+		Dictionary<Package.Dz.CompressFlags, string> dzcompressname = Setting.DzCompressMethodName;
 		dzpackinfo.Add(new ListInfo("default", dzcompressname[Setting.DzDefaultCompressMethod]));
-		foreach (KeyValuePair<string, P_Package.Dz.CompressFlags> keyValuePair in dzpacksetting)
+		foreach (KeyValuePair<string, Package.Dz.CompressFlags> keyValuePair in dzpacksetting)
         {
 			dzpackinfo.Add(new ListInfo(keyValuePair.Key, dzcompressname[keyValuePair.Value]));
 		}
@@ -101,7 +107,7 @@ public partial class Page_Setting : ContentPage
 				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
 				if (ans != cancel && ans != ok)
 				{
-					Dictionary<string, P_Package.Dz.CompressFlags> tempdic = Setting.DzCompressDictionary;
+					Dictionary<string, Package.Dz.CompressFlags> tempdic = Setting.DzCompressDictionary;
 					if (tempdic.ContainsKey(itemname))
 					{
 						tempdic[itemname] = Setting.DzCompressMethodEnum[ans];
@@ -208,10 +214,10 @@ public partial class Page_Setting : ContentPage
 	void InitPakPS3PackSetting()
 	{
 		pakps3packinfo.Clear();
-		Dictionary<string, P_Package.Pak.CompressFlags> pakps3packsetting = Setting.PakPS3CompressDictionary;
-		Dictionary<P_Package.Pak.CompressFlags, string> pakps3compressname = Setting.PakPS3CompressMethodName;
+		Dictionary<string, Package.Pak.CompressFlags> pakps3packsetting = Setting.PakPS3CompressDictionary;
+		Dictionary<Package.Pak.CompressFlags, string> pakps3compressname = Setting.PakPS3CompressMethodName;
 		pakps3packinfo.Add(new ListInfo("default", pakps3compressname[Setting.PakPS3DefaultCompressMethod]));
-		foreach (KeyValuePair<string, P_Package.Pak.CompressFlags> keyValuePair in pakps3packsetting)
+		foreach (KeyValuePair<string, Package.Pak.CompressFlags> keyValuePair in pakps3packsetting)
 		{
 			pakps3packinfo.Add(new ListInfo(keyValuePair.Key, pakps3compressname[keyValuePair.Value]));
 		}
@@ -236,7 +242,7 @@ public partial class Page_Setting : ContentPage
 				ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
 				if (ans != cancel && ans != ok)
 				{
-					Dictionary<string, P_Package.Pak.CompressFlags> tempdic = Setting.PakPS3CompressDictionary;
+					Dictionary<string, Package.Pak.CompressFlags> tempdic = Setting.PakPS3CompressDictionary;
 					if (tempdic.ContainsKey(itemname))
 					{
 						tempdic[itemname] = Setting.PakPS3CompressMethodEnum[ans];
@@ -409,6 +415,46 @@ public partial class Page_Setting : ContentPage
 		Setting.SaveAsXml(Permission.GetSettingPath());
 	}
 
+	/// <summary>
+	/// Xfl Setting Begin
+	/// </summary>
+	void InitXflSizeSetting()
+	{
+		xflwidth.Text = Setting.ReanimXflWidth.ToString();
+		xflheight.Text = Setting.ReanimXflHeight.ToString();
+	}
+
+	private void Entry_XflSize_Width_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		string n = e.NewTextValue;
+        try
+        {
+			Setting.ReanimXflWidth = Convert.ToSingle(n);
+			Setting.SaveAsXml(Permission.GetSettingPath());
+		}
+		catch (Exception)
+        {
+        }
+	}
+
+	private void Entry_XflSize_Height_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		string n = e.NewTextValue;
+		try
+		{
+			Setting.ReanimXflHeight = Convert.ToSingle(n);
+			Setting.SaveAsXml(Permission.GetSettingPath());
+		}
+		catch (Exception)
+		{
+		}
+	}
+
+	/// <summary>
+	/// Reset All(Without language)
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
 	private async void Button_ResetSetting_Clicked(object sender, EventArgs e)
 	{
 		string cancel = MAUIStr.Obj.Setting_Cancel;

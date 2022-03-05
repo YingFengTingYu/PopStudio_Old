@@ -1,4 +1,4 @@
-﻿namespace PopStudio
+﻿namespace PopStudio.Plugin
 {
     internal static class API
     {
@@ -28,9 +28,9 @@
         {
             switch (format)
             {
-                case 0: P_Package.Dz.Dz.Unpack(inFile, outFile, changeimage, delete); return;
-                case 1: P_Package.Rsb.Rsb.Unpack(inFile, outFile, changeimage, delete); return;
-                case 2: P_Package.Pak.Pak.Unpack(inFile, outFile, changeimage, delete); return;
+                case 0: Package.Dz.Dz.Unpack(inFile, outFile, changeimage, delete); return;
+                case 1: Package.Rsb.Rsb.Unpack(inFile, outFile, changeimage, delete); return;
+                case 2: Package.Pak.Pak.Unpack(inFile, outFile, changeimage, delete); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
@@ -39,9 +39,9 @@
         {
             switch (format)
             {
-                case 0: P_Package.Dz.Dz.Pack(inFile, outFile); return;
-                case 1: P_Package.Rsb.Rsb.Pack(inFile, outFile); return;
-                case 2: P_Package.Pak.Pak.Pack(inFile, outFile); return;
+                case 0: Package.Dz.Dz.Pack(inFile, outFile); return;
+                case 1: Package.Rsb.Rsb.Pack(inFile, outFile); return;
+                case 2: Package.Pak.Pak.Pack(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
@@ -78,31 +78,34 @@
             }
         }
 
-        public static void DecodeReanim(string inFile, string outFile, int format)
+        public static void Reanim(string inFile, string outFile, int informat, int outformat)
         {
-            switch (format)
+            Reanim.ReanimFormat inFormat = (Reanim.ReanimFormat)informat;
+            Reanim.ReanimFormat outFormat = (Reanim.ReanimFormat)outformat;
+            Reanim.Reanim reanim = inFormat switch
             {
-                case 0: Reanim.PC.Decode(inFile, outFile); return;
-                case 1: Reanim.Phone32.Decode(inFile, outFile); return;
-                case 2: Reanim.Phone64.Decode(inFile, outFile); return;
-                case 3: Reanim.WP.Decode(inFile, outFile); return;
-                case 4: Reanim.GameConsole.Decode(inFile, outFile); return;
-                case 5: Reanim.TV.Decode(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
-            }
-        }
-
-        public static void EncodeReanim(string inFile, string outFile, int format)
-        {
-            switch (format)
+                PopStudio.Reanim.ReanimFormat.PCCompiled => PopStudio.Reanim.PC.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.Phone32Compiled => PopStudio.Reanim.Phone32.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.Phone64Compiled => PopStudio.Reanim.Phone64.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.WPXnb => PopStudio.Reanim.WP.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.GameConsoleCompiled => PopStudio.Reanim.GameConsole.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.TVCompiled => PopStudio.Reanim.TV.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.Json => PopStudio.Reanim.ReanimJson.Decode(inFile),
+                PopStudio.Reanim.ReanimFormat.RawXml => PopStudio.Reanim.RawXml.Decode(inFile),
+                _ => throw new NotImplementedException()
+            };
+            switch (outFormat)
             {
-                case 0: Reanim.PC.Encode(inFile, outFile); return;
-                case 1: Reanim.Phone32.Encode(inFile, outFile); return;
-                case 2: Reanim.Phone64.Encode(inFile, outFile); return;
-                case 3: Reanim.WP.Encode(inFile, outFile); return;
-                case 4: Reanim.GameConsole.Encode(inFile, outFile); return;
-                case 5: Reanim.TV.Encode(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
+                case PopStudio.Reanim.ReanimFormat.PCCompiled: PopStudio.Reanim.PC.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.Phone32Compiled: PopStudio.Reanim.Phone32.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.Phone64Compiled: PopStudio.Reanim.Phone64.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.WPXnb: PopStudio.Reanim.WP.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.GameConsoleCompiled: PopStudio.Reanim.GameConsole.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.TVCompiled: PopStudio.Reanim.TV.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.Json: PopStudio.Reanim.ReanimJson.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.RawXml: PopStudio.Reanim.RawXml.Encode(reanim, outFile); break;
+                case PopStudio.Reanim.ReanimFormat.FlashXfl: PopStudio.Reanim.FlashXfl.Encode(reanim, outFile); break;
+                default: throw new NotImplementedException();
             }
         }
 
@@ -186,13 +189,13 @@
         {
             switch (format)
             {
-                case 0: P_Compress.Zlib.Decompress(inFile, outFile); return;
-                case 1: P_Compress.Gzip.Decompress(inFile, outFile); return;
-                case 2: P_Compress.Deflate.Decompress(inFile, outFile); return;
-                case 3: P_Compress.Brotli.Decompress(inFile, outFile); return;
-                case 4: P_Compress.Lzma.Decompress(inFile, outFile); return;
-                case 5: P_Compress.Lz4.Decompress(inFile, outFile); return;
-                case 6: P_Compress.Bzip2.Decompress(inFile, outFile); return;
+                case 0: PopStudio.Compress.Zlib.Decompress(inFile, outFile); return;
+                case 1: PopStudio.Compress.Gzip.Decompress(inFile, outFile); return;
+                case 2: PopStudio.Compress.Deflate.Decompress(inFile, outFile); return;
+                case 3: PopStudio.Compress.Brotli.Decompress(inFile, outFile); return;
+                case 4: PopStudio.Compress.Lzma.Decompress(inFile, outFile); return;
+                case 5: PopStudio.Compress.Lz4.Decompress(inFile, outFile); return;
+                case 6: PopStudio.Compress.Bzip2.Decompress(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
@@ -201,13 +204,13 @@
         {
             switch (format)
             {
-                case 0: P_Compress.Zlib.Compress(inFile, outFile); return;
-                case 1: P_Compress.Gzip.Compress(inFile, outFile); return;
-                case 2: P_Compress.Deflate.Compress(inFile, outFile); return;
-                case 3: P_Compress.Brotli.Compress(inFile, outFile); return;
-                case 4: P_Compress.Lzma.Compress(inFile, outFile); return;
-                case 5: P_Compress.Lz4.Compress(inFile, outFile); return;
-                case 6: P_Compress.Bzip2.Compress(inFile, outFile); return;
+                case 0: PopStudio.Compress.Zlib.Compress(inFile, outFile); return;
+                case 1: PopStudio.Compress.Gzip.Compress(inFile, outFile); return;
+                case 2: PopStudio.Compress.Deflate.Compress(inFile, outFile); return;
+                case 3: PopStudio.Compress.Brotli.Compress(inFile, outFile); return;
+                case 4: PopStudio.Compress.Lzma.Compress(inFile, outFile); return;
+                case 5: PopStudio.Compress.Lz4.Compress(inFile, outFile); return;
+                case 6: PopStudio.Compress.Bzip2.Compress(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }

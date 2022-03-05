@@ -5,12 +5,11 @@
         static byte[] xnbmagic = new byte[0x6] { 0x58, 0x4E, 0x42, 0x6D, 0x05, 0x00 };
         static byte[] xnbinfo = new byte[0x26] { 0x01, 0x1E, 0x53, 0x65, 0x78, 0x79, 0x2E, 0x54, 0x6F, 0x64, 0x4C, 0x69, 0x62, 0x2E, 0x52, 0x65, 0x61, 0x6E, 0x69, 0x6D, 0x52, 0x65, 0x61, 0x64, 0x65, 0x72, 0x2C, 0x20, 0x4C, 0x41, 0x57, 0x4E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
 
-        public static void Encode(string inFile, string outFile)
+        public static void Encode(Reanim reanim, string outFile)
         {
             using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
             {
                 bs.Encode = System.Text.Encoding.Unicode;
-                Reanim reanim = ReanimJson.Read(inFile);
                 bs.WriteBytes(xnbmagic);
                 long off_size = bs.Position;
                 bs.Position += 4;
@@ -85,7 +84,7 @@
             }
         }
 
-        public static void Decode(string inFile, string outFile)
+        public static Reanim Decode(string inFile)
         {
             using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
             {
@@ -170,7 +169,7 @@
                     }
                     reanim.tracks[i] = t;
                 }
-                ReanimJson.Write(reanim, outFile);
+                return reanim;
             }
         }
     }

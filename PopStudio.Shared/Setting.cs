@@ -4,6 +4,7 @@ namespace PopStudio
 {
     internal static class Setting
     {
+        public static bool CanSave = true;
         public static Language AppLanguage = Language.ZHCN;
 
         public static readonly Dictionary<string, Language> LanguageEnum = new Dictionary<string, Language> { { "English", Language.ENUS }, { "简体中文", Language.ZHCN } };
@@ -59,13 +60,17 @@ namespace PopStudio
         <!--Convert image integer to string or string to integer in reanim, particles and trail. Find the answer from libpvz.so or PVZ.s3e!-->
         <String id=""PopStudioExample"" value=""99999"" />
     </ImageString>
+    <ReanimXfl width=""80"" height=""80"" />
 </Description>";
 
-        public static readonly Dictionary<P_Package.Dz.CompressFlags, string> DzCompressMethodName = new Dictionary<P_Package.Dz.CompressFlags, string> { { P_Package.Dz.CompressFlags.ZLIB, "Gzip" }, { P_Package.Dz.CompressFlags.LZMA, "Lzma" }, { P_Package.Dz.CompressFlags.STORE, "Store" }, { P_Package.Dz.CompressFlags.BZIP, "Bzip2" } };
-        public static readonly Dictionary<P_Package.Pak.CompressFlags, string> PakPS3CompressMethodName = new Dictionary<P_Package.Pak.CompressFlags, string> { { P_Package.Pak.CompressFlags.ZLIB, "Zlib" }, { P_Package.Pak.CompressFlags.STORE, "Store" } };
+        public static float ReanimXflWidth = 80;
+        public static float ReanimXflHeight = 80;
 
-        public static readonly Dictionary<string, P_Package.Dz.CompressFlags> DzCompressMethodEnum = new Dictionary<string, P_Package.Dz.CompressFlags> { { "Gzip", P_Package.Dz.CompressFlags.ZLIB }, { "Lzma", P_Package.Dz.CompressFlags.LZMA }, { "Store", P_Package.Dz.CompressFlags.STORE }, { "Bzip2", P_Package.Dz.CompressFlags.BZIP } };
-        public static readonly Dictionary<string, P_Package.Pak.CompressFlags> PakPS3CompressMethodEnum = new Dictionary<string, P_Package.Pak.CompressFlags> { { "Zlib", P_Package.Pak.CompressFlags.ZLIB }, { "Store", P_Package.Pak.CompressFlags.STORE } };
+        public static readonly Dictionary<Package.Dz.CompressFlags, string> DzCompressMethodName = new Dictionary<Package.Dz.CompressFlags, string> { { Package.Dz.CompressFlags.ZLIB, "Gzip" }, { Package.Dz.CompressFlags.LZMA, "Lzma" }, { Package.Dz.CompressFlags.STORE, "Store" }, { Package.Dz.CompressFlags.BZIP, "Bzip2" } };
+        public static readonly Dictionary<Package.Pak.CompressFlags, string> PakPS3CompressMethodName = new Dictionary<Package.Pak.CompressFlags, string> { { Package.Pak.CompressFlags.ZLIB, "Zlib" }, { Package.Pak.CompressFlags.STORE, "Store" } };
+
+        public static readonly Dictionary<string, Package.Dz.CompressFlags> DzCompressMethodEnum = new Dictionary<string, Package.Dz.CompressFlags> { { "Gzip", Package.Dz.CompressFlags.ZLIB }, { "Lzma", Package.Dz.CompressFlags.LZMA }, { "Store", Package.Dz.CompressFlags.STORE }, { "Bzip2", Package.Dz.CompressFlags.BZIP } };
+        public static readonly Dictionary<string, Package.Pak.CompressFlags> PakPS3CompressMethodEnum = new Dictionary<string, Package.Pak.CompressFlags> { { "Zlib", Package.Pak.CompressFlags.ZLIB }, { "Store", Package.Pak.CompressFlags.STORE } };
 
         public static void ResetXml(string xmlPath)
         {
@@ -256,6 +261,18 @@ namespace PopStudio
                                 }
                             }
                             break;
+                        case "ReanimXfl":
+                            {
+                                if (child.Attributes["width"] != null)
+                                {
+                                    ReanimXflWidth = Convert.ToSingle(child.Attributes["width"].Value);
+                                }
+                                if (child.Attributes["height"] != null)
+                                {
+                                    ReanimXflHeight = Convert.ToSingle(child.Attributes["height"].Value);
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -267,6 +284,7 @@ namespace PopStudio
 
         public static void SaveAsXml(string xmlPath)
         {
+            if (!CanSave) return;
             using (StreamWriter sw = new StreamWriter(xmlPath, false))
             {
                 sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--Describe some default behaviour-->\n<Description version=\"2\">\n    <Language>");
@@ -274,7 +292,7 @@ namespace PopStudio
                 sw.Write("</Language>    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
                 sw.Write(DzCompressMethodName[DzDefaultCompressMethod]);
                 sw.Write("\" />");
-                foreach (KeyValuePair<string, P_Package.Dz.CompressFlags> keyValuePair in DzCompressDictionary)
+                foreach (KeyValuePair<string, Package.Dz.CompressFlags> keyValuePair in DzCompressDictionary)
                 {
                     sw.Write("\n            <Extension name=\"");
                     sw.Write(keyValuePair.Key);
@@ -285,7 +303,7 @@ namespace PopStudio
                 sw.Write("\n        </CompressMethod>\n    </Dz>\n    <PakPS3>\n        <!--The compressing method to pack pak in ps3-->\n        <CompressMethod>\n            <Default value=\"");
                 sw.Write(PakPS3CompressMethodName[PakPS3DefaultCompressMethod]);
                 sw.Write("\" />");
-                foreach (KeyValuePair<string, P_Package.Pak.CompressFlags> keyValuePair in PakPS3CompressDictionary)
+                foreach (KeyValuePair<string, Package.Pak.CompressFlags> keyValuePair in PakPS3CompressDictionary)
                 {
                     sw.Write("\n            <Extension name=\"");
                     sw.Write(keyValuePair.Key);
@@ -314,21 +332,25 @@ namespace PopStudio
                     sw.Write(keyValuePair.Value);
                     sw.Write("\" />");
                 }
-                sw.Write("\n    </ImageString>\n</Description>");
+                sw.Write("\n    </ImageString>\n    <ReanimXfl width=\"");
+                sw.Write(ReanimXflWidth);
+                sw.Write("\" height=\"");
+                sw.Write(ReanimXflHeight);
+                sw.Write("\" />\n</Description>");
             }
         }
 
         /// <summary>
         /// dz pack
         /// </summary>
-        public static Dictionary<string, P_Package.Dz.CompressFlags> DzCompressDictionary = new Dictionary<string, P_Package.Dz.CompressFlags> { { ".png", P_Package.Dz.CompressFlags.STORE }, { ".jpg", P_Package.Dz.CompressFlags.STORE }, { ".compiled", P_Package.Dz.CompressFlags.STORE }, { ".txt", P_Package.Dz.CompressFlags.ZLIB } };
-        public static P_Package.Dz.CompressFlags DzDefaultCompressMethod = P_Package.Dz.CompressFlags.LZMA;
+        public static Dictionary<string, Package.Dz.CompressFlags> DzCompressDictionary = new Dictionary<string, Package.Dz.CompressFlags> { { ".png", Package.Dz.CompressFlags.STORE }, { ".jpg", Package.Dz.CompressFlags.STORE }, { ".compiled", Package.Dz.CompressFlags.STORE }, { ".txt", Package.Dz.CompressFlags.ZLIB } };
+        public static Package.Dz.CompressFlags DzDefaultCompressMethod = Package.Dz.CompressFlags.LZMA;
 
         /// <summary>
         /// pak ps3 pack
         /// </summary>
-        public static Dictionary<string, P_Package.Pak.CompressFlags> PakPS3CompressDictionary = new Dictionary<string, P_Package.Pak.CompressFlags> { { ".ptx", P_Package.Pak.CompressFlags.ZLIB }, { ".compiled", P_Package.Pak.CompressFlags.ZLIB }, { ".txt", P_Package.Pak.CompressFlags.ZLIB }, { ".xml", P_Package.Pak.CompressFlags.ZLIB }, { ".reanim", P_Package.Pak.CompressFlags.ZLIB } };
-        public static P_Package.Pak.CompressFlags PakPS3DefaultCompressMethod = P_Package.Pak.CompressFlags.STORE;
+        public static Dictionary<string, Package.Pak.CompressFlags> PakPS3CompressDictionary = new Dictionary<string, Package.Pak.CompressFlags> { { ".ptx", Package.Pak.CompressFlags.ZLIB }, { ".compiled", Package.Pak.CompressFlags.ZLIB }, { ".txt", Package.Pak.CompressFlags.ZLIB }, { ".xml", Package.Pak.CompressFlags.ZLIB }, { ".reanim", Package.Pak.CompressFlags.ZLIB } };
+        public static Package.Pak.CompressFlags PakPS3DefaultCompressMethod = Package.Pak.CompressFlags.STORE;
 
         /// <summary>
         /// rsb ptx code
