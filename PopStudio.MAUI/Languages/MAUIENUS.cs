@@ -86,14 +86,10 @@ namespace PopStudio.MAUI.Languages
         //Trail
         public string Trail_Title => "trail";
         public string Trail_Introduction => "Through trail transcoding, you can obtain and modify the content of the game trail effect! ";
-        public string Trail_Mode1 => "Decode";
-        public string Trail_Mode2 => "Encode";
-        public string Trail_Choose1 => "The decoded file path";
-        public string Trail_Choose2 => "The path of generated file";
-        public string Trail_Choose3 => "Decoding Mode";
-        public string Trail_Choose4 => "The encoded file path";
-        public string Trail_Choose5 => "The path of generated file";
-        public string Trail_Choose6 => "Encoding Mode";
+        public string Trail_Choose1 => "Path of in file";
+        public string Trail_Choose2 => "Path of out file";
+        public string Trail_InFormat => "Format of in file";
+        public string Trail_OutFormat => "Format of out file";
 
         //Reanim
         public string Reanim_Title => "reanim";
@@ -106,14 +102,10 @@ namespace PopStudio.MAUI.Languages
         //Particles
         public string Particles_Title => "particles";
         public string Particles_Introduction => "Get and modify the content of game particle effects through particles transcoding! ";
-        public string Particles_Mode1 => "Decode";
-        public string Particles_Mode2 => "Encode";
-        public string Particles_Choose1 => "The decoded file path";
-        public string Particles_Choose2 => "The path of generated file";
-        public string Particles_Choose3 => "Decoding Mode";
-        public string Particles_Choose4 => "The encoded file path";
-        public string Particles_Choose5 => "The path of generated file";
-        public string Particles_Choose6 => "Encoding Mode";
+        public string Particles_Choose1 => "Path of in file";
+        public string Particles_Choose2 => "Path of out file";
+        public string Particles_InFormat => "Format of in file";
+        public string Particles_OutFormat => "Format of out file";
 
         //Compress
         public string Compress_Title => "Compress";
@@ -156,7 +148,7 @@ namespace PopStudio.MAUI.Languages
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support multiple languages. \n2.Fix the bug of PTX. \n3.Fix the bug of some rsb. ";
+        public string HomePage_AppNewNotice => "1.Support reanim file to xfl folder. \n2.Support direct conversion between all kinds of compiled file. ";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

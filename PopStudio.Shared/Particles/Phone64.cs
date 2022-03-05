@@ -2,11 +2,10 @@
 {
     internal class Phone64
     {
-        public static void Encode(string inFile, string outFile)
+        public static void Encode(Particles particles, string outFile)
         {
             using (BinaryStream bs = new BinaryStream())
             {
-                Particles particles = ParticlesJson.Read(inFile);
                 bs.WriteInt32(-527264279);
                 bs.WriteInt32(0);
                 bs.WriteInt32(0);
@@ -162,7 +161,7 @@
             }
         }
 
-        public static void Decode(string inFile, string outFile)
+        public static Particles Decode(string inFile)
         {
             using (BinaryStream bs = new BinaryStream())
             {
@@ -306,7 +305,7 @@
                     emitter.ClipRight = ReadTrackNodes(bs);
                     emitter.AnimationRate = ReadTrackNodes(bs);
                 }
-                ParticlesJson.Write(particles, outFile);
+                return particles;
             }
         }
 

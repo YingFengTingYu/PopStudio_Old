@@ -109,59 +109,59 @@
             }
         }
 
-        public static void DecodeTrail(string inFile, string outFile, int format)
+        public static void Trail(string inFile, string outFile, int informat, int outformat)
         {
-            switch (format)
+            Trail.TrailFormat inFormat = (Trail.TrailFormat)informat;
+            Trail.TrailFormat outFormat = (Trail.TrailFormat)outformat;
+            Trail.Trail trail = inFormat switch
             {
-                case 0: Trail.PC.Decode(inFile, outFile); return;
-                case 1: Trail.Phone32.Decode(inFile, outFile); return;
-                case 2: Trail.Phone64.Decode(inFile, outFile); return;
-                case 3: Trail.WP.Decode(inFile, outFile); return;
-                case 4: Trail.GameConsole.Decode(inFile, outFile); return;
-                case 5: Trail.TV.Decode(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
+                PopStudio.Trail.TrailFormat.PCCompiled => PopStudio.Trail.PC.Decode(inFile),
+                PopStudio.Trail.TrailFormat.Phone32Compiled => PopStudio.Trail.Phone32.Decode(inFile),
+                PopStudio.Trail.TrailFormat.Phone64Compiled => PopStudio.Trail.Phone64.Decode(inFile),
+                PopStudio.Trail.TrailFormat.WPXnb => PopStudio.Trail.WP.Decode(inFile),
+                PopStudio.Trail.TrailFormat.GameConsoleCompiled => PopStudio.Trail.GameConsole.Decode(inFile),
+                PopStudio.Trail.TrailFormat.TVCompiled => PopStudio.Trail.TV.Decode(inFile),
+                PopStudio.Trail.TrailFormat.Json => PopStudio.Trail.TrailJson.Decode(inFile),
+                _ => throw new NotImplementedException()
+            };
+            switch (outFormat)
+            {
+                case PopStudio.Trail.TrailFormat.PCCompiled: PopStudio.Trail.PC.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.Phone32Compiled: PopStudio.Trail.Phone32.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.Phone64Compiled: PopStudio.Trail.Phone64.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.WPXnb: PopStudio.Trail.WP.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.GameConsoleCompiled: PopStudio.Trail.GameConsole.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.TVCompiled: PopStudio.Trail.TV.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.Json: PopStudio.Trail.TrailJson.Encode(trail, outFile); break;
+                default: throw new NotImplementedException();
             }
         }
 
-        public static void EncodeTrail(string inFile, string outFile, int format)
+        public static void Particles(string inFile, string outFile, int informat, int outformat)
         {
-            switch (format)
+            Particles.ParticlesFormat inFormat = (Particles.ParticlesFormat)informat;
+            Particles.ParticlesFormat outFormat = (Particles.ParticlesFormat)outformat;
+            Particles.Particles particles = inFormat switch
             {
-                case 0: Trail.PC.Encode(inFile, outFile); return;
-                case 1: Trail.Phone32.Encode(inFile, outFile); return;
-                case 2: Trail.Phone64.Encode(inFile, outFile); return;
-                case 3: Trail.WP.Encode(inFile, outFile); return;
-                case 4: Trail.GameConsole.Encode(inFile, outFile); return;
-                case 5: Trail.TV.Encode(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
-            }
-        }
-
-        public static void DecodeParticles(string inFile, string outFile, int format)
-        {
-            switch (format)
+                PopStudio.Particles.ParticlesFormat.PCCompiled => PopStudio.Particles.PC.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.Phone32Compiled => PopStudio.Particles.Phone32.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.Phone64Compiled => PopStudio.Particles.Phone64.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.WPXnb => PopStudio.Particles.WP.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.GameConsoleCompiled => PopStudio.Particles.GameConsole.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.TVCompiled => PopStudio.Particles.TV.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.Json => PopStudio.Particles.ParticlesJson.Decode(inFile),
+                _ => throw new NotImplementedException()
+            };
+            switch (outFormat)
             {
-                case 0: Particles.PC.Decode(inFile, outFile); return;
-                case 1: Particles.Phone32.Decode(inFile, outFile); return;
-                case 2: Particles.Phone64.Decode(inFile, outFile); return;
-                case 3: Particles.WP.Decode(inFile, outFile); return;
-                case 4: Particles.GameConsole.Decode(inFile, outFile); return;
-                case 5: Particles.TV.Decode(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
-            }
-        }
-
-        public static void EncodeParticles(string inFile, string outFile, int format)
-        {
-            switch (format)
-            {
-                case 0: Particles.PC.Encode(inFile, outFile); return;
-                case 1: Particles.Phone32.Encode(inFile, outFile); return;
-                case 2: Particles.Phone64.Encode(inFile, outFile); return;
-                case 3: Particles.WP.Encode(inFile, outFile); return;
-                case 4: Particles.GameConsole.Encode(inFile, outFile); return;
-                case 5: Particles.TV.Encode(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
+                case PopStudio.Particles.ParticlesFormat.PCCompiled: PopStudio.Particles.PC.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.Phone32Compiled: PopStudio.Particles.Phone32.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.Phone64Compiled: PopStudio.Particles.Phone64.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.WPXnb: PopStudio.Particles.WP.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.GameConsoleCompiled: PopStudio.Particles.GameConsole.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.TVCompiled: PopStudio.Particles.TV.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.Json: PopStudio.Particles.ParticlesJson.Encode(particles, outFile); break;
+                default: throw new NotImplementedException();
             }
         }
 

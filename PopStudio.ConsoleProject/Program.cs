@@ -21,6 +21,7 @@ while (true)
         Console.WriteLine(Lng[104]);
         Console.WriteLine(Lng[110]);
         Console.WriteLine(Lng[111]);
+        Console.WriteLine(Lng[114]);
         int mode = Convert.ToInt32(Console.ReadLine());
         if (mode == 1)
         {
@@ -663,7 +664,7 @@ while (true)
                     Console.WriteLine(Lng[105]);
                     continue;
                 }
-                PopStudio.Trail.PC.Decode(filepath, filepath + ".trail");
+                API.Trail(filepath, filepath + ".trail", 0, 6);
                 continue;
             }
             else if (mode == 2)
@@ -675,7 +676,7 @@ while (true)
                     Console.WriteLine(Lng[105]);
                     continue;
                 }
-                PopStudio.Trail.Phone32.Decode(filepath, filepath + ".trail");
+                API.Trail(filepath, filepath + ".trail", 1, 6);
                 continue;
             }
             else if (mode == 3)
@@ -687,7 +688,7 @@ while (true)
                     Console.WriteLine(Lng[105]);
                     continue;
                 }
-                PopStudio.Trail.Phone64.Decode(filepath, filepath + ".trail");
+                API.Trail(filepath, filepath + ".trail", 2, 6);
                 continue;
             }
             else if (mode == 4)
@@ -699,7 +700,7 @@ while (true)
                     Console.WriteLine(Lng[106]);
                     continue;
                 }
-                PopStudio.Trail.WP.Decode(filepath, filepath + ".trail");
+                API.Trail(filepath, filepath + ".trail", 3, 6);
                 continue;
             }
             else if (mode == 5)
@@ -711,7 +712,7 @@ while (true)
                     Console.WriteLine(Lng[105]);
                     continue;
                 }
-                PopStudio.Trail.GameConsole.Decode(filepath, filepath + ".trail");
+                API.Trail(filepath, filepath + ".trail", 4, 6);
                 continue;
             }
             else if (mode == 6)
@@ -723,7 +724,7 @@ while (true)
                     Console.WriteLine(Lng[105]);
                     continue;
                 }
-                PopStudio.Trail.TV.Decode(filepath, filepath + ".trail");
+                API.Trail(filepath, filepath + ".trail", 5, 6);
                 continue;
             }
             else
@@ -750,7 +751,7 @@ while (true)
                     Console.WriteLine(Lng[107]);
                     continue;
                 }
-                PopStudio.Trail.PC.Encode(filepath, filepath + ".trail.compiled");
+                API.Trail(filepath, filepath + ".trail.compiled", 6, 0);
                 continue;
             }
             else if (mode == 2)
@@ -762,7 +763,7 @@ while (true)
                     Console.WriteLine(Lng[107]);
                     continue;
                 }
-                PopStudio.Trail.Phone32.Encode(filepath, filepath + ".trail.compiled");
+                API.Trail(filepath, filepath + ".trail.compiled", 6, 1);
                 continue;
             }
             else if (mode == 3)
@@ -774,7 +775,7 @@ while (true)
                     Console.WriteLine(Lng[107]);
                     continue;
                 }
-                PopStudio.Trail.Phone64.Encode(filepath, filepath + ".trail.compiled");
+                API.Trail(filepath, filepath + ".trail.compiled", 6, 2);
                 continue;
             }
             else if (mode == 4)
@@ -786,7 +787,7 @@ while (true)
                     Console.WriteLine(Lng[107]);
                     continue;
                 }
-                PopStudio.Trail.WP.Encode(filepath, filepath + ".xnb");
+                API.Trail(filepath, filepath + ".xnb", 6, 3);
                 continue;
             }
             else if (mode == 5)
@@ -798,7 +799,7 @@ while (true)
                     Console.WriteLine(Lng[107]);
                     continue;
                 }
-                PopStudio.Trail.GameConsole.Encode(filepath, filepath + ".trail.compiled");
+                API.Trail(filepath, filepath + ".trail.compiled", 6, 4);
                 continue;
             }
             else if (mode == 6)
@@ -810,7 +811,7 @@ while (true)
                     Console.WriteLine(Lng[107]);
                     continue;
                 }
-                PopStudio.Trail.TV.Encode(filepath, filepath + ".trail.compiled");
+                API.Trail(filepath, filepath + ".trail.compiled", 6, 5);
                 continue;
             }
             else
@@ -837,7 +838,7 @@ while (true)
                     Console.WriteLine(Lng[113]);
                     continue;
                 }
-                PopStudio.Particles.PC.Decode(filepath, filepath + ".xml");
+                API.Particles(filepath, filepath + ".xml", 0, 6);
                 continue;
             }
             else if (mode == 2)
@@ -849,7 +850,7 @@ while (true)
                     Console.WriteLine(Lng[113]);
                     continue;
                 }
-                PopStudio.Particles.Phone32.Decode(filepath, filepath + ".xml");
+                API.Particles(filepath, filepath + ".xml", 1, 6);
                 continue;
             }
             else if (mode == 3)
@@ -861,7 +862,7 @@ while (true)
                     Console.WriteLine(Lng[113]);
                     continue;
                 }
-                PopStudio.Particles.Phone64.Decode(filepath, filepath + ".xml");
+                API.Particles(filepath, filepath + ".xml", 2, 6);
                 continue;
             }
             else if (mode == 4)
@@ -873,7 +874,7 @@ while (true)
                     Console.WriteLine(Lng[106]);
                     continue;
                 }
-                PopStudio.Particles.WP.Decode(filepath, filepath + ".xml");
+                API.Particles(filepath, filepath + ".xml", 3, 6);
                 continue;
             }
             else if (mode == 5)
@@ -885,7 +886,7 @@ while (true)
                     Console.WriteLine(Lng[113]);
                     continue;
                 }
-                PopStudio.Particles.GameConsole.Decode(filepath, filepath + ".xml");
+                API.Particles(filepath, filepath + ".xml", 4, 6);
                 continue;
             }
             else if (mode == 6)
@@ -897,7 +898,7 @@ while (true)
                     Console.WriteLine(Lng[113]);
                     continue;
                 }
-                PopStudio.Particles.TV.Decode(filepath, filepath + ".xml");
+                API.Particles(filepath, filepath + ".xml", 5, 6);
                 continue;
             }
             else
@@ -924,7 +925,7 @@ while (true)
                     Console.WriteLine(Lng[112]);
                     continue;
                 }
-                PopStudio.Particles.PC.Encode(filepath, filepath + ".xml.compiled");
+                API.Particles(filepath, filepath + ".xml.compiled", 6, 0);
                 continue;
             }
             else if (mode == 2)
@@ -936,7 +937,7 @@ while (true)
                     Console.WriteLine(Lng[112]);
                     continue;
                 }
-                PopStudio.Particles.Phone32.Encode(filepath, filepath + ".xml.compiled");
+                API.Particles(filepath, filepath + ".xml.compiled", 6, 1);
                 continue;
             }
             else if (mode == 3)
@@ -948,7 +949,7 @@ while (true)
                     Console.WriteLine(Lng[112]);
                     continue;
                 }
-                PopStudio.Particles.Phone64.Encode(filepath, filepath + ".xml.compiled");
+                API.Particles(filepath, filepath + ".xml.compiled", 6, 2);
                 continue;
             }
             else if (mode == 4)
@@ -960,7 +961,7 @@ while (true)
                     Console.WriteLine(Lng[112]);
                     continue;
                 }
-                PopStudio.Particles.WP.Encode(filepath, filepath + ".xnb");
+                API.Particles(filepath, filepath + ".xnb", 6, 3);
                 continue;
             }
             else if (mode == 5)
@@ -972,7 +973,7 @@ while (true)
                     Console.WriteLine(Lng[112]);
                     continue;
                 }
-                PopStudio.Particles.GameConsole.Encode(filepath, filepath + ".xml.compiled");
+                API.Particles(filepath, filepath + ".xml.compiled", 6, 4);
                 continue;
             }
             else if (mode == 6)
@@ -984,7 +985,94 @@ while (true)
                     Console.WriteLine(Lng[112]);
                     continue;
                 }
-                PopStudio.Particles.TV.Encode(filepath, filepath + ".xml.compiled");
+                API.Particles(filepath, filepath + ".xml.compiled", 6, 5);
+                continue;
+            }
+            else
+            {
+                Console.WriteLine(Lng[76]);
+                continue;
+            }
+        }
+        else if (mode == 13)
+        {
+            Console.WriteLine(Lng[88]);
+            Console.WriteLine(Lng[89]);
+            Console.WriteLine(Lng[90]);
+            Console.WriteLine(Lng[91]);
+            Console.WriteLine(Lng[92]);
+            Console.WriteLine(Lng[93]);
+            mode = Convert.ToInt32(Console.ReadLine());
+            if (mode == 1)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                API.Reanim(filepath, filepath + ".xfl", 0, 8);
+                continue;
+            }
+            else if (mode == 2)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                API.Reanim(filepath, filepath + ".xfl", 1, 8);
+                continue;
+            }
+            else if (mode == 3)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                API.Reanim(filepath, filepath + ".xfl", 2, 8);
+                continue;
+            }
+            else if (mode == 4)
+            {
+                Console.WriteLine(Lng[101]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[101]);
+                    continue;
+                }
+                API.Reanim(filepath, filepath + ".xfl", 3, 8);
+                continue;
+            }
+            else if (mode == 5)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                API.Reanim(filepath, filepath + ".xfl", 4, 8);
+                continue;
+            }
+            else if (mode == 6)
+            {
+                Console.WriteLine(Lng[100]);
+                string filepath = Console.ReadLine();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    Console.WriteLine(Lng[100]);
+                    continue;
+                }
+                API.Reanim(filepath, filepath + ".xfl", 5, 8);
                 continue;
             }
             else

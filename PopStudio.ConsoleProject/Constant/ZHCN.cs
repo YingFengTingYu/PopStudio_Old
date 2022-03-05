@@ -117,6 +117,7 @@
             "输入12以运行particles编码模式（从json编码）",
             "请选择xml文件",
             "请选择xml.compiled文件",
+            "输入13以运行reanim解码模式（解码为xfl文件夹用于Adobe Animate）",
         };
 
         public string[] All => all;

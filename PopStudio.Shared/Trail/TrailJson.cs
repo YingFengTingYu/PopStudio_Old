@@ -4,7 +4,7 @@ namespace PopStudio.Trail
 {
     internal class TrailJson
     {
-        public static Trail Read(string inFile)
+        public static Trail Decode(string inFile)
         {
             string jsondata;
             using (StreamReader sr = new StreamReader(inFile))
@@ -113,7 +113,7 @@ namespace PopStudio.Trail
             return track;
         }
 
-        public static void Write(Trail trail, string outFile)
+        public static void Encode(Trail trail, string outFile)
         {
             using (StreamWriter sw = new StreamWriter(outFile, false))
             {

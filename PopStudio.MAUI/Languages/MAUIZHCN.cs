@@ -86,14 +86,10 @@ namespace PopStudio.MAUI.Languages
         //Trail
         public string Trail_Title => "Trail转码";
         public string Trail_Introduction => "通过Trail转码功能获取和修改游戏拖尾特效内容！";
-        public string Trail_Mode1 => "解码模式";
-        public string Trail_Mode2 => "编码模式";
-        public string Trail_Choose1 => "请填写被解码的文件路径";
-        public string Trail_Choose2 => "请填写解码生成文件存放路径";
-        public string Trail_Choose3 => "请选择解码模式";
-        public string Trail_Choose4 => "请填写被编码的文件路径";
-        public string Trail_Choose5 => "请填写编码生成文件存放路径";
-        public string Trail_Choose6 => "请选择编码模式";
+        public string Trail_Choose1 => "请填写被转换的文件路径";
+        public string Trail_Choose2 => "请填写转换生成文件存放路径";
+        public string Trail_InFormat => "请选择被转换的文件格式";
+        public string Trail_OutFormat => "请选择转换生成文件格式";
 
         //Reanim
         public string Reanim_Title => "reanim转码";
@@ -106,14 +102,10 @@ namespace PopStudio.MAUI.Languages
         //Particles
         public string Particles_Title => "particles转码";
         public string Particles_Introduction => "通过particles转码功能获取和修改游戏粒子特效内容！";
-        public string Particles_Mode1 => "解码模式";
-        public string Particles_Mode2 => "编码模式";
-        public string Particles_Choose1 => "请填写被解码的文件路径";
-        public string Particles_Choose2 => "请填写解码生成文件存放路径";
-        public string Particles_Choose3 => "请选择解码模式";
-        public string Particles_Choose4 => "请填写被编码的文件路径";
-        public string Particles_Choose5 => "请填写编码生成文件存放路径";
-        public string Particles_Choose6 => "请选择编码模式";
+        public string Particles_Choose1 => "请填写被转换的文件路径";
+        public string Particles_Choose2 => "请填写转换生成文件存放路径";
+        public string Particles_InFormat => "请选择被转换的文件格式";
+        public string Particles_OutFormat => "请选择转换生成文件格式";
 
         //Compress
         public string Compress_Title => "压缩解压";
@@ -156,7 +148,7 @@ namespace PopStudio.MAUI.Languages
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持多语言；\n2.修复PTX解码编码bug；\n3.修复部分rsb解包异常bug。";
+        public string HomePage_AppNewNotice => "1.支持reanim转xfl；\n2.支持各compiled间直接互相转换。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

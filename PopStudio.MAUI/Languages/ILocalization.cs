@@ -86,14 +86,10 @@ namespace PopStudio.MAUI.Languages
         //Trail
         public string Trail_Title { get; }
         public string Trail_Introduction { get; }
-        public string Trail_Mode1 { get; }
-        public string Trail_Mode2 { get; }
         public string Trail_Choose1 { get; }
         public string Trail_Choose2 { get; }
-        public string Trail_Choose3 { get; }
-        public string Trail_Choose4 { get; }
-        public string Trail_Choose5 { get; }
-        public string Trail_Choose6 { get; }
+        public string Trail_InFormat { get; }
+        public string Trail_OutFormat { get; }
 
         //Reanim
         public string Reanim_Title { get; }
@@ -106,14 +102,10 @@ namespace PopStudio.MAUI.Languages
         //Particles
         public string Particles_Title { get; }
         public string Particles_Introduction { get; }
-        public string Particles_Mode1 { get; }
-        public string Particles_Mode2 { get; }
         public string Particles_Choose1 { get; }
         public string Particles_Choose2 { get; }
-        public string Particles_Choose3 { get; }
-        public string Particles_Choose4 { get; }
-        public string Particles_Choose5 { get; }
-        public string Particles_Choose6 { get; }
+        public string Particles_InFormat { get; }
+        public string Particles_OutFormat { get; }
 
         //Compress
         public string Compress_Title { get; }

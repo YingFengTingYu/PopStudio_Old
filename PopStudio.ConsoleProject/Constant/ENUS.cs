@@ -117,6 +117,7 @@
             "enter 12 to run particles encode mode(encode from json)",
             "Please choose xml file",
             "Please choose xml.compiled file",
+            "enter 13 to run reanim decode mode(decode to xfl folder for Adobe Animate)",
         };
 
         public string[] All => all;

@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Particles\Particles.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesTrackNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\GameConsole.cs" />
@@ -101,7 +102,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\Phone32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\PC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\Reanim.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reanim\Json.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimTrack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\ReanimTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RTON\RTON.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\GameConsole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\WP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TV.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\Phone64.cs" />

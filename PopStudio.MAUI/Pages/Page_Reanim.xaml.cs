@@ -37,7 +37,7 @@ namespace PopStudio.MAUI
             CB_OutMode.Items.Add("TV_Compiled");
             CB_OutMode.Items.Add("Studio_Json");
             CB_OutMode.Items.Add("Raw_Xml");
-            CB_OutMode.Items.Add("Flash_Xfl");
+            CB_OutMode.Items.Add("Flash_Xfl_Folder");
             CB_OutMode.SelectedIndex = 6;
         }
 
@@ -97,7 +97,15 @@ namespace PopStudio.MAUI
 		{
 			try
 			{
-				string val = await this.ChooseSaveFile(); //Can't default this
+                string val;
+                if (CB_OutMode.SelectedIndex == 8)
+                {
+                    val = await this.ChooseFolder(); //Can't default this
+                }
+                else
+                {
+                    val = await this.ChooseSaveFile(); //Can't default this
+                }
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
 			}
 			catch (Exception)

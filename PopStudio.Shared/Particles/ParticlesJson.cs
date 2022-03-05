@@ -4,7 +4,7 @@ namespace PopStudio.Particles
 {
     internal class ParticlesJson
     {
-        public static Particles Read(string inFile)
+        public static Particles Decode(string inFile)
         {
             string jsondata;
             using (StreamReader sr = new StreamReader(inFile))
@@ -367,7 +367,7 @@ namespace PopStudio.Particles
             return track;
         }
 
-        public static void Write(Particles particles, string outFile)
+        public static void Encode(Particles particles, string outFile)
         {
             using (StreamWriter sw = new StreamWriter(outFile, false))
             {

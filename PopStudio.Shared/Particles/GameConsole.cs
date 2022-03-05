@@ -2,12 +2,11 @@
 {
     internal class GameConsole
     {
-        public static void Encode(string inFile, string outFile)
+        public static void Encode(Particles particles, string outFile)
         {
             using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
             {
                 bs.Endian = Endian.Big;
-                Particles particles = ParticlesJson.Read(inFile);
                 bs.WriteInt32(1092589901);
                 bs.WriteInt32(0);
                 int count = particles.Emitters?.Length ?? 0;
@@ -133,7 +132,7 @@
             }
         }
 
-        public static void Decode(string inFile, string outFile)
+        public static Particles Decode(string inFile)
         {
             using (BinaryStream bs = new BinaryStream())
             {
@@ -275,7 +274,7 @@
                     emitter.ClipRight = ReadTrackNodes(bs);
                     emitter.AnimationRate = ReadTrackNodes(bs);
                 }
-                ParticlesJson.Write(particles, outFile);
+                return particles;
             }
         }
 
