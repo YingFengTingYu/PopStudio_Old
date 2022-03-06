@@ -5,8 +5,6 @@ namespace PopStudio.MAUI
     internal static partial class Permission
     {
         static readonly string androidpath = Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath + "/setting.xml";
-        static readonly Language defaultlanguage = Java.Util.Locale.Default.Language == "zh" ? Language.ZHCN : Language.ENUS;
-        public static partial Language GetDefaultLanguage() => defaultlanguage;
         public static partial string GetSettingPath() => androidpath;
 
         public static partial async Task<bool> CheckAndRequestPermissionAsync(this ContentPage page)

@@ -1,3 +1,9 @@
 ﻿global using PopStudio.Plugin;
 global using PopStudio.Constant;
+global using System;
+global using System.Linq;
+global using System.IO;
 global using System.IO.Compression;
+global using System.Collections.Generic;
+global using System.Threading;
+global using System.Threading.Tasks;

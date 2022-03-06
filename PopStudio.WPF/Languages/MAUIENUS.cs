@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PopStudio.MAUI.Languages
+namespace PopStudio.WPF.Languages
 {
     internal class MAUIENUS : ILocalization
     {
@@ -182,5 +182,9 @@ namespace PopStudio.MAUI.Languages
         public string PickFlie_SaveFile => "Save file";
         public string PickFile_EnterFileName => "Please enter a file name";
         public string PickFile_ChooseThisFolder => "Select folder\0";
+
+        //AD
+        public string AD_Cancel => "Cancel";
+        public string AD_Title => "Advertisement";
     }
 }

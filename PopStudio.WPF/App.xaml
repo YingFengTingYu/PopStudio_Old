@@ -1,0 +1,130 @@
+﻿<Application x:Class="PopStudio.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PopStudio.WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="CornflowerBlue" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}" >
+                        <Border BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="0" CornerRadius="3,3,3,3" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" ></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <LinearGradientBrush x:Key="ButtonNormalBackgroundFill" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFFFFFFF" Offset="0"/>
+            <GradientStop Color="#FFF0F0EA" Offset="0.9"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ButtonBorder" Color="CornflowerBlue"/>
+        <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{StaticResource ButtonNormalBackgroundFill}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="OnChecked1">
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path">
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="40,0,0,0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path1">
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="40,0,0,0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path2">
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="40,0,0,0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                                <StringAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Text)" Storyboard.TargetName="displayText">
+                                    <DiscreteStringKeyFrame KeyTime="0" Value=""/>
+                                </StringAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="OnUnchecked1">
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path">
+                                    <EasingThicknessKeyFrame KeyTime="0" Value="40,0,0,0"/>
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path1">
+                                    <EasingThicknessKeyFrame KeyTime="0" Value="40,0,0,0"/>
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path2">
+                                    <EasingThicknessKeyFrame KeyTime="0" Value="40,0,0,0"/>
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                                <StringAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Text)" Storyboard.TargetName="displayText">
+                                    <DiscreteStringKeyFrame KeyTime="0" Value=""/>
+                                </StringAnimationUsingKeyFrames>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="displayText">
+                                    <EasingColorKeyFrame KeyTime="0" Value="#777777"/>
+                                    <EasingColorKeyFrame KeyTime="0:0:0.5" Value="#FF63FA00"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Border CornerRadius="10" Background="#BBBBBB" Width="60" Height="20">
+                            <Grid>
+                                <TextBlock x:Name="displayText" Text="" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                <Path x:Name="path2" Fill="Black">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <GeometryGroup.Children>
+                                                <EllipseGeometry Center="10,10" RadiusX="8.5" RadiusY="8.5"></EllipseGeometry>
+                                            </GeometryGroup.Children>
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                                <Path x:Name="path1" Fill="#FF818080">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <GeometryGroup.Children>
+                                                <EllipseGeometry Center="10,10" RadiusX="7" RadiusY="7"></EllipseGeometry>
+                                            </GeometryGroup.Children>
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                                <Path x:Name="path" Fill="CornflowerBlue">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <GeometryGroup.Children>
+                                                <EllipseGeometry Center="10,10" RadiusX="8" RadiusY="8"></EllipseGeometry>
+                                            </GeometryGroup.Children>
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                <BeginStoryboard Storyboard="{StaticResource OnChecked1}"/>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                <BeginStoryboard x:Name="OnUnchecked1_BeginStoryboard" Storyboard="{StaticResource OnUnchecked1}"/>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

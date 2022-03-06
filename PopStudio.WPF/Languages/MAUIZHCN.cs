@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PopStudio.MAUI.Languages
+namespace PopStudio.WPF.Languages
 {
     internal class MAUIZHCN : ILocalization
     {
@@ -182,5 +182,9 @@ namespace PopStudio.MAUI.Languages
         public string PickFlie_SaveFile => "保存文件";
         public string PickFile_EnterFileName => "请输入文件名";
         public string PickFile_ChooseThisFolder => "选择当前文件夹\0";
+
+        //AD
+        public string AD_Cancel => "关闭";
+        public string AD_Title => "广告";
     }
 }

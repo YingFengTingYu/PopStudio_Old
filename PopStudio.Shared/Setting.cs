@@ -289,7 +289,7 @@ namespace PopStudio
             {
                 sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--Describe some default behaviour-->\n<Description version=\"2\">\n    <Language>");
                 sw.Write(LanguageName[AppLanguage]);
-                sw.Write("</Language>    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
+                sw.Write("</Language>\n    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
                 sw.Write(DzCompressMethodName[DzDefaultCompressMethod]);
                 sw.Write("\" />");
                 foreach (KeyValuePair<string, Package.Dz.CompressFlags> keyValuePair in DzCompressDictionary)

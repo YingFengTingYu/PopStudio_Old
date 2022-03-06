@@ -1,6 +1,6 @@
-﻿namespace PopStudio.MAUI
+﻿namespace PopStudio.WPF
 {
-    internal static partial class Permission
+    internal static class Permission
     {
         public static Language GetDefaultLanguage()
         {
@@ -11,8 +11,6 @@
             };
         }
 
-        public static partial string GetSettingPath();
-
-        public static partial Task<bool> CheckAndRequestPermissionAsync(this ContentPage page);
+        public static string GetSettingPath() => Path.GetFullPath(".\\setting.xml");
     }
 }

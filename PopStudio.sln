@@ -9,8 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.ConsoleProject", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.MAUI", "PopStudio.MAUI\PopStudio.MAUI.csproj", "{C19F9B4A-17FC-4A71-8A84-D2F9ACB814A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopStudio.WPF", "PopStudio.WPF\PopStudio.WPF.csproj", "{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PopStudio.Shared\PopStudio.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{5162deba-202f-485f-8b68-0c1c2212382a}*SharedItemsImports = 13
 		PopStudio.Shared\PopStudio.projitems*{876e98fa-0429-4aad-97b9-ff23eabc9b68}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{c19f9b4a-17fc-4a71-8a84-d2f9acb814a5}*SharedItemsImports = 5
@@ -78,6 +81,26 @@ Global
 		{C19F9B4A-17FC-4A71-8A84-D2F9ACB814A5}.Release|x86.ActiveCfg = Release|Any CPU
 		{C19F9B4A-17FC-4A71-8A84-D2F9ACB814A5}.Release|x86.Build.0 = Release|Any CPU
 		{C19F9B4A-17FC-4A71-8A84-D2F9ACB814A5}.Release|x86.Deploy.0 = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|ARM.Build.0 = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|x64.Build.0 = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Debug|x86.Build.0 = Debug|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|ARM.Build.0 = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|ARM64.Build.0 = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x64.ActiveCfg = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x64.Build.0 = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x86.ActiveCfg = Release|Any CPU
+		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
