@@ -1,27 +1,65 @@
 ﻿namespace PopStudio.Plugin
 {
-    internal static class API
+    internal static partial class API
     {
-        //Write for lua(coming soon) and MAUI
-        public static BinaryStream GetStream(string path, int mode)
+        static List<IDisposable> Disposable = new List<IDisposable>();
+
+        public static void DoScript(string script)
         {
-            switch (mode)
+            Script.Do(script);
+        }
+
+        public static void DisposeAll()
+        {
+            int count = Disposable.Count;
+            for (int i = 0; i < count; i++)
             {
-                case 0: return new BinaryStream(path, FileMode.Open);
-                case 1: return new BinaryStream(path, FileMode.Create);
-                case 2: return new BinaryStream(path, FileMode.OpenOrCreate);
-                default: throw new Exception(Str.Obj.TypeMisMatch);
+                Disposable[i].Dispose();
             }
+            Disposable.Clear();
         }
 
-        public static BinaryStream GetStream(byte[] bytes)
+        public static partial void Print(params object[] os);
+
+        public static partial bool? Alert(string text, string title, bool ask = false);
+
+        public static partial string Prompt(string text, string title, string defaulttext = "");
+
+        public static partial string Sheet(string title, params string[] items);
+
+        public static partial string ChooseFolder();
+
+        public static partial string ChooseOpenFile();
+
+        public static partial string ChooseSaveFile();
+
+        //Write for lua(coming soon) and MAUI
+        public static BinaryStream GetFileStream(string path, int mode)
         {
-            return new BinaryStream(bytes);
+            BinaryStream ans = mode switch
+            {
+                0 => new BinaryStream(path, FileMode.Open),
+                1 => new BinaryStream(path, FileMode.Create),
+                2 => new BinaryStream(path, FileMode.OpenOrCreate),
+                _ => throw new Exception(Str.Obj.TypeMisMatch)
+            };
+            Disposable.Add(ans);
+            return ans;
         }
 
-        public static BinaryStream GetStream()
+        public static BinaryStream GetMemoryStream(byte[] bytes = null)
         {
-            return new BinaryStream();
+            BinaryStream ans;
+            if (bytes == null)
+            {
+                ans = new BinaryStream();
+            }
+            else
+            {
+                ans = new BinaryStream(bytes);
+            }
+            Disposable.Add(ans);
+            return ans;
         }
 
         public static void Unpack(string inFile, string outFile, int format, bool changeimage = false, bool delete = false)
@@ -213,6 +251,67 @@
                 case 6: PopStudio.Compress.Bzip2.Compress(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
+        }
+
+        public static void NewDir(string filePath, bool toEnd = true)
+        {
+            Dir.NewDir(filePath, toEnd);
+        }
+
+        public static string[] GetFiles(string filePath)
+        {
+            return Dir.GetFiles(filePath);
+        }
+
+        public static string GetFileExtension(string fileName)
+        {
+            return Path.GetExtension(fileName);
+        }
+
+        public static string GetFileName(string fileName)
+        {
+            return Path.GetFileName(fileName);
+        }
+
+        public static string GetFilePath(string fileName)
+        {
+            return Path.GetDirectoryName(fileName);
+        }
+
+        public static string GetFileNameWithoutExtension(string fileName)
+        {
+            return Path.GetFileNameWithoutExtension(fileName);
+        }
+
+        public static int GetVersion()
+        {
+            return Const.RAINYVERSION;
+        }
+
+        public static int GetSystem()
+        {
+            return Const.SYSTEM;
+        }
+
+        public static string FormatPath(string path)
+        {
+            return Dir.FormatPath(path);
+        }
+
+        public static void DoFile(string filepath, params object[] args)
+        {
+            string s;
+            (Script.luavm["rainy"] as NLua.LuaTable)["cache"] = args;
+            using (StreamReader sr = new StreamReader(filepath.ToString()))
+            {
+                s = "local args = rainy.array2table(rainy.cache); rainy.cache = nil; " + sr.ReadToEnd();
+            }
+            Script.luavm.DoString(s);
+        }
+
+        public static object[] CreateArray(int length)
+        {
+            return new object[length];
         }
     }
 }

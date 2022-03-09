@@ -8,6 +8,11 @@ namespace PopStudio.WPF.Languages
 {
     internal class MAUIZHCN : ILocalization
     {
+        //LuaScript
+        public string LuaScript_Title => "lua脚本";
+        public string LuaScript_Introduction => "通过lua脚本功能，调用程序内置函数，实现批处理等功能！";
+        public string LuaScript_TracePrint => "输出";
+
         //Shell
         public string Shell_OK => "确定\0";
         public string Shell_Cancel => "取消\0";
@@ -36,9 +41,13 @@ namespace PopStudio.WPF.Languages
         public string Setting_ItemCompiled => "compiled自动转换数字i标签";
         public string Setting_IntroCompiled => "PVZ在部分平台compiled文件中Image标签由标准字符串形式变为数字形式，你可以自行在so中找到对应关系并提供给程序，来将数字变为字符串。";
         public string Setting_ItemXfl => "Xfl生成画布大小";
-        public string Setting_IntroXfl => "当使用reanim转码生成Flash_Xfl文档以供使用Adobe Animate查看时，需要指定画布大小，画布大小也可自行在Adobe Animate更改。";
-        public string Setting_XflWidth => "宽度";
-        public string Setting_XflHeight => "高度";
+        public string Setting_IntroXfl => "当使用reanim转码生成Flash_Xfl文档以供使用Adobe Animate查看时，可指定画布大小、生成图片名是使用i标签名还是name标签名、横纵坐标缩放倍数。";
+        public string Setting_XflWidth => "画布宽度";
+        public string Setting_XflHeight => "画布高度";
+        public string Setting_XflLabelName => "使用标签名";
+        public string Setting_XflScaleX => "横坐标缩放";
+        public string Setting_XflScaleY => "纵坐标缩放";
+        public string Setting_AD => "程序启动时加载广告";
         public string Setting_Load => "加载文件";
         public string Setting_Unload => "清空项目";
         public string Setting_Recover => "恢复默认设置";
@@ -148,7 +157,7 @@ namespace PopStudio.WPF.Languages
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持reanim转xfl；\n2.支持各compiled间直接互相转换。";
+        public string HomePage_AppNewNotice => "1.支持reanim转xfl选择更多设置；\n2.支持lua脚本。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

@@ -19,7 +19,7 @@ namespace PopStudio.WPF.Plugin
     /// </summary>
     public partial class PictureDialog : Page
     {
-        public PictureDialog(string title, BitmapImage img, string cancel, Action action)
+        public PictureDialog(string title, BitmapImage img, string cancel, Action action, bool TouchLeave)
         {
             InitializeComponent();
             this.title.Text = title;
@@ -28,6 +28,10 @@ namespace PopStudio.WPF.Plugin
             {
                 pic.Cursor = Cursors.Hand;
                 pic.MouseUp += new MouseButtonEventHandler((object sender, MouseButtonEventArgs args) => action());
+            }
+            if (TouchLeave)
+            {
+                pic.MouseUp += new MouseButtonEventHandler((object sender, MouseButtonEventArgs args) => cancel_Click(null, null));
             }
             this.cancel.Content = cancel;
         }

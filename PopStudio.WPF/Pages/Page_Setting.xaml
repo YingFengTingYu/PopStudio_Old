@@ -82,9 +82,9 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap" FontSize="17" Text="ABGR8888" VerticalAlignment="Center" />
-                <ToggleButton x:Name="rsbptx1" Grid.Column="1" Checked="Switch_RsbPtx_1_Toggled" Unchecked="Switch_RsbPtx_1_Toggled" />
+                <CheckBox Cursor="Hand" x:Name="rsbptx1" Grid.Column="1" Checked="Switch_RsbPtx_1_Toggled" Unchecked="Switch_RsbPtx_1_Toggled" />
                 <TextBlock TextWrapping="Wrap" FontSize="17" Grid.Row="2" Text="ARGB8888_Padding" VerticalAlignment="Center" />
-                <ToggleButton x:Name="rsbptx2" Grid.Row="2" Grid.Column="1" Checked="Switch_RsbPtx_2_Toggled" Unchecked="Switch_RsbPtx_2_Toggled" />
+                <CheckBox Cursor="Hand" x:Name="rsbptx2" Grid.Row="2" Grid.Column="1" Checked="Switch_RsbPtx_2_Toggled" Unchecked="Switch_RsbPtx_2_Toggled" />
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemptx" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introptx" FontSize="14" />
@@ -94,7 +94,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock TextWrapping="Wrap" FontSize="17" Text="ABGR8888" VerticalAlignment="Center" />
-                <ToggleButton x:Name="ptx" Grid.Column="1" Checked="Switch_Ptx_1_Toggled" Unchecked="Switch_Ptx_1_Toggled" />
+                <CheckBox Cursor="Hand" x:Name="ptx" Grid.Column="1" Checked="Switch_Ptx_1_Toggled" Unchecked="Switch_Ptx_1_Toggled" />
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemcdat" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introcdat" FontSize="14" />
@@ -126,11 +126,31 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock FontSize="20" x:Name="label_xflwidth" VerticalAlignment="Center" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflwidth" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="Entry_XflSize_Width_TextChanged" />
+                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflwidth" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflwidth_TextChanged" />
                 <TextBlock FontSize="20" x:Name="label_xflheight" VerticalAlignment="Center" Grid.Row="2" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflheight" Grid.Row="2" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="Entry_XflSize_Height_TextChanged" />
+                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflheight" Grid.Row="2" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflheight_TextChanged" />
+                <TextBlock FontSize="20" x:Name="label_xfllabelname" VerticalAlignment="Center" Grid.Row="4" />
+                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xfllabel_TextChanged" />
+                <TextBlock FontSize="20" x:Name="label_xflscalex" VerticalAlignment="Center" Grid.Row="6" />
+                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflscalex" Grid.Row="6" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflscalex_TextChanged" />
+                <TextBlock FontSize="20" x:Name="label_xflscaley" VerticalAlignment="Center" Grid.Row="8" />
+                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflscaley" Grid.Row="8" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflscaley_TextChanged" />
+            </Grid>
+            <Grid Margin="0 5 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="label_ad" TextWrapping="Wrap" FontSize="20" VerticalAlignment="Center" />
+                <CheckBox x:Name="switch_ad" Grid.Column="1" Checked="Switch_AD_1_Toggled" Unchecked="Switch_AD_1_Toggled" Cursor="Hand" />
             </Grid>
             <Button Margin="0 5 0 5" x:Name="button_recover" Click="Button_ResetSetting_Clicked" />
         </StackPanel>

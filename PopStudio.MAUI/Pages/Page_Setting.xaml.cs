@@ -34,6 +34,10 @@ public partial class Page_Setting : ContentPage
 		label_introxfl.Text = MAUIStr.Obj.Setting_IntroXfl;
 		label_xflwidth.Text = MAUIStr.Obj.Setting_XflWidth;
 		label_xflheight.Text = MAUIStr.Obj.Setting_XflHeight;
+		label_xfllabelname.Text = MAUIStr.Obj.Setting_XflLabelName;
+		label_xflscalex.Text = MAUIStr.Obj.Setting_XflScaleX;
+		label_xflscaley.Text = MAUIStr.Obj.Setting_XflScaleY;
+		label_ad.Text = MAUIStr.Obj.Setting_AD;
 		button_compiled_1.Text = MAUIStr.Obj.Setting_Load;
 		button_compiled_2.Text = MAUIStr.Obj.Setting_Unload;
 		button_recover.Text = MAUIStr.Obj.Setting_Recover;
@@ -48,6 +52,7 @@ public partial class Page_Setting : ContentPage
 		InitRTONKeySetting();
 		InitImageStringSetting();
 		InitXflSizeSetting();
+		switch_ad.IsToggled = Setting.OpenProgramAD;
 		Setting.CanSave = true;
 	}
 
@@ -422,6 +427,9 @@ public partial class Page_Setting : ContentPage
 	{
 		xflwidth.Text = Setting.ReanimXflWidth.ToString();
 		xflheight.Text = Setting.ReanimXflHeight.ToString();
+		xfllabelname.Text = Setting.ReanimXflLabelName.ToString();
+		xflscalex.Text = Setting.ReanimXflScaleX.ToString();
+		xflscaley.Text = Setting.ReanimXflScaleY.ToString();
 	}
 
 	private void Entry_XflSize_Width_TextChanged(object sender, TextChangedEventArgs e)
@@ -443,6 +451,45 @@ public partial class Page_Setting : ContentPage
 		try
 		{
 			Setting.ReanimXflHeight = Convert.ToSingle(n);
+			Setting.SaveAsXml(Permission.GetSettingPath());
+		}
+		catch (Exception)
+		{
+		}
+	}
+
+	private void xfllabel_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		string n = e.NewTextValue;
+		try
+		{
+			Setting.ReanimXflLabelName = Convert.ToInt32(n);
+			Setting.SaveAsXml(Permission.GetSettingPath());
+		}
+		catch (Exception)
+		{
+		}
+	}
+
+	private void xflscalex_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		string n = e.NewTextValue;
+		try
+		{
+			Setting.ReanimXflScaleX = Convert.ToDouble(n);
+			Setting.SaveAsXml(Permission.GetSettingPath());
+		}
+		catch (Exception)
+		{
+		}
+	}
+
+	private void xflscaley_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		string n = e.NewTextValue;
+		try
+		{
+			Setting.ReanimXflScaleY = Convert.ToDouble(n);
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 		catch (Exception)
@@ -511,5 +558,11 @@ public partial class Page_Setting : ContentPage
 	private void button_chooselanguage_Clicked(object sender, EventArgs e)
     {
 		ChangeLanguageSetting();
+	}
+
+	private void Switch_AD_1_Toggled(object sender, EventArgs e)
+	{
+		Setting.OpenProgramAD = ((Switch)sender).IsToggled;
+		Setting.SaveAsXml(Permission.GetSettingPath());
 	}
 }

@@ -13,15 +13,13 @@ namespace PopStudio.WPF
     /// </summary>
     public partial class App : Application
     {
-        public App()
+        public App() : base()
         {
-            string settingxml = Permission.GetSettingPath();
-            if (!File.Exists(settingxml))
+            string settingxml = "setting.xml";
+            if (File.Exists(settingxml))
             {
-                Setting.AppLanguage = Permission.GetDefaultLanguage();
-                Setting.SaveAsXml(settingxml);
+                Setting.LoadFromXml(settingxml);
             }
-            Setting.LoadFromXml(settingxml);
         }
     }
 }

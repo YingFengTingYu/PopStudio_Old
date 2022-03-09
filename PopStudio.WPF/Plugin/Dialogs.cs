@@ -49,9 +49,9 @@ namespace PopStudio.WPF.Plugin
             return (string)MainWindow.Singleten.Result;
         }
 
-        public static async Task DisplayPicture(string title, BitmapImage img, string cancel = "OK", Action action = null)
+        public static async Task DisplayPicture(string title, BitmapImage img, string cancel = "OK", Action action = null, bool TouchLeave = false)
         {
-            MainWindow.Singleten.OpenPictureDialog(title, img, cancel, action);
+            MainWindow.Singleten.OpenPictureDialog(title, img, cancel, action, TouchLeave);
             while (MainWindow.Singleten.Result == null)
             {
                 await Task.Delay(100);

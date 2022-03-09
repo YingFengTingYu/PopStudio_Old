@@ -8,6 +8,13 @@ namespace PopStudio.WPF.Languages
 {
     internal interface ILocalization
     {
+        //LuaScript
+
+        public string LuaScript_Title { get; }
+        public string LuaScript_Introduction { get; }
+        public string LuaScript_TracePrint { get; }
+
+
         //Shell
         public string Shell_OK { get; }
         public string Shell_Cancel { get; }
@@ -39,6 +46,10 @@ namespace PopStudio.WPF.Languages
         public string Setting_IntroXfl { get; }
         public string Setting_XflWidth { get; }
         public string Setting_XflHeight { get; }
+        public string Setting_XflLabelName { get; }
+        public string Setting_XflScaleX { get; }
+        public string Setting_XflScaleY { get; }
+        public string Setting_AD { get; }
         public string Setting_Load { get; }
         public string Setting_Unload { get; }
         public string Setting_Recover { get; }

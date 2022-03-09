@@ -114,11 +114,31 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label x:Name="label_xflwidth" VerticalTextAlignment="Center" />
                 <Entry x:Name="xflwidth" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Width_TextChanged" />
                 <Label x:Name="label_xflheight" VerticalTextAlignment="Center" Grid.Row="2" />
                 <Entry x:Name="xflheight" Grid.Row="2" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Height_TextChanged" />
+                <Label x:Name="label_xfllabelname" VerticalTextAlignment="Center" Grid.Row="4" />
+                <Entry x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" Keyboard="Numeric" TextChanged="xfllabel_TextChanged" />
+                <Label x:Name="label_xflscalex" VerticalTextAlignment="Center" Grid.Row="6" />
+                <Entry x:Name="xflscalex" Grid.Row="6" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscalex_TextChanged" />
+                <Label x:Name="label_xflscaley" VerticalTextAlignment="Center" Grid.Row="8" />
+                <Entry x:Name="xflscaley" Grid.Row="8" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscaley_TextChanged" />
+            </Grid>
+            <Grid Margin="0 5 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="label_ad" VerticalTextAlignment="Center" />
+                <Switch x:Name="switch_ad" Grid.Column="1" Toggled="Switch_AD_1_Toggled" />
             </Grid>
             <Button x:Name="button_recover" Clicked="Button_ResetSetting_Clicked" />
         </StackLayout>

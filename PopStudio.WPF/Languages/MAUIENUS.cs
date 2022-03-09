@@ -8,6 +8,11 @@ namespace PopStudio.WPF.Languages
 {
     internal class MAUIENUS : ILocalization
     {
+        //LuaScript
+        public string LuaScript_Title => "lua script";
+        public string LuaScript_Introduction => "Through Lua script function, call the built-in function of the program to realize batch processing and other functions! ";
+        public string LuaScript_TracePrint => "Print";
+
         //Shell
         public string Shell_OK => "Yes\0";
         public string Shell_Cancel => "No\0";
@@ -36,9 +41,13 @@ namespace PopStudio.WPF.Languages
         public string Setting_ItemCompiled => "Convert Number Image Label";
         public string Setting_IntroCompiled => "In some platform's compiled files in PVZ, the image label is changed from string to number. You can find the corresponding relationship in so and provide it to the tool to change the number into string.";
         public string Setting_ItemXfl => "Xfl canvas size";
-        public string Setting_IntroXfl => "When using reanim transcoding to generate Flash_Xfl document to use Adobe Animate to edit it, you need to allocate the canvas size. It can also be allocated in Adobe Animate. ";
-        public string Setting_XflWidth => "Width";
-        public string Setting_XflHeight => "Height";
+        public string Setting_IntroXfl => "When using reanim transcoding to generate Flash_Xfl document to use Adobe Animate to edit it, you can specify the canvas size, whether the generated picture name uses the I label signature or the name label name, and the scaling multiple of the horizontal and vertical coordinates. ";
+        public string Setting_XflWidth => "Canva Width";
+        public string Setting_XflHeight => "Canva Height";
+        public string Setting_XflLabelName => "Use Label Name";
+        public string Setting_XflScaleX => "Scale X";
+        public string Setting_XflScaleY => "Scale Y";
+        public string Setting_AD => "Load ads when program starts";
         public string Setting_Load => "Load";
         public string Setting_Unload => "Unload";
         public string Setting_Recover => "Restore Default Settings";
@@ -49,7 +58,7 @@ namespace PopStudio.WPF.Languages
         public string Setting_FinishRecover => "Recovery Complete";
         public string Setting_FinishRecoverText => "Restore default settings complete. The tool needs to be restarted immediately. ";
         public string Setting_ChooseItem => "Please Select One";
-        public string Setting_ChooseCompressMode => "Please Select Compression Method";
+        public string Setting_ChooseCompressMode => "Please Select Method";
         public string Setting_EnterExtension => "Please Write the File Extension";
         public string Setting_EnterExtensionText => "Please Write the File Extension. Files with the same extension will be compressed in the same way. ";
         public string Setting_CompressItem1 => "Change Compression Method";
@@ -148,7 +157,7 @@ namespace PopStudio.WPF.Languages
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support reanim file to xfl folder. \n2.Support direct conversion between all kinds of compiled file. ";
+        public string HomePage_AppNewNotice => "1.Support more setting of reanim file to xfl folder. \n2.Support lua script. ";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

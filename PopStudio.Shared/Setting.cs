@@ -5,7 +5,12 @@ namespace PopStudio
     internal static class Setting
     {
         public static bool CanSave = true;
-        public static Language AppLanguage = Language.ZHCN;
+        public static Language AppLanguage = Thread.CurrentThread.CurrentCulture.Name.ToLower() switch
+        {
+            "zh-cn" => Language.ZHCN,
+            "zh-hans-cn" => Language.ZHCN,
+            _ => Language.ENUS
+        };
 
         public static readonly Dictionary<string, Language> LanguageEnum = new Dictionary<string, Language> { { "English", Language.ENUS }, { "简体中文", Language.ZHCN } };
         public static readonly Dictionary<Language, string> LanguageName = new Dictionary<Language, string> { { Language.ENUS, "English" }, { Language.ZHCN, "简体中文" } };
@@ -60,11 +65,17 @@ namespace PopStudio
         <!--Convert image integer to string or string to integer in reanim, particles and trail. Find the answer from libpvz.so or PVZ.s3e!-->
         <String id=""PopStudioExample"" value=""99999"" />
     </ImageString>
-    <ReanimXfl width=""80"" height=""80"" />
+    <ReanimXfl width=""80"" height=""80"" uselabelname=""0"" scalex=""1"" scaley=""1"" />
+    <AD>True</AD>
 </Description>";
+
+        public static bool OpenProgramAD = true;
 
         public static float ReanimXflWidth = 80;
         public static float ReanimXflHeight = 80;
+        public static double ReanimXflScaleX = 1;
+        public static double ReanimXflScaleY = 1;
+        public static int ReanimXflLabelName = 0;
 
         public static readonly Dictionary<Package.Dz.CompressFlags, string> DzCompressMethodName = new Dictionary<Package.Dz.CompressFlags, string> { { Package.Dz.CompressFlags.ZLIB, "Gzip" }, { Package.Dz.CompressFlags.LZMA, "Lzma" }, { Package.Dz.CompressFlags.STORE, "Store" }, { Package.Dz.CompressFlags.BZIP, "Bzip2" } };
         public static readonly Dictionary<Package.Pak.CompressFlags, string> PakPS3CompressMethodName = new Dictionary<Package.Pak.CompressFlags, string> { { Package.Pak.CompressFlags.ZLIB, "Zlib" }, { Package.Pak.CompressFlags.STORE, "Store" } };
@@ -80,7 +91,6 @@ namespace PopStudio
                 sw.Write(LanguageName[AppLanguage]);
                 sw.Write(DefaultXml_P2);
             }
-            LoadFromXml(xmlPath);
         }
 
         public static void LoadFromXml(string xmlPath)
@@ -271,6 +281,23 @@ namespace PopStudio
                                 {
                                     ReanimXflHeight = Convert.ToSingle(child.Attributes["height"].Value);
                                 }
+                                if (child.Attributes["uselabelname"] != null)
+                                {
+                                    ReanimXflLabelName = Convert.ToInt32(child.Attributes["uselabelname"].Value);
+                                }
+                                if (child.Attributes["scalex"] != null)
+                                {
+                                    ReanimXflScaleX = Convert.ToDouble(child.Attributes["scalex"].Value);
+                                }
+                                if (child.Attributes["scaley"] != null)
+                                {
+                                    ReanimXflScaleY = Convert.ToDouble(child.Attributes["scaley"].Value);
+                                }
+                            }
+                            break;
+                        case "AD":
+                            {
+                                OpenProgramAD = Convert.ToBoolean(child.InnerText);
                             }
                             break;
                     }
@@ -336,7 +363,15 @@ namespace PopStudio
                 sw.Write(ReanimXflWidth);
                 sw.Write("\" height=\"");
                 sw.Write(ReanimXflHeight);
-                sw.Write("\" />\n</Description>");
+                sw.Write("\" uselabelname=\"");
+                sw.Write(ReanimXflLabelName);
+                sw.Write("\" scalex=\"");
+                sw.Write(ReanimXflScaleX);
+                sw.Write("\" scaley=\"");
+                sw.Write(ReanimXflScaleY);
+                sw.Write("\" />\n    <AD>");
+                sw.Write(OpenProgramAD);
+                sw.Write("</AD>\n</Description>");
             }
         }
 

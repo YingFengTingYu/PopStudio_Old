@@ -9,7 +9,8 @@
     <Import_RootNamespace>PopStudio</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)API.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\LuaScript.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\API.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\Particles.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesEmitter.cs" />

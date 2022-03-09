@@ -12,10 +12,10 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
 			Title = MAUIStr.Obj.HomePage_Title;
-			label_begin.Text = MAUIStr.Obj.HomePage_Begin;
+			label_begin.Text = Thread.CurrentThread.CurrentCulture.Name;//MAUIStr.Obj.HomePage_Begin;
 			label_function.Text = MAUIStr.Obj.HomePage_Function;
 			label_agreement.Text = MAUIStr.Obj.HomePage_Agreement;
-			label_ver.Text = string.Format(MAUIStr.Obj.HomePage_Version, 3.4);
+			label_ver.Text = string.Format(MAUIStr.Obj.HomePage_Version, Str.Obj.AppVersion);
 			label_author_string.Text = MAUIStr.Obj.HomePage_Author_String;
 			label_author.Text = MAUIStr.Obj.HomePage_Author;
 			label_thanks_string.Text = MAUIStr.Obj.HomePage_Thanks_String;

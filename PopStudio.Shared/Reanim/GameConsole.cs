@@ -56,6 +56,7 @@
         {
             using (BinaryStream bs = new BinaryStream())
             {
+                #region decompress
                 using (BinaryStream bs_source = new BinaryStream(inFile, FileMode.Open))
                 {
                     bs_source.Endian = Endian.Big;
@@ -74,6 +75,8 @@
                         bs_source.CopyTo(bs);
                     }
                 }
+                #endregion
+                #region info
                 bs.Endian = Endian.Big;
                 Reanim reanim = new Reanim();
                 bs.Position = 8;
@@ -82,6 +85,8 @@
                 reanim.fps = bs.ReadFloat32();
                 bs.Position += 4;
                 bs.IdInt32(0xC);
+                #endregion
+                #region part1
                 for (int i = 0; i < tracksNumber; i++)
                 {
                     bs.Position += 8;
@@ -91,6 +96,8 @@
                     };
                     reanim.tracks[i] = t;
                 }
+                #endregion
+                #region part2
                 for (int i = 0; i < tracksNumber; i++)
                 {
                     ReanimTrack t = reanim.tracks[i];
@@ -163,6 +170,7 @@
                         }
                     }
                 }
+                #endregion
                 return reanim;
             }
         }

@@ -18,9 +18,10 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" x:Name="cancel" Margin="10 5 10 5" Click="cancel_Click" />
+            <Button Grid.Column="1" x:Name="cancel" Margin="10 5 10 5" Click="cancel_Click" Cursor="Hand" />
         </Grid>
     </Grid>
 </Page>

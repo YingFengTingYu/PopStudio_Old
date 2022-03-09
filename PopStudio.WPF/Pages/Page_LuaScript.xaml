@@ -1,0 +1,30 @@
+﻿<Page x:Class="PopStudio.WPF.Pages.Page_LuaScript"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PopStudio.WPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+
+    <ScrollViewer x:Name="ScrollViewer" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical" Margin="30,24,30,24">
+            <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introduction" FontSize="16"/>
+            <RichTextBox x:Name="richtextbox1" Margin="0 5 0 5" FontSize="18" Height="200">
+                <FlowDocument LineHeight="1"/>
+            </RichTextBox>
+            <Grid Margin="0 5 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" x:Name="button_run" Click="button_run_Click" />
+            </Grid>
+            <TextBlock x:Name="label_print" Margin="0 5 0 5" FontSize="16" />
+            <RichTextBox x:Name="richtextbox2" Margin="0 5 0 5" Height="85" FontSize="16">
+                <FlowDocument LineHeight="1"/>
+            </RichTextBox>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

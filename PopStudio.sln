@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.ConsoleProject", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.MAUI", "PopStudio.MAUI\PopStudio.MAUI.csproj", "{C19F9B4A-17FC-4A71-8A84-D2F9ACB814A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopStudio.WPF", "PopStudio.WPF\PopStudio.WPF.csproj", "{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.WPF", "PopStudio.WPF\PopStudio.WPF.csproj", "{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

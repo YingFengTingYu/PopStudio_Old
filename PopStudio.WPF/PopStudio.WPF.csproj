@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <None Remove="Icon.png" />
-    <None Remove="Plugin\Almanac_PlantBack.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,25 +25,16 @@
     <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
     <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
     <PackageReference Include="LZMA-SDK" Version="19.0.0" />
+    <PackageReference Include="NLua" Version="1.6.0" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Icon.png" />
-    <Resource Include="Plugin\Almanac_PlantBack.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Plugin\PictureDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Plugin\PromptDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Plugin\AlertDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="ResourceAD.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -60,17 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Plugin\PictureDialog.xaml">
+    <Page Update="Pages\Page_LuaScript.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Plugin\PromptDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Plugin\AlertDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
 

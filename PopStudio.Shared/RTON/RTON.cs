@@ -3,13 +3,18 @@ using System.Text.Json;
 
 namespace PopStudio.RTON
 {
-    internal class RTON
+    internal static class RTON
     {
         public static readonly string magic = "RTON";
         public static readonly int version = 0x1;
         public static readonly string EOF = "DONE";
         public static readonly StringPool R0x90 = new StringPool();
         public static readonly StringPool R0x92 = new StringPool();
+
+        public static string Format(this string s)
+        {
+            return s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t");
+        }
 
         public static void Decode(string inFile, string outFile)
         {
@@ -193,14 +198,14 @@ namespace PopStudio.RTON
                 else if (type == 0x81)
                 {
                     sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head());
+                    sw.Write(bs.ReadStringByVarInt32Head().Format());
                     sw.Write('"');
                 }
                 else if (type == 0x82)
                 {
                     bs.ReadVarInt32();
                     sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head());
+                    sw.Write(bs.ReadStringByVarInt32Head().Format());
                     sw.Write('"');
                 }
                 else if (type == 0x83)
@@ -210,7 +215,7 @@ namespace PopStudio.RTON
                     string value = bs.ReadStringByVarInt32Head();
                     bs.ReadVarInt32();
                     sw.Write('"');
-                    sw.Write("RTID(" + bs.ReadStringByVarInt32Head() + "@" + value + ")");
+                    sw.Write("RTID(" + bs.ReadStringByVarInt32Head() + "@" + value + ")".Format());
                     sw.Write('"');
                 }
                 else if (type == 0x84)
@@ -227,7 +232,7 @@ namespace PopStudio.RTON
                 }
                 else if (type == 0x90)
                 {
-                    string value = bs.ReadStringByVarInt32Head();
+                    string value = bs.ReadStringByVarInt32Head().Format();
                     R0x90.ThrowInPool(value);
                     sw.Write('"');
                     sw.Write(value);
@@ -242,7 +247,7 @@ namespace PopStudio.RTON
                 else if (type == 0x92)
                 {
                     bs.ReadVarInt32();
-                    string value = bs.ReadStringByVarInt32Head();
+                    string value = bs.ReadStringByVarInt32Head().Format();
                     R0x92.ThrowInPool(value);
                     sw.Write('"');
                     sw.Write(value);
@@ -300,7 +305,7 @@ namespace PopStudio.RTON
                 if (type == 0x81)
                 {
                     sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\""));
+                    sw.Write(bs.ReadStringByVarInt32Head().Format());
                     sw.Write('"');
                     sw.Write(':');
                 }
@@ -308,7 +313,7 @@ namespace PopStudio.RTON
                 {
                     bs.ReadVarInt32();
                     sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\""));
+                    sw.Write(bs.ReadStringByVarInt32Head().Format());
                     sw.Write('"');
                     sw.Write(':');
                 }
@@ -319,13 +324,13 @@ namespace PopStudio.RTON
                     string key = bs.ReadStringByVarInt32Head();
                     bs.ReadVarInt32();
                     sw.Write('"');
-                    sw.Write(("RTID(" + bs.ReadStringByVarInt32Head() + "@" + key + ")").Replace("\\", "\\\\").Replace("\"", "\\\""));
+                    sw.Write(("RTID(" + bs.ReadStringByVarInt32Head() + "@" + key + ")").Format());
                     sw.Write('"');
                     sw.Write(':');
                 }
                 else if (type == 0x90)
                 {
-                    string key = bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\"");
+                    string key = bs.ReadStringByVarInt32Head().Format();
                     R0x90.ThrowInPool(key);
                     sw.Write('"');
                     sw.Write(key);
@@ -342,7 +347,7 @@ namespace PopStudio.RTON
                 else if (type == 0x92)
                 {
                     bs.ReadVarInt32();
-                    string key = bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\"");
+                    string key = bs.ReadStringByVarInt32Head().Format();
                     R0x92.ThrowInPool(key);
                     sw.Write('"');
                     sw.Write(key);
@@ -477,14 +482,14 @@ namespace PopStudio.RTON
                 else if (type == 0x81)
                 {
                     sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\""));
+                    sw.Write(bs.ReadStringByVarInt32Head().Format());
                     sw.Write('"');
                 }
                 else if (type == 0x82)
                 {
                     bs.ReadVarInt32();
                     sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\""));
+                    sw.Write(bs.ReadStringByVarInt32Head().Format());
                     sw.Write('"');
                 }
                 else if (type == 0x83)
@@ -494,7 +499,7 @@ namespace PopStudio.RTON
                     string value = bs.ReadStringByVarInt32Head();
                     bs.ReadVarInt32();
                     sw.Write('"');
-                    sw.Write(("RTID(" + bs.ReadStringByVarInt32Head() + "@" + value + ")").Replace("\\", "\\\\").Replace("\"", "\\\""));
+                    sw.Write(("RTID(" + bs.ReadStringByVarInt32Head() + "@" + value + ")").Format());
                     sw.Write('"');
                 }
                 else if (type == 0x84)
@@ -511,7 +516,7 @@ namespace PopStudio.RTON
                 }
                 else if (type == 0x90)
                 {
-                    string value = bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\"");
+                    string value = bs.ReadStringByVarInt32Head().Format();
                     R0x90.ThrowInPool(value);
                     sw.Write('"');
                     sw.Write(value);
@@ -526,7 +531,7 @@ namespace PopStudio.RTON
                 else if (type == 0x92)
                 {
                     bs.ReadVarInt32();
-                    string value = bs.ReadStringByVarInt32Head().Replace("\\", "\\\\").Replace("\"", "\\\"");
+                    string value = bs.ReadStringByVarInt32Head().Format();
                     R0x92.ThrowInPool(value);
                     sw.Write('"');
                     sw.Write(value);

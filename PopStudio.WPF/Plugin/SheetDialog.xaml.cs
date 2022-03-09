@@ -21,6 +21,7 @@ namespace PopStudio.WPF.Plugin
     {
         string[] items;
         string cancelstring;
+        string okstring;
 
         public SheetDialog(string title, string cancel, string ok, params string[] items)
         {
@@ -29,6 +30,7 @@ namespace PopStudio.WPF.Plugin
             Height = Math.Min(l * 30 + 105, 400);
             this.title.Text = title;
             this.items = items;
+            okstring = ok;
             cancelstring = cancel;
             this.ok.Content = ok;
             this.cancel.Content = cancel;
@@ -39,11 +41,19 @@ namespace PopStudio.WPF.Plugin
             }
             list.ItemsSource = items2;
             list.SelectedIndex = 0;
+            if (Height == 400) list.Height = 295;
         }
 
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Singleten.Result = items[list.SelectedIndex];
+            if (list.SelectedIndex < 0 || items.Length <= 0)
+            {
+                MainWindow.Singleten.Result = okstring;
+            }
+            else
+            {
+                MainWindow.Singleten.Result = items[list.SelectedIndex];
+            }
             MainWindow.Singleten.CloseDialog();
         }
 

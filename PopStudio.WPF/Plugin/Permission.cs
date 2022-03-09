@@ -2,15 +2,12 @@
 {
     internal static class Permission
     {
-        public static Language GetDefaultLanguage()
-        {
-            return Thread.CurrentThread.CurrentCulture.Name switch
-            {
-                "zh-CN" => Language.ZHCN,
-                _ => Language.ENUS
-            };
-        }
+        public static string GetSettingPath() => "setting.xml";
 
-        public static string GetSettingPath() => Path.GetFullPath(".\\setting.xml");
+        public static void Restart()
+        {
+            System.Windows.Forms.Application.Restart();
+            Environment.Exit(0);
+        }
     }
 }

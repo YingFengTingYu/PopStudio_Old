@@ -60,12 +60,12 @@ namespace PopStudio.WPF
             DialogGrid.Visibility = Visibility.Visible;
         }
 
-        public void OpenPictureDialog(string title, BitmapImage img, string cancel, Action action)
+        public void OpenPictureDialog(string title, BitmapImage img, string cancel, Action action, bool TouchLeave)
         {
             Result = null;
             DialogControl.Content = new Frame
             {
-                Content = new Plugin.PictureDialog(title, img, cancel, action)
+                Content = new Plugin.PictureDialog(title, img, cancel, action, TouchLeave)
             };
             DialogGrid.Visibility = Visibility.Visible;
         }
@@ -92,7 +92,7 @@ namespace PopStudio.WPF
         {
             InitializeComponent();
 #if DEBUG
-            Topmost = true;
+            //Topmost = true;
 #endif
             button1.Content = MAUIStr.Obj.HomePage_Title;
             button2.Content = MAUIStr.Obj.Package_Title;
@@ -102,10 +102,11 @@ namespace PopStudio.WPF
             button6.Content = MAUIStr.Obj.Trail_Title;
             button7.Content = MAUIStr.Obj.RTON_Title;
             button8.Content = MAUIStr.Obj.Compress_Title;
-            button9.Content = MAUIStr.Obj.Setting_Title;
+            button9.Content = MAUIStr.Obj.LuaScript_Title;
+            button10.Content = MAUIStr.Obj.Setting_Title;
             LoadHomePage();
             Singleten = this;
-            _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(ResourceAD.ImageAD1), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", ResourceAD.AD1));
+            if (Setting.OpenProgramAD) _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(ResourceAD.ImageAD1), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", ResourceAD.AD1), true);
         }
 
         BitmapImage GetImage(byte[] ary)
@@ -162,6 +163,11 @@ namespace PopStudio.WPF
 
         private void button9_Click(object sender, RoutedEventArgs e)
         {
+            LoadLuaScript();
+        }
+
+        private void button10_Click(object sender, RoutedEventArgs e)
+        {
             LoadSetting();
         }
 
@@ -177,6 +183,7 @@ namespace PopStudio.WPF
         Page_Trail trail = new Page_Trail();
         Page_RTON rton = new Page_RTON();
         Page_Compress compress = new Page_Compress();
+        Page_LuaScript luaScript = new Page_LuaScript();
         Page_Setting setting = new Page_Setting();
 
         void ResetButton()
@@ -199,6 +206,8 @@ namespace PopStudio.WPF
             button8.Foreground = Brushes.Black;
             button9.Background = Brushes.White;
             button9.Foreground = Brushes.Black;
+            button10.Background = Brushes.White;
+            button10.Foreground = Brushes.Black;
         }
 
         public void LoadHomePage()
@@ -297,11 +306,23 @@ namespace PopStudio.WPF
             Label_Head.Content = MAUIStr.Obj.Compress_Title;
         }
 
-        public void LoadSetting()
+        public void LoadLuaScript()
         {
             ResetButton();
             button9.Background = Brushes.CornflowerBlue;
             button9.Foreground = Brushes.White;
+            PageControl.Content = new Frame()
+            {
+                Content = luaScript
+            };
+            Label_Head.Content = MAUIStr.Obj.LuaScript_Title;
+        }
+
+        public void LoadSetting()
+        {
+            ResetButton();
+            button10.Background = Brushes.CornflowerBlue;
+            button10.Foreground = Brushes.White;
             PageControl.Content = new Frame()
             {
                 Content = setting

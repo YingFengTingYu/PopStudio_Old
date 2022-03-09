@@ -8,7 +8,6 @@
         Title="PopStudio" Height="540" Width="900" MinHeight="500" MinWidth="500"
         Icon="/Icon.png">
     <Window.Resources>
-
         <LinearGradientBrush x:Key="LGBrush" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="LightSkyBlue" Offset="0" />
             <GradientStop Color="LightBlue" Offset="0.25" />
@@ -53,7 +52,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Margin="0 20 0 20" Text="PopStudio" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="White" />
+                        <TextBlock Margin="0 15 0 10" Text="PopStudio" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="White" />
                         <Border Grid.Row="1" Margin="0 0 0 0" Width="140" BorderBrush="FloralWhite" BorderThickness="0 0 0 1" />
                         <StackPanel Margin="0 5 0 0" Grid.Row="2">
                             <Button FontSize="15" x:Name="button1" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button1_Click" />
@@ -65,6 +64,7 @@
                             <Button FontSize="15" x:Name="button7" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button7_Click" />
                             <Button FontSize="15" x:Name="button8" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button8_Click" />
                             <Button FontSize="15" x:Name="button9" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button9_Click" />
+                            <Button FontSize="15" x:Name="button10" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button10_Click" />
                         </StackPanel>
                     </Grid>
                 </Grid>

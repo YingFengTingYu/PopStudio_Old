@@ -24,31 +24,34 @@
             <Label FontSize="28" Margin="30 0 30 0" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
         </Grid>
     </Shell.FlyoutHeader>
-    <FlyoutItem x:Name="fitem_homepage" Title="主页">
+    <FlyoutItem x:Name="fitem_homepage">
         <ShellContent ContentTemplate="{DataTemplate local:Page_HomePage}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_package" Title="解包打包">
+    <FlyoutItem x:Name="fitem_package">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Package}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_texture" Title="图像转码">
+    <FlyoutItem x:Name="fitem_texture">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Texture}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_reanim" Title="reanim转码">
+    <FlyoutItem x:Name="fitem_reanim">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_particles" Title="particles转码">
+    <FlyoutItem x:Name="fitem_particles">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_trail" Title="trail转码">
+    <FlyoutItem x:Name="fitem_trail">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_rton" Title="RTON转码">
+    <FlyoutItem x:Name="fitem_rton">
         <ShellContent ContentTemplate="{DataTemplate local:Page_RTON}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_compress" Title="压缩解压">
+    <FlyoutItem x:Name="fitem_compress">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Compress}"/>
     </FlyoutItem>
-    <FlyoutItem x:Name="fitem_setting" Title="设置">
+    <FlyoutItem x:Name="fitem_luascript">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_LuaScript}"/>
+    </FlyoutItem>
+    <FlyoutItem x:Name="fitem_setting">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Setting}"/>
     </FlyoutItem>
 </Shell>

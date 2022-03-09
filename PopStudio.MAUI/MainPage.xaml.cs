@@ -15,6 +15,7 @@ namespace PopStudio.MAUI
             fitem_trail.Title = MAUIStr.Obj.Trail_Title;
             fitem_rton.Title = MAUIStr.Obj.RTON_Title;
             fitem_compress.Title = MAUIStr.Obj.Compress_Title;
+            fitem_luascript.Title = MAUIStr.Obj.LuaScript_Title;
             fitem_setting.Title = MAUIStr.Obj.Setting_Title;
         }
 

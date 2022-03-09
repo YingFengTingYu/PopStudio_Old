@@ -54,6 +54,10 @@ namespace PopStudio.WPF.Pages
 			label_introxfl.Text = MAUIStr.Obj.Setting_IntroXfl;
 			label_xflwidth.Text = MAUIStr.Obj.Setting_XflWidth;
 			label_xflheight.Text = MAUIStr.Obj.Setting_XflHeight;
+			label_xfllabelname.Text = MAUIStr.Obj.Setting_XflLabelName;
+			label_xflscalex.Text = MAUIStr.Obj.Setting_XflScaleX;
+			label_xflscaley.Text = MAUIStr.Obj.Setting_XflScaleY;
+			label_ad.Text = MAUIStr.Obj.Setting_AD;
 			button_compiled_1.Content = MAUIStr.Obj.Setting_Load;
 			button_compiled_2.Content = MAUIStr.Obj.Setting_Unload;
 			button_recover.Content = MAUIStr.Obj.Setting_Recover;
@@ -67,7 +71,8 @@ namespace PopStudio.WPF.Pages
 			InitCdatKeySetting();
 			InitRTONKeySetting();
 			InitImageStringSetting();
-			InitXflSizeSetting();
+			InitXflSetting();
+			switch_ad.IsChecked = Setting.OpenProgramAD;
 			Setting.CanSave = true;
 		}
 
@@ -354,13 +359,13 @@ namespace PopStudio.WPF.Pages
 
 		private void Switch_RsbPtx_1_Toggled(object sender, EventArgs e)
 		{
-			Setting.RsbPtxABGR8888Mode = ((ToggleButton)sender).IsChecked == true;
+			Setting.RsbPtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
 		private void Switch_RsbPtx_2_Toggled(object sender, EventArgs e)
 		{
-			Setting.RsbPtxARGB8888PaddingMode = ((ToggleButton)sender).IsChecked == true;
+			Setting.RsbPtxARGB8888PaddingMode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
@@ -374,7 +379,7 @@ namespace PopStudio.WPF.Pages
 
 		private void Switch_Ptx_1_Toggled(object sender, EventArgs e)
 		{
-			Setting.PtxABGR8888Mode = ((ToggleButton)sender).IsChecked == true;
+			Setting.PtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
@@ -440,40 +445,20 @@ namespace PopStudio.WPF.Pages
 		/// <summary>
 		/// Xfl Setting Begin
 		/// </summary>
-		void InitXflSizeSetting()
+		void InitXflSetting()
 		{
 			xflwidth.Text = Setting.ReanimXflWidth.ToString();
 			xflheight.Text = Setting.ReanimXflHeight.ToString();
+			xfllabelname.Text = Setting.ReanimXflLabelName.ToString();
+			xflscalex.Text = Setting.ReanimXflScaleX.ToString();
+			xflscaley.Text = Setting.ReanimXflScaleY.ToString();
 		}
 
-		private void Entry_XflSize_Width_TextChanged(object sender, TextCompositionEventArgs e)
-		{
-			Regex re = new Regex("[^0-9.-]+");
-			e.Handled = re.IsMatch(e.Text);
-			string n = ((TextBox)sender).Text;
-			try
-			{
-				Setting.ReanimXflWidth = Convert.ToSingle(n);
-				Setting.SaveAsXml(Permission.GetSettingPath());
-			}
-			catch (Exception)
-			{
-			}
-		}
+		Regex number = new Regex("[^0-9.-]");
 
-		private void Entry_XflSize_Height_TextChanged(object sender, TextCompositionEventArgs e)
+		private void PreviewTextChanged(object sender, TextCompositionEventArgs e)
 		{
-			Regex re = new Regex("[^0-9.-]+");
-			e.Handled = re.IsMatch(e.Text);
-			string n = ((TextBox)sender).Text;
-			try
-			{
-				Setting.ReanimXflHeight = Convert.ToSingle(n);
-				Setting.SaveAsXml(Permission.GetSettingPath());
-			}
-			catch (Exception)
-			{
-			}
+			e.Handled = number.IsMatch(e.Text);
 		}
 
 		private void NumberOnly(object sender, DataObjectPastingEventArgs e) //Can't really test whether the text is number
@@ -507,7 +492,7 @@ namespace PopStudio.WPF.Pages
 			{
 				Setting.ResetXml(Permission.GetSettingPath());
 				await Dialogs.DisplayAlert(MAUIStr.Obj.Setting_FinishRecover, MAUIStr.Obj.Setting_FinishRecoverText, ok);
-				Environment.Exit(0);
+				Permission.Restart();
 			}
 		}
 
@@ -542,7 +527,7 @@ namespace PopStudio.WPF.Pages
 					Setting.AppLanguage = Setting.LanguageEnum[ans];
 					Setting.SaveAsXml(Permission.GetSettingPath());
 					await Dialogs.DisplayAlert(MAUIStr.Obj.Setting_FinishChooseLanguage, MAUIStr.Obj.Setting_FinishChooseLanguageText, ok);
-					Environment.Exit(0);
+					Permission.Restart();
 				}
 			}
 			catch (Exception)
@@ -559,6 +544,72 @@ namespace PopStudio.WPF.Pages
 		private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
 		{
 			ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta);
+		}
+
+        private void xflwidth_TextChanged(object sender, TextChangedEventArgs e)
+        {
+			try
+			{
+				Setting.ReanimXflWidth = Convert.ToSingle(((TextBox)sender).Text);
+				Setting.SaveAsXml(Permission.GetSettingPath());
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+        private void xflheight_TextChanged(object sender, TextChangedEventArgs e)
+        {
+			try
+			{
+				Setting.ReanimXflHeight = Convert.ToSingle(((TextBox)sender).Text);
+				Setting.SaveAsXml(Permission.GetSettingPath());
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		private void xfllabel_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			try
+			{
+				Setting.ReanimXflLabelName = Convert.ToInt32(((TextBox)sender).Text);
+				Setting.SaveAsXml(Permission.GetSettingPath());
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		private void xflscalex_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			try
+			{
+				Setting.ReanimXflScaleX = Convert.ToDouble(((TextBox)sender).Text);
+				Setting.SaveAsXml(Permission.GetSettingPath());
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		private void xflscaley_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			try
+			{
+				Setting.ReanimXflScaleY = Convert.ToDouble(((TextBox)sender).Text);
+				Setting.SaveAsXml(Permission.GetSettingPath());
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		private void Switch_AD_1_Toggled(object sender, EventArgs e)
+		{
+			Setting.OpenProgramAD = ((CheckBox)sender).IsChecked == true;
+			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 	}
 }

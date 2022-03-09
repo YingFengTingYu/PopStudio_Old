@@ -21,7 +21,7 @@
             <TextBlock x:Name="label_qqgroup_string" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16"/>
             <TextBlock x:Name="label_qqgroup" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16"/>
             <TextBlock x:Name="label_course_string" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16"/>
-            <TextBlock x:Name="label_course" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16"/>
+            <TextBlock x:Name="label_course" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16" Cursor="Hand" MouseUp="label_course_MouseUp" />
             <TextBlock x:Name="label_appnewnotice_string" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16"/>
             <TextBlock x:Name="label_appnewnotice" Margin="0,5,0,5" TextWrapping="Wrap" FontSize="16"/>
         </StackPanel>

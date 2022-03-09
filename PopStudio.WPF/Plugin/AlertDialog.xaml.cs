@@ -24,8 +24,8 @@ namespace PopStudio.WPF.Plugin
             InitializeComponent();
             this.title.Text = title;
             text.Text = message;
-            ok.Visibility = Visibility.Hidden;
-            this.cancel.Content = cancel;
+            board1.Visibility = Visibility.Hidden;
+            cancel2.Content = cancel;
         }
 
         public AlertDialog(string title, string message, string accept, string cancel)
@@ -33,6 +33,7 @@ namespace PopStudio.WPF.Plugin
             InitializeComponent();
             this.title.Text = title;
             text.Text = message;
+            board2.Visibility = Visibility.Hidden;
             ok.Content = accept;
             this.cancel.Content = cancel;
         }

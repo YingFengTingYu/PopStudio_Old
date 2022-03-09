@@ -1,6 +1,4 @@
-﻿//If you want to use English mode, please change this setting. (ZHCN to ENUS)
-//如果你想转为英文模式，请改变这个设置。（ZHCN改为ENUS）
-PopStudio.Setting.AppLanguage = Language.ZHCN;
+﻿//automatically select the language. Both English and Chinese are supported.
 string[] Lng = PopStudio.ConsoleProject.Constant.Str.Obj.All;
 Console.WriteLine(Lng[0], Str.Obj.AppName, Str.Obj.AppVersion);
 Console.WriteLine(Lng[1], Str.Obj.AppAuthor);
@@ -1087,15 +1085,8 @@ while (true)
             continue;
         }
     }
-#if !DEBUG
     catch (Exception ex)
     {
         Console.WriteLine(ex.Message);
-        throw;
-    }
-#endif
-    finally
-    {
-
     }
 }

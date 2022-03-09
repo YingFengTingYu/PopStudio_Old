@@ -57,8 +57,27 @@
 	  <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
 	  <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
 	  <PackageReference Include="LZMA-SDK" Version="19.0.0" />
+	  <PackageReference Include="NLua" Version="1.6.0" />
 	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\Page_LuaScript.xaml.cs">
+	    <DependentUpon>Page_LuaScript.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ResourceAD.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ResourceAD.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="ResourceAD.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>ResourceAD.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +85,10 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_LuaScript.xaml">
+	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Package.xaml">
@@ -87,6 +110,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Trail.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Plugin\Page_AD.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
