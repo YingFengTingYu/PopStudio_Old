@@ -12,6 +12,7 @@ namespace PopStudio.Package.Pak
 
         public static void Pack(string inFolder, string outFile)
         {
+            bool TVPak = false;
             Dir.FormatAndDeleteEndPathSeparator(ref inFolder);
             Dir.FormatAndDeleteEndPathSeparator(ref outFile);
             if (!Directory.Exists(inFolder))
@@ -41,7 +42,7 @@ namespace PopStudio.Package.Pak
                     }
                     else if (child.Name == "TVVersion")
                     {
-                        if (Convert.ToBoolean(child.InnerText)) throw new Exception();
+                        TVPak = Convert.ToBoolean(child.InnerText);
                     }
                     else if (child.Name == "WindowsPathSeparate")
                     {
@@ -68,6 +69,11 @@ namespace PopStudio.Package.Pak
                 pak.x360 = false;
                 pak.xmem = false;
                 pak.compress = false;
+            }
+            if (TVPak)
+            {
+                ZipFile.CreateFromDirectory(inFolder, outFile); //The file in popstudio will enter the zip file, but it doesn't matter.
+                return;
             }
             string[] a = Dir.GetFiles(inFolder);
             int temp = inFolder.Length + 1;
@@ -192,6 +198,7 @@ namespace PopStudio.Package.Pak
             string tempName;
             using (BinaryStream bs = new BinaryStream())
             {
+                bool TVMode = false;
                 PakInfo pak = new PakInfo();
                 using (BinaryStream bs_origin = BinaryStream.Open(inFile))
                 {
@@ -210,7 +217,8 @@ namespace PopStudio.Package.Pak
                     else if (magic == -1161803072) //C0 4A C0 BA
                     {
                         //pak game console
-                        bs.WriteBytes(bs_origin.ReadBytes((int)bs_origin.Length));
+                        bs_origin.CopyTo(bs);
+                        //bs.WriteBytes(bs_origin.ReadBytes((int)bs_origin.Length));
                     }
                     else if (magic == -317524721) //0F F5 12 ED
                     {
@@ -221,64 +229,75 @@ namespace PopStudio.Package.Pak
                         pak.compress = false;
                         throw new Exception(Str.Obj.XmemCompressInvalid);
                     }
+                    else if (magic == 67324752) //TV(zip)50 4B 03 04
+                    {
+                        TVMode = true;
+                    }
                     else
                     {
                         throw new Exception();
                     }
                 }
                 bs.Position = 0;
-                pak.Read(bs);
-                if (pak.fileInfoLibrary == null) return;
-                for (int i = 0; i < pak.fileInfoLibrary.Count; i++)
+                if (TVMode)
                 {
-                    if (!pak.pc) pak.x360 |= PakInfo.Jump(bs);
-                    tempName = Dir.FormatPath(outFolder + pak.fileInfoLibrary[i].fileName);
-                    Dir.NewDir(tempName, false);
-                    byte firstbyte = 0;
-                    if (pak.fileInfoLibrary[i].size != 0)
+                    ZipFile.ExtractToDirectory(inFile, outFolder, true); //in .net standard it can't work well in Android when decompress a zip file from Windows
+                }
+                else
+                {
+                    pak.Read(bs);
+                    if (pak.fileInfoLibrary == null) return;
+                    for (int i = 0; i < pak.fileInfoLibrary.Count; i++)
                     {
-                        using (BinaryStream bs2 = new BinaryStream())
+                        if (!pak.pc) pak.x360 |= PakInfo.Jump(bs);
+                        tempName = Dir.FormatPath(outFolder + pak.fileInfoLibrary[i].fileName);
+                        Dir.NewDir(tempName, false);
+                        byte firstbyte = 0;
+                        if (pak.fileInfoLibrary[i].size != 0)
                         {
-                            bs2.WriteBytes(bs.ReadBytes(pak.fileInfoLibrary[i].zsize));
-                            bs2.Position = 0;
-                            using (ZLibStream zLibStream = new ZLibStream(bs2, CompressionMode.Decompress))
+                            using (BinaryStream bs2 = new BinaryStream())
                             {
-                                using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
+                                bs2.WriteBytes(bs.ReadBytes(pak.fileInfoLibrary[i].zsize));
+                                bs2.Position = 0;
+                                using (ZLibStream zLibStream = new ZLibStream(bs2, CompressionMode.Decompress))
                                 {
-                                    zLibStream.CopyTo(bs3);
-                                    bs3.Position = 0;
-                                    firstbyte = bs3.ReadByte();
+                                    using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
+                                    {
+                                        zLibStream.CopyTo(bs3);
+                                        bs3.Position = 0;
+                                        firstbyte = bs3.ReadByte();
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
-                        {
-                            bs2.WriteBytes(bs.ReadBytes(pak.fileInfoLibrary[i].zsize));
-                            bs2.Position = 0;
-                            firstbyte = bs2.ReadByte();
-                        }
-                    }
-                    if (changeimage && Path.GetExtension(tempName).ToLower() == ".ptx")
-                    {
-                        if (pak.x360)
-                        {
-                            Image.PtxXbox360.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
-                            if (delete) File.Delete(tempName);
-                        }
                         else
                         {
-                            if (firstbyte == 0x44)
+                            using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
                             {
-                                Image.PtxPS3.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                bs2.WriteBytes(bs.ReadBytes(pak.fileInfoLibrary[i].zsize));
+                                bs2.Position = 0;
+                                firstbyte = bs2.ReadByte();
+                            }
+                        }
+                        if (changeimage && Path.GetExtension(tempName).ToLower() == ".ptx")
+                        {
+                            if (pak.x360)
+                            {
+                                Image.PtxXbox360.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
                                 if (delete) File.Delete(tempName);
                             }
-                            else if (firstbyte == 0x47)
+                            else
                             {
-                                Image.PtxPSV.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
-                                if (delete) File.Delete(tempName);
+                                if (firstbyte == 0x44)
+                                {
+                                    Image.PtxPS3.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                    if (delete) File.Delete(tempName);
+                                }
+                                else if (firstbyte == 0x47)
+                                {
+                                    Image.PtxPSV.Ptx.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                    if (delete) File.Delete(tempName);
+                                }
                             }
                         }
                     }
@@ -291,7 +310,7 @@ namespace PopStudio.Package.Pak
                     sw.WriteLine("<!-- DO NOT EDIT THIS FILE. This file is generated by PopStudio. (unless you want to change the way for pack) -->");
                     sw.WriteLine("<PackInfo version=\"1\">");
                     sw.WriteLine("    <PCVersion>" + pak.pc + "</PCVersion>");
-                    sw.WriteLine("    <TVVersion>False</TVVersion>");
+                    sw.WriteLine("    <TVVersion>" + TVMode + "</TVVersion>");
                     sw.WriteLine("    <WindowsPathSeparate>" + pak.win + "</WindowsPathSeparate>");
                     sw.WriteLine("    <Xbox360PtxAlign>" + pak.x360 + "</Xbox360PtxAlign>");
                     sw.WriteLine("    <XmemCompress>" + pak.xmem + "</XmemCompress>");
