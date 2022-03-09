@@ -6,10 +6,10 @@ local mode = args[2];
 local ex;
 local format = 0;
 if mode == nil then
-    local m = rainy.sheet("请选择生成图像格式","PTX(rsb)","cdat(Android,iOS)","tex(iOS)","txz(Android,iOS)","tex(TV)","ptx(xbox360)","ptx(ps3)","ptx(psv)");
-    local tab = {["PTX(rsb)"] = 0, ["cdat(Android,iOS)"] = 1,["tex(iOS)"] = 2,["txz(Android,iOS)"] = 3,["tex(TV)"] = 4,["ptx(xbox360)"] = 5,["ptx(ps3)"] = 6,["ptx(psv)"] = 7};
+    local m = rainy.sheet("请选择生成图像格式","PTX(rsb)","cdat(Android,iOS)","tex(iOS)","txz(Android,iOS)","tex(TV)","ptx(xbox360)","ptx(ps3)","ptx(psv)","xnb(WindowsPhone)");
+    local tab = {["PTX(rsb)"] = 0, ["cdat(Android,iOS)"] = 1,["tex(iOS)"] = 2,["txz(Android,iOS)"] = 3,["tex(TV)"] = 4,["ptx(xbox360)"] = 5,["ptx(ps3)"] = 6,["ptx(psv)"] = 7,["xnb(WindowsPhone)"] = 8};
     mode = tab[m];
-    local tab2 = {[0] = ".PTX",[1] = ".cdat",[2] = ".tex",[3] = ".txz",[4] = ".tex",[5] = ".ptx",[6] = ".ptx",[7] = ".ptx"};
+    local tab2 = {[0] = ".PTX",[1] = ".cdat",[2] = ".tex",[3] = ".txz",[4] = ".tex",[5] = ".ptx",[6] = ".ptx",[7] = ".ptx",[8] = ".xnb"};
     ex = tab2[mode];
     if (mode == 0) then
         local cho = rainy.sheet("请选择生成图像格式","ARGB8888(0)", "ABGR8888(0)", "RGBA4444(1)", "RGB565(2)", "RGBA5551(3)", "RGBA4444_Block(21)", "RGB565_Block(22)", "RGBA5551_Block(23)", "XRGB8888_A8(149)", "ARGB8888(BE)(0)", "ARGB8888_Padding(BE)(0)", "DXT1_RGB(35)", "DXT3_RGBA(36)", "DXT5_RGBA(37)", "DXT5(5)", "DXT5(BE)(5)", "ETC1_RGB(32)", "ETC1_RGB_A8(147)", "ETC1_RGB_A_Palette(147)", "ETC1_RGB_A_Palette(150)", "PVRTC_4BPP_RGBA(30)", "PVRTC_4BPP_RGB_A8(148)");

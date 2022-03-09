@@ -96,6 +96,7 @@
                 case 5: Image.PtxXbox360.Ptx.Decode(inFile, outFile); return;
                 case 6: Image.PtxPS3.Ptx.Decode(inFile, outFile); return;
                 case 7: Image.PtxPSV.Ptx.Decode(inFile, outFile); return;
+                case 8: Image.Xnb.Xnb.Decode(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
@@ -112,6 +113,7 @@
                 case 5: Image.PtxXbox360.Ptx.Encode(inFile, outFile); return;
                 case 6: Image.PtxPS3.Ptx.Encode(inFile, outFile); return;
                 case 7: Image.PtxPSV.Ptx.Encode(inFile, outFile); return;
+                case 8: Image.Xnb.Xnb.Encode(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }

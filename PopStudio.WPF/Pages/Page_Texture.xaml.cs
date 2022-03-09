@@ -48,6 +48,7 @@ namespace PopStudio.WPF.Pages
             CB_CMode.Items.Add("ptx(Xbox360)");
             CB_CMode.Items.Add("ptx(PS3)");
             CB_CMode.Items.Add("ptx(PSV)");
+            CB_CMode.Items.Add("xnb(Windows Phone)");
             CB_CMode.SelectedIndex = 0;
             CB_FMode.Items.Clear();
             CB_FMode.Items.Add("ARGB8888(0)");
@@ -211,6 +212,10 @@ namespace PopStudio.WPF.Pages
             else if (index == 7)
             {
                 CB_FMode.Items.Add("DXT5_RGBA_Morton");
+            }
+            else if (index == 8)
+            {
+                CB_FMode.Items.Add("ABGR8888");
             }
             CB_FMode.SelectedIndex = 0;
         }

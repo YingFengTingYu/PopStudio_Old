@@ -9,6 +9,8 @@
     <Import_RootNamespace>PopStudio</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\Xnb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\XnbHead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\LuaScript.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\API.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
