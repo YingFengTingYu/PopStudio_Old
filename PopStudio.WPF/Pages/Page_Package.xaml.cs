@@ -44,6 +44,7 @@ namespace PopStudio.WPF.Pages
 			CB_CMode.Items.Add("dz");
 			CB_CMode.Items.Add("rsb");
 			CB_CMode.Items.Add("pak");
+			CB_CMode.Items.Add("arcv");
 			CB_CMode.SelectedIndex = 0;
 		}
 

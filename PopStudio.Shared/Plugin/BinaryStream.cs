@@ -144,6 +144,13 @@ namespace PopStudio.Plugin
             return ans;
         }
 
+        public string PeekString(int count, Endian endian = Endian.Null)
+        {
+            string ans = ReadString(count, endian);
+            Position -= count;
+            return ans;
+        }
+
         //读取数据
         /// <summary>
         /// 读取有符号字节

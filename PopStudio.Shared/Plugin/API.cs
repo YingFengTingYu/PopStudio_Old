@@ -69,6 +69,7 @@
                 case 0: Package.Dz.Dz.Unpack(inFile, outFile, changeimage, delete); return;
                 case 1: Package.Rsb.Rsb.Unpack(inFile, outFile, changeimage, delete); return;
                 case 2: Package.Pak.Pak.Unpack(inFile, outFile, changeimage, delete); return;
+                case 3: Package.Arcv.Arcv.Unpack(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
@@ -80,6 +81,7 @@
                 case 0: Package.Dz.Dz.Pack(inFile, outFile); return;
                 case 1: Package.Rsb.Rsb.Pack(inFile, outFile); return;
                 case 2: Package.Pak.Pak.Pack(inFile, outFile); return;
+                case 3: Package.Arcv.Arcv.Pack(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }

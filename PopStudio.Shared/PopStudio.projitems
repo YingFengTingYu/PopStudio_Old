@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\Xnb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\XnbHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Arcv\Arcv.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\LuaScript.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\API.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
