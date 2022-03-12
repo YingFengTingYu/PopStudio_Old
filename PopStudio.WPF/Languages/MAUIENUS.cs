@@ -151,13 +151,13 @@ namespace PopStudio.WPF.Languages
         public string HomePage_Author_String => "Author:";
         public string HomePage_Author => "YingFengTingYu";
         public string HomePage_Thanks_String => "Thanks:";
-        public string HomePage_Thanks => "2508, Japonisme Toumai, 补补23456, 63enjoy, AS魇梦蚀, 伊特, 某个萌新, 天天, 僵学者, An-Haze";
+        public string HomePage_Thanks => "2508, Japonisme Toumai, 补补23456, 63enjoy, AS魇梦蚀, 伊特, 某个萌新, 天天, Indestructible_Ch, 僵学者, An-Haze";
         public string HomePage_QQGroup_String => "QQ group:";
         public string HomePage_QQGroup => "1017246977";
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support more setting of reanim file to xfl folder. \n2.Support lua script. ";
+        public string HomePage_AppNewNotice => "1.Support arcv unpack and pack. \n2.Support xnb image in wp Chinese version decode and encode. ";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

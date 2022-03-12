@@ -6,7 +6,7 @@
         public string VarIntTooBig { get; }
         public string DataMisMatch { get; }
         public string AppName => "PopStudio";
-        public string AppVersion => "3.5";
+        public string AppVersion => "3.6";
         public string AppAuthor { get; }
         public string FileNotFound { get; }
         public string FolderNotFound { get; }

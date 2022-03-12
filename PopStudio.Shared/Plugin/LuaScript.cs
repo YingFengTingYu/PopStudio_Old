@@ -7,7 +7,7 @@ namespace PopStudio.Plugin
     {
         public Script()
         {
-            State.Encoding = Encoding.UTF8; //指定lua状态机字符串编码格式为utf8，以支持中文
+            State.Encoding = Encoding.UTF8;
             DoString("rainy = {} rainy.array2table = function (ary) local ans,l = {},ary.Length - 1; for i=0,l do ans[i + 1] = ary[i]; end return ans; end rainy.table2array = function(a) local l = #a; local ans = rainy.createarray(l); for i = 1,l do ans[i - 1] = a[i]; end return ans; end"); //rainy扩展
             RegisterFunction("print", null, typeof(API).GetMethod("Print"));
             RegisterFunction("rainy.alert", null, typeof(API).GetMethod("Alert"));
@@ -34,12 +34,14 @@ namespace PopStudio.Plugin
             RegisterFunction("rainy.getfilenamewithoutextension", null, typeof(API).GetMethod("GetFileNameWithoutExtension"));
             RegisterFunction("rainy.getversion", null, typeof(API).GetMethod("GetVersion"));
             RegisterFunction("rainy.getsystem", null, typeof(API).GetMethod("GetSystem"));
+            RegisterFunction("rainy.getlanguage", null, typeof(API).GetMethod("GetLanguage"));
             RegisterFunction("rainy.formatpath", null, typeof(API).GetMethod("FormatPath"));
             RegisterFunction("rainy.dofile", null, typeof(API).GetMethod("DoFile"));
             RegisterFunction("rainy.createarray", null, typeof(API).GetMethod("CreateArray"));
             RegisterFunction("rainy.choosefolder", null, typeof(API).GetMethod("ChooseFolder"));
             RegisterFunction("rainy.chooseopenfile", null, typeof(API).GetMethod("ChooseOpenFile"));
             RegisterFunction("rainy.choosesavefile", null, typeof(API).GetMethod("ChooseSaveFile"));
+            RegisterFunction("rainy.deletefile", null, typeof(API).GetMethod("DeleteFile"));
             DoString("local temp = rainy.getfiles rainy.getfiles = function (a) return rainy.array2table(temp(a)) end");
         }
 

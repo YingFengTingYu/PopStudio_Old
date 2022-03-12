@@ -151,13 +151,13 @@ namespace PopStudio.MAUI.Languages
         public string HomePage_Author_String => "作者：";
         public string HomePage_Author => "萌新迎风听雨";
         public string HomePage_Thanks_String => "特别感谢：";
-        public string HomePage_Thanks => "2508 和风唐舞 补补23456 63enjoy AS魇梦蚀 伊特 某个萌新 天天 僵学者 An-Haze";
+        public string HomePage_Thanks => "2508 和风唐舞 补补23456 63enjoy AS魇梦蚀 伊特 某个萌新 天天 Indestructible_Ch 僵学者 An-Haze";
         public string HomePage_QQGroup_String => "交流QQ群：";
         public string HomePage_QQGroup => "1017246977";
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持reanim转xfl选择更多设置；\n2.支持lua脚本。";
+        public string HomePage_AppNewNotice => "1.支持arcv解包打包；\n2.支持wp中文版xnb图像解码编码。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

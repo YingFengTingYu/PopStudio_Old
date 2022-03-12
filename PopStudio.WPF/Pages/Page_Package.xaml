@@ -54,9 +54,9 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap" x:Name="label_changeimage" FontSize="17" VerticalAlignment="Center"/>
-                <ToggleButton x:Name="switchchange1" Grid.Column="1" />
+                <CheckBox x:Name="switchchange1" Grid.Column="1" Cursor="Hand" />
                 <TextBlock TextWrapping="Wrap" x:Name="label_deleteimage" Grid.Row="2" FontSize="17" VerticalAlignment="Center"/>
-                <ToggleButton x:Name="switchchange2" Grid.Row="2" Grid.Column="1" />
+                <CheckBox x:Name="switchchange2" Grid.Row="2" Grid.Column="1" Cursor="Hand" />
             </Grid>
             <Button Margin="0 5 0 5" x:Name="button_run" Click="Do"/>
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_statue" FontSize="20" />

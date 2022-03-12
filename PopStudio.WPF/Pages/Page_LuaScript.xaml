@@ -22,7 +22,7 @@
                 <Button Grid.Column="1" x:Name="button_run" Click="button_run_Click" />
             </Grid>
             <TextBlock x:Name="label_print" Margin="0 5 0 5" FontSize="16" />
-            <RichTextBox x:Name="richtextbox2" Margin="0 5 0 5" Height="85" FontSize="16">
+            <RichTextBox IsReadOnly="True" x:Name="richtextbox2" Margin="0 5 0 5" Height="85" FontSize="16">
                 <FlowDocument LineHeight="1"/>
             </RichTextBox>
         </StackPanel>

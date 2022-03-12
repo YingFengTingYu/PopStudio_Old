@@ -91,9 +91,6 @@ namespace PopStudio.WPF
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            //Topmost = true;
-#endif
             button1.Content = MAUIStr.Obj.HomePage_Title;
             button2.Content = MAUIStr.Obj.Package_Title;
             button3.Content = MAUIStr.Obj.Texture_Title;
@@ -106,7 +103,30 @@ namespace PopStudio.WPF
             button10.Content = MAUIStr.Obj.Setting_Title;
             LoadHomePage();
             Singleten = this;
-            if (Setting.OpenProgramAD) _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(ResourceAD.ImageAD1), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", ResourceAD.AD1), true);
+            if (Setting.OpenProgramAD)
+            {
+                int randomNumber = new Random().Next(1, 4);
+                byte[] img;
+                string url;
+                switch (randomNumber)
+                {
+                    case 1:
+                        img = ResourceAD.ImageAD1;
+                        url = ResourceAD.AD1;
+                        break;
+                    case 2:
+                        img = ResourceAD.ImageAD2;
+                        url = ResourceAD.AD2;
+                        break;
+                    case 3:
+                        img = ResourceAD.ImageAD3;
+                        url = ResourceAD.AD3;
+                        break;
+                    default:
+                        return;
+                }
+                _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(img), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", url), true);
+            }
         }
 
         BitmapImage GetImage(byte[] ary)

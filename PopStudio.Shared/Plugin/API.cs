@@ -21,11 +21,11 @@
 
         public static partial void Print(params object[] os);
 
-        public static partial bool? Alert(string text, string title, bool ask = false);
+        public static partial bool? Alert(string text = "", string title = "PopStudio", bool ask = false);
 
-        public static partial string Prompt(string text, string title, string defaulttext = "");
+        public static partial string Prompt(string text = "", string title = "PopStudio", string defaulttext = "");
 
-        public static partial string Sheet(string title, params string[] items);
+        public static partial string Sheet(string title = "PopStudio", params string[] items);
 
         public static partial string ChooseFolder();
 
@@ -297,6 +297,11 @@
             return Const.SYSTEM;
         }
 
+        public static int GetLanguage()
+        {
+            return (int)Setting.AppLanguage;
+        }
+
         public static string FormatPath(string path)
         {
             return Dir.FormatPath(path);
@@ -316,6 +321,21 @@
         public static object[] CreateArray(int length)
         {
             return new object[length];
+        }
+
+        public static bool DeleteFile(string filePath)
+        {
+            if (Directory.Exists(filePath))
+            {
+                Directory.Delete(filePath, true);
+                return true;
+            }
+            else if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                return true;
+            }
+            return false;
         }
     }
 }

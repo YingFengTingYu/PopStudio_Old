@@ -126,13 +126,6 @@
                 this.crc32 = (int)crc32;
             }
 
-            public ArcvFileInfo Read(BinaryStream bs)
-            {
-                offset = bs.ReadInt32();
-                size = bs.ReadInt32();
-                crc32 = bs.ReadInt32();
-                return this;
-            }
             public void Write(BinaryStream bs)
             {
                 bs.WriteInt32(offset);

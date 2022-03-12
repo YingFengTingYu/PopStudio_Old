@@ -70,11 +70,49 @@ namespace PopStudio.WPF {
         }
         
         /// <summary>
+        ///   查找类似 http://www.pvzhome.com/resources/69/ 的本地化字符串。
+        /// </summary>
+        internal static string AD2 {
+            get {
+                return ResourceManager.GetString("AD2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 https://iflynote.com/h/s/doc/zLhyVbgjjYqZRS9Q 的本地化字符串。
+        /// </summary>
+        internal static string AD3 {
+            get {
+                return ResourceManager.GetString("AD3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
         internal static byte[] ImageAD1 {
             get {
                 object obj = ResourceManager.GetObject("ImageAD1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] ImageAD2 {
+            get {
+                object obj = ResourceManager.GetObject("ImageAD2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] ImageAD3 {
+            get {
+                object obj = ResourceManager.GetObject("ImageAD3", resourceCulture);
                 return ((byte[])(obj));
             }
         }
