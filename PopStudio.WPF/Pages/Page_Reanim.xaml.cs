@@ -55,7 +55,7 @@ namespace PopStudio.WPF.Pages
             CB_OutMode.Items.Add("Studio_Json");
             CB_OutMode.Items.Add("Raw_Xml");
             CB_OutMode.Items.Add("Flash_Xfl_Folder");
-            CB_OutMode.SelectedIndex = 6;
+            CB_OutMode.SelectedIndex = 7;
         }
 
         private void Button_Click(object sender, EventArgs e)

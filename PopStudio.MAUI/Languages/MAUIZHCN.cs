@@ -9,8 +9,8 @@ namespace PopStudio.MAUI.Languages
     internal class MAUIZHCN : ILocalization
     {
         //LuaScript
-        public string LuaScript_Title => "lua脚本";
-        public string LuaScript_Introduction => "通过lua脚本功能，调用程序内置函数，实现批处理等功能！";
+        public string LuaScript_Title => "Lua脚本";
+        public string LuaScript_Introduction => "通过Lua脚本功能，调用程序内置函数，实现批处理等功能！";
         public string LuaScript_TracePrint => "输出";
 
         //Shell
@@ -101,16 +101,16 @@ namespace PopStudio.MAUI.Languages
         public string Trail_OutFormat => "请选择转换生成文件格式";
 
         //Reanim
-        public string Reanim_Title => "reanim转码";
-        public string Reanim_Introduction => "通过reanim转码功能获取和修改游戏动作内容！";
+        public string Reanim_Title => "Reanim转码";
+        public string Reanim_Introduction => "通过Reanim转码功能获取和修改游戏动作内容！";
         public string Reanim_Choose1 => "请填写被转换的文件路径";
         public string Reanim_Choose2 => "请填写转换生成文件存放路径";
         public string Reanim_InFormat => "请选择被转换的文件格式";
         public string Reanim_OutFormat => "请选择转换生成文件格式";
 
         //Particles
-        public string Particles_Title => "particles转码";
-        public string Particles_Introduction => "通过particles转码功能获取和修改游戏粒子特效内容！";
+        public string Particles_Title => "Particles转码";
+        public string Particles_Introduction => "通过Particles转码功能获取和修改游戏粒子特效内容！";
         public string Particles_Choose1 => "请填写被转换的文件路径";
         public string Particles_Choose2 => "请填写转换生成文件存放路径";
         public string Particles_InFormat => "请选择被转换的文件格式";

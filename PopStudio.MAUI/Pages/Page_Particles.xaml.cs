@@ -30,6 +30,7 @@ namespace PopStudio.MAUI
             CB_InMode.Items.Add("GameConsole_Compiled");
             CB_InMode.Items.Add("TV_Compiled");
             CB_InMode.Items.Add("Studio_Json");
+            CB_InMode.Items.Add("Raw_Xml");
             CB_InMode.SelectedIndex = 0;
             CB_OutMode.Items.Clear();
             CB_OutMode.Items.Add("PC_Compiled");
@@ -39,7 +40,8 @@ namespace PopStudio.MAUI
             CB_OutMode.Items.Add("GameConsole_Compiled");
             CB_OutMode.Items.Add("TV_Compiled");
             CB_OutMode.Items.Add("Studio_Json");
-            CB_OutMode.SelectedIndex = 6;
+            CB_OutMode.Items.Add("Raw_Xml");
+            CB_OutMode.SelectedIndex = 7;
         }
 
         private void Button_Click(object sender, EventArgs e)

@@ -9,8 +9,8 @@ namespace PopStudio.WPF.Languages
     internal class MAUIENUS : ILocalization
     {
         //LuaScript
-        public string LuaScript_Title => "lua script";
-        public string LuaScript_Introduction => "Through Lua script function, call the built-in function of the program to realize batch processing and other functions! ";
+        public string LuaScript_Title => "Lua Script";
+        public string LuaScript_Introduction => "Through lua script function, call the built-in function of the program to realize batch processing and other functions! ";
         public string LuaScript_TracePrint => "Print";
 
         //Shell
@@ -93,7 +93,7 @@ namespace PopStudio.WPF.Languages
         public string RTON_Choose6 => "Encoding Mode";
 
         //Trail
-        public string Trail_Title => "trail";
+        public string Trail_Title => "Trail";
         public string Trail_Introduction => "Through trail transcoding, you can obtain and modify the content of the game trail effect! ";
         public string Trail_Choose1 => "Path of in file";
         public string Trail_Choose2 => "Path of out file";
@@ -101,7 +101,7 @@ namespace PopStudio.WPF.Languages
         public string Trail_OutFormat => "Format of out file";
 
         //Reanim
-        public string Reanim_Title => "reanim";
+        public string Reanim_Title => "Reanim";
         public string Reanim_Introduction => "Obtain and modify the game action content through reanim transcoding! ";
         public string Reanim_Choose1 => "Path of in file";
         public string Reanim_Choose2 => "Path of out file";
@@ -109,7 +109,7 @@ namespace PopStudio.WPF.Languages
         public string Reanim_OutFormat => "Format of out file";
 
         //Particles
-        public string Particles_Title => "particles";
+        public string Particles_Title => "Particles";
         public string Particles_Introduction => "Get and modify the content of game particle effects through particles transcoding! ";
         public string Particles_Choose1 => "Path of in file";
         public string Particles_Choose2 => "Path of out file";

@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\Xnb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\XnbHead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Arcv\Arcv.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Particles\RawXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\LuaScript.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\API.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\GameConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trail\RawXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\WP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TV.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\Phone64.cs" />

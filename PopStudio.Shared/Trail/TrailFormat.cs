@@ -12,6 +12,7 @@ namespace PopStudio.Trail
         WPXnb,
         GameConsoleCompiled,
         TVCompiled,
-        Json
+        Json,
+        RawXml
     }
 }

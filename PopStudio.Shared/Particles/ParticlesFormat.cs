@@ -12,6 +12,7 @@ namespace PopStudio.Particles
         WPXnb,
         GameConsoleCompiled,
         TVCompiled,
-        Json
+        Json,
+        RawXml
     }
 }

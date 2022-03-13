@@ -164,6 +164,7 @@
                 PopStudio.Trail.TrailFormat.GameConsoleCompiled => PopStudio.Trail.GameConsole.Decode(inFile),
                 PopStudio.Trail.TrailFormat.TVCompiled => PopStudio.Trail.TV.Decode(inFile),
                 PopStudio.Trail.TrailFormat.Json => PopStudio.Trail.TrailJson.Decode(inFile),
+                PopStudio.Trail.TrailFormat.RawXml => PopStudio.Trail.RawXml.Decode(inFile),
                 _ => throw new NotImplementedException()
             };
             switch (outFormat)
@@ -175,6 +176,7 @@
                 case PopStudio.Trail.TrailFormat.GameConsoleCompiled: PopStudio.Trail.GameConsole.Encode(trail, outFile); break;
                 case PopStudio.Trail.TrailFormat.TVCompiled: PopStudio.Trail.TV.Encode(trail, outFile); break;
                 case PopStudio.Trail.TrailFormat.Json: PopStudio.Trail.TrailJson.Encode(trail, outFile); break;
+                case PopStudio.Trail.TrailFormat.RawXml: PopStudio.Trail.RawXml.Encode(trail, outFile); break;
                 default: throw new NotImplementedException();
             }
         }
@@ -192,6 +194,7 @@
                 PopStudio.Particles.ParticlesFormat.GameConsoleCompiled => PopStudio.Particles.GameConsole.Decode(inFile),
                 PopStudio.Particles.ParticlesFormat.TVCompiled => PopStudio.Particles.TV.Decode(inFile),
                 PopStudio.Particles.ParticlesFormat.Json => PopStudio.Particles.ParticlesJson.Decode(inFile),
+                PopStudio.Particles.ParticlesFormat.RawXml => PopStudio.Particles.RawXml.Decode(inFile),
                 _ => throw new NotImplementedException()
             };
             switch (outFormat)
@@ -203,6 +206,7 @@
                 case PopStudio.Particles.ParticlesFormat.GameConsoleCompiled: PopStudio.Particles.GameConsole.Encode(particles, outFile); break;
                 case PopStudio.Particles.ParticlesFormat.TVCompiled: PopStudio.Particles.TV.Encode(particles, outFile); break;
                 case PopStudio.Particles.ParticlesFormat.Json: PopStudio.Particles.ParticlesJson.Encode(particles, outFile); break;
+                case PopStudio.Particles.ParticlesFormat.RawXml: PopStudio.Particles.RawXml.Encode(particles, outFile); break;
                 default: throw new NotImplementedException();
             }
         }
