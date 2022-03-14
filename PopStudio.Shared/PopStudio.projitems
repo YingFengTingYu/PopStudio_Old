@@ -158,5 +158,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailTrackNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BinaryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unity\Serialized\Serialized.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unity\Serialized\SerializedHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\FSHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\Node.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\StorageBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\UnityFS.cs" />
   </ItemGroup>
 </Project>

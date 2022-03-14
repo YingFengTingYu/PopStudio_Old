@@ -101,6 +101,7 @@ namespace PopStudio.WPF
             button8.Content = MAUIStr.Obj.Compress_Title;
             button9.Content = MAUIStr.Obj.LuaScript_Title;
             button10.Content = MAUIStr.Obj.Setting_Title;
+            //button11.Content = MAUIStr.Obj.Unity_Title;
             LoadHomePage();
             Singleten = this;
             if (Setting.OpenProgramAD)
@@ -191,6 +192,11 @@ namespace PopStudio.WPF
             LoadSetting();
         }
 
+        private void button11_Click(object sender, RoutedEventArgs e)
+        {
+            LoadUnity();
+        }
+
         #endregion
 
         #region ShowPage
@@ -205,6 +211,7 @@ namespace PopStudio.WPF
         Page_Compress compress = new Page_Compress();
         Page_LuaScript luaScript = new Page_LuaScript();
         Page_Setting setting = new Page_Setting();
+        Page_Unity unity = new Page_Unity();
 
         void ResetButton()
         {
@@ -228,6 +235,8 @@ namespace PopStudio.WPF
             button9.Foreground = Brushes.Black;
             button10.Background = Brushes.White;
             button10.Foreground = Brushes.Black;
+            //button11.Background = Brushes.White;
+            //button11.Foreground = Brushes.Black;
         }
 
         public void LoadHomePage()
@@ -348,6 +357,18 @@ namespace PopStudio.WPF
                 Content = setting
             };
             Label_Head.Content = MAUIStr.Obj.Setting_Title;
+        }
+
+        public void LoadUnity()
+        {
+            ResetButton();
+            //button11.Background = Brushes.CornflowerBlue;
+            //button11.Foreground = Brushes.White;
+            PageControl.Content = new Frame()
+            {
+                Content = unity
+            };
+            Label_Head.Content = MAUIStr.Obj.Unity_Title;
         }
 
         #endregion

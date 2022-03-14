@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PopStudio.WPF.Languages
+﻿namespace PopStudio.WPF.Languages
 {
     internal interface ILocalization
     {
+        //Unity
+        public string Unity_Title { get; }
+        public string Unity_Introduction { get; }
+        public string Unity_Choose1 { get; }
+        public string Unity_Choose2 { get; }
+        public string Unity_Format { get; }
+
         //LuaScript
 
         public string LuaScript_Title { get; }

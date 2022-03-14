@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PopStudio.WPF.Languages
+﻿namespace PopStudio.WPF.Languages
 {
     internal class MAUIZHCN : ILocalization
     {
+        //Unity
+        public string Unity_Title => "Unity资源提取";
+        public string Unity_Introduction => "通过Unity资源提取功能，获取PVZ3等使用Unity引擎制作的游戏的资源！";
+        public string Unity_Choose1 => "请填写被提取的文件路径";
+        public string Unity_Choose2 => "请填写提取生成文件存放路径";
+        public string Unity_Format => "请选择被提取的文件格式";
+
         //LuaScript
         public string LuaScript_Title => "Lua脚本";
         public string LuaScript_Introduction => "通过Lua脚本功能，调用程序内置函数，实现批处理等功能！";
@@ -157,7 +158,7 @@ namespace PopStudio.WPF.Languages
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持arcv解包打包；\n2.支持wp中文版xnb图像解码编码。";
+        public string HomePage_AppNewNotice => "1.支持particles和trail的Raw_Xml格式；\n2.修复动作转xfl的kx和ky出错问题。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

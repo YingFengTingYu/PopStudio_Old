@@ -86,6 +86,15 @@
             }
         }
 
+        public static void UnityExtract(string inFile, string outFile, int format)
+        {
+            switch (format)
+            {
+                case 0: Unity.UnityFS.UnityFS.Extract(inFile, outFile); return;
+                default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
         public static void DecodeImage(string inFile, string outFile, int format)
         {
             switch (format)

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PopStudio.MAUI.Languages
+﻿namespace PopStudio.MAUI.Languages
 {
     internal class MAUIENUS : ILocalization
     {
+        //Unity
+        public string Unity_Title => "Unity Extract";
+        public string Unity_Introduction => "Through unity extract, get the resources of games made by unity engine such as pvz3! ";
+        public string Unity_Choose1 => "Path of extracted file";
+        public string Unity_Choose2 => "Path of generated folder";
+        public string Unity_Format => "Format of extracted file";
+
         //LuaScript
         public string LuaScript_Title => "Lua Script";
         public string LuaScript_Introduction => "Through lua script function, call the built-in function of the program to realize batch processing and other functions! ";
@@ -157,7 +158,7 @@ namespace PopStudio.MAUI.Languages
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support arcv unpack and pack. \n2.Support xnb image in wp Chinese version decode and encode. ";
+        public string HomePage_AppNewNotice => "1.Support Raw_Xml format for particles and trail. \n2.Fix a bug(wrong kx and ky in reanim to xfl). ";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

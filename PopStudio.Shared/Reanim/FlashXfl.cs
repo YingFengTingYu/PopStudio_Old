@@ -104,38 +104,14 @@ namespace PopStudio.Reanim
                             double skewy = -(defaultTransform.ky ?? 0) / dx;
                             float sx = defaultTransform.sx ?? 1;
                             float sy = defaultTransform.sy ?? 1;
-                            double a = Math.Cos(skewx);
-                            double b = Math.Sin(skewx);
-                            double d = Math.Cos(skewy);
-                            double c = Math.Sin(skewy);
-                            skewx = Math.Abs(skewx);
-                            skewy = Math.Abs(skewy);
-                            double qpi = Math.PI / 4;
-                            double q3pi = qpi * 3;
-                            if (skewx < qpi || skewx >= q3pi)
-                            {
-                                a *= sx;
-                            }
-                            else
-                            {
-                                b *= sx;
-                            }
-                            if (skewy < qpi || skewy >= q3pi)
-                            {
-                                d *= sy;
-                            }
-                            else
-                            {
-                                c *= sy;
-                            }
                             sw.Write("a=\"");
-                            sw.Write(a);
+                            sw.Write(Math.Cos(skewx) * sx);
                             sw.Write("\" b=\"");
-                            sw.Write(b);
+                            sw.Write(Math.Sin(skewx) * sx);
                             sw.Write("\" c=\"");
-                            sw.Write(c);
+                            sw.Write(Math.Sin(skewy) * sy);
                             sw.Write("\" d=\"");
-                            sw.Write(d);
+                            sw.Write(Math.Cos(skewy) * sy);
                             sw.Write("\" ");
                             #endregion
                             #region coordinate
