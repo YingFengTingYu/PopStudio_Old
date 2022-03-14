@@ -8,7 +8,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>3.4</FileVersion>
+    <FileVersion>3.7</FileVersion>
   </PropertyGroup>
 
   <Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
