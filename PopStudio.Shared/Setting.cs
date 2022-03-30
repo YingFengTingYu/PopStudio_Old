@@ -5,7 +5,7 @@ namespace PopStudio
     internal static class Setting
     {
         public static bool CanSave = true;
-        public static Language AppLanguage = Thread.CurrentThread.CurrentCulture.Name.ToLower() switch
+        public static Language AppLanguage = System.Globalization.CultureInfo.CurrentCulture.Name.ToLower() switch
         {
             "zh-cn" => Language.ZHCN,
             "zh-hans-cn" => Language.ZHCN,
@@ -470,7 +470,14 @@ namespace PopStudio
                 {
                     return ImageConvertStringToInteger[os];
                 }
-                return -1;
+                try
+                {
+                    return Convert.ToInt32(os);
+                }
+                catch (Exception)
+                {
+                    return -1;
+                }
             }
             return o;
         }

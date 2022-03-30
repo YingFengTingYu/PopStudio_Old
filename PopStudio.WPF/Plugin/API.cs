@@ -20,7 +20,7 @@ namespace PopStudio.Plugin
                 }
                 str = str[0..^1];
             }
-            box.Dispatcher.BeginInvoke(() => { Paragraph para = new(); para.Inlines.Add(new Run(str)); box.Document.Blocks.Add(para); });
+            box.Dispatcher.Invoke(() => { Paragraph para = new(); para.Inlines.Add(new Run(str)); box.Document.Blocks.Add(para); });
         }
 
         public static partial bool? Alert(string text, string title, bool ask)
@@ -29,11 +29,11 @@ namespace PopStudio.Plugin
             bool a = false;
             if (ask)
             {
-                box.Dispatcher.BeginInvoke(async () => { ans = await Dialogs.DisplayAlert(title, text, "OK", "Cancel"); a = true; });
+                box.Dispatcher.Invoke(async () => { ans = await Dialogs.DisplayAlert(title, text, "OK", "Cancel"); a = true; });
             }
             else
             {
-                box.Dispatcher.BeginInvoke(async () => { await Dialogs.DisplayAlert(title, text, "Cancel"); a = true; });
+                box.Dispatcher.Invoke(async () => { await Dialogs.DisplayAlert(title, text, "Cancel"); a = true; });
             }
             while (!a) Task.Delay(200);
             return ans;
@@ -43,7 +43,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(async () => { ans = await Dialogs.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
+            box.Dispatcher.Invoke(async () => { ans = await Dialogs.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }
@@ -52,7 +52,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(async () => { ans = await Dialogs.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
+            box.Dispatcher.Invoke(async () => { ans = await Dialogs.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
             while (!a) Task.Delay(200);
             if (ans == "OK\0" && ans == "Cancel\0")
             {
@@ -65,7 +65,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(() => { ans = WPF.PickFile.ChooseFolder(null); a = true; });
+            box.Dispatcher.Invoke(() => { ans = WPF.PickFile.ChooseFolder(null); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }
@@ -74,7 +74,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(() => { ans = WPF.PickFile.ChooseOpenFile(null); a = true; });
+            box.Dispatcher.Invoke(() => { ans = WPF.PickFile.ChooseOpenFile(null); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }
@@ -83,7 +83,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(() => { ans = WPF.PickFile.ChooseSaveFile(null); a = true; });
+            box.Dispatcher.Invoke(() => { ans = WPF.PickFile.ChooseSaveFile(null); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }

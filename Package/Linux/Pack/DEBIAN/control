@@ -1,0 +1,8 @@
+Package: PopStudio
+Version: 3.9
+Standards-Version: 3.9
+Uploaders: YingFengTingYu <1259546233@qq.com>
+Maintainer: YingFengTingYu
+Section: utils
+Architecture: all
+Description: Modify the data package, images, actions, particle effects and other contents of PopCap Games by using PopStudio! 

@@ -19,13 +19,33 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-x64'">
     <DefineConstants>$(DefineConstants)TRACE;LINUXCONSOLE</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm'">
+    <DefineConstants>$(DefineConstants)TRACE;LINUXCONSOLE</DefineConstants>
+  </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm64'">
     <DefineConstants>$(DefineConstants)TRACE;LINUXCONSOLE</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-x64'">
+    <DefineConstants>$(DefineConstants)TRACE;LINUXCONSOLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm'">
+    <DefineConstants>$(DefineConstants)TRACE;LINUXCONSOLE</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
+    <DefineConstants>$(DefineConstants)TRACE;LINUXCONSOLE</DefineConstants>
+  </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-x64'">
-    <DefineConstants>$(DefineConstants)TRACE;MACCONSOLE</DefineConstants>
+    <DefineConstants>$(DefineConstants)TRACE;MACOSCONSOLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-arm64'">
+    <DefineConstants>$(DefineConstants)TRACE;MACOSCONSOLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
-using PopStudio.MAUI.Languages;
+using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -68,7 +68,7 @@ namespace PopStudio.MAUI
                 {
                     err = ex.Message;
                 }
-                Device.BeginInvokeOnMainThread(() =>
+                Dispatcher.Dispatch(() =>
                 {
                     if (err == null)
                     {

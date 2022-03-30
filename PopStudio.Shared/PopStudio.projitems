@@ -9,17 +9,26 @@
     <Import_RootNamespace>PopStudio</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\AncientXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\NewXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\TVAtlasXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\Plist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\OldXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\AtlasImageDat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Atlas\CutImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\IDisposablePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\SubImageInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\Xnb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\XnbHead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Arcv\Arcv.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\RawXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\EncodeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\LuaScript.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\API.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\Particles.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesField.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesTrackNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\GameConsole.cs" />
@@ -89,6 +98,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Dir.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\ETCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\MaxRectsBinPack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Palette.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\PVRTCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\RijndaelHelper.cs" />
@@ -158,11 +168,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailTrackNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BinaryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Unity\Serialized\Serialized.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Unity\Serialized\SerializedHead.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\FSHead.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\Node.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\StorageBlock.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Unity\UnityFS\UnityFS.cs" />
   </ItemGroup>
 </Project>

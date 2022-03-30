@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:PopStudio.MAUI"
              Title="主页"
              FlyoutWidth="200"
-             FlyoutBehavior="Flyout"
              FlyoutBackgroundColor="CornflowerBlue"
              BackgroundColor="CornflowerBlue">
     <!--I wonder why Microsoft use Unicode encoding by default in editting xaml but use UTF8 encoding in compiling xaml...-->
@@ -21,37 +20,40 @@
     </Shell.ItemTemplate>
     <Shell.FlyoutHeader>
         <Grid>
-            <Label FontSize="28" Margin="30 0 30 0" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
         </Grid>
     </Shell.FlyoutHeader>
     <FlyoutItem x:Name="fitem_homepage">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_HomePage}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_HomePage}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_package">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Package}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Package}" />
+    </FlyoutItem>
+    <FlyoutItem x:Name="fitem_atlas">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Atlas}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_texture">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Texture}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Texture}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_reanim">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_particles">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_trail">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_rton">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_RTON}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_RTON}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_compress">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Compress}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Compress}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_luascript">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_LuaScript}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_LuaScript}" />
     </FlyoutItem>
     <FlyoutItem x:Name="fitem_setting">
-        <ShellContent ContentTemplate="{DataTemplate local:Page_Setting}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Setting}" />
     </FlyoutItem>
 </Shell>

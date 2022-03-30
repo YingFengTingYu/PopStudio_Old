@@ -1,9 +1,11 @@
-﻿using PopStudio.MAUI.Languages;
+﻿using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.MAUI
 {
     internal static partial class Permission
     {
+        public static partial bool HiddenFlyout() => true;
+
         static readonly string androidpath = Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath + "/setting.xml";
         public static partial string GetSettingPath() => androidpath;
 

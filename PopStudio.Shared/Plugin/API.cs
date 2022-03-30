@@ -2,22 +2,11 @@
 {
     internal static partial class API
     {
-        static List<IDisposable> Disposable = new List<IDisposable>();
+        static IDisposablePool Disposable = new IDisposablePool();
 
-        public static void DoScript(string script)
-        {
-            Script.Do(script);
-        }
+        public static void DoScript(string script) => Script.Do(script);
 
-        public static void DisposeAll()
-        {
-            int count = Disposable.Count;
-            for (int i = 0; i < count; i++)
-            {
-                Disposable[i].Dispose();
-            }
-            Disposable.Clear();
-        }
+        public static void DisposeAll() => Disposable.Dispose();
 
         public static partial void Print(params object[] os);
 
@@ -34,33 +23,15 @@
         public static partial string ChooseSaveFile();
 
         //Write for lua(coming soon) and MAUI
-        public static BinaryStream GetFileStream(string path, int mode)
+        public static BinaryStream GetFileStream(string path, int mode) => Disposable.Add(mode switch
         {
-            BinaryStream ans = mode switch
-            {
-                0 => new BinaryStream(path, FileMode.Open),
-                1 => new BinaryStream(path, FileMode.Create),
-                2 => new BinaryStream(path, FileMode.OpenOrCreate),
-                _ => throw new Exception(Str.Obj.TypeMisMatch)
-            };
-            Disposable.Add(ans);
-            return ans;
-        }
+            0 => new BinaryStream(path, FileMode.Open),
+            1 => new BinaryStream(path, FileMode.Create),
+            2 => new BinaryStream(path, FileMode.OpenOrCreate),
+            _ => throw new Exception(Str.Obj.TypeMisMatch)
+        });
 
-        public static BinaryStream GetMemoryStream(byte[] bytes = null)
-        {
-            BinaryStream ans;
-            if (bytes == null)
-            {
-                ans = new BinaryStream();
-            }
-            else
-            {
-                ans = new BinaryStream(bytes);
-            }
-            Disposable.Add(ans);
-            return ans;
-        }
+        public static BinaryStream GetMemoryStream(byte[] bytes = null) => Disposable.Add(bytes == null ? new BinaryStream() : new BinaryStream(bytes));
 
         public static void Unpack(string inFile, string outFile, int format, bool changeimage = false, bool delete = false)
         {
@@ -82,15 +53,6 @@
                 case 1: Package.Rsb.Rsb.Pack(inFile, outFile); return;
                 case 2: Package.Pak.Pak.Pack(inFile, outFile); return;
                 case 3: Package.Arcv.Arcv.Pack(inFile, outFile); return;
-                default: throw new Exception(Str.Obj.TypeMisMatch);
-            }
-        }
-
-        public static void UnityExtract(string inFile, string outFile, int format)
-        {
-            switch (format)
-            {
-                case 0: Unity.UnityFS.UnityFS.Extract(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
             }
         }
@@ -131,91 +93,85 @@
 
         public static void Reanim(string inFile, string outFile, int informat, int outformat)
         {
-            Reanim.ReanimFormat inFormat = (Reanim.ReanimFormat)informat;
-            Reanim.ReanimFormat outFormat = (Reanim.ReanimFormat)outformat;
-            Reanim.Reanim reanim = inFormat switch
+            Reanim.Reanim reanim = informat switch
             {
-                PopStudio.Reanim.ReanimFormat.PCCompiled => PopStudio.Reanim.PC.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.Phone32Compiled => PopStudio.Reanim.Phone32.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.Phone64Compiled => PopStudio.Reanim.Phone64.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.WPXnb => PopStudio.Reanim.WP.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.GameConsoleCompiled => PopStudio.Reanim.GameConsole.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.TVCompiled => PopStudio.Reanim.TV.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.Json => PopStudio.Reanim.ReanimJson.Decode(inFile),
-                PopStudio.Reanim.ReanimFormat.RawXml => PopStudio.Reanim.RawXml.Decode(inFile),
+                0 => PopStudio.Reanim.PC.Decode(inFile),
+                1 => PopStudio.Reanim.Phone32.Decode(inFile),
+                2 => PopStudio.Reanim.Phone64.Decode(inFile),
+                3 => PopStudio.Reanim.WP.Decode(inFile),
+                4 => PopStudio.Reanim.GameConsole.Decode(inFile),
+                5 => PopStudio.Reanim.TV.Decode(inFile),
+                6 => PopStudio.Reanim.ReanimJson.Decode(inFile),
+                7 => PopStudio.Reanim.RawXml.Decode(inFile),
                 _ => throw new NotImplementedException()
             };
-            switch (outFormat)
+            switch (outformat)
             {
-                case PopStudio.Reanim.ReanimFormat.PCCompiled: PopStudio.Reanim.PC.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.Phone32Compiled: PopStudio.Reanim.Phone32.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.Phone64Compiled: PopStudio.Reanim.Phone64.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.WPXnb: PopStudio.Reanim.WP.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.GameConsoleCompiled: PopStudio.Reanim.GameConsole.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.TVCompiled: PopStudio.Reanim.TV.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.Json: PopStudio.Reanim.ReanimJson.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.RawXml: PopStudio.Reanim.RawXml.Encode(reanim, outFile); break;
-                case PopStudio.Reanim.ReanimFormat.FlashXfl: PopStudio.Reanim.FlashXfl.Encode(reanim, outFile); break;
+                case 0: PopStudio.Reanim.PC.Encode(reanim, outFile); break;
+                case 1: PopStudio.Reanim.Phone32.Encode(reanim, outFile); break;
+                case 2: PopStudio.Reanim.Phone64.Encode(reanim, outFile); break;
+                case 3: PopStudio.Reanim.WP.Encode(reanim, outFile); break;
+                case 4: PopStudio.Reanim.GameConsole.Encode(reanim, outFile); break;
+                case 5: PopStudio.Reanim.TV.Encode(reanim, outFile); break;
+                case 6: PopStudio.Reanim.ReanimJson.Encode(reanim, outFile); break;
+                case 7: PopStudio.Reanim.RawXml.Encode(reanim, outFile); break;
+                case 8: PopStudio.Reanim.FlashXfl.Encode(reanim, outFile); break;
                 default: throw new NotImplementedException();
             }
         }
 
         public static void Trail(string inFile, string outFile, int informat, int outformat)
         {
-            Trail.TrailFormat inFormat = (Trail.TrailFormat)informat;
-            Trail.TrailFormat outFormat = (Trail.TrailFormat)outformat;
-            Trail.Trail trail = inFormat switch
+            Trail.Trail trail = informat switch
             {
-                PopStudio.Trail.TrailFormat.PCCompiled => PopStudio.Trail.PC.Decode(inFile),
-                PopStudio.Trail.TrailFormat.Phone32Compiled => PopStudio.Trail.Phone32.Decode(inFile),
-                PopStudio.Trail.TrailFormat.Phone64Compiled => PopStudio.Trail.Phone64.Decode(inFile),
-                PopStudio.Trail.TrailFormat.WPXnb => PopStudio.Trail.WP.Decode(inFile),
-                PopStudio.Trail.TrailFormat.GameConsoleCompiled => PopStudio.Trail.GameConsole.Decode(inFile),
-                PopStudio.Trail.TrailFormat.TVCompiled => PopStudio.Trail.TV.Decode(inFile),
-                PopStudio.Trail.TrailFormat.Json => PopStudio.Trail.TrailJson.Decode(inFile),
-                PopStudio.Trail.TrailFormat.RawXml => PopStudio.Trail.RawXml.Decode(inFile),
+                0 => PopStudio.Trail.PC.Decode(inFile),
+                1 => PopStudio.Trail.Phone32.Decode(inFile),
+                2 => PopStudio.Trail.Phone64.Decode(inFile),
+                3 => PopStudio.Trail.WP.Decode(inFile),
+                4 => PopStudio.Trail.GameConsole.Decode(inFile),
+                5 => PopStudio.Trail.TV.Decode(inFile),
+                6 => PopStudio.Trail.TrailJson.Decode(inFile),
+                7 => PopStudio.Trail.RawXml.Decode(inFile),
                 _ => throw new NotImplementedException()
             };
-            switch (outFormat)
+            switch (outformat)
             {
-                case PopStudio.Trail.TrailFormat.PCCompiled: PopStudio.Trail.PC.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.Phone32Compiled: PopStudio.Trail.Phone32.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.Phone64Compiled: PopStudio.Trail.Phone64.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.WPXnb: PopStudio.Trail.WP.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.GameConsoleCompiled: PopStudio.Trail.GameConsole.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.TVCompiled: PopStudio.Trail.TV.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.Json: PopStudio.Trail.TrailJson.Encode(trail, outFile); break;
-                case PopStudio.Trail.TrailFormat.RawXml: PopStudio.Trail.RawXml.Encode(trail, outFile); break;
+                case 0: PopStudio.Trail.PC.Encode(trail, outFile); break;
+                case 1: PopStudio.Trail.Phone32.Encode(trail, outFile); break;
+                case 2: PopStudio.Trail.Phone64.Encode(trail, outFile); break;
+                case 3: PopStudio.Trail.WP.Encode(trail, outFile); break;
+                case 4: PopStudio.Trail.GameConsole.Encode(trail, outFile); break;
+                case 5: PopStudio.Trail.TV.Encode(trail, outFile); break;
+                case 6: PopStudio.Trail.TrailJson.Encode(trail, outFile); break;
+                case 7: PopStudio.Trail.RawXml.Encode(trail, outFile); break;
                 default: throw new NotImplementedException();
             }
         }
 
         public static void Particles(string inFile, string outFile, int informat, int outformat)
         {
-            Particles.ParticlesFormat inFormat = (Particles.ParticlesFormat)informat;
-            Particles.ParticlesFormat outFormat = (Particles.ParticlesFormat)outformat;
-            Particles.Particles particles = inFormat switch
+            Particles.Particles particles = informat switch
             {
-                PopStudio.Particles.ParticlesFormat.PCCompiled => PopStudio.Particles.PC.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.Phone32Compiled => PopStudio.Particles.Phone32.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.Phone64Compiled => PopStudio.Particles.Phone64.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.WPXnb => PopStudio.Particles.WP.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.GameConsoleCompiled => PopStudio.Particles.GameConsole.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.TVCompiled => PopStudio.Particles.TV.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.Json => PopStudio.Particles.ParticlesJson.Decode(inFile),
-                PopStudio.Particles.ParticlesFormat.RawXml => PopStudio.Particles.RawXml.Decode(inFile),
+                0 => PopStudio.Particles.PC.Decode(inFile),
+                1 => PopStudio.Particles.Phone32.Decode(inFile),
+                2 => PopStudio.Particles.Phone64.Decode(inFile),
+                3 => PopStudio.Particles.WP.Decode(inFile),
+                4 => PopStudio.Particles.GameConsole.Decode(inFile),
+                5 => PopStudio.Particles.TV.Decode(inFile),
+                6 => PopStudio.Particles.ParticlesJson.Decode(inFile),
+                7 => PopStudio.Particles.RawXml.Decode(inFile),
                 _ => throw new NotImplementedException()
             };
-            switch (outFormat)
+            switch (outformat)
             {
-                case PopStudio.Particles.ParticlesFormat.PCCompiled: PopStudio.Particles.PC.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.Phone32Compiled: PopStudio.Particles.Phone32.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.Phone64Compiled: PopStudio.Particles.Phone64.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.WPXnb: PopStudio.Particles.WP.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.GameConsoleCompiled: PopStudio.Particles.GameConsole.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.TVCompiled: PopStudio.Particles.TV.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.Json: PopStudio.Particles.ParticlesJson.Encode(particles, outFile); break;
-                case PopStudio.Particles.ParticlesFormat.RawXml: PopStudio.Particles.RawXml.Encode(particles, outFile); break;
+                case 0: PopStudio.Particles.PC.Encode(particles, outFile); break;
+                case 1: PopStudio.Particles.Phone32.Encode(particles, outFile); break;
+                case 2: PopStudio.Particles.Phone64.Encode(particles, outFile); break;
+                case 3: PopStudio.Particles.WP.Encode(particles, outFile); break;
+                case 4: PopStudio.Particles.GameConsole.Encode(particles, outFile); break;
+                case 5: PopStudio.Particles.TV.Encode(particles, outFile); break;
+                case 6: PopStudio.Particles.ParticlesJson.Encode(particles, outFile); break;
+                case 7: PopStudio.Particles.RawXml.Encode(particles, outFile); break;
                 default: throw new NotImplementedException();
             }
         }
@@ -270,55 +226,47 @@
             }
         }
 
-        public static void NewDir(string filePath, bool toEnd = true)
+        public static bool CutImage(string inFile, string outFolder, string infoFile, string itemName, int format) => format switch
         {
-            Dir.NewDir(filePath, toEnd);
-        }
+            0 => Atlas.NewXml.Cut(inFile, outFolder, infoFile, itemName),
+            1 => Atlas.OldXml.Cut(inFile, outFolder, infoFile, itemName),
+            2 => Atlas.AncientXml.Cut(inFile, outFolder, infoFile, itemName),
+            3 => Atlas.Plist.Cut(inFile, outFolder, infoFile, itemName),
+            4 => Atlas.AtlasImageDat.Cut(inFile, outFolder, infoFile, itemName),
+            5 => Atlas.TVAtlasXml.Cut(inFile, outFolder, infoFile, itemName),
+            _ => throw new Exception(Str.Obj.TypeMisMatch)
+        };
 
-        public static string[] GetFiles(string filePath)
+        public static bool SpliceImage(string inFile, string outFolder, string infoFile, string itemName, int format, int maxWidth = 2048, int maxHeight = 2048) => format switch
         {
-            return Dir.GetFiles(filePath);
-        }
+            0 => Atlas.NewXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            1 => Atlas.OldXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            2 => Atlas.AncientXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            3 => Atlas.Plist.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            4 => Atlas.AtlasImageDat.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            5 => Atlas.TVAtlasXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            _ => throw new Exception(Str.Obj.TypeMisMatch)
+        };
 
-        public static string GetFileExtension(string fileName)
-        {
-            return Path.GetExtension(fileName);
-        }
+        public static void NewDir(string filePath, bool toEnd = true) => Dir.NewDir(filePath, toEnd);
 
-        public static string GetFileName(string fileName)
-        {
-            return Path.GetFileName(fileName);
-        }
+        public static string[] GetFiles(string filePath) => Dir.GetFiles(filePath);
 
-        public static string GetFilePath(string fileName)
-        {
-            return Path.GetDirectoryName(fileName);
-        }
+        public static string GetFileExtension(string fileName) => Path.GetExtension(fileName);
 
-        public static string GetFileNameWithoutExtension(string fileName)
-        {
-            return Path.GetFileNameWithoutExtension(fileName);
-        }
+        public static string GetFileName(string fileName) => Path.GetFileName(Dir.FormatPath(fileName));
 
-        public static int GetVersion()
-        {
-            return Const.RAINYVERSION;
-        }
+        public static string GetFilePath(string fileName) => Path.GetDirectoryName(fileName);
 
-        public static int GetSystem()
-        {
-            return Const.SYSTEM;
-        }
+        public static string GetFileNameWithoutExtension(string fileName) => Path.GetFileNameWithoutExtension(Dir.FormatPath(fileName));
 
-        public static int GetLanguage()
-        {
-            return (int)Setting.AppLanguage;
-        }
+        public static int GetVersion() => Const.RAINYVERSION;
 
-        public static string FormatPath(string path)
-        {
-            return Dir.FormatPath(path);
-        }
+        public static int GetSystem() => Const.SYSTEM;
+
+        public static int GetLanguage() => (int)Setting.AppLanguage;
+
+        public static string FormatPath(string path) => Dir.FormatPath(path);
 
         public static void DoFile(string filepath, params object[] args)
         {
@@ -331,10 +279,7 @@
             Script.luavm.DoString(s);
         }
 
-        public static object[] CreateArray(int length)
-        {
-            return new object[length];
-        }
+        public static object[] CreateArray(int length) => new object[length];
 
         public static bool DeleteFile(string filePath)
         {

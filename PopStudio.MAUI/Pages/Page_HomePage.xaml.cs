@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
-using PopStudio.MAUI.Languages;
+using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -12,7 +12,7 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
 			Title = MAUIStr.Obj.HomePage_Title;
-			label_begin.Text = Thread.CurrentThread.CurrentCulture.Name;//MAUIStr.Obj.HomePage_Begin;
+			label_begin.Text = MAUIStr.Obj.HomePage_Begin;
 			label_function.Text = MAUIStr.Obj.HomePage_Function;
 			label_agreement.Text = MAUIStr.Obj.HomePage_Agreement;
 			label_ver.Text = string.Format(MAUIStr.Obj.HomePage_Version, Str.Obj.AppVersion);
@@ -26,7 +26,12 @@ namespace PopStudio.MAUI
 			label_course.Text = MAUIStr.Obj.HomePage_Course;
 			label_appnewnotice_string.Text = MAUIStr.Obj.HomePage_AppNewNotice_String;
 			label_appnewnotice.Text = MAUIStr.Obj.HomePage_AppNewNotice;
-			this.CheckAndRequestPermissionAsync();
+            AskPermission();
 		}
+
+		async void AskPermission()
+        {
+			if (!await this.CheckAndRequestPermissionAsync()) Environment.Exit(0);
+        }
     }
 }

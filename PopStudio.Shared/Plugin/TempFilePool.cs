@@ -24,6 +24,8 @@
                 {
                     if (File.Exists(s)) File.Delete(s);
                 }
+                Files.Clear();
+                Files = null;
             }
         }
     }

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Setting"
-             BackgroundColor="White">
+             BackgroundColor="#CCCCCC">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label x:Name="label_introduction" FontSize="16"/>
@@ -18,8 +18,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Label VerticalTextAlignment="Center" Margin="0 0 0 10" Text="{Binding ItemName}" />
-                            <Label VerticalTextAlignment="Center" Margin="0 10 0 0" Grid.Column="1" Text="{Binding ItemValue}" />
+                            <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
+                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -43,8 +43,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Label VerticalTextAlignment="Center" Margin="0 0 0 10" Text="{Binding ItemName}" />
-                            <Label VerticalTextAlignment="Center" Margin="0 10 0 0" Grid.Column="1" Text="{Binding ItemValue}" />
+                            <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
+                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -132,7 +132,7 @@
                 <Label x:Name="label_xflscaley" VerticalTextAlignment="Center" Grid.Row="8" />
                 <Entry x:Name="xflscaley" Grid.Row="8" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscaley_TextChanged" />
             </Grid>
-            <Grid Margin="0 5 0 5">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />

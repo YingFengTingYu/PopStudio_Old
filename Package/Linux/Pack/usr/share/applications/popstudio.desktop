@@ -1,0 +1,15 @@
+[Desktop Entry]
+
+Name=PopStudio
+
+Exec=/usr/bin/PopStudio
+
+Icon=/usr/share/icons/popstudio_icon.png
+
+Terminal=false
+
+Type=Application
+
+X-Ubuntu-Touch=true
+
+Categories=Development

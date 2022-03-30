@@ -48,7 +48,7 @@
         /// <returns></returns>
         public static string[] GetFiles(string path)
         {
-            fileNameLib = new string[100000];
+            fileNameLib = new string[10000];
             fileNum = 0;
             GetFile(path);
             string[] ansLib = new string[fileNum];

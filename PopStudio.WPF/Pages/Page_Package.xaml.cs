@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PopStudio.WPF.Languages;
+using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.WPF.Pages
 {
@@ -66,7 +66,7 @@ namespace PopStudio.WPF.Pages
 				{
 					if (mode == true)
 					{
-						if (!Directory.Exists(inFile))
+                        if (!Directory.Exists(inFile))
 						{
 							throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
 						}

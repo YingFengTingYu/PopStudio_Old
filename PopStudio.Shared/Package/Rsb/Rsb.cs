@@ -57,6 +57,7 @@ namespace PopStudio.Package.Rsb
                     else if (child.Name == "PtxInfoLength")
                     {
                         ptxEachLength = Convert.ToInt32(child.InnerText);
+                        rsb.head.ptxInfo_EachLength = ptxEachLength;
                     }
                     else if (child.Name == "ZlibAll")
                     {
@@ -68,48 +69,6 @@ namespace PopStudio.Package.Rsb
             using BinaryStream bs_rsgpfile = new BinaryStream(tempFilePool.Add(), FileMode.Create);
             bs_rsgpfile.Endian = endian;
             rsb.head.version = version;
-            //Firstly, read three lists
-            //byte[] fileList, rsgpList, compositeList; //must pay attention to endian!!
-            //using (StreamReader sr = new StreamReader(studioPath + "RESOURCES.CSV"))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        var s = sr.ReadLine();
-            //        if (s.IndexOf(',') != -1)
-            //        {
-            //            var ss = s.Split(',');
-            //            rsb.fileList.Add(new CompressString(ss[0], new RsbExtraInfo(Convert.ToInt32(ss[1]))));
-            //        }
-            //    }
-            //}
-            //using (StreamReader sr = new StreamReader(studioPath + "RESOURCESGROUP.CSV"))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        var s = sr.ReadLine();
-            //        if (s.IndexOf(',') != -1)
-            //        {
-            //            var ss = s.Split(',');
-            //            rsb.rsgpList.Add(new CompressString(ss[0], new RsbExtraInfo(Convert.ToInt32(ss[1]))));
-            //        }
-            //    }
-            //}
-            //using (StreamReader sr = new StreamReader(studioPath + "COMPOSITERESOURCES.CSV"))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        var s = sr.ReadLine();
-            //        if (s.IndexOf(',') != -1)
-            //        {
-            //            var ss = s.Split(',');
-            //            rsb.compositeList.Add(new CompressString(ss[0], new RsbExtraInfo(Convert.ToInt32(ss[1]))));
-            //        }
-            //    }
-            //}
-            //fileList = rsb.fileList.Write();
-            //rsgpList = rsb.rsgpList.Write();
-            //compositeList = rsb.compositeList.Write();
-            //secondly,read all files
             xmldata = File.ReadAllText(studioPath + "RESOURCESGROUP.XML");
             xml = new XmlDocument();
             xml.LoadXml(xmldata);
@@ -215,7 +174,7 @@ namespace PopStudio.Package.Rsb
                                 bsP1.Position = 0;
                                 if (compressPart0)
                                 {
-                                    using (ZLibStream zLibStream = new ZLibStream(bsP0over, CompressionLevel.SmallestSize, true))
+                                    using (ZLibStream zLibStream = new ZLibStream(bsP0over, CompressionLevel.Fastest, true))
                                     {
                                         bsP0.CopyTo(zLibStream);
                                     }
@@ -237,7 +196,7 @@ namespace PopStudio.Package.Rsb
                                 }
                                 if (compressPart1)
                                 {
-                                    using (ZLibStream zLibStream = new ZLibStream(bsP1over, CompressionLevel.SmallestSize, true))
+                                    using (ZLibStream zLibStream = new ZLibStream(bsP1over, CompressionLevel.Fastest, true))
                                     {
                                         bsP1.CopyTo(zLibStream);
                                     }

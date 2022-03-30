@@ -5,16 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PopStudio.WPF"
         mc:Ignorable="d"
-        Title="PopStudio" Height="540" Width="900" MinHeight="500" MinWidth="500"
+        Title="PopStudio" Height="580" Width="900" MinHeight="540" MinWidth="540"
         Icon="/Icon.png">
-    <Window.Resources>
-        <LinearGradientBrush x:Key="LGBrush" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="LightSkyBlue" Offset="0" />
-            <GradientStop Color="LightBlue" Offset="0.25" />
-            <GradientStop Color="LightBlue" Offset="0.75" />
-            <GradientStop Color="LightSkyBlue" Offset="1" />
-        </LinearGradientBrush>
-    </Window.Resources>
     <Grid>
         <Grid x:Name="DialogGrid" Visibility="Collapsed" Background="#88000000" Panel.ZIndex="3">
             <ContentControl x:Name="DialogControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -32,19 +24,7 @@
             </Border>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" Panel.ZIndex="2">
-                <Grid>
-                    <Grid.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="border" 
-					Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Offset)"
-					BeginTime="00:00:00" Duration="00:00:10" From="0" To="1" AutoReverse="True" RepeatBehavior="Forever"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Grid.Triggers>
-                    <Border x:Name="border" Background="{StaticResource LGBrush}" CornerRadius="2"/>
+                <Grid Background="SkyBlue">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -57,7 +37,7 @@
                         <StackPanel Margin="0 5 0 0" Grid.Row="2">
                             <Button FontSize="15" x:Name="button1" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button1_Click" />
                             <Button FontSize="15" x:Name="button2" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button2_Click" />
-                            <!--<Button FontSize="15" x:Name="button11" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button11_Click" />-->
+                            <Button FontSize="15" x:Name="button11" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button11_Click" />
                             <Button FontSize="15" x:Name="button3" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button3_Click" />
                             <Button FontSize="15" x:Name="button4" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button4_Click" />
                             <Button FontSize="15" x:Name="button5" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button5_Click" />
@@ -76,6 +56,8 @@
                     <RowDefinition Height="40" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
+                <Image HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Source="/topmost.png" Panel.ZIndex="1" Cursor="Hand" MouseUp="Image_MouseUp" />
 
                 <Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
 

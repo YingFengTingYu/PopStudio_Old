@@ -364,3 +364,8 @@ FodyWeavers.xsd
 
 # nds - doing
 NdsGraphic/
+
+# unity - doing
+Unity/
+/Tool/LuaScript/生成TV版xml狗槿版.lua
+/Tool/LuaScript/生成TV版xml狗槿版源文件.lua

@@ -2,7 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
-using PopStudio.MAUI.Languages;
+using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -40,7 +40,7 @@ namespace PopStudio.MAUI
                 {
                     API.Print(MAUIStr.Obj.Share_Finish);
                 }
-                Device.BeginInvokeOnMainThread(() => { b.IsEnabled = true; });
+                Dispatcher.Dispatch(() => { b.IsEnabled = true; });
             }))
             { IsBackground = true }.Start();
         }

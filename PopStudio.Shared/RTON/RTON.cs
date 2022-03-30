@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace PopStudio.RTON
 {
@@ -11,18 +13,18 @@ namespace PopStudio.RTON
         public static readonly StringPool R0x90 = new StringPool();
         public static readonly StringPool R0x92 = new StringPool();
 
-        public static string Format(this string s)
-        {
-            return s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t");
-        }
-
+        /// <summary>
+        /// It's very slow while converting RESOURCES.RTON
+        /// </summary>
+        /// <param name="inFile"></param>
+        /// <param name="outFile"></param>
         public static void Decode(string inFile, string outFile)
         {
             R0x90.Clear();
             R0x92.Clear();
-            using (Stream stream = new FileStream(outFile, FileMode.Create))
+            using (FileStream stream = new FileStream(outFile, FileMode.Create))
             {
-                using (StreamWriter sw = new StreamWriter(stream))
+                using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), Indented = true }))
                 {
                     using (BinaryStream bs = BinaryStream.Open(inFile))
                     {
@@ -47,18 +49,17 @@ namespace PopStudio.RTON
             //The iv for Rijndael is part of the key for Rijndael
             Array.Copy(keybytes, 4, ivbytes, 0, 24);
             byte[] source;
-            using (Stream stream = new FileStream(outFile, FileMode.Create))
+            using (FileStream stream = new FileStream(outFile, FileMode.Create))
             {
-                using (StreamWriter sw = new StreamWriter(stream))
+                using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), Indented = true }))
                 {
                     using (BinaryStream bs = BinaryStream.Open(inFile))
                     {
                         bs.IdInt16(0x10);
                         source = bs.ReadBytes((int)(bs.Length - 2));
                     }
-                    using (BinaryStream bs = new BinaryStream())
+                    using (BinaryStream bs = new BinaryStream(RijndaelHelper.Decrypt(source, keybytes, ivbytes, new Org.BouncyCastle.Crypto.Paddings.ZeroBytePadding())))
                     {
-                        bs.WriteBytes(RijndaelHelper.Decrypt(source, keybytes, ivbytes, new Org.BouncyCastle.Crypto.Paddings.ZeroBytePadding()));
                         bs.Position = 0;
                         bs.IdString(magic);
                         bs.IdInt32(version);
@@ -71,483 +72,330 @@ namespace PopStudio.RTON
             R0x92.Clear();
         }
 
-        static void ReadJArray(BinaryStream bs, StreamWriter sw, string space = "")
+        static void ReadJArray(BinaryStream bs, Utf8JsonWriter sw)
         {
-            string space2 = space + "    ";
+            sw.WriteStartArray();
+            string tempstring;
             bs.IdByte(0xFD);
             int number = bs.ReadVarInt32();
-            sw.Write('[');
             for (int i = 0; i < number; i++)
             {
-                if (i != 0) sw.Write(',');
-                sw.Write('\n');
-                sw.Write(space2);
                 byte type = bs.ReadByte();
-                if (type == 0x00)
+                switch (type)
                 {
-                    sw.Write("false");
-                }
-                else if (type == 0x01)
-                {
-                    sw.Write("true");
-                }
-                else if (type == 0x08)
-                {
-                    sw.Write(bs.ReadSByte());
-                }
-                else if (type == 0x09)
-                {
-                    sw.Write((sbyte)0);
-                }
-                else if (type == 0x0A)
-                {
-                    sw.Write(bs.ReadByte());
-                }
-                else if (type == 0x0B)
-                {
-                    sw.Write((byte)0);
-                }
-                else if (type == 0x10)
-                {
-                    sw.Write(bs.ReadInt16());
-                }
-                else if (type == 0x11)
-                {
-                    sw.Write((short)0);
-                }
-                else if (type == 0x12)
-                {
-                    sw.Write(bs.ReadUInt16());
-                }
-                else if (type == 0x13)
-                {
-                    sw.Write((ushort)0);
-                }
-                else if (type == 0x20)
-                {
-                    sw.Write(bs.ReadInt32());
-                }
-                else if (type == 0x21)
-                {
-                    sw.Write(0);
-                }
-                else if (type == 0x22)
-                {
-                    sw.Write(bs.ReadFloat32());
-                }
-                else if (type == 0x23)
-                {
-                    sw.Write(0F);
-                }
-                else if (type == 0x24)
-                {
-                    sw.Write(bs.ReadVarInt32());
-                }
-                else if (type == 0x25)
-                {
-                    sw.Write(bs.ReadZigZag32());
-                }
-                else if (type == 0x26)
-                {
-                    sw.Write(bs.ReadUInt32());
-                }
-                else if (type == 0x27)
-                {
-                    sw.Write(0U);
-                }
-                else if (type == 0x28)
-                {
-                    sw.Write(bs.ReadUVarInt32());
-                }
-                else if (type == 0x40)
-                {
-                    sw.Write(bs.ReadInt64());
-                }
-                else if (type == 0x41)
-                {
-                    sw.Write(0L);
-                }
-                else if (type == 0x42)
-                {
-                    sw.Write(bs.ReadFloat64());
-                }
-                else if (type == 0x43)
-                {
-                    sw.Write(0D);
-                }
-                else if (type == 0x44)
-                {
-                    sw.Write(bs.ReadVarInt64());
-                }
-                else if (type == 0x45)
-                {
-                    sw.Write(bs.ReadZigZag64());
-                }
-                else if (type == 0x46)
-                {
-                    sw.Write(bs.ReadUInt64());
-                }
-                else if (type == 0x47)
-                {
-                    sw.Write(0UL);
-                }
-                else if (type == 0x48)
-                {
-                    sw.Write(bs.ReadUVarInt64());
-                }
-                else if (type == 0x81)
-                {
-                    sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Format());
-                    sw.Write('"');
-                }
-                else if (type == 0x82)
-                {
-                    bs.ReadVarInt32();
-                    sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Format());
-                    sw.Write('"');
-                }
-                else if (type == 0x83)
-                {
-                    bs.IdByte(0x03);
-                    bs.ReadVarInt32();
-                    string value = bs.ReadStringByVarInt32Head();
-                    bs.ReadVarInt32();
-                    sw.Write('"');
-                    sw.Write("RTID(" + bs.ReadStringByVarInt32Head() + "@" + value + ")".Format());
-                    sw.Write('"');
-                }
-                else if (type == 0x84)
-                {
-                    sw.Write("null");
-                }
-                else if (type == 0x85)
-                {
-                    ReadJObject(bs, sw, space2);
-                }
-                else if (type == 0x86)
-                {
-                    ReadJArray(bs, sw, space2);
-                }
-                else if (type == 0x90)
-                {
-                    string value = bs.ReadStringByVarInt32Head().Format();
-                    R0x90.ThrowInPool(value);
-                    sw.Write('"');
-                    sw.Write(value);
-                    sw.Write('"');
-                }
-                else if (type == 0x91)
-                {
-                    sw.Write('"');
-                    sw.Write(R0x90[bs.ReadVarInt32()].Value);
-                    sw.Write('"');
-                }
-                else if (type == 0x92)
-                {
-                    bs.ReadVarInt32();
-                    string value = bs.ReadStringByVarInt32Head().Format();
-                    R0x92.ThrowInPool(value);
-                    sw.Write('"');
-                    sw.Write(value);
-                    sw.Write('"');
-                }
-                else if (type == 0x93)
-                {
-                    sw.Write('"');
-                    sw.Write(R0x92[bs.ReadVarInt32()].Value);
-                    sw.Write('"');
-                }
-                else
-                {
-                    throw new Exception(Str.Obj.DataMisMatch);
+                    case 0x0:
+                        sw.WriteBooleanValue(false);
+                        break;
+                    case 0x1:
+                        sw.WriteBooleanValue(true);
+                        break;
+                    case 0x8:
+                        sw.WriteNumberValue(bs.ReadSByte());
+                        break;
+                    case 0x9:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0xA:
+                        sw.WriteNumberValue(bs.ReadByte());
+                        break;
+                    case 0xB:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x10:
+                        sw.WriteNumberValue(bs.ReadInt16());
+                        break;
+                    case 0x11:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x12:
+                        sw.WriteNumberValue(bs.ReadUInt16());
+                        break;
+                    case 0x13:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x20:
+                        sw.WriteNumberValue(bs.ReadInt32());
+                        break;
+                    case 0x21:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x22:
+                        sw.WriteNumberValue(bs.ReadFloat32());
+                        break;
+                    case 0x23:
+                        sw.WriteNumberValue(0F);
+                        break;
+                    case 0x24:
+                        sw.WriteNumberValue(bs.ReadVarInt32());
+                        break;
+                    case 0x25:
+                        sw.WriteNumberValue(bs.ReadZigZag32());
+                        break;
+                    case 0x26:
+                        sw.WriteNumberValue(bs.ReadUInt32());
+                        break;
+                    case 0x27:
+                        sw.WriteNumberValue(0U);
+                        break;
+                    case 0x28:
+                        sw.WriteNumberValue(bs.ReadUVarInt32());
+                        break;
+                    case 0x40:
+                        sw.WriteNumberValue(bs.ReadInt64());
+                        break;
+                    case 0x41:
+                        sw.WriteNumberValue(0L);
+                        break;
+                    case 0x42:
+                        sw.WriteNumberValue(bs.ReadFloat64());
+                        break;
+                    case 0x43:
+                        sw.WriteNumberValue(0D);
+                        break;
+                    case 0x44:
+                        sw.WriteNumberValue(bs.ReadVarInt64());
+                        break;
+                    case 0x45:
+                        sw.WriteNumberValue(bs.ReadZigZag64());
+                        break;
+                    case 0x46:
+                        sw.WriteNumberValue(bs.ReadUInt64());
+                        break;
+                    case 0x47:
+                        sw.WriteNumberValue(0UL);
+                        break;
+                    case 0x48:
+                        sw.WriteNumberValue(bs.ReadUVarInt64());
+                        break;
+                    case 0x81:
+                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        break;
+                    case 0x82:
+                        bs.ReadVarInt32();
+                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        break;
+                    case 0x83:
+                        bs.IdByte(0x03);
+                        bs.ReadVarInt32();
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        bs.ReadVarInt32();
+                        sw.WriteStringValue($"RTID({bs.ReadStringByVarInt32Head()}@{tempstring})");
+                        break;
+                    case 0x84:
+                        sw.WriteNullValue();
+                        break;
+                    case 0x85:
+                        ReadJObject(bs, sw);
+                        break;
+                    case 0x86:
+                        ReadJArray(bs, sw);
+                        break;
+                    case 0x90:
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        R0x90.ThrowInPool(tempstring);
+                        sw.WriteStringValue(tempstring);
+                        break;
+                    case 0x91:
+                        sw.WriteStringValue(R0x90[bs.ReadVarInt32()].Value);
+                        break;
+                    case 0x92:
+                        bs.ReadVarInt32();
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        R0x92.ThrowInPool(tempstring);
+                        sw.WriteStringValue(tempstring);
+                        break;
+                    case 0x93:
+                        sw.WriteStringValue(R0x92[bs.ReadVarInt32()].Value);
+                        break;
+                    default:
+                        throw new Exception(Str.Obj.TypeMisMatch);
                 }
             }
             bs.IdByte(0xFE);
-            if (number != 0)
-            {
-                sw.Write('\n');
-                sw.Write(space);
-            }
-            sw.Write(']');
+            sw.WriteEndArray();
         }
 
-        static void ReadJObject(BinaryStream bs, StreamWriter sw, string space = "")
+        static void ReadJObject(BinaryStream bs, Utf8JsonWriter sw)
         {
-            string space2 = space + "    ";
-            sw.Write('{');
-            bool first = true;
+            sw.WriteStartObject();
+            string tempstring;
             while (true)
             {
                 //key
                 byte type = bs.ReadByte();
                 if (type == 0xFF)
                 {
-                    if (!first)
-                    {
-                        sw.Write('\n');
-                        sw.Write(space);
-                    }
-                    sw.Write('}');
-                    return;
+                    break;
                 }
-                if (first)
+                switch (type)
                 {
-                    first = false;
-                }
-                else
-                {
-                    sw.Write(',');
-                }
-                sw.Write('\n');
-                sw.Write(space2);
-                if (type == 0x81)
-                {
-                    sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Format());
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else if (type == 0x82)
-                {
-                    bs.ReadVarInt32();
-                    sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Format());
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else if (type == 0x83)
-                {
-                    bs.IdByte(0x03);
-                    bs.ReadVarInt32();
-                    string key = bs.ReadStringByVarInt32Head();
-                    bs.ReadVarInt32();
-                    sw.Write('"');
-                    sw.Write(("RTID(" + bs.ReadStringByVarInt32Head() + "@" + key + ")").Format());
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else if (type == 0x90)
-                {
-                    string key = bs.ReadStringByVarInt32Head().Format();
-                    R0x90.ThrowInPool(key);
-                    sw.Write('"');
-                    sw.Write(key);
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else if (type == 0x91)
-                {
-                    sw.Write('"');
-                    sw.Write(R0x90[bs.ReadVarInt32()].Value);
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else if (type == 0x92)
-                {
-                    bs.ReadVarInt32();
-                    string key = bs.ReadStringByVarInt32Head().Format();
-                    R0x92.ThrowInPool(key);
-                    sw.Write('"');
-                    sw.Write(key);
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else if (type == 0x93)
-                {
-                    sw.Write('"');
-                    sw.Write(R0x92[bs.ReadVarInt32()].Value);
-                    sw.Write('"');
-                    sw.Write(':');
-                }
-                else
-                {
-                    throw new Exception(Str.Obj.DataMisMatch);
+                    case 0x81:
+                        sw.WritePropertyName(bs.ReadStringByVarInt32Head());
+                        break;
+                    case 0x82:
+                        bs.ReadVarInt32();
+                        sw.WritePropertyName(bs.ReadStringByVarInt32Head());
+                        break;
+                    case 0x83:
+                        bs.IdByte(0x03);
+                        bs.ReadVarInt32();
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        bs.ReadVarInt32();
+                        sw.WritePropertyName($"RTID({bs.ReadStringByVarInt32Head()}@{tempstring})");
+                        break;
+                    case 0x90:
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        R0x90.ThrowInPool(tempstring);
+                        sw.WritePropertyName(tempstring);
+                        break;
+                    case 0x91:
+                        sw.WritePropertyName(R0x90[bs.ReadVarInt32()].Value);
+                        break;
+                    case 0x92:
+                        bs.ReadVarInt32();
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        R0x92.ThrowInPool(tempstring);
+                        sw.WritePropertyName(tempstring);
+                        break;
+                    case 0x93:
+                        sw.WritePropertyName(R0x92[bs.ReadVarInt32()].Value);
+                        break;
+                    default:
+                        throw new Exception(Str.Obj.TypeMisMatch);
                 }
                 //value
                 type = bs.ReadByte();
-                if (type == 0x00)
+                switch (type)
                 {
-                    sw.Write("false");
-                }
-                else if (type == 0x01)
-                {
-                    sw.Write("true");
-                }
-                else if (type == 0x08)
-                {
-                    sw.Write(bs.ReadSByte());
-                }
-                else if (type == 0x09)
-                {
-                    sw.Write((sbyte)0);
-                }
-                else if (type == 0x0A)
-                {
-                    sw.Write(bs.ReadByte());
-                }
-                else if (type == 0x0B)
-                {
-                    sw.Write((byte)0);
-                }
-                else if (type == 0x10)
-                {
-                    sw.Write(bs.ReadInt16());
-                }
-                else if (type == 0x11)
-                {
-                    sw.Write((short)0);
-                }
-                else if (type == 0x12)
-                {
-                    sw.Write(bs.ReadUInt16());
-                }
-                else if (type == 0x13)
-                {
-                    sw.Write((ushort)0);
-                }
-                else if (type == 0x20)
-                {
-                    sw.Write(bs.ReadInt32());
-                }
-                else if (type == 0x21)
-                {
-                    sw.Write(0);
-                }
-                else if (type == 0x22)
-                {
-                    sw.Write(bs.ReadFloat32());
-                }
-                else if (type == 0x23)
-                {
-                    sw.Write(0F);
-                }
-                else if (type == 0x24)
-                {
-                    sw.Write(bs.ReadVarInt32());
-                }
-                else if (type == 0x25)
-                {
-                    sw.Write(bs.ReadZigZag32());
-                }
-                else if (type == 0x26)
-                {
-                    sw.Write(bs.ReadUInt32());
-                }
-                else if (type == 0x27)
-                {
-                    sw.Write(0U);
-                }
-                else if (type == 0x28)
-                {
-                    sw.Write(bs.ReadUVarInt32());
-                }
-                else if (type == 0x40)
-                {
-                    sw.Write(bs.ReadInt64());
-                }
-                else if (type == 0x41)
-                {
-                    sw.Write(0L);
-                }
-                else if (type == 0x42)
-                {
-                    sw.Write(bs.ReadFloat64());
-                }
-                else if (type == 0x43)
-                {
-                    sw.Write(0D);
-                }
-                else if (type == 0x44)
-                {
-                    sw.Write(bs.ReadVarInt64());
-                }
-                else if (type == 0x45)
-                {
-                    sw.Write(bs.ReadZigZag64());
-                }
-                else if (type == 0x46)
-                {
-                    sw.Write(bs.ReadUInt64());
-                }
-                else if (type == 0x47)
-                {
-                    sw.Write(0UL);
-                }
-                else if (type == 0x48)
-                {
-                    sw.Write(bs.ReadUVarInt64());
-                }
-                else if (type == 0x81)
-                {
-                    sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Format());
-                    sw.Write('"');
-                }
-                else if (type == 0x82)
-                {
-                    bs.ReadVarInt32();
-                    sw.Write('"');
-                    sw.Write(bs.ReadStringByVarInt32Head().Format());
-                    sw.Write('"');
-                }
-                else if (type == 0x83)
-                {
-                    bs.IdByte(0x03);
-                    bs.ReadVarInt32();
-                    string value = bs.ReadStringByVarInt32Head();
-                    bs.ReadVarInt32();
-                    sw.Write('"');
-                    sw.Write(("RTID(" + bs.ReadStringByVarInt32Head() + "@" + value + ")").Format());
-                    sw.Write('"');
-                }
-                else if (type == 0x84)
-                {
-                    sw.Write("null");
-                }
-                else if (type == 0x85)
-                {
-                    ReadJObject(bs, sw, space2);
-                }
-                else if (type == 0x86)
-                {
-                    ReadJArray(bs, sw, space2);
-                }
-                else if (type == 0x90)
-                {
-                    string value = bs.ReadStringByVarInt32Head().Format();
-                    R0x90.ThrowInPool(value);
-                    sw.Write('"');
-                    sw.Write(value);
-                    sw.Write('"');
-                }
-                else if (type == 0x91)
-                {
-                    sw.Write('"');
-                    sw.Write(R0x90[bs.ReadVarInt32()].Value);
-                    sw.Write('"');
-                }
-                else if (type == 0x92)
-                {
-                    bs.ReadVarInt32();
-                    string value = bs.ReadStringByVarInt32Head().Format();
-                    R0x92.ThrowInPool(value);
-                    sw.Write('"');
-                    sw.Write(value);
-                    sw.Write('"');
-                }
-                else if (type == 0x93)
-                {
-                    sw.Write('"');
-                    sw.Write(R0x92[bs.ReadVarInt32()].Value);
-                    sw.Write('"');
-                }
-                else
-                {
-                    throw new Exception(Str.Obj.DataMisMatch);
+                    case 0x0:
+                        sw.WriteBooleanValue(false);
+                        break;
+                    case 0x1:
+                        sw.WriteBooleanValue(true);
+                        break;
+                    case 0x8:
+                        sw.WriteNumberValue(bs.ReadSByte());
+                        break;
+                    case 0x9:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0xA:
+                        sw.WriteNumberValue(bs.ReadByte());
+                        break;
+                    case 0xB:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x10:
+                        sw.WriteNumberValue(bs.ReadInt16());
+                        break;
+                    case 0x11:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x12:
+                        sw.WriteNumberValue(bs.ReadUInt16());
+                        break;
+                    case 0x13:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x20:
+                        sw.WriteNumberValue(bs.ReadInt32());
+                        break;
+                    case 0x21:
+                        sw.WriteNumberValue(0);
+                        break;
+                    case 0x22:
+                        sw.WriteNumberValue(bs.ReadFloat32());
+                        break;
+                    case 0x23:
+                        sw.WriteNumberValue(0F);
+                        break;
+                    case 0x24:
+                        sw.WriteNumberValue(bs.ReadVarInt32());
+                        break;
+                    case 0x25:
+                        sw.WriteNumberValue(bs.ReadZigZag32());
+                        break;
+                    case 0x26:
+                        sw.WriteNumberValue(bs.ReadUInt32());
+                        break;
+                    case 0x27:
+                        sw.WriteNumberValue(0U);
+                        break;
+                    case 0x28:
+                        sw.WriteNumberValue(bs.ReadUVarInt32());
+                        break;
+                    case 0x40:
+                        sw.WriteNumberValue(bs.ReadInt64());
+                        break;
+                    case 0x41:
+                        sw.WriteNumberValue(0L);
+                        break;
+                    case 0x42:
+                        sw.WriteNumberValue(bs.ReadFloat64());
+                        break;
+                    case 0x43:
+                        sw.WriteNumberValue(0D);
+                        break;
+                    case 0x44:
+                        sw.WriteNumberValue(bs.ReadVarInt64());
+                        break;
+                    case 0x45:
+                        sw.WriteNumberValue(bs.ReadZigZag64());
+                        break;
+                    case 0x46:
+                        sw.WriteNumberValue(bs.ReadUInt64());
+                        break;
+                    case 0x47:
+                        sw.WriteNumberValue(0UL);
+                        break;
+                    case 0x48:
+                        sw.WriteNumberValue(bs.ReadUVarInt64());
+                        break;
+                    case 0x81:
+                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        break;
+                    case 0x82:
+                        bs.ReadVarInt32();
+                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        break;
+                    case 0x83:
+                        bs.IdByte(0x03);
+                        bs.ReadVarInt32();
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        bs.ReadVarInt32();
+                        sw.WriteStringValue($"RTID({bs.ReadStringByVarInt32Head()}@{tempstring})");
+                        break;
+                    case 0x84:
+                        sw.WriteNullValue();
+                        break;
+                    case 0x85:
+                        ReadJObject(bs, sw);
+                        break;
+                    case 0x86:
+                        ReadJArray(bs, sw);
+                        break;
+                    case 0x90:
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        R0x90.ThrowInPool(tempstring);
+                        sw.WriteStringValue(tempstring);
+                        break;
+                    case 0x91:
+                        sw.WriteStringValue(R0x90[bs.ReadVarInt32()].Value);
+                        break;
+                    case 0x92:
+                        bs.ReadVarInt32();
+                        tempstring = bs.ReadStringByVarInt32Head();
+                        R0x92.ThrowInPool(tempstring);
+                        sw.WriteStringValue(tempstring);
+                        break;
+                    case 0x93:
+                        sw.WriteStringValue(R0x92[bs.ReadVarInt32()].Value);
+                        break;
+                    default:
+                        throw new Exception(Str.Obj.TypeMisMatch);
                 }
             }
+            sw.WriteEndObject();
         }
 
         public static void EncodeAndEncrypt(string inFile, string outFile)

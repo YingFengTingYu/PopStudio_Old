@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PopStudio.WPF.Languages;
+using PopStudio.GUILanguage.Languages;
 using PopStudio.WPF.Pages;
 
 namespace PopStudio.WPF
@@ -101,7 +101,7 @@ namespace PopStudio.WPF
             button8.Content = MAUIStr.Obj.Compress_Title;
             button9.Content = MAUIStr.Obj.LuaScript_Title;
             button10.Content = MAUIStr.Obj.Setting_Title;
-            //button11.Content = MAUIStr.Obj.Unity_Title;
+            button11.Content = MAUIStr.Obj.Atlas_Title;
             LoadHomePage();
             Singleten = this;
             if (Setting.OpenProgramAD)
@@ -194,7 +194,7 @@ namespace PopStudio.WPF
 
         private void button11_Click(object sender, RoutedEventArgs e)
         {
-            LoadUnity();
+            LoadAtlas();
         }
 
         #endregion
@@ -211,7 +211,7 @@ namespace PopStudio.WPF
         Page_Compress compress = new Page_Compress();
         Page_LuaScript luaScript = new Page_LuaScript();
         Page_Setting setting = new Page_Setting();
-        Page_Unity unity = new Page_Unity();
+        Page_Atlas atlas = new Page_Atlas();
 
         void ResetButton()
         {
@@ -235,8 +235,8 @@ namespace PopStudio.WPF
             button9.Foreground = Brushes.Black;
             button10.Background = Brushes.White;
             button10.Foreground = Brushes.Black;
-            //button11.Background = Brushes.White;
-            //button11.Foreground = Brushes.Black;
+            button11.Background = Brushes.White;
+            button11.Foreground = Brushes.Black;
         }
 
         public void LoadHomePage()
@@ -359,18 +359,22 @@ namespace PopStudio.WPF
             Label_Head.Content = MAUIStr.Obj.Setting_Title;
         }
 
-        public void LoadUnity()
+        public void LoadAtlas()
         {
             ResetButton();
-            //button11.Background = Brushes.CornflowerBlue;
-            //button11.Foreground = Brushes.White;
+            button11.Background = Brushes.CornflowerBlue;
+            button11.Foreground = Brushes.White;
             PageControl.Content = new Frame()
             {
-                Content = unity
+                Content = atlas
             };
-            Label_Head.Content = MAUIStr.Obj.Unity_Title;
+            Label_Head.Content = MAUIStr.Obj.Atlas_Title;
         }
-
         #endregion
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Topmost = !Topmost;
+        }
     }
 }

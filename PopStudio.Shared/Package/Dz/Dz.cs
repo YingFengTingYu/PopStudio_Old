@@ -51,6 +51,7 @@
 
         public static void DzipEncoder(BinaryStream bs, string inFolder)
         {
+            bs.Encode = EncodeHelper.ANSI;
             string[] files = Dir.GetFiles(inFolder);
             string[] fileName = new string[files.Length];
             string[] pathName = new string[files.Length];
@@ -162,6 +163,7 @@
 
         public static void DzipDecoder(BinaryStream bs, string outFolder, bool changeimage = false, bool delete = false)
         {
+            bs.Encode = EncodeHelper.ANSI;
             outFolder += Const.PATHSEPARATOR;
             string tempName;
             DtrzInfo dz = new DtrzInfo().Read(bs);

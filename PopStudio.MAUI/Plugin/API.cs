@@ -18,7 +18,7 @@ namespace PopStudio.Plugin
                 }
                 str = str[0..^1];
             }
-            Device.BeginInvokeOnMainThread(() => box.Print(str));
+            box.Dispatcher.Dispatch(() => box.Print(str));
         }
 
         public static partial bool? Alert(string text, string title, bool ask)
@@ -27,11 +27,11 @@ namespace PopStudio.Plugin
             bool a = false;
             if (ask)
             {
-                Device.BeginInvokeOnMainThread(async () => { ans = await box.DisplayAlert(title, text, "OK", "Cancel"); a = true; });
+                box.Dispatcher.Dispatch(async () => { ans = await box.DisplayAlert(title, text, "OK", "Cancel"); a = true; });
             }
             else
             {
-                Device.BeginInvokeOnMainThread(async () => { await box.DisplayAlert(title, text, "Cancel"); a = true; });
+                box.Dispatcher.Dispatch(async () => { await box.DisplayAlert(title, text, "Cancel"); a = true; });
             }
             while (!a) Task.Delay(200);
             return ans;
@@ -41,7 +41,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            Device.BeginInvokeOnMainThread(async () => { ans = await box.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
+            box.Dispatcher.Dispatch(async () => { ans = await box.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }
@@ -50,7 +50,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            Device.BeginInvokeOnMainThread(async () => { ans = await box.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
+            box.Dispatcher.Dispatch(async () => { ans = await box.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
             while (!a) Task.Delay(200);
             if (ans == "OK\0" && ans == "Cancel\0")
             {
@@ -63,7 +63,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            Device.BeginInvokeOnMainThread(async () => { ans = await box.ChooseFolder(); a = true; });
+            box.Dispatcher.Dispatch(async () => { ans = await box.ChooseFolder(); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }
@@ -72,7 +72,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            Device.BeginInvokeOnMainThread(async () => { ans = await box.ChooseOpenFile(); a = true; });
+            box.Dispatcher.Dispatch(async () => { ans = await box.ChooseOpenFile(); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }
@@ -81,7 +81,7 @@ namespace PopStudio.Plugin
         {
             string ans = null;
             bool a = false;
-            Device.BeginInvokeOnMainThread(async () => { ans = await box.ChooseSaveFile(); a = true; });
+            box.Dispatcher.Dispatch(async () => { ans = await box.ChooseSaveFile(); a = true; });
             while (!a) Task.Delay(200);
             return ans;
         }

@@ -1,4 +1,4 @@
-﻿using PopStudio.WPF.Languages;
+﻿using PopStudio.GUILanguage.Languages;
 using PopStudio.WPF.Plugin;
 using System;
 using System.Collections.Generic;

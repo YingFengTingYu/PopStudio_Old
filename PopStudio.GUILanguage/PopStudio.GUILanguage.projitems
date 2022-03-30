@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>da450279-8012-49f0-968d-01216f0e6428</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>PopStudio.GUILanguage</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Languages\ILocalization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Languages\MAUIENUS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Languages\MAUIStr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Languages\MAUIZHCN.cs" />
+  </ItemGroup>
+</Project>

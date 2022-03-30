@@ -18,7 +18,7 @@
         public const string DOUBLEPATHSEPARATOR = @"//";
         public const string DOUBLEUNUSEDPATHSEPARATOR = @"\\";
         public const int SYSTEM = 0b00000100;
-#elif MAC
+#elif MACOS
         public const string PATHSEPARATOR = @"/";
         public const string UNUSEDPATHSEPARATOR = @"\";
         public const string EMPTYPATHSEPARATOR = @" /";
@@ -50,7 +50,7 @@
         public const string DOUBLEPATHSEPARATOR = @"\\";
         public const string DOUBLEUNUSEDPATHSEPARATOR = @"//";
         public const int SYSTEM = 0b10000001;
-#elif MACCONSOLE
+#elif MACOSCONSOLE
         public const string PATHSEPARATOR = @"/";
         public const string UNUSEDPATHSEPARATOR = @"\";
         public const string EMPTYPATHSEPARATOR = @" /";
@@ -67,6 +67,6 @@
         public const string DOUBLEUNUSEDPATHSEPARATOR = @"//";
         public const int SYSTEM = 0b00000001;
 #endif
-        public const int RAINYVERSION = 10;
+        public const int RAINYVERSION = 11;
     }
 }

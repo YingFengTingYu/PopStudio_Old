@@ -2,6 +2,7 @@
 {
     internal static partial class Permission
     {
+        public static partial bool HiddenFlyout() => false;
         static string macospath = Path.GetFullPath("./setting.xml");
 
         public static partial string GetSettingPath() => macospath;

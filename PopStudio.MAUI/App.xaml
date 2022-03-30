@@ -7,6 +7,7 @@
 
             <Style TargetType="Switch">
                 <Setter Property="ThumbColor" Value="CornflowerBlue" />
+                <Setter Property="OnColor" Value="#555555" />
             </Style>
 
             <Style TargetType="Picker">
@@ -28,8 +29,8 @@
             </Style>
 
             <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="#000000" />
                 <Setter Property="BackgroundColor" Value="#EEEEEE" />
-                <Setter Property="TextColor" Value="Black" />
             </Style>
 
         </ResourceDictionary>

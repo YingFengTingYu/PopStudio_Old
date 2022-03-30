@@ -1,4 +1,4 @@
-using PopStudio.MAUI.Languages;
+using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.MAUI;
 

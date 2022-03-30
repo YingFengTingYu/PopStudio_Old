@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PopStudio.WPF.Languages;
+using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.WPF.Pages
 {
@@ -58,7 +58,7 @@ namespace PopStudio.WPF.Pages
                 {
                     API.Print(MAUIStr.Obj.Share_Finish);
                 }
-                Dispatcher.BeginInvoke(() => { b.IsEnabled = true; });
+                Dispatcher.Invoke(() => { b.IsEnabled = true; });
             }))
             { IsBackground = true }.Start();
         }

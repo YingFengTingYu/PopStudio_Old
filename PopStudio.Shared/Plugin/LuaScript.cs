@@ -17,6 +17,8 @@ namespace PopStudio.Plugin
             RegisterFunction("rainy.getmemorystream", null, typeof(API).GetMethod("GetMemoryStream"));
             RegisterFunction("rainy.unpack", null, typeof(API).GetMethod("Unpack"));
             RegisterFunction("rainy.pack", null, typeof(API).GetMethod("Pack"));
+            RegisterFunction("rainy.cutimage", null, typeof(API).GetMethod("CutImage"));
+            RegisterFunction("rainy.spliceimage", null, typeof(API).GetMethod("SpliceImage"));
             RegisterFunction("rainy.decodeimage", null, typeof(API).GetMethod("DecodeImage"));
             RegisterFunction("rainy.encodeimage", null, typeof(API).GetMethod("EncodeImage"));
             RegisterFunction("rainy.reanim", null, typeof(API).GetMethod("Reanim"));

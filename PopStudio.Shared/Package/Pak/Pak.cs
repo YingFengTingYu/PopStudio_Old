@@ -82,6 +82,7 @@ namespace PopStudio.Package.Pak
             if (pak.pc) tempFile = tempFilePool.Add();
             using (BinaryStream bs_files = new BinaryStream(tempFile, FileMode.Create))
             {
+                bs_files.Encode = EncodeHelper.ANSI;
                 //write head
                 for (int i = 0; i < a.Length; i++)
                 {
@@ -198,6 +199,7 @@ namespace PopStudio.Package.Pak
             string tempName;
             using (BinaryStream bs = new BinaryStream())
             {
+                bs.Encode = EncodeHelper.ANSI;
                 bool TVMode = false;
                 PakInfo pak = new PakInfo();
                 using (BinaryStream bs_origin = BinaryStream.Open(inFile))

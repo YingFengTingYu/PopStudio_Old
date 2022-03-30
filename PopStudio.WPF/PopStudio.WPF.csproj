@@ -8,13 +8,16 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>3.7</FileVersion>
+    <FileVersion>3.8</FileVersion>
   </PropertyGroup>
 
   <Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
 
+  <Import Project="..\PopStudio.GUILanguage\PopStudio.GUILanguage.projitems" Label="Shared" />
+
   <ItemGroup>
     <None Remove="Icon.png" />
+    <None Remove="topmost.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +35,7 @@
 
   <ItemGroup>
     <Resource Include="Icon.png" />
+    <Resource Include="topmost.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,10 +54,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Pages\Page_LuaScript.xaml">
+    <Page Update="Pages\Page_Atlas.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\Page_Unity.xaml">
+    <Page Update="Pages\Page_LuaScript.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>

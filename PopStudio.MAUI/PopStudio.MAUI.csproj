@@ -63,6 +63,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\Page_Atlas.xaml.cs">
+	    <DependentUpon>Page_Atlas.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Page_LuaScript.xaml.cs">
 	    <DependentUpon>Page_LuaScript.xaml</DependentUpon>
 	  </Compile>
@@ -84,11 +87,13 @@
 	  <MauiXaml Update="Pages\Page_Compress.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_Atlas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_LuaScript.xaml">
-	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Package.xaml">
@@ -124,8 +129,12 @@
 
 	<Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
 
+	<Import Project="..\PopStudio.GUILanguage\PopStudio.GUILanguage.projitems" Label="Shared" />
+
 	<PropertyGroup>
 	  <AndroidPackageFormats>apk</AndroidPackageFormats>
+	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+	  <AotAssemblies>False</AotAssemblies>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
@@ -133,7 +142,7 @@
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;MAC</DefineConstants>
+	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
@@ -141,6 +150,22 @@
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
 	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
 	</PropertyGroup>
 	

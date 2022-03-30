@@ -11,13 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.MAUI", "PopStudio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.WPF", "PopStudio.WPF\PopStudio.WPF.csproj", "{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.GTK", "PopStudio.GTK\PopStudio.GTK.csproj", "{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.GUILanguage", "PopStudio.GUILanguage\PopStudio.GUILanguage.shproj", "{DA450279-8012-49F0-968D-01216F0E6428}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		PopStudio.Shared\PopStudio.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
-		PopStudio.Shared\PopStudio.projitems*{5162deba-202f-485f-8b68-0c1c2212382a}*SharedItemsImports = 13
-		PopStudio.Shared\PopStudio.projitems*{876e98fa-0429-4aad-97b9-ff23eabc9b68}*SharedItemsImports = 5
-		PopStudio.Shared\PopStudio.projitems*{c19f9b4a-17fc-4a71-8a84-d2f9acb814a5}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -101,11 +99,42 @@ Global
 		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x64.Build.0 = Release|Any CPU
 		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x86.ActiveCfg = Release|Any CPU
 		{02C9F77B-5C7D-4EFE-8BD9-ACA709D8CAA9}.Release|x86.Build.0 = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|x64.Build.0 = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Debug|x86.Build.0 = Debug|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|ARM.Build.0 = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|ARM64.Build.0 = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x64.ActiveCfg = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x64.Build.0 = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBC4D291-1D51-47A2-997F-CF423A66F884}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
+		PopStudio.Shared\PopStudio.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
+		PopStudio.Shared\PopStudio.projitems*{5162deba-202f-485f-8b68-0c1c2212382a}*SharedItemsImports = 13
+		PopStudio.Shared\PopStudio.projitems*{876e98fa-0429-4aad-97b9-ff23eabc9b68}*SharedItemsImports = 5
+		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
+		PopStudio.Shared\PopStudio.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
+		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{c19f9b4a-17fc-4a71-8a84-d2f9acb814a5}*SharedItemsImports = 5
+		PopStudio.Shared\PopStudio.projitems*{c19f9b4a-17fc-4a71-8a84-d2f9acb814a5}*SharedItemsImports = 5
+		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{da450279-8012-49f0-968d-01216f0e6428}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

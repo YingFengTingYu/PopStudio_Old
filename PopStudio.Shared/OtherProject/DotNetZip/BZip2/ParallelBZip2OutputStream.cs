@@ -981,11 +981,11 @@ namespace Ionic.BZip2
             {
                 lock(outputLock)
                 {
-                    int tid = Thread.CurrentThread.GetHashCode();
-                    Console.ForegroundColor = (ConsoleColor) (tid % 8 + 10);
-                    Console.Write("{0:000} PBOS ", tid);
-                    Console.WriteLine(format, varParams);
-                    Console.ResetColor();
+                    //int tid = Thread.CurrentThread.GetHashCode();
+                    //Console.ForegroundColor = (ConsoleColor) (tid % 8 + 10);
+                    //Console.Write("{0:000} PBOS ", tid);
+                    //Console.WriteLine(format, varParams);
+                    //Console.ResetColor();
                 }
             }
         }

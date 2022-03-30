@@ -1,4 +1,4 @@
-﻿using PopStudio.MAUI.Languages;
+﻿using PopStudio.GUILanguage.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -65,7 +65,7 @@ namespace PopStudio.MAUI
                 {
                     err = ex.Message;
                 }
-                Device.BeginInvokeOnMainThread(() =>
+                Dispatcher.Dispatch(() =>
                 {
                     if (err == null)
                     {
