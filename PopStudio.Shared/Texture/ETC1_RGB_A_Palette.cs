@@ -131,7 +131,7 @@ namespace PopStudio.Texture
                     indexTable[1] = (byte)((bufferbyte << 4) | bufferbyte);
                     break;
                 default:
-                    bitsLength = Math.ILogB(indexNumber);
+                    bitsLength = Math.ILogB(indexNumber - 1) + 1;
                     indexTable = new byte[indexNumber];
                     for (int i = 0; i < indexNumber; i++)
                     {
