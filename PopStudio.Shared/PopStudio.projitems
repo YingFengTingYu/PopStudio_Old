@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Atlas\OldXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Atlas\AtlasImageDat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Atlas\CutImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\BitStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\IDisposablePool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SubImageInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\Xnb.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\ETCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\GlobalUsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\MaxRectsBinPack.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Plugin\Palette.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\PVRTCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\RijndaelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />

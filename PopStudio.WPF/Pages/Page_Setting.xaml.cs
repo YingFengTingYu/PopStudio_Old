@@ -375,11 +375,18 @@ namespace PopStudio.WPF.Pages
 		void InitPTXDecodeSetting()
 		{
 			ptx.IsChecked = Setting.PtxABGR8888Mode;
+			ptx2.IsChecked = Setting.PtxARGB8888PaddingMode;
 		}
 
 		private void Switch_Ptx_1_Toggled(object sender, EventArgs e)
 		{
 			Setting.PtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
+			Setting.SaveAsXml(Permission.GetSettingPath());
+		}
+
+		private void Switch_Ptx_2_Toggled(object sender, EventArgs e)
+		{
+			Setting.PtxARGB8888PaddingMode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 

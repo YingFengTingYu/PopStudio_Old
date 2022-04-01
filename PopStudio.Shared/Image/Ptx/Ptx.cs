@@ -253,16 +253,18 @@ namespace PopStudio.Image.Ptx
                                     sKBitmap.Save(outFile);
                                 }
                             }
-                            else if ((head.width << 2) == head.check)
+                            else if ((fromrsb && Setting.RsbPtxARGB8888PaddingMode) || ((!fromrsb) && Setting.PtxARGB8888PaddingMode))
                             {
-                                using (SKBitmap sKBitmap = Texture.ARGB8888.Read(bs, head.width, head.height))
+                                int w = head.width;
+                                if ((w % 64) != 0) w = (w / 64) * 64 + 64;
+                                using (SKBitmap sKBitmap = Texture.ARGB8888_Padding.Read(bs, head.width, head.height, w << 2))
                                 {
                                     sKBitmap.Save(outFile);
                                 }
                             }
                             else
                             {
-                                using (SKBitmap sKBitmap = Texture.ARGB8888_Padding.Read(bs, head.width, head.height, head.check))
+                                using (SKBitmap sKBitmap = Texture.ARGB8888.Read(bs, head.width, head.height))
                                 {
                                     sKBitmap.Save(outFile);
                                 }

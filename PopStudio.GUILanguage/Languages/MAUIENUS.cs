@@ -47,7 +47,7 @@
         public string Setting_ItemRsb => "PTX0 Format of Rsb Unpacking and Packing";
         public string Setting_IntroRsb => "If it is necessary to decode and encode PTX when unpacking and packing Rsb, you need to specify the decoding and encoding method of ptx0. If neither is checked, it will use ARGB8888 mode. ";
         public string Setting_ItemPtx => "PTX0 Format for decoding";
-        public string Setting_IntroPtx => "When decoding PTX0, you need to specify the decoding method. If neither is checked, it will use ARGB8888(Padding) mode. ";
+        public string Setting_IntroPtx => "When decoding PTX0, you need to specify the decoding method. If neither is checked, it will use ARGB8888 mode. ";
         public string Setting_ItemCdat => "Cdat Cipher";
         public string Setting_IntroCdat => "Cdat is the encryption PNG format of PVZ free. The program provides the key by default, and you can change it by yourself. ";
         public string Setting_ItemRTON => "RTON Cipher";
@@ -171,7 +171,7 @@
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support Image Cutting. ";
+        public string HomePage_AppNewNotice => "1.Support rsb packing with optional compression level;\n2.Fix several bugs of ETC1_RGB_A_Palette encoding and decoding.";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

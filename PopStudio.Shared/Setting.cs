@@ -45,7 +45,7 @@ namespace PopStudio
         <Ptx>
             <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding and encoding ptx when unpacking or packing rsb-->
             <ABGR8888Mode value=""False"" />
-            <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for encoding ptx when packing rsb-->
+            <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding and encoding ptx when unpacking or packing rsb-->
             <ARGB8888PaddingMode value=""False"" />
         </Ptx>
     </Rsb>
@@ -54,8 +54,10 @@ namespace PopStudio
         <Key value=""AS23DSREPLKL335KO4439032N8345NF"" />
     </Cdat>
     <Ptx>
-        <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding and encoding ptx-->
+        <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding ptx-->
         <ABGR8888Mode value=""False"" />
+        <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding ptx-->
+        <ARGB8888PaddingMode value=""False"" />
     </Ptx>
     <RTON>
         <!--The key to decrypt and encrypt RTON in PVZ2(The default key is wrong and you need to fix it there)-->
@@ -229,6 +231,11 @@ namespace PopStudio
                                                 PtxABGR8888Mode = Convert.ToBoolean(childchild.Attributes["value"].Value);
                                             }
                                             break;
+                                        case "ARGB8888PaddingMode":
+                                            {
+                                                PtxARGB8888PaddingMode = Convert.ToBoolean(childchild.Attributes["value"].Value);
+                                            }
+                                            break;
                                     }
                                 }
                             }
@@ -340,12 +347,14 @@ namespace PopStudio
                 }
                 sw.Write("\n        </CompressMethod>\n    </PakPS3>\n    <Rsb>\n        <Ptx>\n            <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding and encoding ptx when unpacking or packing rsb-->\n            <ABGR8888Mode value=\"");
                 sw.Write(RsbPtxABGR8888Mode);
-                sw.Write("\" />\n            <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for encoding ptx when packing rsb-->\n            <ARGB8888PaddingMode value=\"");
+                sw.Write("\" />\n            <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding and encoding ptx when unpacking or packing rsb-->\n            <ARGB8888PaddingMode value=\"");
                 sw.Write(RsbPtxARGB8888PaddingMode);
                 sw.Write("\" />\n        </Ptx>\n    </Rsb>\n    <Cdat>\n        <!--The key to decrypt and encrypt cdat in PVZ Free-->\n        <Key value=\"");
                 sw.Write(CdatKey);
-                sw.Write("\" />\n    </Cdat>\n    <Ptx>\n        <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding and encoding ptx-->\n        <ABGR8888Mode value=\"");
+                sw.Write("\" />\n    </Cdat>\n    <Ptx>\n        <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding ptx-->\n        <ABGR8888Mode value=\"");
                 sw.Write(PtxABGR8888Mode);
+                sw.Write("\" />\n        <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding ptx-->\n        <ARGB8888PaddingMode value=\"");
+                sw.Write(PtxARGB8888PaddingMode);
                 sw.Write("\" />\n    </Ptx>\n    <RTON>\n        <!--The key to decrypt and encrypt RTON in PVZ2(The default key is wrong and you need to fix it there)-->\n        <Key value=\"");
                 sw.Write(RTONKey);
                 sw.Write("\" />\n    </RTON>\n    <ImageString name=\"");
@@ -402,6 +411,7 @@ namespace PopStudio
         /// ptx decode
         /// </summary>
         public static bool PtxABGR8888Mode = false;
+        public static bool PtxARGB8888PaddingMode = false;
 
         /// <summary>
         /// PVZ2 RTON key (Should be enterred by yourself)

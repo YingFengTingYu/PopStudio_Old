@@ -26,6 +26,7 @@ namespace PopStudio.Package.Rsb
             bool compressPart1 = true;
             int ptxEachLength = 0x10;
             bool smf = false;
+            CompressionLevel level = CompressionLevel.Optimal;
             string xmldata;
             XmlDocument xml;
             XmlNode root;
@@ -63,8 +64,23 @@ namespace PopStudio.Package.Rsb
                     {
                         smf = Convert.ToBoolean(child.InnerText);
                     }
+                    else if (child.Name == "CompressLevel")
+                    {
+                        level = child.InnerText switch
+                        {
+                            "Fastest" => CompressionLevel.Fastest,
+                            "Smallest" => CompressionLevel.SmallestSize,
+                            _ => CompressionLevel.Optimal
+                        };
+                    }
                 }
             }
+            byte emptyfilecompresshead = level switch
+            {
+                CompressionLevel.Fastest => 0x01,
+                CompressionLevel.SmallestSize => 0xDA,
+                _ => 0x9C
+            };
             using TempFilePool tempFilePool = new TempFilePool(); //I just want to delete temp files without using try catch
             using BinaryStream bs_rsgpfile = new BinaryStream(tempFilePool.Add(), FileMode.Create);
             bs_rsgpfile.Endian = endian;
@@ -174,14 +190,14 @@ namespace PopStudio.Package.Rsb
                                 bsP1.Position = 0;
                                 if (compressPart0)
                                 {
-                                    using (ZLibStream zLibStream = new ZLibStream(bsP0over, CompressionLevel.Fastest, true))
+                                    using (ZLibStream zLibStream = new ZLibStream(bsP0over, level, true))
                                     {
                                         bsP0.CopyTo(zLibStream);
                                     }
                                     if (bsP0over.Length == 0)
                                     {
                                         bsP0over.WriteUInt8(0x78);
-                                        bsP0over.WriteUInt8(0xDA);
+                                        bsP0over.WriteUInt8(emptyfilecompresshead);
                                         bsP0over.WriteUInt8(0x03);
                                         bsP0over.WriteUInt8(0x00);
                                         bsP0over.WriteUInt8(0x00);
@@ -196,7 +212,7 @@ namespace PopStudio.Package.Rsb
                                 }
                                 if (compressPart1)
                                 {
-                                    using (ZLibStream zLibStream = new ZLibStream(bsP1over, CompressionLevel.Fastest, true))
+                                    using (ZLibStream zLibStream = new ZLibStream(bsP1over, level, true))
                                     {
                                         bsP1.CopyTo(zLibStream);
                                     }
@@ -423,27 +439,8 @@ namespace PopStudio.Package.Rsb
                     string lst = outFolder + "POPSTUDIOINFO";
                     Dir.NewDir(lst);
                     lst += Const.PATHSEPARATOR;
-                    //using (StreamWriter sw = new StreamWriter(lst + "RESOURCES.CSV", false))
-                    //{
-                    //    for (int i = 0; i < rsb.fileList.Length; i++)
-                    //    {
-                    //        sw.WriteLine(rsb.fileList[i].name + "," + ((RsbExtraInfo)rsb.fileList[i].extraInfo).index);
-                    //    }
-                    //}
-                    //using (StreamWriter sw = new StreamWriter(lst + "RESOURCESGROUP.CSV", false))
-                    //{
-                    //    for (int i = 0; i < rsb.rsgpList.Length; i++)
-                    //    {
-                    //        sw.WriteLine(rsb.rsgpList[i].name + "," + ((RsbExtraInfo)rsb.rsgpList[i].extraInfo).index);
-                    //    }
-                    //}
-                    //using (StreamWriter sw = new StreamWriter(lst + "COMPOSITERESOURCES.CSV", false))
-                    //{
-                    //    for (int i = 0; i < rsb.compositeList.Length; i++)
-                    //    {
-                    //        sw.WriteLine(rsb.compositeList[i].name + "," + ((RsbExtraInfo)rsb.compositeList[i].extraInfo).index);
-                    //    }
-                    //}
+                    int compresslevel = 0;
+                    bool getlevel = true;
                     if (rsb.head.xmlPart1_BeginOffset != 0)
                     {
                         using (BinaryStream bs2 = new BinaryStream())
@@ -496,10 +493,15 @@ namespace PopStudio.Package.Rsb
                                         bs_temp.Position = 0;
                                         try
                                         {
+                                            if (getlevel)
+                                            {
+                                                compresslevel = bs.PeekUInt16(Endian.Small) >> 14;
+                                            }
                                             using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
                                             {
                                                 zLibStream.CopyTo(bs_p0);
                                             }
+                                            getlevel = false;
                                         }
                                         catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
                                         {
@@ -515,10 +517,15 @@ namespace PopStudio.Package.Rsb
                                         bs_temp.Position = 0;
                                         try
                                         {
+                                            if (getlevel)
+                                            {
+                                                compresslevel = bs.PeekUInt16(Endian.Small) >> 14;
+                                            }
                                             using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
                                             {
                                                 zLibStream.CopyTo(bs_p1);
                                             }
+                                            getlevel = false;
                                         }
                                         catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
                                         {
@@ -584,6 +591,12 @@ namespace PopStudio.Package.Rsb
                         }
                         sw.WriteLine("</ResourcesGroupInfo>");
                     }
+                    string compresslevelinfo = getlevel ? "Optimal" : compresslevel switch
+                    {
+                        0 => "Fastest",
+                        3 => "Smallest",
+                        _ => "Optimal"
+                    };
                     using (StreamWriter sw = new StreamWriter(lst + "PACKINFO.XML", false))
                     {
                         sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
@@ -592,6 +605,7 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("    <PackageVersion>" + rsb.head.version + "</PackageVersion>");
                         sw.WriteLine("    <UseBigEndian>" + (bs.Endian == Endian.Big) + "</UseBigEndian>");
                         sw.WriteLine("    <CompressMethod>" + (rsb.rsgp.Length > 0 ? (rsb.rsgp[0].head.flags & 0b11) : 1) + "</CompressMethod>");
+                        sw.WriteLine("    <CompressLevel>" + compresslevelinfo + "</CompressLevel>");
                         sw.WriteLine("    <PtxInfoLength>" + rsb.head.ptxInfo_EachLength + "</PtxInfoLength>");
                         sw.WriteLine("    <ZlibAll>" + usesmf + "</ZlibAll>");
                         sw.WriteLine("</PackInfo>");

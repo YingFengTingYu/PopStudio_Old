@@ -135,6 +135,7 @@
 	  <AndroidPackageFormats>apk</AndroidPackageFormats>
 	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 	  <AotAssemblies>False</AotAssemblies>
+	  <Nullable>disable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">

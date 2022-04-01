@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:PopStudio.WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <Style TargetType="ScrollViewer">
+            <Setter Property="PanningMode" Value="Both" />
+        </Style>
         <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         </Style>

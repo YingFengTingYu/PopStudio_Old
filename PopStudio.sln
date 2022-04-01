@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.GTK", "PopStudio.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.GUILanguage", "PopStudio.GUILanguage\PopStudio.GUILanguage.shproj", "{DA450279-8012-49F0-968D-01216F0E6428}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Package\Package.csproj", "{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,26 @@ Global
 		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x64.Build.0 = Release|Any CPU
 		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}.Release|x86.Build.0 = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|x64.Build.0 = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Debug|x86.Build.0 = Debug|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|ARM.Build.0 = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|ARM64.Build.0 = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|x64.ActiveCfg = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|x64.Build.0 = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|x86.ActiveCfg = Release|Any CPU
+		{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

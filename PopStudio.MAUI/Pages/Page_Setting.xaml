@@ -81,8 +81,14 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Label Text="ABGR8888" VerticalTextAlignment="Center" />
                 <Switch x:Name="ptx" Grid.Column="1" Toggled="Switch_Ptx_1_Toggled" />
+                <Label Grid.Row="1" Text="ARGB8888_Padding" VerticalTextAlignment="Center" />
+                <Switch x:Name="ptx2" Grid.Row="1" Grid.Column="1" Toggled="Switch_Ptx_2_Toggled" />
             </Grid>
             <Label x:Name="label_itemcdat" />
             <Label x:Name="label_introcdat" FontSize="16" />

@@ -353,11 +353,18 @@ public partial class Page_Setting : ContentPage
 	void InitPTXDecodeSetting()
 	{
 		ptx.IsToggled = Setting.PtxABGR8888Mode;
+		ptx2.IsToggled = Setting.PtxARGB8888PaddingMode;
 	}
 
 	private void Switch_Ptx_1_Toggled(object sender, ToggledEventArgs e)
 	{
 		Setting.PtxABGR8888Mode = e.Value;
+		Setting.SaveAsXml(Permission.GetSettingPath());
+	}
+
+	private void Switch_Ptx_2_Toggled(object sender, ToggledEventArgs e)
+	{
+		Setting.PtxARGB8888PaddingMode = e.Value;
 		Setting.SaveAsXml(Permission.GetSettingPath());
 	}
 

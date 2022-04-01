@@ -47,7 +47,7 @@
         public string Setting_ItemRsb => "Rsb解包打包PTX0格式";
         public string Setting_IntroRsb => "Rsb解包打包时，若需同时进行解码编码PTX，需规定对PTX0解码编码的方式，两者都不勾选即为ARGB8888方式。";
         public string Setting_ItemPtx => "PTX0图像解码格式";
-        public string Setting_IntroPtx => "PTX0解码时，需规定对PTX0解码的方式，不勾选即为ARGB8888(Padding)方式。";
+        public string Setting_IntroPtx => "PTX0解码时，需规定对PTX0解码的方式，两者都不勾选即为ARGB8888方式。";
         public string Setting_ItemCdat => "Cdat加密解密密钥";
         public string Setting_IntroCdat => "Cdat是PVZ Free的加密png格式，程序默认提供密钥，你也可以自行更改。";
         public string Setting_ItemRTON => "RTON加密解密密钥";
@@ -171,7 +171,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持图像切割；\n2.支持Linux系统-GTK3.0；\n3.rsb打包更换为快速打包模式。";
+        public string HomePage_AppNewNotice => "1.支持rsb打包自选压缩等级；\n2.修复ETC1_RGB_A_Palette编码和解码的错误。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

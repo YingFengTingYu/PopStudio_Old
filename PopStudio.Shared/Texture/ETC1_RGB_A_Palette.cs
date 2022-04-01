@@ -114,29 +114,38 @@ namespace PopStudio.Texture
             }
             S = pixels.Length;
             byte indexNumber = bs.ReadByte();
-            if (indexNumber == 0)
+            int bitsLength;
+            byte[] indexTable;
+            byte bufferbyte;
+            switch (indexNumber)
             {
-                byte temp2 = 0;
-                int ind = 0;
-                for (int i = 0; i < S; i++)
-                {
-                    if (ind == 0) temp2 = bs.ReadByte();
-                    pixels[i] = pixels[i].WithAlpha((byte)(((temp2 >> ind) & 0b1) == 0 ? 0 : 255)); //2022.2.17 fix this bug
-                    ind = (ind + 1) % 8;
-                }
+                case 0:
+                    bitsLength = 1;
+                    indexTable = new byte[2] { 0, 255 };
+                    break;
+                case 1: //??
+                    bitsLength = 1;
+                    indexTable = new byte[2];
+                    indexTable[0] = 0;
+                    bufferbyte = bs.ReadByte();
+                    indexTable[1] = (byte)((bufferbyte << 4) | bufferbyte);
+                    break;
+                default:
+                    bitsLength = Math.ILogB(indexNumber);
+                    indexTable = new byte[indexNumber];
+                    for (int i = 0; i < indexNumber; i++)
+                    {
+                        bufferbyte = bs.ReadByte();
+                        indexTable[i] = (byte)((bufferbyte << 4) | bufferbyte);
+                    }
+                    break;
             }
-            else
+            using (BitStream bitstream = new BitStream(bs))
             {
-                byte[] table = bs.ReadBytes(indexNumber);
-                byte temp2 = 0;
-                byte temp3;
-                int ind = 4;
+                bitstream.LeaveOpen = true;
                 for (int i = 0; i < S; i++)
                 {
-                    if (ind == 4) temp2 = bs.ReadByte();
-                    temp3 = table[(temp2 >> ind) & 0b1111];
-                    pixels[i] = pixels[i].WithAlpha((byte)((temp3 << 4) | temp3));
-                    ind = (ind + 4) % 8;
+                    pixels[i] = pixels[i].WithAlpha(indexTable[bitstream.ReadBits(bitsLength)]);
                 }
             }
             SKBitmap image = new SKBitmap(width, height);
@@ -190,68 +199,22 @@ namespace PopStudio.Texture
             }
             if (t) pixels = imagein.Pixels;
             int S = pixels.Length;
-            List<byte> ary = Palette.GeneratePalette_A8(pixels, 16);
-            ary.Sort();
-            if ((ary[13] <= 13 && ary[14] >= 245) || (ary[1] <= 10 && ary[2] >= 242))
+            bs.WriteByte(0x10);
+            for (byte i = 0; i < 16; i++)
             {
-                AlphaSize = (S >> 3) + 1;
-                bs.WriteByte(0);
-                int flags;
-                for (int i = 0; i < S; i += 8)
-                {
-                    flags = 0;
-                    for (int j = 0; j < 8; j++)
-                    {
-                        flags |= ((pixels[i | j].Alpha & 0b10000000) >> 7) << j;
-                    }
-                    bs.WriteByte((byte)flags);
-                }
+                bs.WriteByte(i);
             }
-            else
+            bool odd = (S & 0b1) == 1;
+            S >>= 1;
+            AlphaSize = S + 17;
+            for (int i = 0; i < S; i++)
             {
-                AlphaSize = (S >> 1) + 17;
-                bs.WriteByte(0x10);
-                for (int i = 0; i < 16; i++)
-                {
-                    bs.WriteByte(ary[i]);
-                }
-                int flags;
-                for (int i = 0; i < S; i += 2)
-                {
-                    flags = 0;
-                    for (int j = 0; j < 2; j++)
-                    {
-                        int iorj = i | j;
-                        int delta = pixels[iorj].Alpha;
-                        if (delta == ary[0])
-                        {
-                            continue;
-                        }
-                        else if (delta == ary[15])
-                        {
-                            flags |= 240 >> (j << 2);
-                            continue;
-                        }
-                        for (int k = 1; k < 16; k++)
-                        {
-                            int d = pixels[iorj].Alpha - ary[k];
-                            if (d <= 0)
-                            {
-                                if (delta + d >= 0)
-                                {
-                                    flags |= (k << 4) >> (j << 2);
-                                }
-                                else
-                                {
-                                    flags |= ((k - 1) << 4) >> (j << 2);
-                                }
-                                break;
-                            }
-                            delta = d;
-                        }
-                    }
-                    bs.WriteByte((byte)flags);
-                }
+                bs.WriteByte((byte)((pixels[i << 1].Alpha & 0b11110000) | (pixels[(i << 1) | 1].Alpha >> 4)));
+            }
+            if (odd)
+            {
+                AlphaSize++;
+                bs.WriteByte((byte)((pixels[S << 1].Alpha & 0b11110000)));
             }
             if (t)
             {

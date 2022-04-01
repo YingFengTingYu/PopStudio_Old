@@ -39,6 +39,9 @@ namespace PopStudio.GTK.Pages
         public HBox switchpairs_ptx;
         public Label label_ptx;
         public Switch switch_ptx;
+        public HBox switchpairs_ptx2;
+        public Label label_ptx2;
+        public Switch switch_ptx2;
         public Label label_itemcdat;
         public Label label_introcdat;
         public Entry entry_cdat;
@@ -94,6 +97,7 @@ namespace PopStudio.GTK.Pages
             label_itemptx = CreateTitle(MAUIStr.Obj.Setting_ItemPtx);
             label_introptx = CreateText(MAUIStr.Obj.Setting_IntroPtx);
             switchpairs_ptx = CreateSwitchPairs(out label_ptx, out switch_ptx, "ABGR8888");
+            switchpairs_ptx2 = CreateSwitchPairs(out label_ptx2, out switch_ptx2, "ARGB8888_Padding");
             label_itemcdat = CreateTitle(MAUIStr.Obj.Setting_ItemCdat);
             label_introcdat = CreateText(MAUIStr.Obj.Setting_IntroCdat);
             entry_cdat = CreateEntry();
@@ -133,6 +137,7 @@ namespace PopStudio.GTK.Pages
             PackStart(label_itemptx, false, false, 5);
             PackStart(label_introptx, false, false, 5);
             PackStart(switchpairs_ptx, false, false, 5);
+            PackStart(switchpairs_ptx2, false, false, 5);
             PackStart(label_itemcdat, false, false, 5);
             PackStart(label_introcdat, false, false, 5);
             PackStart(entry_cdat, false, false, 5);
@@ -154,6 +159,8 @@ namespace PopStudio.GTK.Pages
             PackStart(button_recover, false, false, 5);
             switch_rsbptx1.Active = Setting.RsbPtxABGR8888Mode;
             switch_rsbptx2.Active = Setting.RsbPtxARGB8888PaddingMode;
+            switch_ptx.Active = Setting.PtxABGR8888Mode;
+            switch_ptx2.Active = Setting.PtxARGB8888PaddingMode;
             entry_cdat.Text = Setting.CdatKey;
             entry_rton.Text = Setting.RTONKey;
             entry_xflwidth.Text = Setting.ReanimXflWidth.ToString();
@@ -390,6 +397,10 @@ namespace PopStudio.GTK.Pages
             switch_rsbptx1.ButtonReleaseEvent += Switch_RsbPtx_1_Toggled;
             switch_rsbptx2.Activate += Switch_RsbPtx_2_Toggled;
             switch_rsbptx2.ButtonReleaseEvent += Switch_RsbPtx_2_Toggled;
+            switch_ptx.Activate += Switch_Ptx_1_Toggled;
+            switch_ptx.ButtonReleaseEvent += Switch_Ptx_1_Toggled;
+            switch_ptx2.Activate += Switch_Ptx_2_Toggled;
+            switch_ptx2.ButtonReleaseEvent += Switch_Ptx_2_Toggled;
             entry_cdat.Changed += (s, e) =>
             {
                 Setting.CdatKey = entry_cdat.Text;
@@ -518,6 +529,18 @@ namespace PopStudio.GTK.Pages
         private void Switch_RsbPtx_2_Toggled(object sender, EventArgs e)
         {
             Setting.RsbPtxARGB8888PaddingMode = !((Switch)sender).Active;
+            Setting.SaveAsXml(Permission.GetSettingPath());
+        }
+
+        private void Switch_Ptx_1_Toggled(object sender, EventArgs e)
+        {
+            Setting.PtxABGR8888Mode = !((Switch)sender).Active;
+            Setting.SaveAsXml(Permission.GetSettingPath());
+        }
+
+        private void Switch_Ptx_2_Toggled(object sender, EventArgs e)
+        {
+            Setting.PtxARGB8888PaddingMode = !((Switch)sender).Active;
             Setting.SaveAsXml(Permission.GetSettingPath());
         }
 

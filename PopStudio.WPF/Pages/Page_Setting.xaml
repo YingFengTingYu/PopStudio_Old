@@ -93,8 +93,15 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <TextBlock TextWrapping="Wrap" FontSize="17" Text="ABGR8888" VerticalAlignment="Center" />
                 <CheckBox Cursor="Hand" x:Name="ptx" Grid.Column="1" Checked="Switch_Ptx_1_Toggled" Unchecked="Switch_Ptx_1_Toggled" />
+                <TextBlock TextWrapping="Wrap" FontSize="17" Grid.Row="2" Text="ARGB8888_Padding" VerticalAlignment="Center" />
+                <CheckBox Cursor="Hand" x:Name="ptx2" Grid.Column="1" Grid.Row="2" Checked="Switch_Ptx_2_Toggled" Unchecked="Switch_Ptx_2_Toggled" />
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemcdat" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introcdat" FontSize="14" />

@@ -137,6 +137,13 @@ namespace PopStudio.Plugin
             return ans;
         }
 
+        public ushort PeekUInt16(Endian endian = Endian.Null)
+        {
+            ushort ans = ReadUInt16(endian);
+            Position -= 2;
+            return ans;
+        }
+
         public int PeekInt32(Endian endian = Endian.Null)
         {
             int ans = ReadInt32(endian);
