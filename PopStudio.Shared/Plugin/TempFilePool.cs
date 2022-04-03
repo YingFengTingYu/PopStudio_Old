@@ -11,6 +11,20 @@
             return s;
         }
 
+        public void Clear()
+        {
+            foreach (string s in Files)
+            {
+                if (File.Exists(s)) File.Delete(s);
+            }
+            Files.Clear();
+        }
+
+        public void Remove(string name)
+        {
+            if (Files.Remove(name) && File.Exists(name)) File.Delete(name);
+        }
+
         public void Dispose()
         {
             Dispose(true);

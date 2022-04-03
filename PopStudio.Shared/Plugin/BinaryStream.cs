@@ -631,30 +631,8 @@ namespace PopStudio.Plugin
         /// <returns>读取到的内容 | Value which you read</returns>
         public byte[] ReadBytes(int count, Endian _ = Endian.Null)
         {
-            if (count == 0)
-            {
-                return Array.Empty<byte>();
-            }
-
             byte[] array = new byte[count];
-            int num = 0;
-            do
-            {
-                int num2 = BaseStream.Read(array, num, count);
-                if (num2 == 0)
-                {
-                    break;
-                }
-                num += num2;
-                count -= num2;
-            }
-            while (count > 0);
-            if (num != array.Length)
-            {
-                byte[] array2 = new byte[num];
-                Array.Copy(array, 0, array2, 0, num);
-                array = array2;
-            }
+            BaseStream.Read(array, 0, count);
             return array;
         }
 

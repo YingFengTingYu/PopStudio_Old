@@ -4,7 +4,7 @@
     {
         static IDisposablePool Disposable = new IDisposablePool();
 
-        public static void DoScript(string script) => Script.Do(script);
+        public static void DoScript(string script) => LuaScript.Script.Do(script);
 
         public static void DisposeAll() => Disposable.Dispose();
 
@@ -32,6 +32,8 @@
         });
 
         public static BinaryStream GetMemoryStream(byte[] bytes = null) => Disposable.Add(bytes == null ? new BinaryStream() : new BinaryStream(bytes));
+
+        public static TempFilePool GetTempFilePool() => Disposable.Add(new TempFilePool());
 
         public static void Unpack(string inFile, string outFile, int format, bool changeimage = false, bool delete = false)
         {
@@ -234,6 +236,7 @@
             3 => Atlas.Plist.Cut(inFile, outFolder, infoFile, itemName),
             4 => Atlas.AtlasImageDat.Cut(inFile, outFolder, infoFile, itemName),
             5 => Atlas.TVAtlasXml.Cut(inFile, outFolder, infoFile, itemName),
+            6 => Atlas.ResRTON.Cut(inFile, outFolder, infoFile, itemName),
             _ => throw new Exception(Str.Obj.TypeMisMatch)
         };
 
@@ -245,18 +248,19 @@
             3 => Atlas.Plist.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
             4 => Atlas.AtlasImageDat.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
             5 => Atlas.TVAtlasXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
+            6 => Atlas.ResRTON.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
             _ => throw new Exception(Str.Obj.TypeMisMatch)
         };
 
         public static void NewDir(string filePath, bool toEnd = true) => Dir.NewDir(filePath, toEnd);
 
-        public static string[] GetFiles(string filePath) => Dir.GetFiles(filePath);
+        public static string[] GetFiles(string filePath) => Dir.GetFiles(Dir.FormatPath(filePath));
 
         public static string GetFileExtension(string fileName) => Path.GetExtension(fileName);
 
         public static string GetFileName(string fileName) => Path.GetFileName(Dir.FormatPath(fileName));
 
-        public static string GetFilePath(string fileName) => Path.GetDirectoryName(fileName);
+        public static string GetFilePath(string fileName) => Path.GetDirectoryName(Dir.FormatPath(fileName));
 
         public static string GetFileNameWithoutExtension(string fileName) => Path.GetFileNameWithoutExtension(Dir.FormatPath(fileName));
 
@@ -271,12 +275,12 @@
         public static void DoFile(string filepath, params object[] args)
         {
             string s;
-            (Script.luavm["rainy"] as NLua.LuaTable)["cache"] = args;
+            (LuaScript.Script.luavm["rainy"] as NLua.LuaTable)["cache"] = args;
             using (StreamReader sr = new StreamReader(filepath.ToString()))
             {
                 s = "local args = rainy.array2table(rainy.cache); rainy.cache = nil; " + sr.ReadToEnd();
             }
-            Script.luavm.DoString(s);
+            LuaScript.Script.luavm.DoString(s);
         }
 
         public static object[] CreateArray(int length) => new object[length];

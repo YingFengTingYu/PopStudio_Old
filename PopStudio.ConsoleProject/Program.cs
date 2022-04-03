@@ -1,6 +1,6 @@
 ﻿//automatically select the language. Both English and Chinese are supported.
 string[] Lng = PopStudio.ConsoleProject.Constant.Str.Obj.All;
-Console.WriteLine(Lng[0], Str.Obj.AppName, Str.Obj.AppVersion);
+Console.WriteLine(Lng[0], "PopStudio", Str.Obj.AppVersion);
 Console.WriteLine(Lng[1], Str.Obj.AppAuthor);
 Console.WriteLine(Lng[2]);
 while (true)

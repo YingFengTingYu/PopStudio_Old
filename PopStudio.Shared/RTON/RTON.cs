@@ -12,16 +12,18 @@ namespace PopStudio.RTON
         public static readonly string EOF = "DONE";
         public static readonly StringPool R0x90 = new StringPool();
         public static readonly StringPool R0x92 = new StringPool();
+        public static readonly List<byte[]> R0x90List = new List<byte[]>();
+        public static readonly List<byte[]> R0x92List = new List<byte[]>();
 
         /// <summary>
-        /// It's very slow while converting RESOURCES.RTON
+        /// Now it is very fast
         /// </summary>
         /// <param name="inFile"></param>
         /// <param name="outFile"></param>
         public static void Decode(string inFile, string outFile)
         {
-            R0x90.Clear();
-            R0x92.Clear();
+            R0x90List.Clear();
+            R0x92List.Clear();
             using (FileStream stream = new FileStream(outFile, FileMode.Create))
             {
                 using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), Indented = true }))
@@ -35,14 +37,14 @@ namespace PopStudio.RTON
                     }
                 }
             }
-            R0x90.Clear();
-            R0x92.Clear();
+            R0x90List.Clear();
+            R0x92List.Clear();
         }
 
         public static void DecodeAndDecrypt(string inFile, string outFile)
         {
-            R0x90.Clear();
-            R0x92.Clear();
+            R0x90List.Clear();
+            R0x92List.Clear();
             //The key for Rijndael is the MD5 of the enterred key
             byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Setting.RTONKey))).ToLower().Replace("-", ""));
             byte[] ivbytes = new byte[24];
@@ -68,14 +70,34 @@ namespace PopStudio.RTON
                     }
                 }
             }
-            R0x90.Clear();
-            R0x92.Clear();
+            R0x90List.Clear();
+            R0x92List.Clear();
+        }
+
+        static byte[] ReadRTID(BinaryStream bs)
+        {
+            bs.IdByte(0x03);
+            bs.ReadVarInt32();
+            byte[] bs2 = bs.ReadBytes(bs.ReadVarInt32());
+            bs.ReadVarInt32();
+            byte[] bs1 = bs.ReadBytes(bs.ReadVarInt32());
+            byte[] ans = new byte[bs1.Length + bs2.Length + 7];
+            ans[0] = 0x52;
+            ans[1] = 0x54;
+            ans[2] = 0x49;
+            ans[3] = 0x44;
+            ans[4] = 0x28;
+            Array.Copy(bs1, 0, ans, 5, bs1.Length);
+            ans[bs1.Length + 5] = 0x40;
+            Array.Copy(bs2, 0, ans, bs1.Length + 6, bs2.Length);
+            ans[^1] = 0x29;
+            return ans;
         }
 
         static void ReadJArray(BinaryStream bs, Utf8JsonWriter sw)
         {
             sw.WriteStartArray();
-            string tempstring;
+            byte[] tempstring;
             bs.IdByte(0xFD);
             int number = bs.ReadVarInt32();
             for (int i = 0; i < number; i++)
@@ -168,18 +190,14 @@ namespace PopStudio.RTON
                         sw.WriteNumberValue(bs.ReadUVarInt64());
                         break;
                     case 0x81:
-                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        sw.WriteStringValue(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
                     case 0x82:
                         bs.ReadVarInt32();
-                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        sw.WriteStringValue(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
                     case 0x83:
-                        bs.IdByte(0x03);
-                        bs.ReadVarInt32();
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        bs.ReadVarInt32();
-                        sw.WriteStringValue($"RTID({bs.ReadStringByVarInt32Head()}@{tempstring})");
+                        sw.WriteStringValue(ReadRTID(bs));
                         break;
                     case 0x84:
                         sw.WriteNullValue();
@@ -191,21 +209,21 @@ namespace PopStudio.RTON
                         ReadJArray(bs, sw);
                         break;
                     case 0x90:
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        R0x90.ThrowInPool(tempstring);
+                        tempstring = bs.ReadBytes(bs.ReadVarInt32());
+                        R0x90List.Add(tempstring);
                         sw.WriteStringValue(tempstring);
                         break;
                     case 0x91:
-                        sw.WriteStringValue(R0x90[bs.ReadVarInt32()].Value);
+                        sw.WriteStringValue(R0x90List[bs.ReadVarInt32()]);
                         break;
                     case 0x92:
                         bs.ReadVarInt32();
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        R0x92.ThrowInPool(tempstring);
+                        tempstring = bs.ReadBytes(bs.ReadVarInt32());
+                        R0x92List.Add(tempstring);
                         sw.WriteStringValue(tempstring);
                         break;
                     case 0x93:
-                        sw.WriteStringValue(R0x92[bs.ReadVarInt32()].Value);
+                        sw.WriteStringValue(R0x92List[bs.ReadVarInt32()]);
                         break;
                     default:
                         throw new Exception(Str.Obj.TypeMisMatch);
@@ -218,7 +236,7 @@ namespace PopStudio.RTON
         static void ReadJObject(BinaryStream bs, Utf8JsonWriter sw)
         {
             sw.WriteStartObject();
-            string tempstring;
+            byte[] tempstring;
             while (true)
             {
                 //key
@@ -230,35 +248,31 @@ namespace PopStudio.RTON
                 switch (type)
                 {
                     case 0x81:
-                        sw.WritePropertyName(bs.ReadStringByVarInt32Head());
+                        sw.WritePropertyName(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
                     case 0x82:
                         bs.ReadVarInt32();
-                        sw.WritePropertyName(bs.ReadStringByVarInt32Head());
+                        sw.WritePropertyName(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
                     case 0x83:
-                        bs.IdByte(0x03);
-                        bs.ReadVarInt32();
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        bs.ReadVarInt32();
-                        sw.WritePropertyName($"RTID({bs.ReadStringByVarInt32Head()}@{tempstring})");
+                        sw.WritePropertyName(ReadRTID(bs));
                         break;
                     case 0x90:
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        R0x90.ThrowInPool(tempstring);
+                        tempstring = bs.ReadBytes(bs.ReadVarInt32());
+                        R0x90List.Add(tempstring);
                         sw.WritePropertyName(tempstring);
                         break;
                     case 0x91:
-                        sw.WritePropertyName(R0x90[bs.ReadVarInt32()].Value);
+                        sw.WritePropertyName(R0x90List[bs.ReadVarInt32()]);
                         break;
                     case 0x92:
                         bs.ReadVarInt32();
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        R0x92.ThrowInPool(tempstring);
+                        tempstring = bs.ReadBytes(bs.ReadVarInt32());
+                        R0x92List.Add(tempstring);
                         sw.WritePropertyName(tempstring);
                         break;
                     case 0x93:
-                        sw.WritePropertyName(R0x92[bs.ReadVarInt32()].Value);
+                        sw.WritePropertyName(R0x92List[bs.ReadVarInt32()]);
                         break;
                     default:
                         throw new Exception(Str.Obj.TypeMisMatch);
@@ -352,18 +366,14 @@ namespace PopStudio.RTON
                         sw.WriteNumberValue(bs.ReadUVarInt64());
                         break;
                     case 0x81:
-                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        sw.WriteStringValue(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
                     case 0x82:
                         bs.ReadVarInt32();
-                        sw.WriteStringValue(bs.ReadStringByVarInt32Head());
+                        sw.WriteStringValue(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
                     case 0x83:
-                        bs.IdByte(0x03);
-                        bs.ReadVarInt32();
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        bs.ReadVarInt32();
-                        sw.WriteStringValue($"RTID({bs.ReadStringByVarInt32Head()}@{tempstring})");
+                        sw.WriteStringValue(ReadRTID(bs));
                         break;
                     case 0x84:
                         sw.WriteNullValue();
@@ -375,21 +385,21 @@ namespace PopStudio.RTON
                         ReadJArray(bs, sw);
                         break;
                     case 0x90:
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        R0x90.ThrowInPool(tempstring);
+                        tempstring = bs.ReadBytes(bs.ReadVarInt32());
+                        R0x90List.Add(tempstring);
                         sw.WriteStringValue(tempstring);
                         break;
                     case 0x91:
-                        sw.WriteStringValue(R0x90[bs.ReadVarInt32()].Value);
+                        sw.WriteStringValue(R0x90List[bs.ReadVarInt32()]);
                         break;
                     case 0x92:
                         bs.ReadVarInt32();
-                        tempstring = bs.ReadStringByVarInt32Head();
-                        R0x92.ThrowInPool(tempstring);
+                        tempstring = bs.ReadBytes(bs.ReadVarInt32());
+                        R0x92List.Add(tempstring);
                         sw.WriteStringValue(tempstring);
                         break;
                     case 0x93:
-                        sw.WriteStringValue(R0x92[bs.ReadVarInt32()].Value);
+                        sw.WriteStringValue(R0x92List[bs.ReadVarInt32()]);
                         break;
                     default:
                         throw new Exception(Str.Obj.TypeMisMatch);
@@ -402,12 +412,8 @@ namespace PopStudio.RTON
         {
             R0x90.Clear();
             R0x92.Clear();
-            string jsondata;
-            using (StreamReader sr = new StreamReader(inFile))
-            {
-                jsondata = sr.ReadToEnd();
-            }
-            using JsonDocument json = JsonDocument.Parse(jsondata);
+            using BinaryStream sr = new BinaryStream(inFile, FileMode.Open);
+            using JsonDocument json = JsonDocument.Parse(sr, new JsonDocumentOptions { AllowTrailingCommas = true });
             JsonElement root = json.RootElement;
             byte[] source;
             using (BinaryStream bs = new BinaryStream())
@@ -417,7 +423,7 @@ namespace PopStudio.RTON
                 WriteJObject(bs, root);
                 bs.WriteString(EOF);
                 bs.Position = 0;
-                source = bs.ReadBytes((int)bs.Length);
+                source = ((MemoryStream)bs.BaseStream).ToArray();
             }
             //The key for Rijndael is the MD5 of the enterred key
             byte[] keybytes = Encoding.UTF8.GetBytes(BitConverter.ToString(System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Setting.RTONKey))).ToLower().Replace("-", ""));
@@ -437,12 +443,8 @@ namespace PopStudio.RTON
         {
             R0x90.Clear();
             R0x92.Clear();
-            string jsondata;
-            using (StreamReader sr = new StreamReader(inFile))
-            {
-                jsondata = sr.ReadToEnd();
-            }
-            using JsonDocument json = JsonDocument.Parse(jsondata);
+            using BinaryStream sr = new BinaryStream(inFile, FileMode.Open);
+            using JsonDocument json = JsonDocument.Parse(sr, new JsonDocumentOptions { AllowTrailingCommas = true });
             JsonElement root = json.RootElement;
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {

@@ -57,7 +57,7 @@ namespace PopStudio.GTK.Pages
             text4 = CreateTitle(MAUIStr.Obj.Atlas_Choose4);
             textbox4 = CreateEntry();
             text_mode = CreateTitle(MAUIStr.Obj.Atlas_Format);
-            CB_Mode = CreateComboBox("resources.xml(Rsb)", "resources.xml(Old)", "resources.xml(Ancient)", "plist(Free)", "atlasimagemap.dat", "xml(TV)");
+            CB_Mode = CreateComboBox("RESOURCES.XML(Rsb)", "resources.xml(Old)", "resources.xml(Ancient)", "plist(Free)", "atlasimagemap.dat", "xml(TV)", "RESOURCES.RTON(Rsb)");
             splice_size = CreateHidden(out text_maxwidth, out CB_MaxWidth, out text_maxheight, out CB_MaxHeight);
             splice_size.Visible = false;
             button_run = CreateButton(MAUIStr.Obj.Share_Run);

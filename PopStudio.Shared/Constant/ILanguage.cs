@@ -5,8 +5,7 @@
         public string EndOfFile { get; }
         public string VarIntTooBig { get; }
         public string DataMisMatch { get; }
-        public string AppName => "PopStudio";
-        public string AppVersion => "4.0";
+        public string AppVersion => "4.1";
         public string AppAuthor { get; }
         public string FileNotFound { get; }
         public string FolderNotFound { get; }

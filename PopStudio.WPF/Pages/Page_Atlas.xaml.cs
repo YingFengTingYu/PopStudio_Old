@@ -44,12 +44,13 @@ namespace PopStudio.WPF.Pages
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text5.Text = MAUIStr.Obj.Share_Waiting;
             CB_Mode.Items.Clear();
-            CB_Mode.Items.Add("resources.xml(Rsb)");
+            CB_Mode.Items.Add("RESOURCES.XML(Rsb)");
             CB_Mode.Items.Add("resources.xml(Old)");
             CB_Mode.Items.Add("resources.xml(Ancient)");
             CB_Mode.Items.Add("plist(Free)");
             CB_Mode.Items.Add("atlasimagemap.dat");
             CB_Mode.Items.Add("xml(TV)");
+            CB_Mode.Items.Add("RESOURCES.RTON(Rsb)");
             CB_Mode.SelectedIndex = 0;
             CB_MaxWidth.Items.Clear();
             CB_MaxWidth.Items.Add("256");
