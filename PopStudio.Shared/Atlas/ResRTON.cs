@@ -57,8 +57,8 @@ namespace PopStudio.Atlas
                     if (cd["type"]?.GetValue<string>() == "Image" && cd["parent"]?.GetValue<string>() == itemName)
                     {
                         SubImageInfo temp = cutinfo[cd["id"].GetValue<string>().ToLower()];
-                        cd["ax"] = temp.X + 1;
-                        cd["ay"] = temp.Y + 1;
+                        cd["ax"] = temp.X;
+                        cd["ay"] = temp.Y;
                         cd["aw"] = temp.Width;
                         cd["ah"] = temp.Height;
                     }
@@ -120,7 +120,7 @@ namespace PopStudio.Atlas
                 {
                     if (cd["type"]?.GetValue<string>() == "Image" && cd["parent"]?.GetValue<string>() == itemName)
                     {
-                        cutinfo.Add(new SubImageInfo((cd["ax"]?.GetValue<int>() ?? 1) - 1, (cd["ay"]?.GetValue<int>() ?? 1) - 1, cd["aw"]?.GetValue<int>() ?? 0, cd["ah"]?.GetValue<int>() ?? 0, cd["id"]?.GetValue<string>()));
+                        cutinfo.Add(new SubImageInfo(cd["ax"]?.GetValue<int>() ?? 0, cd["ay"]?.GetValue<int>() ?? 0, cd["aw"]?.GetValue<int>() ?? 0, cd["ah"]?.GetValue<int>() ?? 0, cd["id"]?.GetValue<string>()));
                     }
                 }
                 if (cutinfo.Count == 0) return false;
