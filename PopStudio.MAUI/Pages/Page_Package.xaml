@@ -18,7 +18,7 @@
                 <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
             </Grid>
             <Label x:Name="label1" />
-            <Grid>
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -26,9 +26,10 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox1" />
                 <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
-            </Grid>
+            </Grid>-->
+            <Entry x:Name="textbox1" />
             <Label x:Name="label2" />
-            <Grid>
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -36,7 +37,8 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox2" />
                 <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
-            </Grid>
+            </Grid>-->
+            <Entry x:Name="textbox2" />
             <Label x:Name="label3" />
             <Picker x:Name="CB_CMode" />
             <Grid x:Name="change">

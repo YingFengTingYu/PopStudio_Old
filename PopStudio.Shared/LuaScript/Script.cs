@@ -11,6 +11,8 @@ namespace PopStudio.LuaScript
             State.Encoding = System.Text.Encoding.UTF8;
             DoString("rainy = {} rainy.array2table = function (ary) local ans,l = {},ary.Length - 1; for i=0,l do ans[i + 1] = ary[i]; end return ans; end rainy.table2array = function(a) local l = #a; local ans = rainy.createarray(l); for i = 1,l do ans[i - 1] = a[i]; end return ans; end"); //rainy扩展
             RegisterFunction("print", null, typeof(Function).GetMethod("Print"));
+            RegisterFunction("rainy.closeexception", null, typeof(Function).GetMethod("CloseException"));
+            RegisterFunction("rainy.openexception", null, typeof(Function).GetMethod("OpenException"));
             RegisterFunction("rainy.alert", null, typeof(Function).GetMethod("Alert"));
             RegisterFunction("rainy.prompt", null, typeof(Function).GetMethod("Prompt"));
             RegisterFunction("rainy.sheet", null, typeof(Function).GetMethod("Sheet"));
@@ -46,6 +48,7 @@ namespace PopStudio.LuaScript
             RegisterFunction("rainy.chooseopenfile", null, typeof(Function).GetMethod("ChooseOpenFile"));
             RegisterFunction("rainy.choosesavefile", null, typeof(Function).GetMethod("ChooseSaveFile"));
             RegisterFunction("rainy.deletefile", null, typeof(Function).GetMethod("DeleteFile"));
+            RegisterFunction("rainy.fileexists", null, typeof(Function).GetMethod("FileExists"));
             DoString("local temp = rainy.getfiles rainy.getfiles = function (a) return rainy.array2table(temp(a)) end");
         }
 

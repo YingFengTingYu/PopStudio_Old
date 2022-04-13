@@ -554,10 +554,12 @@ namespace PopStudio.GTK.Pages
                         TreeView tree = new TreeView(dzpackinfo);
                         TreeViewColumn v1 = new TreeViewColumn { Title = MAUIStr.Obj.Setting_Extension };
                         CellRendererText v1cell = new CellRendererText();
+                        v1cell.FontDesc = GenFont(11);
                         v1.PackStart(v1cell, true);
                         v1.AddAttribute(v1cell, "text", 0);
                         TreeViewColumn v2 = new TreeViewColumn { Title = MAUIStr.Obj.Setting_CompressionMethod };
                         CellRendererText v2cell = new CellRendererText();
+                        v2cell.FontDesc = GenFont(11);
                         v2.PackStart(v2cell, true);
                         v2.AddAttribute(v2cell, "text", 1);
                         tree.AppendColumn(v1);
@@ -570,10 +572,12 @@ namespace PopStudio.GTK.Pages
                         TreeView tree = new TreeView(pakps3packinfo);
                         TreeViewColumn v1 = new TreeViewColumn { Title = MAUIStr.Obj.Setting_Extension };
                         CellRendererText v1cell = new CellRendererText();
+                        v1cell.FontDesc = GenFont(11);
                         v1.PackStart(v1cell, true);
                         v1.AddAttribute(v1cell, "text", 0);
                         TreeViewColumn v2 = new TreeViewColumn { Title = MAUIStr.Obj.Setting_CompressionMethod };
                         CellRendererText v2cell = new CellRendererText();
+                        v2cell.FontDesc = GenFont(11);
                         v2.PackEnd(v2cell, true);
                         v2.AddAttribute(v2cell, "text", 1);
                         tree.AppendColumn(v1);
@@ -663,8 +667,18 @@ namespace PopStudio.GTK.Pages
             return l;
         }
 
-        static Button CreateButton(string t) => new Button(t);
+        static Button CreateButton(string t)
+        {
+            Button ans = new Button(t);
+            ans.ModifyFont(GenFont(11));
+            return ans;
+        }
 
-        static Entry CreateEntry() => new Entry();
+        static Entry CreateEntry()
+        {
+            Entry ans = new Entry();
+            ans.ModifyFont(GenFont(11));
+            return ans;
+        }
     }
 }

@@ -10,10 +10,19 @@ namespace PopStudio.RTON
         public static readonly string magic = "RTON";
         public static readonly int version = 0x1;
         public static readonly string EOF = "DONE";
-        public static readonly StringPool R0x90 = new StringPool();
-        public static readonly StringPool R0x92 = new StringPool();
-        public static readonly List<byte[]> R0x90List = new List<byte[]>();
-        public static readonly List<byte[]> R0x92List = new List<byte[]>();
+
+        static readonly StringPool R0x90 = new StringPool();
+        static readonly StringPool R0x92 = new StringPool();
+        static readonly List<byte[]> R0x90List = new List<byte[]>();
+        static readonly List<byte[]> R0x92List = new List<byte[]>();
+        static readonly byte[] NULL = new byte[] { 0x2A };
+        static readonly byte[] RTID0 = new byte[] { 0x52, 0x54, 0x49, 0x44, 0x28, 0x30, 0x29 };
+        static readonly string Str_Null = "*";
+        static readonly string Str_RTID_Begin = "RTID(";
+        static readonly string Str_RTID_End = ")";
+        static readonly string Str_RTID_0 = "RTID(0)";
+        static readonly string Str_RTID_2 = "RTID({0}.{1}.{2:x8}@{3})";
+        static readonly string Str_RTID_3 = "RTID({0}@{1})";
 
         /// <summary>
         /// Now it is very fast
@@ -26,7 +35,7 @@ namespace PopStudio.RTON
             R0x92List.Clear();
             using (FileStream stream = new FileStream(outFile, FileMode.Create))
             {
-                using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), Indented = true }))
+                using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, Indented = true }))
                 {
                     using (BinaryStream bs = BinaryStream.Open(inFile))
                     {
@@ -53,7 +62,7 @@ namespace PopStudio.RTON
             byte[] source;
             using (FileStream stream = new FileStream(outFile, FileMode.Create))
             {
-                using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), Indented = true }))
+                using (Utf8JsonWriter sw = new Utf8JsonWriter(stream, new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, Indented = true }))
                 {
                     using (BinaryStream bs = BinaryStream.Open(inFile))
                     {
@@ -74,24 +83,34 @@ namespace PopStudio.RTON
             R0x92List.Clear();
         }
 
-        static byte[] ReadRTID(BinaryStream bs)
+        static string ReadRTID(BinaryStream bs)
         {
-            bs.IdByte(0x03);
-            bs.ReadVarInt32();
-            byte[] bs2 = bs.ReadBytes(bs.ReadVarInt32());
-            bs.ReadVarInt32();
-            byte[] bs1 = bs.ReadBytes(bs.ReadVarInt32());
-            byte[] ans = new byte[bs1.Length + bs2.Length + 7];
-            ans[0] = 0x52;
-            ans[1] = 0x54;
-            ans[2] = 0x49;
-            ans[3] = 0x44;
-            ans[4] = 0x28;
-            Array.Copy(bs1, 0, ans, 5, bs1.Length);
-            ans[bs1.Length + 5] = 0x40;
-            Array.Copy(bs2, 0, ans, bs1.Length + 6, bs2.Length);
-            ans[^1] = 0x29;
-            return ans;
+            byte temp = bs.ReadByte();
+            switch (temp)
+            {
+                case 0x00:
+                    return Str_RTID_0;
+                case 0x01: //Not sure
+                    int value_1_2 = bs.ReadVarInt32();
+                    int value_1_1 = bs.ReadVarInt32();
+                    uint x16_1 = bs.ReadUInt32();
+                    return string.Format(Str_RTID_2, value_1_1, value_1_2, x16_1, string.Empty);
+                case 0x02:
+                    bs.ReadVarInt32();
+                    string str = bs.ReadStringByVarInt32Head();
+                    int value_2_2 = bs.ReadVarInt32();
+                    int value_2_1 = bs.ReadVarInt32();
+                    uint x16_2 = bs.ReadUInt32();
+                    return string.Format(Str_RTID_2, value_2_1, value_2_2, x16_2, str);
+                case 0x03:
+                    bs.ReadVarInt32();
+                    string str2 = bs.ReadStringByVarInt32Head();
+                    bs.ReadVarInt32();
+                    string str1 = bs.ReadStringByVarInt32Head();
+                    return string.Format(Str_RTID_3, str1, str2);
+                default:
+                    throw new Exception($"No such type in 0x83: {temp}");
+            }
         }
 
         static void ReadJArray(BinaryStream bs, Utf8JsonWriter sw)
@@ -110,6 +129,9 @@ namespace PopStudio.RTON
                         break;
                     case 0x1:
                         sw.WriteBooleanValue(true);
+                        break;
+                    case 0x2:
+                        sw.WriteStringValue(NULL);
                         break;
                     case 0x8:
                         sw.WriteNumberValue(bs.ReadSByte());
@@ -200,7 +222,7 @@ namespace PopStudio.RTON
                         sw.WriteStringValue(ReadRTID(bs));
                         break;
                     case 0x84:
-                        sw.WriteNullValue();
+                        sw.WriteStringValue(RTID0);
                         break;
                     case 0x85:
                         ReadJObject(bs, sw);
@@ -225,6 +247,26 @@ namespace PopStudio.RTON
                     case 0x93:
                         sw.WriteStringValue(R0x92List[bs.ReadVarInt32()]);
                         break;
+                    case 0xB0:
+                    case 0xB1:
+                    case 0xB2:
+                    case 0xB3:
+                    case 0xB4:
+                    case 0xB5:
+                    case 0xB6:
+                    case 0xB7:
+                    case 0xB8:
+                    //about object
+                    case 0xB9:
+                    //about array
+                    case 0xBA:
+                    //about string
+                    case 0xBB:
+                        //about binary
+                        throw new Exception("0xb0-0xbb is not supported!");
+                    case 0xBC:
+                        sw.WriteBooleanValue(bs.ReadByte() != 0);
+                        break;
                     default:
                         throw new Exception(Str.Obj.TypeMisMatch);
                 }
@@ -247,6 +289,9 @@ namespace PopStudio.RTON
                 }
                 switch (type)
                 {
+                    case 0x2:
+                        sw.WritePropertyName(NULL);
+                        break;
                     case 0x81:
                         sw.WritePropertyName(bs.ReadBytes(bs.ReadVarInt32()));
                         break;
@@ -256,6 +301,9 @@ namespace PopStudio.RTON
                         break;
                     case 0x83:
                         sw.WritePropertyName(ReadRTID(bs));
+                        break;
+                    case 0x84:
+                        sw.WritePropertyName(RTID0);
                         break;
                     case 0x90:
                         tempstring = bs.ReadBytes(bs.ReadVarInt32());
@@ -287,6 +335,9 @@ namespace PopStudio.RTON
                     case 0x1:
                         sw.WriteBooleanValue(true);
                         break;
+                    case 0x2:
+                        sw.WriteStringValue(NULL);
+                        break;
                     case 0x8:
                         sw.WriteNumberValue(bs.ReadSByte());
                         break;
@@ -376,7 +427,7 @@ namespace PopStudio.RTON
                         sw.WriteStringValue(ReadRTID(bs));
                         break;
                     case 0x84:
-                        sw.WriteNullValue();
+                        sw.WriteStringValue(RTID0);
                         break;
                     case 0x85:
                         ReadJObject(bs, sw);
@@ -400,6 +451,26 @@ namespace PopStudio.RTON
                         break;
                     case 0x93:
                         sw.WriteStringValue(R0x92List[bs.ReadVarInt32()]);
+                        break;
+                    case 0xB0:
+                    case 0xB1:
+                    case 0xB2:
+                    case 0xB3:
+                    case 0xB4:
+                    case 0xB5:
+                    case 0xB6:
+                    case 0xB7:
+                    case 0xB8:
+                        //about object
+                    case 0xB9:
+                        //about array
+                    case 0xBA:
+                        //about string
+                    case 0xBB:
+                        //about binary
+                        throw new Exception("0xb0-0xbb is not supported!");
+                    case 0xBC:
+                        sw.WriteBooleanValue(bs.ReadByte() != 0);
                         break;
                     default:
                         throw new Exception(Str.Obj.TypeMisMatch);
@@ -466,6 +537,76 @@ namespace PopStudio.RTON
             return true;
         }
 
+        static bool WriteRTID(BinaryStream bs, string str)
+        {
+            if (str.StartsWith(Str_RTID_Begin) && str.EndsWith(Str_RTID_End))
+            {
+                if (str == Str_RTID_0)
+                {
+                    bs.WriteByte(0x84);
+                    return true;
+                }
+                string newstr = str[5..^1];
+                int index;
+                if ((index = newstr.IndexOf('@')) > -1)
+                {
+                    bs.WriteByte(0x83);
+                    string str1 = newstr[..index];
+                    string str2 = newstr[(index + 1)..];
+                    //test if str1 is for 0x83 0x02
+                    bool isr8302 = true;
+                    int dot1index = 0, dot2index = 0, dindex = 0;
+                    for (int i = 0; i < str1.Length; i++)
+                    {
+                        if (str1[i] == '.')
+                        {
+                            switch (dindex)
+                            {
+                                case 0:
+                                    dot1index = i;
+                                    break;
+                                case 1:
+                                    dot2index = i;
+                                    break;
+                                default:
+                                    isr8302 = false;
+                                    break;
+                            }
+                            dindex++;
+                        }
+                        else if (str1[i] > '9' && str1[i] < '0' && (!(dindex == 2 && ((str1[i] >= 'a' && str1[i] <= 'f') || (str1[i] >= 'A' && str1[i] <= 'F')))))
+                        {
+                            isr8302 = false;
+                        }
+                        if (!isr8302) break;
+                    }
+                    if (dindex != 2)
+                    {
+                        isr8302 = false;
+                    }
+                    if (isr8302)
+                    {
+                        bs.WriteByte(0x02);
+                        bs.WriteVarInt32(str2.Length);
+                        bs.WriteStringByVarInt32Head(str2);
+                        bs.WriteVarInt32(Convert.ToInt32(str1[(dot1index + 1)..dot2index]));
+                        bs.WriteVarInt32(Convert.ToInt32(str1[..dot1index]));
+                        bs.WriteUInt32(Convert.ToUInt32(str1[(dot2index + 1)..]));
+                    }
+                    else
+                    {
+                        bs.WriteByte(0x03);
+                        bs.WriteVarInt32(str2.Length);
+                        bs.WriteStringByVarInt32Head(str2);
+                        bs.WriteVarInt32(str1.Length);
+                        bs.WriteStringByVarInt32Head(str1);
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
         static void WriteJArray(BinaryStream bs, JsonElement json)
         {
             bs.WriteByte(0xFD);
@@ -496,16 +637,13 @@ namespace PopStudio.RTON
                         break;
                     case JsonValueKind.String:
                         string str = value.GetString();
-                        if (str.Length > 6 && str[..5] == "RTID(" && str[^1] == ')' && str.IndexOf('@') != -1)
+                        if (str == Str_Null)
                         {
-                            //83rton
-                            var ary = str[5..^1].Split('@');
-                            bs.WriteByte(0x83);
-                            bs.WriteByte(0x03);
-                            bs.WriteVarInt32(ary[1].Length);
-                            bs.WriteStringByVarInt32Head(ary[1]);
-                            bs.WriteVarInt32(ary[0].Length);
-                            bs.WriteStringByVarInt32Head(ary[0]);
+                            bs.WriteByte(0x02);
+                        }
+                        else if (WriteRTID(bs, str))
+                        {
+                            //83rton or 84(has already been written by WriteRTID function)
                         }
                         else if (IsASCII(str))
                         {
@@ -592,7 +730,7 @@ namespace PopStudio.RTON
                             }
                             else
                             {
-                                if (I64Val + (1 << 30) >= 0)
+                                if (I64Val + 0x40000000 >= 0)
                                 {
                                     bs.WriteByte(0x25);
                                     bs.WriteZigZag32((int)I64Val);
@@ -618,16 +756,13 @@ namespace PopStudio.RTON
             {
                 //key
                 string key = property.Name;
-                if (key.Length > 6 && key[..5] == "RTID(" && key[^1] == ')' && key.IndexOf('@') != -1)
+                if (key == Str_Null)
+                {
+                    bs.WriteByte(0x02);
+                }
+                else if (WriteRTID(bs, key))
                 {
                     //83rton
-                    var ary = key[5..^1].Split('@');
-                    bs.WriteByte(0x83);
-                    bs.WriteByte(0x03);
-                    bs.WriteVarInt32(ary[1].Length);
-                    bs.WriteStringByVarInt32Head(ary[1]);
-                    bs.WriteVarInt32(ary[0].Length);
-                    bs.WriteStringByVarInt32Head(ary[0]);
                 }
                 else if (IsASCII(key))
                 {
@@ -687,16 +822,13 @@ namespace PopStudio.RTON
                         break;
                     case JsonValueKind.String:
                         string str = value.GetString();
-                        if (str.Length > 6 && str[..5] == "RTID(" && str[^1] == ')' && str.IndexOf('@') != -1)
+                        if (str == Str_Null)
+                        {
+                            bs.WriteByte(0x02);
+                        }
+                        else if (WriteRTID(bs, str))
                         {
                             //83rton
-                            var ary = str[5..^1].Split('@');
-                            bs.WriteByte(0x83);
-                            bs.WriteByte(0x03);
-                            bs.WriteVarInt32(ary[1].Length);
-                            bs.WriteStringByVarInt32Head(ary[1]);
-                            bs.WriteVarInt32(ary[0].Length);
-                            bs.WriteStringByVarInt32Head(ary[0]);
                         }
                         else if (IsASCII(str))
                         {
@@ -783,7 +915,7 @@ namespace PopStudio.RTON
                             }
                             else
                             {
-                                if (I64Val + (1 << 30) >= 0)
+                                if (I64Val + 0x40000000 >= 0)
                                 {
                                     bs.WriteByte(0x25);
                                     bs.WriteZigZag32((int)I64Val);

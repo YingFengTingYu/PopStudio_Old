@@ -161,13 +161,20 @@ namespace PopStudio.GTK
             }
         }
 
-        static Pango.FontDescription GenFont(int Size) => Pango.FontDescription.FromString($"Sans Not-Rotated {Size}");
+        static Pango.FontDescription GenFont(int Size)
+        {
+#if MACOS
+            Size += Size >> 1;
+#endif
+            return Pango.FontDescription.FromString($"Sans Not-Rotated {Size}");
+        }
 
         static Button CreateBarButton(string title)
         {
             Button button = new Button(title);
             button.MarginLeft = 25;
             button.MarginRight = 25;
+            button.ModifyFont(GenFont(11));
             return button;
         }
 

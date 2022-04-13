@@ -171,7 +171,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持通过RESOURCES.RTON裁剪和构建图集；\n2.增加RTON转为json的速度；\n3.升级lua脚本功能。";
+        public string HomePage_AppNewNotice => "1.升级lua脚本功能。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

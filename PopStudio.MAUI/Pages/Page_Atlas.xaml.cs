@@ -23,9 +23,9 @@ namespace PopStudio.MAUI
             text_mode.Text = MAUIStr.Obj.Atlas_Format;
             text_maxwidth.Text = MAUIStr.Obj.Atlas_MaxWidth;
             text_maxheight.Text = MAUIStr.Obj.Atlas_MaxHeight;
-            button1.Text = MAUIStr.Obj.Share_Choose;
-            button2.Text = MAUIStr.Obj.Share_Choose;
-            button3.Text = MAUIStr.Obj.Share_Choose;
+            //button1.Text = MAUIStr.Obj.Share_Choose;
+            //button2.Text = MAUIStr.Obj.Share_Choose;
+            //button3.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text5.Text = MAUIStr.Obj.Share_Waiting;

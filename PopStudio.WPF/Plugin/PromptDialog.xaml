@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PopStudio.WPF.Plugin"
-        mc:Ignorable="d" Height="210" Width="320"
+        mc:Ignorable="d" Width="320"
         Background="White">
     <Grid Margin="10 10 10 10">
         <Grid.RowDefinitions>

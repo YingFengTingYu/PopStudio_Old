@@ -17,57 +17,18 @@
             head = new RsbHeadInfo().Read(bs);
             compositeInfo = new RsbCompositeInfo[head.composite_Number];
             rsgpInfo = new RsbRsgpInfo[head.rsgp_Number];
-            //autopoolInfo = new RsbAutoPoolInfo[head.autopool_Number];
             ptxInfo = new RsbPtxInfo[head.ptx_Number];
             rsgp = new RsgpInfo[head.rsgp_Number];
-            //bs.Position = head.fileList_BeginOffset;
-            //byte[] b_file = new byte[head.fileList_Length];
-            //using (BinaryStream b_file_stream = new BinaryStream(b_file))
-            //{
-            //    int dividefour = head.fileList_Length >> 2;
-            //    for (int i = 0; i < dividefour; i++)
-            //    {
-            //        b_file_stream.WriteInt32(bs.ReadInt32());
-            //    }
-            //}
-            //fileList.Read(b_file);
-            //bs.Position = head.rsgpList_BeginOffset;
-            //byte[] b_rsgp = new byte[head.rsgpList_Length];
-            //using (BinaryStream b_rsgp_stream = new BinaryStream(b_rsgp))
-            //{
-            //    int dividefour = head.rsgpList_Length >> 2;
-            //    for (int i = 0; i < dividefour; i++)
-            //    {
-            //        b_rsgp_stream.WriteInt32(bs.ReadInt32());
-            //    }
-            //}
-            //rsgpList.Read(b_rsgp);
             bs.Position = head.compositeInfo_BeginOffset;
             for (int i = 0; i < compositeInfo.Length; i++)
             {
                 compositeInfo[i] = new RsbCompositeInfo().Read(bs);
             }
-            //bs.Position = head.compositeList_BeginOffset;
-            //byte[] b_composite = new byte[head.compositeList_Length];
-            //using (BinaryStream b_composite_stream = new BinaryStream(b_composite))
-            //{
-            //    int dividefour = head.compositeList_Length >> 2;
-            //    for (int i = 0; i < dividefour; i++)
-            //    {
-            //        b_composite_stream.WriteInt32(bs.ReadInt32());
-            //    }
-            //}
-            //compositeList.Read(b_composite);
             bs.Position = head.rsgpInfo_BeginOffset;
             for (int i = 0; i < rsgpInfo.Length; i++)
             {
                 rsgpInfo[i] = new RsbRsgpInfo().Read(bs);
             }
-            //bs.Position = head.autopoolInfo_BeginOffset;
-            //for (int i = 0; i < autopoolInfo.Length; i++)
-            //{
-            //    autopoolInfo[i] = new RsbAutoPoolInfo().Read(bs);
-            //}
             bs.Position = head.ptxInfo_BeginOffset;
             for (int i = 0; i < ptxInfo.Length; i++)
             {

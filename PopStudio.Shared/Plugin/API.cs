@@ -4,7 +4,11 @@
     {
         static IDisposablePool Disposable = new IDisposablePool();
 
-        public static void DoScript(string script) => LuaScript.Script.Do(script);
+        public static void CloseException() => LuaScript.Script.luavm.ErrorThrow = false;
+
+        public static void OpenException() => LuaScript.Script.luavm.ErrorThrow = true;
+
+        public static void DoScript(string script) => LuaScript.Script.Do(script ?? string.Empty);
 
         public static void DisposeAll() => Disposable.Dispose();
 
@@ -22,7 +26,6 @@
 
         public static partial string ChooseSaveFile();
 
-        //Write for lua(coming soon) and MAUI
         public static BinaryStream GetFileStream(string path, int mode) => Disposable.Add(mode switch
         {
             0 => new BinaryStream(path, FileMode.Open),
@@ -299,5 +302,7 @@
             }
             return false;
         }
+
+        public static int FileExists(string filePath) => (File.Exists(filePath) ? 0b1 : 0b0) | (Directory.Exists(filePath) ? 0b10 : 0b00);
     }
 }

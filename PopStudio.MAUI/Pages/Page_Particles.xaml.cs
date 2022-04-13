@@ -17,8 +17,8 @@ namespace PopStudio.MAUI
             text2.Text = MAUIStr.Obj.Particles_Choose2;
             text_in.Text = MAUIStr.Obj.Particles_InFormat;
             text_out.Text = MAUIStr.Obj.Particles_OutFormat;
-            button1.Text = MAUIStr.Obj.Share_Choose;
-            button2.Text = MAUIStr.Obj.Share_Choose;
+            //button1.Text = MAUIStr.Obj.Share_Choose;
+            //button2.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;

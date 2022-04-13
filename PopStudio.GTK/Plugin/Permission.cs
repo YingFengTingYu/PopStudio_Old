@@ -20,6 +20,7 @@ namespace PopStudio.GTK
 
         public static void Restart()
         {
+            Process.Start(Environment.ProcessPath);
             Environment.Exit(0);
         }
     }

@@ -171,7 +171,7 @@
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1.Support cut and splice image by RESOURCES.RTON;\n2.Increase the speed of RTON to json;\n3.Upgrade lua script function.";
+        public string HomePage_AppNewNotice => "1.Upgrade lua script function.";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

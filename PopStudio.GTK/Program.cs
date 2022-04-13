@@ -5,10 +5,12 @@ if (File.Exists(settingxml))
     PopStudio.Setting.LoadFromXml(settingxml);
 }
 Gtk.Application.Init();
-var win = new PopStudio.GTK.MainPage();
-win.DeleteEvent += (s, e) =>
+using (PopStudio.GTK.MainPage win = new PopStudio.GTK.MainPage())
 {
-    Gtk.Application.Quit();
-};
-win.ShowAll();
-Gtk.Application.Run();
+    win.DeleteEvent += (s, e) =>
+    {
+        Gtk.Application.Quit();
+    };
+    win.ShowAll();
+    Gtk.Application.Run();
+}

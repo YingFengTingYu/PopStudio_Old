@@ -439,9 +439,8 @@ namespace PopStudio.Plugin
             {
                 if (num2 == 35)
                 {
-                    throw new Exception(Constant.Str.Obj.VarIntTooBig);
+                    throw new Exception(Str.Obj.VarIntTooBig);
                 }
-
                 b = ReadUInt8();
                 num |= (b & 0x7F) << num2;
                 num2 += 7;
@@ -466,7 +465,7 @@ namespace PopStudio.Plugin
             {
                 if (num2 == 70)
                 {
-                    throw new FormatException("数据过大！");
+                    throw new FormatException(Str.Obj.VarIntTooBig);
                 }
                 b = ReadUInt8();
                 num |= ((long)(b & 0x7F)) << num2;
@@ -510,11 +509,7 @@ namespace PopStudio.Plugin
         public int ReadZigZag32(Endian _ = Endian.Null)
         {
             uint n = (uint)ReadVarInt32();
-            if ((n & 0b1) == 0)
-            {
-                return (int)(n >> 1);
-            }
-            return -(int)((n + 1) >> 1);
+            return (((int)(n << 31)) >> 31) ^ ((int)(n >> 1));
         }
 
         /// <summary>
@@ -527,11 +522,7 @@ namespace PopStudio.Plugin
         public long ReadZigZag64(Endian _ = Endian.Null)
         {
             ulong n = (ulong)ReadVarInt64();
-            if ((n & 0b1) == 0)
-            {
-                return (long)(n >> 1);
-            }
-            return -(long)((n + 1) >> 1);
+            return ((long)(n >> 1)) ^ (-(long)(n & 0b1));
         }
 
         /// <summary>

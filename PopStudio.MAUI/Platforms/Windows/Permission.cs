@@ -3,7 +3,7 @@
     internal static partial class Permission
     {
         public static partial bool HiddenFlyout() => false;
-        static string windowspath = "setting.xml";
+        static string windowspath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\setting.xml";
 
         public static partial string GetSettingPath() => windowspath;
 

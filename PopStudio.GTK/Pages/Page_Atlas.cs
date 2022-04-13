@@ -185,11 +185,16 @@ namespace PopStudio.GTK.Pages
             return ans;
         }
 
-        static Entry CreateEntry() => new Entry();
+        static Entry CreateEntry()
+        {
+            Entry ans = new Entry();
+            ans.ModifyFont(GenFont(11));
+            return ans;
+        }
 
         static HBox CreateEntryAndButton(out Entry e, out Button b)
         {
-            e = new Entry();
+            e = CreateEntry();
             b = CreateButton(MAUIStr.Obj.Share_Choose);
             HBox ans = new HBox();
             ans.PackStart(e, true, true, 0);
@@ -231,12 +236,18 @@ namespace PopStudio.GTK.Pages
             return l;
         }
 
-        static Button CreateButton(string t) => new Button(t);
+        static Button CreateButton(string t)
+        {
+            Button ans = new Button(t);
+            ans.ModifyFont(GenFont(11));
+            return ans;
+        }
 
         static ComboBox CreateComboBox(params string[] s)
         {
             ComboBox ans = new ComboBox(s);
             ans.Active = 0;
+            ans.ModifyFont(GenFont(11));
             return ans;
         }
 
@@ -244,6 +255,7 @@ namespace PopStudio.GTK.Pages
         {
             ComboBox ans = new ComboBox(s);
             ans.Active = defaultIndex;
+            ans.ModifyFont(GenFont(11));
             return ans;
         }
     }

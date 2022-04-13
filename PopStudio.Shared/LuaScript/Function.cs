@@ -2,6 +2,34 @@
 {
     internal class Function
     {
+        public static void CloseException(params object[] args)
+        {
+            try
+            {
+                API.CloseException();
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
+                return;
+            }
+        }
+
+        public static void OpenException(params object[] args)
+        {
+            try
+            {
+                API.OpenException();
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
+                return;
+            }
+        }
+
         public static void Print(params object[] args)
         {
             try
@@ -606,6 +634,20 @@
             try
             {
                 return API.DeleteFile(args.Length == 0 ? null : args[0]?.ToString());
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
+                return null;
+            }
+        }
+
+        public static int? FileExists(params object[] args)
+        {
+            try
+            {
+                return API.FileExists(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {

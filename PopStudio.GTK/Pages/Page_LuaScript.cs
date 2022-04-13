@@ -65,6 +65,7 @@ namespace PopStudio.GTK.Pages
         static Table CreateTButton(out Button b)
         {
             b = new Button(MAUIStr.Obj.Share_Run);
+            b.ModifyFont(GenFont(11));
             Table ans = new Table(1, 5, true);
             ans.Attach(b, 1, 4, 0, 1);
             return ans;
@@ -73,6 +74,7 @@ namespace PopStudio.GTK.Pages
         static ScrolledWindow CreateRichTextBox(out TextView t)
         {
             t = new TextView();
+            t.ModifyFont(GenFont(11));
             ScrolledWindow ans = new ScrolledWindow();
             ans.Add(t);
             return ans;

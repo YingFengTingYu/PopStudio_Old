@@ -18,7 +18,7 @@
                 <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
             </Grid>
             <Label x:Name="text1" />
-            <Grid>
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -26,9 +26,10 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox1" />
                 <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
-            </Grid>
+            </Grid>-->
+            <Entry x:Name="textbox1" />
             <Label x:Name="text2" />
-            <Grid>
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -36,9 +37,10 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox2" />
                 <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
-            </Grid>
+            </Grid>-->
+            <Entry x:Name="textbox2" />
             <Label x:Name="text3" />
-            <Grid>
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -46,7 +48,8 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox3" />
                 <Button x:Name="button3" Grid.Column="2" Clicked="Button3_Clicked" />
-            </Grid>
+            </Grid>-->
+            <Entry x:Name="textbox3" />
             <Label x:Name="text4" />
             <Grid>
                 <Entry x:Name="textbox4" />

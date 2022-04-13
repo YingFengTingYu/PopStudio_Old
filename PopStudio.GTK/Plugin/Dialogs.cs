@@ -6,6 +6,14 @@ namespace PopStudio.GTK.Plugin
 {
     internal class Dialogs
     {
+        static Pango.FontDescription GenFont(int Size)
+        {
+#if MACOS
+            Size += Size >> 1;
+#endif
+            return Pango.FontDescription.FromString($"Sans Not-Rotated {Size}");
+        }
+
         public static string DisplayActionSheet(string title, string cancel, string ok, params string[] items)
         {
             string ans = null;
@@ -18,6 +26,7 @@ namespace PopStudio.GTK.Plugin
                         tree.HeadersVisible = false;
                         TreeViewColumn v1 = new TreeViewColumn();
                         CellRendererText v1cell = new CellRendererText();
+                        v1cell.FontDesc = GenFont(11);
                         v1.PackStart(v1cell, true);
                         v1.AddAttribute(v1cell, "text", 0);
                         tree.AppendColumn(v1);
@@ -63,6 +72,7 @@ namespace PopStudio.GTK.Plugin
                     l.MarginTop = 20;
                     l.MarginBottom = 50;
                     l.MaxWidthChars = 40;
+                    l.ModifyFont(GenFont(11));
                     alert.ContentArea.PackStart(l, false, false, 0);
                     alert.Resizable = false;
                     alert.ShowAll();
@@ -84,6 +94,8 @@ namespace PopStudio.GTK.Plugin
                     l.MarginTop = 20;
                     l.MarginBottom = 50;
                     l.MaxWidthChars = 40;
+                    l.ModifyFont(GenFont(11));
+                    alert.WidthRequest = 350;
                     alert.ContentArea.PackStart(l, false, false, 0);
                     alert.Resizable = false;
                     alert.ShowAll();
@@ -114,9 +126,12 @@ namespace PopStudio.GTK.Plugin
                     l.MarginRight = 20;
                     l.MarginTop = 20;
                     l.MaxWidthChars = 40;
+                    l.ModifyFont(GenFont(11));
                     using (Entry entry = new Entry(initialValue))
                     {
                         entry.Margin = 20;
+                        entry.ModifyFont(GenFont(11));
+                        alert.WidthRequest = 350;
                         alert.ContentArea.PackStart(l, false, false, 0);
                         alert.ContentArea.PackStart(entry, false, false, 0);
                         alert.Resizable = false;
@@ -163,7 +178,7 @@ namespace PopStudio.GTK.Plugin
             Label l = new Label(text);
             l.LineWrap = true;
             l.LineWrapMode = Pango.WrapMode.Char;
-            l.ModifyFont(Pango.FontDescription.FromString($"Sans Not-Rotated 11"));
+            l.ModifyFont(GenFont(11));
             l.Xalign = 0;
             return l;
         }
