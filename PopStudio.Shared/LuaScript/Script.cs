@@ -13,6 +13,7 @@ namespace PopStudio.LuaScript
             RegisterFunction("print", null, typeof(Function).GetMethod("Print"));
             RegisterFunction("rainy.closeexception", null, typeof(Function).GetMethod("CloseException"));
             RegisterFunction("rainy.openexception", null, typeof(Function).GetMethod("OpenException"));
+            RegisterFunction("rainy.throwexception", null, typeof(Function).GetMethod("ThrowException"));
             RegisterFunction("rainy.alert", null, typeof(Function).GetMethod("Alert"));
             RegisterFunction("rainy.prompt", null, typeof(Function).GetMethod("Prompt"));
             RegisterFunction("rainy.sheet", null, typeof(Function).GetMethod("Sheet"));
@@ -47,8 +48,11 @@ namespace PopStudio.LuaScript
             RegisterFunction("rainy.choosefolder", null, typeof(Function).GetMethod("ChooseFolder"));
             RegisterFunction("rainy.chooseopenfile", null, typeof(Function).GetMethod("ChooseOpenFile"));
             RegisterFunction("rainy.choosesavefile", null, typeof(Function).GetMethod("ChooseSaveFile"));
+            RegisterFunction("rainy.openurl", null, typeof(Function).GetMethod("OpenUrl"));
             RegisterFunction("rainy.deletefile", null, typeof(Function).GetMethod("DeleteFile"));
             RegisterFunction("rainy.fileexists", null, typeof(Function).GetMethod("FileExists"));
+            RegisterFunction("rainy.sleep", null, typeof(Function).GetMethod("Sleep"));
+            RegisterFunction("rainy.httpget", null, typeof(Function).GetMethod("HttpGet"));
             DoString("local temp = rainy.getfiles rainy.getfiles = function (a) return rainy.array2table(temp(a)) end");
         }
 

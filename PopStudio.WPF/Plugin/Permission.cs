@@ -1,4 +1,6 @@
-﻿namespace PopStudio.WPF
+﻿using System.Diagnostics;
+
+namespace PopStudio.WPF
 {
     internal static class Permission
     {
@@ -9,5 +11,7 @@
             System.Windows.Forms.Application.Restart();
             Environment.Exit(0);
         }
+
+        public static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url.Replace("&", "^&")) { UseShellExecute = true });
     }
 }

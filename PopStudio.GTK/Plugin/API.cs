@@ -45,7 +45,7 @@ namespace PopStudio.Plugin
                     a = true;
                 });
             }
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -58,7 +58,7 @@ namespace PopStudio.Plugin
                 ans = Dialogs.DisplayPromptAsync(title, text, initialValue: defaulttext);
                 a = true;
             });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -71,7 +71,7 @@ namespace PopStudio.Plugin
                 ans = Dialogs.DisplayActionSheet(title, "Cancel", "OK", items);
                 a = true;
             });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -80,7 +80,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             Application.Invoke((s, e) => { ans = PickFile.ChooseFolder(); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -89,7 +89,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             Application.Invoke((s, e) => { ans = PickFile.ChooseOpenFile(); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -98,9 +98,11 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             Application.Invoke((s, e) => { ans = PickFile.ChooseSaveFile(); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
+
+        public static partial void OpenUrl(string url) => Permission.OpenUrl(url);
     }
 }
 

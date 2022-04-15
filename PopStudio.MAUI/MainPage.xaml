@@ -6,7 +6,6 @@
              FlyoutWidth="200"
              FlyoutBackgroundColor="CornflowerBlue"
              BackgroundColor="CornflowerBlue">
-    <!--I wonder why Microsoft use Unicode encoding by default in editting xaml but use UTF8 encoding in compiling xaml...-->
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid ColumnDefinitions="*">

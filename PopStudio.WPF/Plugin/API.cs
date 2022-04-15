@@ -35,7 +35,7 @@ namespace PopStudio.Plugin
             {
                 box.Dispatcher.BeginInvoke(async () => { await Dialogs.DisplayAlert(title, text, "Cancel"); a = true; });
             }
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -44,7 +44,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.BeginInvoke(async () => { ans = await Dialogs.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -53,7 +53,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.BeginInvoke(async () => { ans = await Dialogs.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             if (ans == "OK\0" && ans == "Cancel\0")
             {
                 return null;
@@ -66,7 +66,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.BeginInvoke(() => { ans = WPF.PickFile.ChooseFolder(null); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -75,7 +75,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.BeginInvoke(() => { ans = WPF.PickFile.ChooseOpenFile(null); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -84,9 +84,11 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.BeginInvoke(() => { ans = WPF.PickFile.ChooseSaveFile(null); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
+
+        public static partial void OpenUrl(string url) => WPF.Permission.OpenUrl(url);
     }
 }
 

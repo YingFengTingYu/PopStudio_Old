@@ -20,8 +20,8 @@ namespace PopStudio.MAUI
             text2.Text = MAUIStr.Obj.Texture_Choose2;
             text3.Text = MAUIStr.Obj.Texture_Choose3;
             textN.Text = MAUIStr.Obj.Texture_Choose7;
-            //button1.Text = MAUIStr.Obj.Share_Choose;
-            //button2.Text = MAUIStr.Obj.Share_Choose;
+            button1.Text = MAUIStr.Obj.Share_Choose;
+            button2.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;

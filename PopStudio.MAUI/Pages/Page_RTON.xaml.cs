@@ -19,8 +19,8 @@ namespace PopStudio.MAUI
             text1.Text = MAUIStr.Obj.RTON_Choose1;
             text2.Text = MAUIStr.Obj.RTON_Choose2;
             text3.Text = MAUIStr.Obj.RTON_Choose3;
-            //button1.Text = MAUIStr.Obj.Share_Choose;
-            //button2.Text = MAUIStr.Obj.Share_Choose;
+            button1.Text = MAUIStr.Obj.Share_Choose;
+            button2.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;

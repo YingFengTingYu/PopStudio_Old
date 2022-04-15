@@ -12,7 +12,6 @@
             {
                 Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
-                return;
             }
         }
 
@@ -26,7 +25,19 @@
             {
                 Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
-                return;
+            }
+        }
+
+        public static void ThrowException(params object[] args)
+        {
+            try
+            {
+                API.ThrowException(args.Length > 0 ? args[0]?.ToString() : null);
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
             }
         }
 
@@ -36,8 +47,9 @@
             {
                 API.Print(args);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
             }
         }
@@ -643,11 +655,51 @@
             }
         }
 
+        public static void OpenUrl(params object[] args)
+        {
+            try
+            {
+                API.OpenUrl(args.Length > 0 ? (args[0]?.ToString()) : null);
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
+            }
+        }
+
         public static int? FileExists(params object[] args)
         {
             try
             {
                 return API.FileExists(args.Length == 0 ? null : args[0]?.ToString());
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
+                return null;
+            }
+        }
+
+        public static void Sleep(params object[] args)
+        {
+            try
+            {
+                API.Sleep(args.Length == 0 ? 0 : Convert.ToInt32(args[0]));
+            }
+            catch (Exception ex)
+            {
+                Print(ex.Message);
+                if (Script.luavm.ErrorThrow) throw;
+            }
+        }
+
+        public static string HttpGet(params object[] args)
+        {
+            try
+            {
+                return API.HttpGet(args.Length > 0 ? (args[0]?.ToString()) : null);
             }
             catch (Exception ex)
             {

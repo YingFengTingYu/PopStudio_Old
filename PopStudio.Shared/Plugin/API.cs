@@ -8,6 +8,8 @@
 
         public static void OpenException() => LuaScript.Script.luavm.ErrorThrow = true;
 
+        public static void ThrowException(string msg) => throw new Exception(msg);
+
         public static void DoScript(string script) => LuaScript.Script.Do(script ?? string.Empty);
 
         public static void DisposeAll() => Disposable.Dispose();
@@ -25,6 +27,8 @@
         public static partial string ChooseOpenFile();
 
         public static partial string ChooseSaveFile();
+
+        public static partial void OpenUrl(string url = "");
 
         public static BinaryStream GetFileStream(string path, int mode) => Disposable.Add(mode switch
         {
@@ -304,5 +308,19 @@
         }
 
         public static int FileExists(string filePath) => (File.Exists(filePath) ? 0b1 : 0b0) | (Directory.Exists(filePath) ? 0b10 : 0b00);
+
+        public static void Sleep(int ms) => Thread.Sleep(ms);
+
+        public static string HttpGet(string url)
+        {
+            try
+            {
+                using (var a = new HttpClient()) return a.GetStringAsync(url).Result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

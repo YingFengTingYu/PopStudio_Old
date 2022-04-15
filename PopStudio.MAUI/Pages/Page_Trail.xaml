@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Trail"
-             BackgroundColor="#CCCCCC">
+             BackgroundColor="White">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label x:Name="label_introduction" FontSize="16"/>
             <Label x:Name="text1" />
-            <!--<Grid>
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -15,10 +15,9 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox1" />
                 <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
-            </Grid>-->
-            <Entry x:Name="textbox1" />
+            </Grid>
             <Label x:Name="text2" />
-            <!--<Grid>
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*" />
                     <ColumnDefinition Width="1*" />
@@ -26,8 +25,7 @@
                 </Grid.ColumnDefinitions>
                 <Entry x:Name="textbox2" />
                 <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
-            </Grid>-->
-            <Entry x:Name="textbox2" />
+            </Grid>
             <Label x:Name="text_in" />
             <Picker x:Name="CB_InMode" />
             <Label x:Name="text_out" />

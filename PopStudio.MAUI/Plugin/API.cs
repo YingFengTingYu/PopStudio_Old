@@ -33,7 +33,7 @@ namespace PopStudio.Plugin
             {
                 box.Dispatcher.Dispatch(async () => { await box.DisplayAlert(title, text, "Cancel"); a = true; });
             }
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -42,7 +42,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.Dispatch(async () => { ans = await box.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -51,7 +51,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.Dispatch(async () => { ans = await box.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             if (ans == "OK\0" && ans == "Cancel\0")
             {
                 return null;
@@ -64,7 +64,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.Dispatch(async () => { ans = await box.ChooseFolder(); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -73,7 +73,7 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.Dispatch(async () => { ans = await box.ChooseOpenFile(); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
 
@@ -82,9 +82,11 @@ namespace PopStudio.Plugin
             string ans = null;
             bool a = false;
             box.Dispatcher.Dispatch(async () => { ans = await box.ChooseSaveFile(); a = true; });
-            while (!a) Task.Delay(200);
+            while (!a) Thread.Sleep(200);
             return ans;
         }
+
+        public static partial void OpenUrl(string url) => Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
     }
 }
 
