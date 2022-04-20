@@ -4,6 +4,34 @@ namespace PopStudio.MAUI
 {
     internal static partial class Permission
     {
+        static async void _modify()
+        {
+            Android.App.Activity activity;
+            while ((activity = Platform.CurrentActivity) == null) await Task.Delay(500);
+            Android.Views.Window window = activity.Window;
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
+                window.AddFlags(Android.Views.WindowManagerFlags.DrawsSystemBarBackgrounds);
+                var controller = AndroidX.Core.View.ViewCompat.GetWindowInsetsController(window.DecorView);
+                controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
+                window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+                Application.Current.RequestedThemeChanged += (s, a) =>
+                {
+                    controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
+                };
+            }
+            else
+            {
+                window.AddFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
+            }
+        }
+
+        public static partial void ModifyFullBar()
+        {
+            _modify();
+        }
+
         public static partial bool HiddenPermission() => false;
 
         public static partial bool HiddenFlyout() => true;

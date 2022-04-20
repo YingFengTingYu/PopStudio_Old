@@ -29,6 +29,7 @@ namespace PopStudio.MAUI
 			label_course.Text = MAUIStr.Obj.HomePage_Course;
 			label_appnewnotice_string.Text = MAUIStr.Obj.HomePage_AppNewNotice_String;
 			label_appnewnotice.Text = MAUIStr.Obj.HomePage_AppNewNotice;
+			
 		}
 
         private async void button_permission_Clicked(object sender, EventArgs e)

@@ -34,6 +34,6 @@ public partial class Page_AD : ContentPage
 
     private async void image_Clicked(object sender, EventArgs e)
     {
-		await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
-	}
+        await Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+    }
 }

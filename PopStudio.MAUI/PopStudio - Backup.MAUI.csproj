@@ -33,49 +33,48 @@
 		<BundleAssemblies>False</BundleAssemblies>
 		<AndroidKeyStore>False</AndroidKeyStore>
 		<EnableLLVM>True</EnableLLVM>
-		<RunAOTCompilation>True</RunAOTCompilation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <MandroidI18n>CJK;West;</MandroidI18n>
 	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <DefineConstants>$(DefineConstants)ANDROID</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)IOS</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)MACOS</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)WINDOWS</DefineConstants>
+	  <TrimMode>link</TrimMode>
 	</PropertyGroup>
 
 	<ItemGroup>
