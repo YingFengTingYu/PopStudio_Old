@@ -11,16 +11,7 @@
                 Setting.SaveAsXml(settingxml);
             }
             Setting.LoadFromXml(settingxml);
-            if (Setting.OpenProgramAD)
-            {
-                MainPage = new Page_AD();
-                load();
-            }
-            else
-            {
-                MainPage = new AppShell();
-            }
-            Permission.ModifyFullBar();
+            MainPage = new AppShell();
         }
 
         async void load()

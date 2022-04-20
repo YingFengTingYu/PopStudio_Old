@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_HomePage">
-    <ScrollView>
+    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="PopStudio" Margin="0,10,0,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="30" FontAttributes="Bold"/>
             <Label x:Name="label_begin" HorizontalTextAlignment="Center" FontSize="Title" />

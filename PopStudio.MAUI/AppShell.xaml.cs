@@ -19,6 +19,7 @@ namespace PopStudio.MAUI
             fitem_luascript.Title = MAUIStr.Obj.LuaScript_Title;
             fitem_setting.Title = MAUIStr.Obj.Setting_Title;
             FlyoutBehavior = Permission.HiddenFlyout() ? FlyoutBehavior.Flyout : FlyoutBehavior.Locked;
+            Permission.ModifyFullBar();
         }
 
         protected override bool OnBackButtonPressed()

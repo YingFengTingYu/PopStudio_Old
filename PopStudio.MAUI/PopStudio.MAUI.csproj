@@ -39,12 +39,12 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <RunAOTCompilation>True</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)ANDROID</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
 	</PropertyGroup>
 

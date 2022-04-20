@@ -4,6 +4,8 @@ namespace PopStudio.MAUI
 {
     internal static partial class Permission
     {
+        static bool DarkMode => (Android.App.Application.Context.Resources.Configuration.UiMode & Android.Content.Res.UiMode.NightMask) == Android.Content.Res.UiMode.NightYes;
+
         static async void _modify()
         {
             Android.App.Activity activity;
@@ -13,9 +15,9 @@ namespace PopStudio.MAUI
             {
                 window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
                 window.AddFlags(Android.Views.WindowManagerFlags.DrawsSystemBarBackgrounds);
-                var controller = AndroidX.Core.View.ViewCompat.GetWindowInsetsController(window.DecorView);
-                controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
                 window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+                AndroidX.Core.View.WindowInsetsControllerCompat controller = AndroidX.Core.View.ViewCompat.GetWindowInsetsController(window.DecorView);
+                controller!.AppearanceLightStatusBars = !DarkMode;
                 Application.Current.RequestedThemeChanged += (s, a) =>
                 {
                     controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
