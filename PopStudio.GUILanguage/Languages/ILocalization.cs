@@ -161,6 +161,8 @@
         public string HomePage_Title { get; }
         public string HomePage_Begin { get; }
         public string HomePage_Function { get; }
+        public string HomePage_Permission { get; }
+        public string HomePage_PermissionAsk { get; }
         public string HomePage_Agreement { get; }
         public string HomePage_Version { get; }
         public string HomePage_Author_String { get; }

@@ -160,6 +160,8 @@
         public string HomePage_Title => "HomePage";
         public string HomePage_Begin => "Start your creative journey!";
         public string HomePage_Function => "Modify the data package, images, actions, particle effects and other contents of PopCap Games by using PopStudio! ";
+        public string HomePage_Permission => "On Android 6 and above systems, the program must have storage permission to operate normally. Click the button to give permission:";
+        public string HomePage_PermissionAsk => "Give Permission";
         public string HomePage_Agreement => "If you use this tool to make works, please be sure to indicate the use of this tool in an eye-catching position. Commercial use of this tool must be approved by the author, otherwise it will be deemed as infringement! ";
         public string HomePage_Version => "PopStudio Version {0}";
         public string HomePage_Author_String => "Author:";

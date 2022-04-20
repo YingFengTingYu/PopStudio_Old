@@ -8,19 +8,17 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 
 		<!-- Display name -->
-		<ApplicationTitle>PopStudio</ApplicationTitle>
+		<ApplicationTitle>PopStudio.MAUI</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.yingfengtingyu.popstudio</ApplicationId>
+		<ApplicationId>com.companyname.popstudio.maui</ApplicationId>
+		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">5B7DBF1A-A142-4A27-8F82-02B7627544F2</ApplicationId>
 
 		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
-
-		<!-- Required for C# Hot Reload -->
-		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
 
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -28,17 +26,25 @@
 		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AndroidManifestApplicationName>PopStudio</AndroidManifestApplicationName>
+		<AndroidManifestApplicationPackageName>com.yingfengtingyu.popstudio</AndroidManifestApplicationPackageName>
+		<AndroidManifestApplicationVersionNumber>12</AndroidManifestApplicationVersionNumber>
+		<AndroidManifestApplicationVersionName>4.2</AndroidManifestApplicationVersionName>
+		<BundleAssemblies>True</BundleAssemblies>
+		<RunAOTCompilation>True</RunAOTCompilation>
+		<AndroidKeyStore>False</AndroidKeyStore>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="6495ED" />
+		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#6495ED" />
+		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -47,47 +53,20 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
-		<!-- Required - WinUI does not yet have buildTransitive for everything -->
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.1" />
-		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.1" />
-	</ItemGroup>
-
 	<ItemGroup>
 	  <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
 	  <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
 	  <PackageReference Include="LZMA-SDK" Version="19.0.0" />
 	  <PackageReference Include="NLua" Version="1.6.0" />
 	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.254" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Pages\Page_Atlas.xaml.cs">
-	    <DependentUpon>Page_Atlas.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Pages\Page_LuaScript.xaml.cs">
-	    <DependentUpon>Page_LuaScript.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="ResourceAD.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>ResourceAD.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="ResourceAD.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>ResourceAD.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Pages\Page_Compress.xaml">
+	  <MauiXaml Update="Pages\Page_Atlas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Atlas.xaml">
+	  <MauiXaml Update="Pages\Page_Compress.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_HomePage.xaml">
@@ -122,52 +101,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
-		<OutputType>WinExe</OutputType>
-		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-	</PropertyGroup>
+	<Import Project="..\PopStudio.GUILanguage\PopStudio.GUILanguage.projitems" Label="Shared" />
 
 	<Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
 
-	<Import Project="..\PopStudio.GUILanguage\PopStudio.GUILanguage.projitems" Label="Shared" />
-
-	<PropertyGroup>
-	  <AndroidPackageFormats>apk</AndroidPackageFormats>
-	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
-	  <AotAssemblies>False</AotAssemblies>
-	  <Nullable>disable</Nullable>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
-	</PropertyGroup>
-	
 </Project>

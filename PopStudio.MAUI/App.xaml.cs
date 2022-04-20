@@ -11,7 +11,8 @@
                 Setting.SaveAsXml(settingxml);
             }
             Setting.LoadFromXml(settingxml);
-            MainPage = new MainPage();
+            
+            MainPage = new AppShell();
         }
     }
 }

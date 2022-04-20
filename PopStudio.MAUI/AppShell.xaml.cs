@@ -2,9 +2,9 @@
 
 namespace PopStudio.MAUI
 {
-    public partial class MainPage : Shell
+    public partial class AppShell : Shell
     {
-        public MainPage()
+        public AppShell()
         {
             InitializeComponent();
             fitem_homepage.Title = MAUIStr.Obj.HomePage_Title;

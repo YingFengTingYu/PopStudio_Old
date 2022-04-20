@@ -160,6 +160,8 @@
         public string HomePage_Title => "主页";
         public string HomePage_Begin => "开始你的创造之旅吧！";
         public string HomePage_Function => "通过PopStudio修改宝开游戏的数据包、图像、动作、粒子特效等各种内容！";
+        public string HomePage_Permission => "在安卓6及以上系统，程序必须获取存储权限才能正常运行，点击按钮获取权限：";
+        public string HomePage_PermissionAsk => "获取权限";
         public string HomePage_Agreement => "若您使用本工具制作作品，请务必在醒目位置注明使用本工具，商用本工具必须得到作者许可，否则视为侵权！";
         public string HomePage_Version => "PopStudio 版本号{0}";
         public string HomePage_Author_String => "作者：";

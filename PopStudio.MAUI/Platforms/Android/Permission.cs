@@ -4,6 +4,8 @@ namespace PopStudio.MAUI
 {
     internal static partial class Permission
     {
+        public static partial bool HiddenPermission() => false;
+
         public static partial bool HiddenFlyout() => true;
 
         static readonly string androidpath = Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath + "/setting.xml";
@@ -16,22 +18,18 @@ namespace PopStudio.MAUI
             bool HavePermission = true;
             if (status != PermissionStatus.Granted)
             {
-                if (await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_Request1, MAUIStr.Obj.Permission_GoTo, MAUIStr.Obj.Permission_Cancel))
-                {
+                //if (await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_Request1, MAUIStr.Obj.Permission_GoTo, MAUIStr.Obj.Permission_Cancel))
+                //{
                     HavePermission = (await readwritepermission.RequestAsync()) == PermissionStatus.Granted;
-                }
-                else
-                {
-                    HavePermission = false;
-                }
+                //}
+                //else
+                //{
+                //    HavePermission = false;
+                //}
             }
             if (!HavePermission) return false;
-            try
-            {
-                File.Create("/sdcard/REo1cUFQKTE220kiFEmtjh7U1Lr3oS8S");
-                File.Delete("/sdcard/REo1cUFQKTE220kiFEmtjh7U1Lr3oS8S");
-            }
-            catch (Exception)
+#pragma warning disable CA1416
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R && !Android.OS.Environment.IsExternalStorageManager)
             {
                 if (await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_Request2, MAUIStr.Obj.Permission_GoTo, MAUIStr.Obj.Permission_Cancel))
                 {
@@ -40,6 +38,7 @@ namespace PopStudio.MAUI
                     Android.App.Application.Context.StartActivity(bb);
                 }
             }
+#pragma warning restore CA1416
             return true;
         }
     }

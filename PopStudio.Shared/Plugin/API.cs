@@ -315,7 +315,7 @@
         {
             try
             {
-                using (var a = new HttpClient()) return a.GetStringAsync(url).Result;
+                using (var a = new System.Net.Http.HttpClient()) return a.GetStringAsync(url).Result;
             }
             catch (Exception)
             {

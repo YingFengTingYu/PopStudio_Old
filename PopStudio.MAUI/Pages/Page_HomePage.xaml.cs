@@ -15,6 +15,9 @@ namespace PopStudio.MAUI
 			label_begin.Text = MAUIStr.Obj.HomePage_Begin;
 			label_function.Text = MAUIStr.Obj.HomePage_Function;
 			label_agreement.Text = MAUIStr.Obj.HomePage_Agreement;
+			AndroidPermission.IsVisible = !Permission.HiddenPermission();
+			label_permission.Text = MAUIStr.Obj.HomePage_Permission;
+			button_permission.Text = MAUIStr.Obj.HomePage_PermissionAsk;
 			label_ver.Text = string.Format(MAUIStr.Obj.HomePage_Version, Str.Obj.AppVersion);
 			label_author_string.Text = MAUIStr.Obj.HomePage_Author_String;
 			label_author.Text = MAUIStr.Obj.HomePage_Author;
@@ -26,12 +29,11 @@ namespace PopStudio.MAUI
 			label_course.Text = MAUIStr.Obj.HomePage_Course;
 			label_appnewnotice_string.Text = MAUIStr.Obj.HomePage_AppNewNotice_String;
 			label_appnewnotice.Text = MAUIStr.Obj.HomePage_AppNewNotice;
-            AskPermission();
 		}
 
-		async void AskPermission()
+        private async void button_permission_Clicked(object sender, EventArgs e)
         {
-			if (!await this.CheckAndRequestPermissionAsync()) Environment.Exit(0);
-        }
+			await this.CheckAndRequestPermissionAsync();
+		}
     }
 }

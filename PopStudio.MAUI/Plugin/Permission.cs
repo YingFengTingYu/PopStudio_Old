@@ -2,6 +2,7 @@
 {
     internal static partial class Permission
     {
+        public static partial bool HiddenPermission();
         public static partial bool HiddenFlyout();
         public static partial string GetSettingPath();
 

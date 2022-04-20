@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PopStudio.MAUI.Page_HomePage"
-             BackgroundColor="White">
+             x:Class="PopStudio.MAUI.Page_HomePage">
     <ScrollView>
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label Text="PopStudio" Margin="0,10,0,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="30" FontAttributes="Bold"/>
             <Label x:Name="label_begin" HorizontalTextAlignment="Center" FontSize="Title" />
             <Label x:Name="label_function" FontSize="16" />
             <Label x:Name="label_agreement" FontSize="16" />
+            <StackLayout x:Name="AndroidPermission">
+                <Label x:Name="label_permission" FontSize="16" />
+                <Button x:Name="button_permission" Margin="10,10,10,10" Clicked="button_permission_Clicked" />
+            </StackLayout>
             <Label x:Name="label_ver" FontSize="16"/>
             <Label x:Name="label_author_string" FontSize="16"/>
             <Label x:Name="label_author" FontSize="16"/>
