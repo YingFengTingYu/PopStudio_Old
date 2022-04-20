@@ -190,7 +190,9 @@
         public string Permission_Title => "权限申请";
         public string Permission_Request1 => "在Android6及以上系统版本中，请授予程序存储权限，否则程序将无权读写文件！";
         public string Permission_Request2 => "在Android11及以上系统版本中，请授予程序所有文件访问权限，否则程序将只能读写程序内部文件夹中的文件！";
+        public string Permission_RequestFinish => "已经拥有存储权限！";
         public string Permission_GoTo => "前往授权";
+        public string Permission_OK => "确定";
         public string Permission_Cancel => "取消";
 
         //PickFile

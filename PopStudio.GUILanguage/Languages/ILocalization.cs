@@ -191,7 +191,9 @@
         public string Permission_Title { get; }
         public string Permission_Request1 { get; }
         public string Permission_Request2 { get; }
+        public string Permission_RequestFinish { get; }
         public string Permission_GoTo { get; }
+        public string Permission_OK { get; }
         public string Permission_Cancel { get; }
 
         //PickFile

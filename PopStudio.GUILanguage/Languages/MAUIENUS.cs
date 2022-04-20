@@ -190,7 +190,9 @@
         public string Permission_Title => "Permissions Request";
         public string Permission_Request1 => "In Android 6 and above system versions, please grant the read and write storage permission, otherwise the program will not have the right to read and write files! ";
         public string Permission_Request2 => "In Android 11 and above system versions, please grant the manage storage permission, otherwise the program will only read and write files in the internal folder of the program! ";
+        public string Permission_RequestFinish => "Already has storage permission! ";
         public string Permission_GoTo => "Authorization";
+        public string Permission_OK => "OK";
         public string Permission_Cancel => "Cancel";
 
         //PickFile

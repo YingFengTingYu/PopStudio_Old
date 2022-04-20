@@ -11,7 +11,6 @@
             <Grid ColumnDefinitions="*">
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center" HeightRequest="45" />
             </Grid>
@@ -20,7 +19,7 @@
     
     <Shell.FlyoutHeader>
         <Grid>
-            <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" TextColor="{AppThemeBinding Light=Black, Dark=White}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
         </Grid>
     </Shell.FlyoutHeader>
     

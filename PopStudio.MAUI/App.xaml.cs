@@ -13,11 +13,5 @@
             Setting.LoadFromXml(settingxml);
             MainPage = new AppShell();
         }
-
-        async void load()
-        {
-            await Task.Delay(2500);
-            MainPage = new AppShell();
-        }
     }
 }

@@ -4,28 +4,22 @@ namespace PopStudio.MAUI
 {
     internal static partial class Permission
     {
-        static bool DarkMode => (Android.App.Application.Context.Resources.Configuration.UiMode & Android.Content.Res.UiMode.NightMask) == Android.Content.Res.UiMode.NightYes;
-
         static async void _modify()
         {
-            Android.App.Activity activity;
-            while ((activity = Platform.CurrentActivity) == null) await Task.Delay(500);
-            Android.Views.Window window = activity.Window;
-            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R)
             {
+                Android.App.Activity activity;
+                while ((activity = Platform.CurrentActivity) == null) await Task.Delay(500);
+                Android.Views.Window window = activity.Window;
                 window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
                 window.AddFlags(Android.Views.WindowManagerFlags.DrawsSystemBarBackgrounds);
                 window.SetStatusBarColor(Android.Graphics.Color.Transparent);
                 AndroidX.Core.View.WindowInsetsControllerCompat controller = AndroidX.Core.View.ViewCompat.GetWindowInsetsController(window.DecorView);
-                controller!.AppearanceLightStatusBars = !DarkMode;
+                controller!.AppearanceLightStatusBars = (Android.App.Application.Context.Resources.Configuration.UiMode & Android.Content.Res.UiMode.NightMask) != Android.Content.Res.UiMode.NightYes;
                 Application.Current.RequestedThemeChanged += (s, a) =>
                 {
                     controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
                 };
-            }
-            else
-            {
-                window.AddFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
             }
         }
 
@@ -43,19 +37,14 @@ namespace PopStudio.MAUI
 
         public static partial async Task<bool> CheckAndRequestPermissionAsync(this ContentPage page)
         {
+            bool showfinishalert = true;
             ReadWriteStoragePermission readwritepermission = new ReadWriteStoragePermission();
             PermissionStatus status = await readwritepermission.CheckStatusAsync();
             bool HavePermission = true;
             if (status != PermissionStatus.Granted)
             {
-                //if (await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_Request1, MAUIStr.Obj.Permission_GoTo, MAUIStr.Obj.Permission_Cancel))
-                //{
-                    HavePermission = (await readwritepermission.RequestAsync()) == PermissionStatus.Granted;
-                //}
-                //else
-                //{
-                //    HavePermission = false;
-                //}
+                HavePermission = (await readwritepermission.RequestAsync()) == PermissionStatus.Granted;
+                showfinishalert = false;
             }
             if (!HavePermission) return false;
 #pragma warning disable CA1416
@@ -67,8 +56,13 @@ namespace PopStudio.MAUI
                     bb.SetFlags(Android.Content.ActivityFlags.NewTask);
                     Android.App.Application.Context.StartActivity(bb);
                 }
+                showfinishalert = false;
             }
 #pragma warning restore CA1416
+            if (showfinishalert)
+            {
+                await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_RequestFinish, MAUIStr.Obj.Permission_OK);
+            }
             return true;
         }
     }
