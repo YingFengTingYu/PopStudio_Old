@@ -7,7 +7,9 @@
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>4.2</FileVersion>
+    <FileVersion>4.3</FileVersion>
+    <PackageId>$(AssemblyName)</PackageId>
+    <AssemblyName>PopStudio</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -59,7 +61,7 @@
     <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
     <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
     <PackageReference Include="LZMA-SDK" Version="19.0.0" />
-    <PackageReference Include="NLua" Version="1.6.0" />
+    <PackageReference Include="MoonSharp" Version="2.0.0" />
     <PackageReference Include="PangoSharp" Version="3.24.24.34" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />

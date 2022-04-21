@@ -10,8 +10,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -23,8 +23,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -36,8 +36,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -49,8 +49,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -68,8 +68,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -88,8 +88,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -116,8 +116,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -136,8 +136,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -151,8 +151,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -165,8 +165,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -185,8 +185,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -204,8 +204,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -223,8 +223,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -242,8 +242,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -261,8 +261,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -280,8 +280,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -299,8 +299,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -318,8 +318,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -337,8 +337,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -356,8 +356,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -375,8 +375,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -394,8 +394,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -413,8 +413,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -432,8 +432,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -445,8 +445,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -459,8 +459,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -473,8 +473,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -487,8 +487,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -501,8 +501,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -515,8 +515,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return -1;
             }
         }
@@ -529,8 +529,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return -1;
             }
         }
@@ -543,8 +543,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return -1;
             }
         }
@@ -557,8 +557,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -580,8 +580,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -593,8 +593,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -607,8 +607,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -621,8 +621,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -635,8 +635,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -649,8 +649,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -663,8 +663,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -676,8 +676,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
@@ -690,8 +690,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
             }
         }
 
@@ -703,8 +703,8 @@
             }
             catch (Exception ex)
             {
-                Print(ex.Message);
                 if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
                 return null;
             }
         }
