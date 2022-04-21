@@ -8,7 +8,8 @@
         }
         public static partial bool HiddenPermission() => true;
         public static partial bool HiddenFlyout() => false;
-        static string macospath = "setting.xml";
+
+        static string macospath = FileSystem.AppDataDirectory + "/setting.xml";
 
         public static partial string GetSettingPath() => macospath;
 
