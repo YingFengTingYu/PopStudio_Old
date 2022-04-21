@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
+		<TargetFrameworks>net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-android;net6.0-windows10.0.19041</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>PopStudio.MAUI</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -60,6 +60,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
 	</PropertyGroup>
 
@@ -70,6 +71,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
 	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
 	</PropertyGroup>
 
@@ -96,24 +98,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="ImageAD1.png" />
-	  <None Remove="ImageAD2.png" />
-	  <None Remove="ImageAD3.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
 	  <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
 	  <PackageReference Include="LZMA-SDK" Version="19.0.0" />
-	  <PackageReference Include="NLua" Version="1.6.0" />
+	  <PackageReference Include="MoonSharp" Version="2.0.0" />
 	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.254" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Resource Include="ImageAD1.png" />
-	  <Resource Include="ImageAD2.png" />
-	  <Resource Include="ImageAD3.png" />
 	</ItemGroup>
 
 	<ItemGroup>

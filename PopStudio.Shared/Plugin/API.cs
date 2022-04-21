@@ -282,7 +282,7 @@
         public static void DoFile(string filepath, params object[] args)
         {
             string s;
-            (LuaScript.Script.luavm["rainy"] as NLua.LuaTable)["cache"] = args;
+            (LuaScript.Script.luavm.Globals["rainy"] as MoonSharp.Interpreter.Table)["cache"] = args;
             using (StreamReader sr = new StreamReader(filepath.ToString()))
             {
                 s = "local args = rainy.array2table(rainy.cache); rainy.cache = nil; " + sr.ReadToEnd();

@@ -1,65 +1,242 @@
-﻿using NLua;
+﻿using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Platforms;
+using System.Text;
 
 namespace PopStudio.LuaScript
 {
-    internal class Script : Lua
+    internal class Script : MoonSharp.Interpreter.Script
     {
         public bool ErrorThrow = true;
 
-        public Script()
+        private class RainyPlatformAccessorBase : PlatformAccessorBase
         {
-            State.Encoding = System.Text.Encoding.UTF8;
-            DoString("rainy = {} rainy.array2table = function (ary) local ans,l = {},ary.Length - 1; for i=0,l do ans[i + 1] = ary[i]; end return ans; end rainy.table2array = function(a) local l = #a; local ans = rainy.createarray(l); for i = 1,l do ans[i - 1] = a[i]; end return ans; end"); //rainy扩展
-            RegisterFunction("print", null, typeof(Function).GetMethod("Print"));
-            RegisterFunction("rainy.closeexception", null, typeof(Function).GetMethod("CloseException"));
-            RegisterFunction("rainy.openexception", null, typeof(Function).GetMethod("OpenException"));
-            RegisterFunction("rainy.throwexception", null, typeof(Function).GetMethod("ThrowException"));
-            RegisterFunction("rainy.alert", null, typeof(Function).GetMethod("Alert"));
-            RegisterFunction("rainy.prompt", null, typeof(Function).GetMethod("Prompt"));
-            RegisterFunction("rainy.sheet", null, typeof(Function).GetMethod("Sheet"));
-            RegisterFunction("rainy.getfilestream", null, typeof(Function).GetMethod("GetFileStream"));
-            RegisterFunction("rainy.getmemorystream", null, typeof(Function).GetMethod("GetMemoryStream"));
-            RegisterFunction("rainy.gettempfilepool", null, typeof(Function).GetMethod("GetTempFilePool"));
-            RegisterFunction("rainy.unpack", null, typeof(Function).GetMethod("Unpack"));
-            RegisterFunction("rainy.pack", null, typeof(Function).GetMethod("Pack"));
-            RegisterFunction("rainy.cutimage", null, typeof(Function).GetMethod("CutImage"));
-            RegisterFunction("rainy.spliceimage", null, typeof(Function).GetMethod("SpliceImage"));
-            RegisterFunction("rainy.decodeimage", null, typeof(Function).GetMethod("DecodeImage"));
-            RegisterFunction("rainy.encodeimage", null, typeof(Function).GetMethod("EncodeImage"));
-            RegisterFunction("rainy.reanim", null, typeof(Function).GetMethod("Reanim"));
-            RegisterFunction("rainy.trail", null, typeof(Function).GetMethod("Trail"));
-            RegisterFunction("rainy.particles", null, typeof(Function).GetMethod("Particles"));
-            RegisterFunction("rainy.decoderton", null, typeof(Function).GetMethod("DecodeRTON"));
-            RegisterFunction("rainy.encoderton", null, typeof(Function).GetMethod("EncodeRTON"));
-            RegisterFunction("rainy.decompress", null, typeof(Function).GetMethod("Decompress"));
-            RegisterFunction("rainy.compress", null, typeof(Function).GetMethod("Compress"));
-            RegisterFunction("rainy.newdir", null, typeof(Function).GetMethod("NewDir"));
-            RegisterFunction("rainy.getfiles", null, typeof(Function).GetMethod("GetFiles"));
-            RegisterFunction("rainy.getfileextension", null, typeof(Function).GetMethod("GetFileExtension"));
-            RegisterFunction("rainy.getfilename", null, typeof(Function).GetMethod("GetFileName"));
-            RegisterFunction("rainy.getfilepath", null, typeof(Function).GetMethod("GetFilePath"));
-            RegisterFunction("rainy.getfilenamewithoutextension", null, typeof(Function).GetMethod("GetFileNameWithoutExtension"));
-            RegisterFunction("rainy.getversion", null, typeof(Function).GetMethod("GetVersion"));
-            RegisterFunction("rainy.getsystem", null, typeof(Function).GetMethod("GetSystem"));
-            RegisterFunction("rainy.getlanguage", null, typeof(Function).GetMethod("GetLanguage"));
-            RegisterFunction("rainy.formatpath", null, typeof(Function).GetMethod("FormatPath"));
-            RegisterFunction("rainy.dofile", null, typeof(Function).GetMethod("DoFile"));
-            RegisterFunction("rainy.createarray", null, typeof(Function).GetMethod("CreateArray"));
-            RegisterFunction("rainy.choosefolder", null, typeof(Function).GetMethod("ChooseFolder"));
-            RegisterFunction("rainy.chooseopenfile", null, typeof(Function).GetMethod("ChooseOpenFile"));
-            RegisterFunction("rainy.choosesavefile", null, typeof(Function).GetMethod("ChooseSaveFile"));
-            RegisterFunction("rainy.openurl", null, typeof(Function).GetMethod("OpenUrl"));
-            RegisterFunction("rainy.deletefile", null, typeof(Function).GetMethod("DeleteFile"));
-            RegisterFunction("rainy.fileexists", null, typeof(Function).GetMethod("FileExists"));
-            RegisterFunction("rainy.sleep", null, typeof(Function).GetMethod("Sleep"));
-            RegisterFunction("rainy.httpget", null, typeof(Function).GetMethod("HttpGet"));
-            DoString("local temp = rainy.getfiles rainy.getfiles = function (a) return rainy.array2table(temp(a)) end");
+            //
+            // 摘要:
+            //     Gets an environment variable. Must be implemented, but an implementation is allowed
+            //     to always return null if a more meaningful implementation cannot be achieved
+            //     or is not desired.
+            //
+            // 参数:
+            //   envvarname:
+            //     The envvarname.
+            //
+            // 返回结果:
+            //     The environment variable value, or null if not found
+            public override string GetEnvironmentVariable(string envvarname)
+            {
+                return null;
+            }
+
+            //
+            // 摘要:
+            //     Filters the CoreModules enumeration to exclude non-supported operations
+            //
+            // 参数:
+            //   module:
+            //     The requested modules.
+            //
+            // 返回结果:
+            //     The requested modules, with unsupported modules filtered out.
+            public override CoreModules FilterSupportedCoreModules(CoreModules module)
+            {
+                return module & ~(CoreModules.OS_System | CoreModules.IO);
+            }
+
+            //
+            // 摘要:
+            //     A function used to open files in the 'io' module. LimitedPlatformAccessorBase
+            //     does NOT offer a meaningful implementation of this method and thus does not support
+            //     'io' and 'os' modules.
+            //
+            // 参数:
+            //   script:
+            //
+            //   filename:
+            //     The filename.
+            //
+            //   encoding:
+            //     The encoding.
+            //
+            //   mode:
+            //     The mode (as per Lua usage - e.g. 'w+', 'rb', etc.).
+            //
+            // 异常:
+            //   T:System.NotImplementedException:
+            //     The current platform accessor does not support 'io' and 'os' operations. Provide
+            //     your own implementation of platform to work around this limitation, if needed.
+            public override Stream IO_OpenFile(MoonSharp.Interpreter.Script script, string filename, Encoding encoding, string mode)
+            {
+                throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            }
+
+            //
+            // 摘要:
+            //     Gets a standard stream (stdin, stdout, stderr). LimitedPlatformAccessorBase does
+            //     NOT offer a meaningful implementation of this method and thus does not support
+            //     'io' and 'os' modules.
+            //
+            // 参数:
+            //   type:
+            //     The type.
+            //
+            // 异常:
+            //   T:System.NotImplementedException:
+            //     The current platform accessor does not support 'io' and 'os' operations. Provide
+            //     your own implementation of platform to work around this limitation, if needed.
+            public override Stream IO_GetStandardStream(StandardFileType type)
+            {
+                throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            }
+
+            //
+            // 摘要:
+            //     Gets a temporary filename.
+            public override string IO_OS_GetTempFilename() => Path.GetTempFileName();
+
+            //
+            // 摘要:
+            //     Exits the process, returning the specified exit code. 
+            //
+            // 参数:
+            //   exitCode:
+            //     The exit code.
+            public override void OS_ExitFast(int exitCode) => Environment.Exit(exitCode);
+
+            //
+            // 摘要:
+            //     Checks if a file exists. Used by the 'os' module. 
+            //
+            // 参数:
+            //   file:
+            //     The file.
+            //
+            // 返回结果:
+            //     True if the file exists, false otherwise.
+            public override bool OS_FileExists(string file) => File.Exists(file);
+
+            //
+            // 摘要:
+            //     Deletes the specified file. Used by the 'os' module.
+            //
+            // 参数:
+            //   file:
+            //     The file.
+            public override void OS_FileDelete(string file) => File.Delete(file);
+
+            //
+            // 摘要:
+            //     Moves the specified file. Used by the 'os' module. LimitedPlatformAccessorBase
+            //     does NOT offer a meaningful implementation of this method and thus does not support
+            //     'io' and 'os' modules.
+            //
+            // 参数:
+            //   src:
+            //     The source.
+            //
+            //   dst:
+            //     The DST.
+            //
+            // 异常:
+            //   T:System.NotImplementedException:
+            //     The current platform accessor does not support 'io' and 'os' operations. Provide
+            //     your own implementation of platform to work around this limitation, if needed.
+            public override void OS_FileMove(string src, string dst) => File.Move(src, dst);
+
+            //
+            // 摘要:
+            //     Executes the specified command line, returning the child process exit code and
+            //     blocking in the meantime. LimitedPlatformAccessorBase does NOT offer a meaningful
+            //     implementation of this method and thus does not support 'io' and 'os' modules.
+            //
+            // 参数:
+            //   cmdline:
+            //     The cmdline.
+            //
+            // 异常:
+            //   T:System.NotImplementedException:
+            //     The current platform accessor does not support 'io' and 'os' operations. Provide
+            //     your own implementation of platform to work around this limitation, if needed.
+            public override int OS_Execute(string cmdline)
+            {
+                throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            }
+
+            //
+            // 摘要:
+            //     Gets the platform name prefix
+            //
+            // 异常:
+            //   T:System.NotImplementedException:
+            public override string GetPlatformNamePrefix()
+            {
+                return "rainy";
+            }
+
+            //
+            // 摘要:
+            //     Default handler for 'print' calls. Can be customized in ScriptOptions
+            //
+            // 参数:
+            //   content:
+            //     The content.
+            //
+            // 异常:
+            //   T:System.NotImplementedException:
+            public override void DefaultPrint(string content) => API.Print(content);
         }
 
-        public override void Dispose()
+        static Script()
         {
-            base.Dispose();
-            API.DisposeAll();
+            UserData.RegisterType<BinaryStream>();
+            UserData.RegisterType<TempFilePool>();
+            GlobalOptions.Platform = new RainyPlatformAccessorBase();
+        }
+
+        public Script()
+        {
+            Table rainy = new Table(null);
+            rainy["closeexception"] = (Action<object[]>)Function.CloseException;
+            rainy["openexception"] = (Action<object[]>)Function.OpenException;
+            rainy["throwexception"] = (Action<object[]>)Function.ThrowException;
+            rainy["alert"] = (Func<object[], bool?>)Function.Alert;
+            rainy["prompt"] = (Func<object[], string>)Function.Prompt;
+            rainy["sheet"] = (Func<object[], string>)Function.Sheet;
+            rainy["getfilestream"] = (Func<object[], BinaryStream>)Function.GetFileStream;
+            rainy["getmemorystream"] = (Func<object[], BinaryStream>)Function.GetMemoryStream;
+            rainy["gettempfilepool"] = (Func<object[], TempFilePool>)Function.GetTempFilePool;
+            rainy["unpack"] = (Action<object[]>)Function.Unpack;
+            rainy["pack"] = (Action<object[]>)Function.Pack;
+            rainy["cutimage"] = (Action<object[]>)Function.CutImage;
+            rainy["spliceimage"] = (Action<object[]>)Function.SpliceImage;
+            rainy["decodeimage"] = (Action<object[]>)Function.DecodeImage;
+            rainy["encodeimage"] = (Action<object[]>)Function.EncodeImage;
+            rainy["reanim"] = (Action<object[]>)Function.Reanim;
+            rainy["trail"] = (Action<object[]>)Function.Trail;
+            rainy["particles"] = (Action<object[]>)Function.Particles;
+            rainy["decoderton"] = (Action<object[]>)Function.DecodeRTON;
+            rainy["encoderton"] = (Action<object[]>)Function.EncodeRTON;
+            rainy["decompress"] = (Action<object[]>)Function.Decompress;
+            rainy["compress"] = (Action<object[]>)Function.Compress;
+            rainy["newdir"] = (Action<object[]>)Function.NewDir;
+            rainy["getfiles"] = (Func<object[], string[]>)Function.GetFiles;
+            rainy["getfileextension"] = (Func<object[], string>)Function.GetFileExtension;
+            rainy["getfilename"] = (Func<object[], string>)Function.GetFileName;
+            rainy["getfilepath"] = (Func<object[], string>)Function.GetFilePath;
+            rainy["getfilenamewithoutextension"] = (Func<object[], string>)Function.GetFileNameWithoutExtension;
+            rainy["getversion"] = (Func<object[], int>)Function.GetVersion;
+            rainy["getsystem"] = (Func<object[], int>)Function.GetSystem;
+            rainy["getlanguage"] = (Func<object[], int>)Function.GetLanguage;
+            rainy["formatpath"] = (Func<object[], string>)Function.FormatPath;
+            rainy["dofile"] = (Action<object[]>)Function.DoFile;
+            rainy["choosefolder"] = (Func<object[], string>)Function.ChooseFolder;
+            rainy["chooseopenfile"] = (Func<object[], string>)Function.ChooseOpenFile;
+            rainy["choosesavefile"] = (Func<object[], string>)Function.ChooseSaveFile;
+            rainy["openurl"] = (Action<object[]>)Function.OpenUrl;
+            rainy["deletefile"] = (Func<object[], bool?>)Function.DeleteFile;
+            rainy["fileexists"] = (Func<object[], int?>)Function.FileExists;
+            rainy["sleep"] = (Action<object[]>)Function.Sleep;
+            rainy["httpget"] = (Func<object[], string>)Function.HttpGet;
+            Globals["rainy"] = rainy;
         }
 
         //静态部分
@@ -68,20 +245,13 @@ namespace PopStudio.LuaScript
         
         public static void Load()
         {
-            if (luavm != null)
-            {
-                luavm.Dispose();
-            }
             luavm = new Script();
         }
 
         public static void Unload()
         {
-            if (luavm != null)
-            {
-                luavm.Dispose();
-                luavm = null;
-            }
+            luavm = null;
+            API.DisposeAll();
         }
         public static void Do(string str)
         {
