@@ -328,7 +328,7 @@ namespace PopStudio.Particles
                         i = ++j;
                     }
                 }
-                else if (next == '.' || (next >= '0' && next <= '9'))
+                else if (next == '.' || next == '-' || (next >= '0' && next <= '9'))
                 {
                     //Read a number
                     int j = i;

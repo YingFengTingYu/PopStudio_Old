@@ -8,8 +8,7 @@ namespace PopStudio.MAUI
         {
             if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R)
             {
-                Android.App.Activity activity;
-                while ((activity = Platform.CurrentActivity) == null) await Task.Delay(500);
+                Android.App.Activity activity = await Platform.WaitForActivityAsync();
                 Android.Views.Window window = activity.Window;
                 window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
                 window.AddFlags(Android.Views.WindowManagerFlags.DrawsSystemBarBackgrounds);
@@ -20,6 +19,11 @@ namespace PopStudio.MAUI
                 {
                     controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
                 };
+            }
+            else
+            {
+                Application.Current.UserAppTheme = AppTheme.Dark;
+                Application.Current.UserAppTheme = AppTheme.Light;
             }
         }
 
