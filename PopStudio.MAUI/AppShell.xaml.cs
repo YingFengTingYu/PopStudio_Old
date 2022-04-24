@@ -4,6 +4,8 @@ namespace PopStudio.MAUI
 {
     public partial class AppShell : Shell
     {
+        static AppShell Singleten;
+
         public AppShell()
         {
             InitializeComponent();
@@ -20,6 +22,7 @@ namespace PopStudio.MAUI
             fitem_setting.Title = MAUIStr.Obj.Setting_Title;
             FlyoutBehavior = Permission.HiddenFlyout() ? FlyoutBehavior.Flyout : FlyoutBehavior.Locked;
             Permission.ModifyFullBar();
+            Singleten = this;
         }
 
         protected override bool OnBackButtonPressed()
