@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PopStudio.Package.Dz
+﻿namespace PopStudio.Package.Dz
 {
     internal class Dz
     {
