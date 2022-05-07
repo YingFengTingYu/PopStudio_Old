@@ -89,10 +89,17 @@ namespace PopStudio.WPF.Pages
                         API.DecodeRTON(inFile, outFile, cmode);
                     }
                 }
+#if DEBUG
+                finally
+                {
+
+                }
+#else
                 catch (Exception ex)
                 {
                     err = ex.Message;
                 }
+#endif
                 Dispatcher.Invoke(() =>
                 {
                     if (err == null)

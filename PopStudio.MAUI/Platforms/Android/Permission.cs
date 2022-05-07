@@ -20,11 +20,6 @@ namespace PopStudio.MAUI
                     controller!.AppearanceLightStatusBars = Application.Current.RequestedTheme == AppTheme.Light;
                 };
             }
-            else
-            {
-                Application.Current.UserAppTheme = AppTheme.Dark;
-                Application.Current.UserAppTheme = AppTheme.Light;
-            }
         }
 
         public static partial void ModifyFullBar()

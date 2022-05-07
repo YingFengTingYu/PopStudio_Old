@@ -18,6 +18,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Atlas\AtlasImageDat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Atlas\CutImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaScript\Function.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\ChunkInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BitStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\IDisposablePool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SubImageInfo.cs" />
@@ -77,11 +81,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\CRC32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\ParallelBZip2OutputStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OtherProject\DotNetZip\BZip2\Rand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\FileInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\MatchInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\CompressFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\FileInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Pak\Pak.cs" />
