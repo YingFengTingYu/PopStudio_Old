@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Unicode;
 
 namespace PopStudio.RTON
 {
@@ -893,38 +892,48 @@ namespace PopStudio.RTON
                         else
                         {
                             //is varint number
-                            long I64Val = value.GetInt64();
-                            if (I64Val == 0)
+                            //but don't know if it is ulong
+                            if (value.TryGetInt64(out long I64Val))
                             {
-                                bs.WriteByte(0x21);
-                            }
-                            else if (I64Val > 0)
-                            {
-                                if (I64Val <= int.MaxValue)
+                                //long I64Val = value.GetInt64();
+                                if (I64Val == 0)
                                 {
-                                    //rton24
-                                    bs.WriteByte(0x24);
-                                    bs.WriteVarInt32((int)I64Val);
+                                    bs.WriteByte(0x21);
+                                }
+                                else if (I64Val > 0)
+                                {
+                                    if (I64Val <= int.MaxValue)
+                                    {
+                                        //rton24
+                                        bs.WriteByte(0x24);
+                                        bs.WriteVarInt32((int)I64Val);
+                                    }
+                                    else
+                                    {
+                                        //rton44
+                                        bs.WriteByte(0x44);
+                                        bs.WriteVarInt64(I64Val);
+                                    }
                                 }
                                 else
                                 {
-                                    //rton44
-                                    bs.WriteByte(0x44);
-                                    bs.WriteVarInt64(I64Val);
+                                    if (I64Val + 0x40000000 >= 0)
+                                    {
+                                        bs.WriteByte(0x25);
+                                        bs.WriteZigZag32((int)I64Val);
+                                    }
+                                    else
+                                    {
+                                        bs.WriteByte(0x45);
+                                        bs.WriteZigZag64(I64Val);
+                                    }
                                 }
                             }
                             else
                             {
-                                if (I64Val + 0x40000000 >= 0)
-                                {
-                                    bs.WriteByte(0x25);
-                                    bs.WriteZigZag32((int)I64Val);
-                                }
-                                else
-                                {
-                                    bs.WriteByte(0x45);
-                                    bs.WriteZigZag64(I64Val);
-                                }
+                                ulong v = value.GetUInt64();
+                                bs.WriteByte(0x46);
+                                bs.WriteUInt64(v);
                             }
                         }
                         break;

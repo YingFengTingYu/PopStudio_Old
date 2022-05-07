@@ -1232,6 +1232,26 @@ namespace PopStudio.Plugin
             BaseStream.CopyTo(s);
         }
 
+        public void CopyTo(Stream s, long Length)
+        {
+            byte[] array = new byte[81920];
+            int count;
+            int length2 = array.Length;
+            long times = Length / length2;
+            for (long i = 0; i < times; i++)
+            {
+                count = Read(array, 0, length2);
+                if (count == 0) return;
+                s.Write(array, 0, count);
+            }
+            length2 = (int)(Length % length2);
+            if (length2 != 0)
+            {
+                Read(array, 0, length2);
+                s.Write(array, 0, length2);
+            }
+        }
+
         public static implicit operator Stream(BinaryStream a)
         {
             return a.BaseStream;
