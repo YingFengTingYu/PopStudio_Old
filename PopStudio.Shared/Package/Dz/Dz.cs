@@ -1,5 +1,12 @@
 ﻿namespace PopStudio.Package.Dz
 {
+    /// <summary>
+    /// Marmalade SDK - Derbh API
+    /// dzip archive
+    /// It can use dz, gzip, lzma, bzip2, store and zero to save the file
+    /// dz compression is only in Derbh API and dzip.exe
+    /// I can't support it, so the program will only copy it out.
+    /// </summary>
     internal class Dz
     {
         public static Dictionary<string, CompressFlags> compressDictionary;
