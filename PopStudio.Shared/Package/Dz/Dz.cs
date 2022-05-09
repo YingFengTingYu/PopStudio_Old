@@ -15,6 +15,7 @@
         public static CompressFlags GetCompressMethod(string fileName)
         {
             string extension = Path.GetExtension(fileName).ToLower();
+            
             if (compressDictionary.ContainsKey(extension))
             {
                 return compressDictionary[extension];
@@ -30,129 +31,153 @@
             {
                 throw new Exception(string.Format(Str.Obj.FileNotFound, inFile));
             }
-            using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
+            using (IDisposablePool pool = new IDisposablePool())
             {
-                bs.Encode = EncodeHelper.ANSI;
-                outFolder += Const.PATHSEPARATOR;
-                string tempName;
-                DtrzInfo dz = new DtrzInfo();
-                dz.Read(bs);
-                int chunksCount = dz.Chunks.Length;
-                for (int i = 0; i < chunksCount; i++)
+                using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
                 {
-                    ChunkInfo SubInfo = dz.Chunks[i];
-                    tempName = Dir.FormatPath(outFolder + dz.FolderNameLibrary[SubInfo.FolderNameIndex]);
-                    Dir.NewDir(tempName);
-                    tempName = Dir.FormatPath(tempName + Const.PATHSEPARATOR + dz.FileNameLibrary[SubInfo.FileNameIndex]);
-                    if (SubInfo.MultiIndex != 0)
+                    bs.Encode = EncodeHelper.ANSI;
+                    outFolder += Const.PATHSEPARATOR;
+                    string tempName;
+                    DtrzInfo dz = new DtrzInfo();
+                    dz.Read(bs);
+                    //ReadArchives
+                    int archivesCount = dz.ArchivesCount;
+                    BinaryStream[] bsLib = new BinaryStream[archivesCount];
+                    string mFilePath = Path.GetDirectoryName(inFile) + Const.PATHSEPARATOR;
+                    for (int i = 0; i < archivesCount; i++)
                     {
-                        //Multi saved file
-                        string ex = Path.GetExtension(tempName);
-                        tempName = $"{tempName[..^ex.Length]}_multi_{SubInfo.MultiIndex}{ex}";
-                    }
-                    bs.Position = SubInfo.Offset;
-                    CompressFlags flags = SubInfo.Flags;
-                    if ((flags & CompressFlags.DZ) != 0)
-                    {
-                        //dz decompress
-                        //unsupported
-                        //just copy
-                        using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
+                        if (dz.ArchiveNameLibrary[i] == null)
                         {
-                            bs.CopyTo(bs2, SubInfo.ZSize_For_Dz);
+                            bsLib[i] = bs;
+                        }
+                        else
+                        {
+                            bsLib[i] = pool.Add(new BinaryStream(mFilePath + dz.ArchiveNameLibrary[i], FileMode.Open));
                         }
                     }
-                    else if ((flags & CompressFlags.ZLIB) != 0)
+                    int chunksCount = dz.ChunksCount;
+                    BinaryStream tempbs;
+                    for (int i = 0; i < chunksCount; i++)
                     {
-                        //gzip decompress
-                        using (BinaryStream bs2 = new BinaryStream())
+                        ChunkInfo SubInfo = dz.Chunks[i];
+                        tempbs = bsLib[SubInfo.ArchiveIndex];
+                        tempName = Dir.FormatPath(outFolder + dz.FolderNameLibrary[SubInfo.FolderNameIndex]);
+                        Dir.NewDir(tempName);
+                        tempName = Dir.FormatPath(tempName + Const.PATHSEPARATOR + dz.FileNameLibrary[SubInfo.FileNameIndex]);
+                        if (SubInfo.MultiIndex != 0)
                         {
-                            bs.CopyTo(bs2, SubInfo.ZSize_For_Compress);
-                            bs2.Position = 0;
-                            using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
+                            //Multi saved file
+                            string ex = Path.GetExtension(tempName);
+                            tempName = $"{tempName[..^ex.Length]}_multi_{SubInfo.MultiIndex}{ex}";
+                        }
+                        tempbs.Position = SubInfo.Offset;
+                        if (SubInfo.ZSize_For_Compress == -1)
+                        {
+                            SubInfo.ZSize_For_Compress = (int)(tempbs.Length - tempbs.Position);
+                        }
+                        CompressFlags flags = SubInfo.Flags;
+                        if ((flags & CompressFlags.DZ) != 0)
+                        {
+                            //dz decompress
+                            //unsupported
+                            //just copy
+                            using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
                             {
-                                using (GZipStream gZipStream = new GZipStream(bs2, CompressionMode.Decompress))
+                                tempbs.CopyTo(bs2, SubInfo.ZSize_For_Dz);
+                            }
+                        }
+                        else if ((flags & CompressFlags.ZLIB) != 0)
+                        {
+                            //gzip decompress
+                            using (BinaryStream bs2 = new BinaryStream())
+                            {
+                                tempbs.CopyTo(bs2, SubInfo.ZSize_For_Compress);
+                                bs2.Position = 0;
+                                using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
                                 {
-                                    gZipStream.CopyTo(bs3);
+                                    using (GZipStream gZipStream = new GZipStream(bs2, CompressionMode.Decompress))
+                                    {
+                                        gZipStream.CopyTo(bs3);
+                                    }
                                 }
                             }
                         }
-                    }
-                    else if ((flags & CompressFlags.BZIP) != 0)
-                    {
-                        //bzip2 decompress
-                        using (BinaryStream bs2 = new BinaryStream())
+                        else if ((flags & CompressFlags.BZIP) != 0)
                         {
-                            bs.CopyTo(bs2, SubInfo.ZSize_For_Compress);
-                            bs2.Position = 0;
-                            using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
+                            //bzip2 decompress
+                            using (BinaryStream bs2 = new BinaryStream())
                             {
-                                using (Ionic.BZip2.BZip2InputStream bZip2Stream = new Ionic.BZip2.BZip2InputStream(bs2))
+                                tempbs.CopyTo(bs2, SubInfo.ZSize_For_Compress);
+                                bs2.Position = 0;
+                                using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
                                 {
-                                    bZip2Stream.CopyTo(bs3);
+                                    using (Ionic.BZip2.BZip2InputStream bZip2Stream = new Ionic.BZip2.BZip2InputStream(bs2))
+                                    {
+                                        bZip2Stream.CopyTo(bs3);
+                                    }
                                 }
                             }
                         }
-                    }
-                    else if ((flags & CompressFlags.ZERO) != 0)
-                    {
-                        //zero chunk
-                        int copytimes = SubInfo.Size / 81920;
-                        int copyelse = SubInfo.Size % 81920;
-                        byte[] temp = new byte[81920];
-                        using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
+                        else if ((flags & CompressFlags.ZERO) != 0)
                         {
-                            for (int j = 0; j < copytimes; j++)
+                            //zero chunk
+                            int copytimes = SubInfo.Size / 81920;
+                            int copyelse = SubInfo.Size % 81920;
+                            byte[] temp = new byte[81920];
+                            using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
                             {
-                                bs2.Write(temp, 0, 81920);
+                                for (int j = 0; j < copytimes; j++)
+                                {
+                                    bs2.Write(temp, 0, 81920);
+                                }
+                                if (copyelse != 0)
+                                {
+                                    bs2.Write(temp, 0, copyelse);
+                                }
                             }
-                            if (copyelse != 0)
+                        }
+                        else if ((flags & CompressFlags.STORE) != 0)
+                        {
+                            //copy only
+                            using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
                             {
-                                bs2.Write(temp, 0, copyelse);
+                                tempbs.CopyTo(bs2, SubInfo.Size);
                             }
                         }
-                    }
-                    else if ((flags & CompressFlags.STORE) != 0)
-                    {
-                        //copy only
-                        using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
+                        else if ((flags & CompressFlags.LZMA) != 0)
                         {
-                            bs.CopyTo(bs2, SubInfo.Size);
+                            //lzma decompress
+                            SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder();
+                            byte[] properties = tempbs.ReadBytes(5);
+                            long fileLength = tempbs.ReadInt64();
+                            coder.SetDecoderProperties(properties);
+                            using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
+                            {
+                                coder.Code(tempbs, bs3, SubInfo.ZSize_For_Compress - 13, fileLength, null);
+                            }
                         }
-                    }
-                    else if ((flags & CompressFlags.LZMA) != 0)
-                    {
-                        //lzma decompress
-                        SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder();
-                        byte[] properties = bs.ReadBytes(5);
-                        long fileLength = bs.ReadInt64();
-                        coder.SetDecoderProperties(properties);
-                        using (BinaryStream bs3 = new BinaryStream(tempName, FileMode.Create))
+                        else
                         {
-                            coder.Code(bs, bs3, SubInfo.ZSize_For_Compress - 13, fileLength, null);
+                            //unknow chunk
+                            //copy only
+                            using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
+                            {
+                                tempbs.CopyTo(bs2, SubInfo.Size);
+                            }
                         }
-                    }
-                    else
-                    {
-                        //unknow chunk
-                        //copy only
-                        using (BinaryStream bs2 = new BinaryStream(tempName, FileMode.Create))
+                        if (changeimage)
                         {
-                            bs.CopyTo(bs2, SubInfo.Size);
-                        }
-                    }
-                    if (changeimage)
-                    {
-                        string ex = Path.GetExtension(tempName).ToLower();
-                        if (ex == ".tex")
-                        {
-                            Image.Tex.Tex.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
-                            if (delete) File.Delete(tempName);
-                        }
-                        else if (ex == ".txz")
-                        {
-                            Image.Txz.Txz.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
-                            if (delete) File.Delete(tempName);
+                            string ex = Path.GetExtension(tempName).ToLower();
+                            if (ex == ".tex")
+                            {
+                                Image.Tex.Tex.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                if (delete) File.Delete(tempName);
+                            }
+                            else if (ex == ".txz")
+                            {
+                                Image.Txz.Txz.Decode(tempName, Path.ChangeExtension(tempName, ".png"));
+                                if (delete) File.Delete(tempName);
+                            }
                         }
                     }
                 }

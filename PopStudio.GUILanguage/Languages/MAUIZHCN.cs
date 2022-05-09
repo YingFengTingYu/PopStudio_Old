@@ -173,7 +173,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.将lua实现改为MoonSharp实现（基于lua5.2）；\n2.支持Linux arm和arm64系统。";
+        public string HomePage_AppNewNotice => "1.修复particles-RawXml读取解析负数异常问题；\n2.修复RTON编码解析UInt64整数异常问题；\n3.重新实现dz解包打包以更符合dzip.exe。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

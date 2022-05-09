@@ -10,6 +10,9 @@
         public string[] FileNameLibrary = null;
         public string[] FolderNameLibrary = null;
         public ChunkInfo[] Chunks = null;
+        public ushort ArchivesCount;
+        public ushort ChunksCount;
+        public string[] ArchiveNameLibrary = null;
 
         public void WritePart1(BinaryStream bs)
         {
@@ -86,25 +89,42 @@
             {
                 Chunks[item.ChunkIndex] = item;
             }
-            bs.IdUInt16(1);
-            bs.IdUInt16((ushort)chunksCount);
+            ArchivesCount = bs.ReadUInt16();
+            ArchiveNameLibrary = new string[ArchivesCount];
+            ArchiveNameLibrary[0] = null;
+            List<ChunkInfo>[] chunksList = new List<ChunkInfo>[ArchivesCount];
+            for (int i = 0; i < ArchivesCount; i++)
+            {
+                chunksList[i] = new List<ChunkInfo>();
+            }
+            ChunksCount = bs.ReadUInt16();
             for (int i = 0; i < chunksCount; i++)
             {
                 Chunks[i].ReadInfo(bs);
+                chunksList[Chunks[i].ArchiveIndex].Add(Chunks[i]);
             }
-            tempChunks.Sort((a, b) => a.Offset - b.Offset);
-            chunksCount--;
-            for (int i = 0; i < chunksCount; i++)
+            for (int i = 1; i < ArchivesCount; i++)
             {
-                tempChunks[i].ZSize_For_Compress = tempChunks[i + 1].Offset - tempChunks[i].Offset;
+                ArchiveNameLibrary[i] = bs.ReadStringByEmpty();
             }
-            if ((tempChunks[chunksCount].Flags & CompressFlags.STORE) != 0)
+            //support multi-archive
+            //so need more array
+            foreach (List<ChunkInfo> temp in chunksList)
             {
-                tempChunks[chunksCount].ZSize_For_Compress = tempChunks[chunksCount].Size;
-            }
-            else
-            {
-                tempChunks[chunksCount].ZSize_For_Compress = (int)(bs.Length - tempChunks[chunksCount].Offset);
+                int count = temp.Count - 1;
+                temp.Sort((a, b) => a.Offset - b.Offset);
+                for (int i = 0; i < count; i++)
+                {
+                    temp[i].ZSize_For_Compress = temp[i + 1].Offset - temp[i].Offset;
+                }
+                if ((temp[count].Flags & CompressFlags.STORE) != 0)
+                {
+                    temp[count].ZSize_For_Compress = temp[count].Size;
+                }
+                else
+                {
+                    temp[count].ZSize_For_Compress = -1; //will be set soon
+                }
             }
         }
     }
