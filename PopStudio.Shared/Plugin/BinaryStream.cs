@@ -118,6 +118,11 @@ namespace PopStudio.Plugin
             if (ReadInt32(endian) != h) throw new Exception(Str.Obj.DataMisMatch);
         }
 
+        public void IdUInt32(uint h, Endian endian = Endian.Null)
+        {
+            if (ReadUInt32(endian) != h) throw new Exception(Str.Obj.DataMisMatch);
+        }
+
         public void IdBytes(byte[] h, Endian _ = Endian.Null)
         {
             int length = h.Length;
@@ -667,6 +672,11 @@ namespace PopStudio.Plugin
             return ReadString(ReadUInt16(), endian);
         }
 
+        public string ReadStringByInt16Head(Endian endian = Endian.Null)
+        {
+            return ReadString(ReadInt16(), endian);
+        }
+
         /// <summary>
         /// 根据一个位于字符串前方的32位整数的字符串长度值读取字符串
         ///  | 
@@ -1140,6 +1150,20 @@ namespace PopStudio.Plugin
             byte[] ary = Encode.GetBytes(value);
             if (endian == Endian.Small) Array.Reverse(ary);
             WriteUInt16((ushort)ary.Length);
+            BaseStream.Write(ary, 0, ary.Length);
+        }
+
+        public void WriteStringByInt16Head(string value, Endian endian = Endian.Null)
+        {
+            if (value == null)
+            {
+                WriteInt16(0);
+                return;
+            }
+            if (endian == Endian.Null) endian = StringEndian;
+            byte[] ary = Encode.GetBytes(value);
+            if (endian == Endian.Small) Array.Reverse(ary);
+            WriteInt16((short)ary.Length);
             BaseStream.Write(ary, 0, ary.Length);
         }
 

@@ -94,9 +94,21 @@
         public string Texture_Choose6 => "Encoding Mode";
         public string Texture_Choose7 => "Encoding Format";
 
+        //Pam
+        public string Pam_Title => "Pam";
+        public string Pam_Introduction => "Through PAM transcoding, you can convert PAM animation file and json file to modify game animation! Pam versions 1 to 6 are all supported! You can also use Twinkles-Toolkit to convert the generated JSON file into XFL animation for Adobe animation to view! ";
+        public string Pam_Mode1 => "Decode";
+        public string Pam_Mode2 => "Encode";
+        public string Pam_Choose1 => "The decoded file path";
+        public string Pam_Choose2 => "The path of generated file";
+        public string Pam_Choose3 => "Decoding Mode";
+        public string Pam_Choose4 => "The encoded file path";
+        public string Pam_Choose5 => "The path of generated file";
+        public string Pam_Choose6 => "Encoding Mode";
+
         //RTON
         public string RTON_Title => "RTON";
-        public string RTON_Introduction => "Through RTON transcoding, realize the mutual conversion operation of RTON files and json files to modify the content of games! If you choose the encrypted rton mode, you need to fill in the key in the setting. ";
+        public string RTON_Introduction => "Through RTON transcoding, you can convert RTON file and json file to modify the content of games! If you choose the encrypted rton mode, you need to fill in the key in the setting. ";
         public string RTON_Mode1 => "Decode";
         public string RTON_Mode2 => "Encode";
         public string RTON_Choose1 => "The decoded file path";

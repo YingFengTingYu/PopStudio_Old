@@ -96,6 +96,18 @@
         public string Texture_Choose6 { get; }
         public string Texture_Choose7 { get; }
 
+        //Pam
+        public string Pam_Title { get; }
+        public string Pam_Introduction { get; }
+        public string Pam_Mode1 { get; }
+        public string Pam_Mode2 { get; }
+        public string Pam_Choose1 { get; }
+        public string Pam_Choose2 { get; }
+        public string Pam_Choose3 { get; }
+        public string Pam_Choose4 { get; }
+        public string Pam_Choose5 { get; }
+        public string Pam_Choose6 { get; }
+
         //RTON
         public string RTON_Title { get; }
         public string RTON_Introduction { get; }

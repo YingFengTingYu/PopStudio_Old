@@ -102,6 +102,7 @@ namespace PopStudio.WPF
             button9.Content = MAUIStr.Obj.LuaScript_Title;
             button10.Content = MAUIStr.Obj.Setting_Title;
             button11.Content = MAUIStr.Obj.Atlas_Title;
+            button12.Content = MAUIStr.Obj.Pam_Title;
             LoadHomePage();
             Singleten = this;
             if (Setting.OpenProgramAD)
@@ -197,6 +198,11 @@ namespace PopStudio.WPF
             LoadAtlas();
         }
 
+        private void button12_Click(object sender, RoutedEventArgs e)
+        {
+            LoadPam();
+        }
+
         #endregion
 
         #region ShowPage
@@ -212,6 +218,7 @@ namespace PopStudio.WPF
         Page_LuaScript luaScript = new Page_LuaScript();
         Page_Setting setting = new Page_Setting();
         Page_Atlas atlas = new Page_Atlas();
+        Page_Pam pam = new Page_Pam();
 
         void ResetButton()
         {
@@ -237,6 +244,8 @@ namespace PopStudio.WPF
             button10.Foreground = Brushes.Black;
             button11.Background = Brushes.White;
             button11.Foreground = Brushes.Black;
+            button12.Background = Brushes.White;
+            button12.Foreground = Brushes.Black;
         }
 
         public void LoadHomePage()
@@ -369,6 +378,18 @@ namespace PopStudio.WPF
                 Content = atlas
             };
             Label_Head.Content = MAUIStr.Obj.Atlas_Title;
+        }
+
+        public void LoadPam()
+        {
+            ResetButton();
+            button12.Background = Brushes.CornflowerBlue;
+            button12.Foreground = Brushes.White;
+            PageControl.Content = new Frame()
+            {
+                Content = pam
+            };
+            Label_Head.Content = MAUIStr.Obj.Pam_Title;
         }
         #endregion
 

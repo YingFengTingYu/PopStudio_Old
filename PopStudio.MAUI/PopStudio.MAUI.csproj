@@ -104,6 +104,7 @@
 	  <PackageReference Include="MoonSharp" Version="2.0.0" />
 	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.254" />
+	  <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.2-mauipre.1.22102.15" />
 	</ItemGroup>
 
 	<ItemGroup>

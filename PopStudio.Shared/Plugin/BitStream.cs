@@ -22,7 +22,7 @@ namespace PopStudio.Plugin
         {
             BaseStream = stream;
             BitPosition = 0;
-        }
+    }
 
         public BitStream(byte[] ary) : this(new MemoryStream(ary))
         {

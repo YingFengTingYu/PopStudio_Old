@@ -15,7 +15,6 @@
         public static CompressFlags GetCompressMethod(string fileName)
         {
             string extension = Path.GetExtension(fileName).ToLower();
-            
             if (compressDictionary.ContainsKey(extension))
             {
                 return compressDictionary[extension];

@@ -94,6 +94,18 @@
         public string Texture_Choose6 => "请选择编码模式";
         public string Texture_Choose7 => "请选择编码格式";
 
+        //Pam
+        public string Pam_Title => "Pam转码";
+        public string Pam_Introduction => "通过Pam转码功能，实现Pam动画文件和json文件的互相转换操作，来修改游戏动画！Pam版本号1-6的都支持！你还可以使用TwinKleS-ToolKit将生成的json文件转为xfl动画供Adobe Animate查看！";
+        public string Pam_Mode1 => "解码模式";
+        public string Pam_Mode2 => "编码模式";
+        public string Pam_Choose1 => "请填写被解码的文件路径";
+        public string Pam_Choose2 => "请填写解码生成文件存放路径";
+        public string Pam_Choose3 => "请选择解码模式";
+        public string Pam_Choose4 => "请填写被编码的文件路径";
+        public string Pam_Choose5 => "请填写编码生成文件存放路径";
+        public string Pam_Choose6 => "请选择编码模式";
+
         //RTON
         public string RTON_Title => "RTON转码";
         public string RTON_Introduction => "通过RTON转码功能，实现RTON文件和json文件的互相转换操作，来修改游戏内容！如果你选择加密RTON模式，你需要在设置中自行填写密钥。";

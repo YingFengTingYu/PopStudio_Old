@@ -66,6 +66,7 @@
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.0-preview.209" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

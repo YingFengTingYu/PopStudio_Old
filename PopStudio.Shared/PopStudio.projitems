@@ -108,6 +108,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\TempFilePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\JsonTokenConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\FrameFlags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\FrameInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\ImageInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\Pam.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\PopAnimInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PopAnim\SpriteInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\FlashXfl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\GameConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reanim\RawXml.cs" />

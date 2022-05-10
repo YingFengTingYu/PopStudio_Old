@@ -247,6 +247,44 @@
             }
         }
 
+        public static void DecodePam(params object[] args)
+        {
+            try
+            {
+                object[] n = new object[2];
+                int min = args.Length > n.Length ? n.Length : args.Length;
+                for (int i = 0; i < min; i++)
+                {
+                    n[i] = args[i];
+                }
+                API.DecodePam(n[0]?.ToString(), n[1]?.ToString());
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+            }
+        }
+
+        public static void EncodePam(params object[] args)
+        {
+            try
+            {
+                object[] n = new object[2];
+                int min = args.Length > n.Length ? n.Length : args.Length;
+                for (int i = 0; i < min; i++)
+                {
+                    n[i] = args[i];
+                }
+                API.EncodePam(n[0]?.ToString(), n[1]?.ToString());
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+            }
+        }
+
         public static void DecodeImage(params object[] args)
         {
             try

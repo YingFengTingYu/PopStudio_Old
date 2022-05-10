@@ -21,7 +21,7 @@ namespace PopStudio.GTK
 
         static string _defaultwindowtitle = "PopStudio";
         static int _defaultwindowwidth = 900;
-        static int _defaultwindowheight = 580;
+        static int _defaultwindowheight = 620;
         static int _defaultsidebarwidth = 210;
         static int _defaultsidebartitleheight = 70;
         static int _defaultpagetitleheight = 50;
@@ -45,6 +45,7 @@ namespace PopStudio.GTK
         public Button button9;
         public Button button10;
         public Button button11;
+        public Button button12;
         #endregion
 
         #region page
@@ -96,6 +97,9 @@ namespace PopStudio.GTK
             button6 = CreateBarButton(MAUIStr.Obj.Trail_Title);
             sidebar.PackStart(button6, false, false, 4);
             button6.Clicked += (s, e) => LoadTrail();
+            button12 = CreateBarButton(MAUIStr.Obj.Pam_Title);
+            sidebar.PackStart(button12, false, false, 4);
+            button12.Clicked += (s, e) => LoadPam();
             button7 = CreateBarButton(MAUIStr.Obj.RTON_Title);
             sidebar.PackStart(button7, false, false, 4);
             button7.Clicked += (s, e) => LoadRTON();
@@ -189,6 +193,7 @@ namespace PopStudio.GTK
         Page_LuaScript luaScript = new Page_LuaScript();
         Page_Setting setting = new Page_Setting();
         Page_Atlas atlas = new Page_Atlas();
+        Page_Pam pam = new Page_Pam();
 
         public void LoadHomePage()
         {
@@ -240,6 +245,14 @@ namespace PopStudio.GTK
             content.SetPage(trail);
             pagetitle.Text = MAUIStr.Obj.Trail_Title;
             ShowAll();
+        }
+
+        public void LoadPam()
+        {
+            content.SetPage(pam);
+            pagetitle.Text = MAUIStr.Obj.Pam_Title;
+            ShowAll();
+            pam.ModeChange(pam.TB_Mode.Active);
         }
 
         public void LoadRTON()
