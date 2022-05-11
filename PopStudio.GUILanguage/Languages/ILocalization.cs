@@ -2,6 +2,11 @@
 {
     internal interface ILocalization
     {
+        //Command
+        public string Command_EnterInteger { get; }
+        public string Command_EnterString { get; }
+        public string Command_EnterFormat { get; }
+
         //Atlas
         public string Atlas_Title { get; }
         public string Atlas_Introduction { get; }

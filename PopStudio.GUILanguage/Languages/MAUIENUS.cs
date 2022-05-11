@@ -2,6 +2,10 @@
 {
     internal class MAUIENUS : ILocalization
     {
+        //Command
+        public string Command_EnterInteger => "Please enter an integer...";
+        public string Command_EnterString => "Please enter a string...";
+        public string Command_EnterFormat => "Please enter order number of the format";
         //Atlas
         public string Atlas_Title => "Atlas";
         public string Atlas_Introduction => "Through the atlas function, build small pictures into atlas or cut the atlas into small pictures! ";

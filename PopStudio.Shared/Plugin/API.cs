@@ -104,6 +104,128 @@
             }
         }
 
+        public static void ParseReanim(string inFile, string outFile, int outformat)
+        {
+            Reanim.Reanim reanim = null;
+            for (int i = 0; i < 8; i++)
+            {
+                try
+                {
+                    reanim = i switch
+                    {
+                        0 => PopStudio.Reanim.PC.Decode(inFile),
+                        1 => PopStudio.Reanim.Phone32.Decode(inFile),
+                        2 => PopStudio.Reanim.Phone64.Decode(inFile),
+                        3 => PopStudio.Reanim.WP.Decode(inFile),
+                        4 => PopStudio.Reanim.GameConsole.Decode(inFile),
+                        5 => PopStudio.Reanim.TV.Decode(inFile),
+                        6 => PopStudio.Reanim.ReanimJson.Decode(inFile),
+                        7 => PopStudio.Reanim.RawXml.Decode(inFile),
+                        _ => throw new NotImplementedException()
+                    };
+                }
+                catch (Exception)
+                {
+                    reanim = null;
+                }
+                if (reanim != null) break;
+            }
+            if (reanim == null) throw new NotImplementedException();
+            switch (outformat)
+            {
+                case 0: PopStudio.Reanim.PC.Encode(reanim, outFile); break;
+                case 1: PopStudio.Reanim.Phone32.Encode(reanim, outFile); break;
+                case 2: PopStudio.Reanim.Phone64.Encode(reanim, outFile); break;
+                case 3: PopStudio.Reanim.WP.Encode(reanim, outFile); break;
+                case 4: PopStudio.Reanim.GameConsole.Encode(reanim, outFile); break;
+                case 5: PopStudio.Reanim.TV.Encode(reanim, outFile); break;
+                case 6: PopStudio.Reanim.ReanimJson.Encode(reanim, outFile); break;
+                case 7: PopStudio.Reanim.RawXml.Encode(reanim, outFile); break;
+                case 8: PopStudio.Reanim.FlashXfl.Encode(reanim, outFile); break;
+                default: throw new NotImplementedException();
+            }
+        }
+
+        public static void ParseTrail(string inFile, string outFile, int outformat)
+        {
+            Trail.Trail trail = null;
+            for (int i = 0; i < 8; i++)
+            {
+                try
+                {
+                    trail = i switch
+                    {
+                        0 => PopStudio.Trail.PC.Decode(inFile),
+                        1 => PopStudio.Trail.Phone32.Decode(inFile),
+                        2 => PopStudio.Trail.Phone64.Decode(inFile),
+                        3 => PopStudio.Trail.WP.Decode(inFile),
+                        4 => PopStudio.Trail.GameConsole.Decode(inFile),
+                        5 => PopStudio.Trail.TV.Decode(inFile),
+                        6 => PopStudio.Trail.TrailJson.Decode(inFile),
+                        7 => PopStudio.Trail.RawXml.Decode(inFile),
+                        _ => throw new NotImplementedException()
+                    };
+                }
+                catch (Exception)
+                {
+                    trail = null;
+                }
+                if (trail != null) break;
+            }
+            switch (outformat)
+            {
+                case 0: PopStudio.Trail.PC.Encode(trail, outFile); break;
+                case 1: PopStudio.Trail.Phone32.Encode(trail, outFile); break;
+                case 2: PopStudio.Trail.Phone64.Encode(trail, outFile); break;
+                case 3: PopStudio.Trail.WP.Encode(trail, outFile); break;
+                case 4: PopStudio.Trail.GameConsole.Encode(trail, outFile); break;
+                case 5: PopStudio.Trail.TV.Encode(trail, outFile); break;
+                case 6: PopStudio.Trail.TrailJson.Encode(trail, outFile); break;
+                case 7: PopStudio.Trail.RawXml.Encode(trail, outFile); break;
+                default: throw new NotImplementedException();
+            }
+        }
+
+        public static void ParseParticles(string inFile, string outFile, int outformat)
+        {
+            Particles.Particles particles = null;
+            for (int i = 0; i < 8; i++)
+            {
+                try
+                {
+                    particles = i switch
+                    {
+                        0 => PopStudio.Particles.PC.Decode(inFile),
+                        1 => PopStudio.Particles.Phone32.Decode(inFile),
+                        2 => PopStudio.Particles.Phone64.Decode(inFile),
+                        3 => PopStudio.Particles.WP.Decode(inFile),
+                        4 => PopStudio.Particles.GameConsole.Decode(inFile),
+                        5 => PopStudio.Particles.TV.Decode(inFile),
+                        6 => PopStudio.Particles.ParticlesJson.Decode(inFile),
+                        7 => PopStudio.Particles.RawXml.Decode(inFile),
+                        _ => throw new NotImplementedException()
+                    };
+                }
+                catch (Exception)
+                {
+                    particles = null;
+                }
+                if (particles != null) break;
+            }
+            switch (outformat)
+            {
+                case 0: PopStudio.Particles.PC.Encode(particles, outFile); break;
+                case 1: PopStudio.Particles.Phone32.Encode(particles, outFile); break;
+                case 2: PopStudio.Particles.Phone64.Encode(particles, outFile); break;
+                case 3: PopStudio.Particles.WP.Encode(particles, outFile); break;
+                case 4: PopStudio.Particles.GameConsole.Encode(particles, outFile); break;
+                case 5: PopStudio.Particles.TV.Encode(particles, outFile); break;
+                case 6: PopStudio.Particles.ParticlesJson.Encode(particles, outFile); break;
+                case 7: PopStudio.Particles.RawXml.Encode(particles, outFile); break;
+                default: throw new NotImplementedException();
+            }
+        }
+
         public static void Reanim(string inFile, string outFile, int informat, int outformat)
         {
             Reanim.Reanim reanim = informat switch
@@ -289,7 +411,7 @@
             (LuaScript.Script.luavm.Globals["rainy"] as MoonSharp.Interpreter.Table)["cache"] = args;
             using (StreamReader sr = new StreamReader(filepath.ToString()))
             {
-                s = "local args = rainy.array2table(rainy.cache); rainy.cache = nil; " + sr.ReadToEnd();
+                s = "local args = rainy.cache; rainy.cache = nil; " + sr.ReadToEnd();
             }
             LuaScript.Script.luavm.DoString(s);
         }

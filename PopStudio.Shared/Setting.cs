@@ -318,69 +318,78 @@ namespace PopStudio
 
         public static void SaveAsXml(string xmlPath)
         {
-            if (!CanSave) return;
-            using (StreamWriter sw = new StreamWriter(xmlPath, false))
+            try
             {
-                sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--Describe some default behaviour-->\n<Description version=\"2\">\n    <Language>");
-                sw.Write(LanguageName[AppLanguage]);
-                sw.Write("</Language>\n    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
-                sw.Write(DzCompressMethodName[DzDefaultCompressMethod]);
-                sw.Write("\" />");
-                foreach (KeyValuePair<string, Package.Dz.CompressFlags> keyValuePair in DzCompressDictionary)
+
+
+                if (!CanSave) return;
+                using (StreamWriter sw = new StreamWriter(xmlPath, false))
                 {
-                    sw.Write("\n            <Extension name=\"");
-                    sw.Write(keyValuePair.Key);
-                    sw.Write("\" value=\"");
-                    sw.Write(DzCompressMethodName[keyValuePair.Value]);
+                    sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--Describe some default behaviour-->\n<Description version=\"2\">\n    <Language>");
+                    sw.Write(LanguageName[AppLanguage]);
+                    sw.Write("</Language>\n    <Dz>\n        <!--The compressing method to pack dz-->\n        <CompressMethod>\n            <Default value=\"");
+                    sw.Write(DzCompressMethodName[DzDefaultCompressMethod]);
                     sw.Write("\" />");
-                }
-                sw.Write("\n        </CompressMethod>\n    </Dz>\n    <PakPS3>\n        <!--The compressing method to pack pak in ps3-->\n        <CompressMethod>\n            <Default value=\"");
-                sw.Write(PakPS3CompressMethodName[PakPS3DefaultCompressMethod]);
-                sw.Write("\" />");
-                foreach (KeyValuePair<string, Package.Pak.CompressFlags> keyValuePair in PakPS3CompressDictionary)
-                {
-                    sw.Write("\n            <Extension name=\"");
-                    sw.Write(keyValuePair.Key);
-                    sw.Write("\" value=\"");
-                    sw.Write(PakPS3CompressMethodName[keyValuePair.Value]);
+                    foreach (KeyValuePair<string, Package.Dz.CompressFlags> keyValuePair in DzCompressDictionary)
+                    {
+                        sw.Write("\n            <Extension name=\"");
+                        sw.Write(keyValuePair.Key);
+                        sw.Write("\" value=\"");
+                        sw.Write(DzCompressMethodName[keyValuePair.Value]);
+                        sw.Write("\" />");
+                    }
+                    sw.Write("\n        </CompressMethod>\n    </Dz>\n    <PakPS3>\n        <!--The compressing method to pack pak in ps3-->\n        <CompressMethod>\n            <Default value=\"");
+                    sw.Write(PakPS3CompressMethodName[PakPS3DefaultCompressMethod]);
                     sw.Write("\" />");
+                    foreach (KeyValuePair<string, Package.Pak.CompressFlags> keyValuePair in PakPS3CompressDictionary)
+                    {
+                        sw.Write("\n            <Extension name=\"");
+                        sw.Write(keyValuePair.Key);
+                        sw.Write("\" value=\"");
+                        sw.Write(PakPS3CompressMethodName[keyValuePair.Value]);
+                        sw.Write("\" />");
+                    }
+                    sw.Write("\n        </CompressMethod>\n    </PakPS3>\n    <Rsb>\n        <Ptx>\n            <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding and encoding ptx when unpacking or packing rsb-->\n            <ABGR8888Mode value=\"");
+                    sw.Write(RsbPtxABGR8888Mode);
+                    sw.Write("\" />\n            <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding and encoding ptx when unpacking or packing rsb-->\n            <ARGB8888PaddingMode value=\"");
+                    sw.Write(RsbPtxARGB8888PaddingMode);
+                    sw.Write("\" />\n        </Ptx>\n    </Rsb>\n    <Cdat>\n        <!--The key to decrypt and encrypt cdat in PVZ Free-->\n        <Key value=\"");
+                    sw.Write(CdatKey);
+                    sw.Write("\" />\n    </Cdat>\n    <Ptx>\n        <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding ptx-->\n        <ABGR8888Mode value=\"");
+                    sw.Write(PtxABGR8888Mode);
+                    sw.Write("\" />\n        <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding ptx-->\n        <ARGB8888PaddingMode value=\"");
+                    sw.Write(PtxARGB8888PaddingMode);
+                    sw.Write("\" />\n    </Ptx>\n    <RTON>\n        <!--The key to decrypt and encrypt RTON in PVZ2(The default key is wrong and you need to fix it there)-->\n        <Key value=\"");
+                    sw.Write(RTONKey);
+                    sw.Write("\" />\n    </RTON>\n    <ImageString name=\"");
+                    sw.Write(ImageConvertName);
+                    sw.Write("\">\n        <!--Convert image integer to string or string to integer in reanim, particles and trail. Find the answer from libpvz.so or PVZ.s3e!-->");
+                    foreach (KeyValuePair<string, int> keyValuePair in ImageConvertStringToInteger)
+                    {
+                        sw.Write("\n        <String id=\"");
+                        sw.Write(keyValuePair.Key);
+                        sw.Write("\" value=\"");
+                        sw.Write(keyValuePair.Value);
+                        sw.Write("\" />");
+                    }
+                    sw.Write("\n    </ImageString>\n    <ReanimXfl width=\"");
+                    sw.Write(ReanimXflWidth);
+                    sw.Write("\" height=\"");
+                    sw.Write(ReanimXflHeight);
+                    sw.Write("\" uselabelname=\"");
+                    sw.Write(ReanimXflLabelName);
+                    sw.Write("\" scalex=\"");
+                    sw.Write(ReanimXflScaleX);
+                    sw.Write("\" scaley=\"");
+                    sw.Write(ReanimXflScaleY);
+                    sw.Write("\" />\n    <AD>");
+                    sw.Write(OpenProgramAD);
+                    sw.Write("</AD>\n</Description>");
                 }
-                sw.Write("\n        </CompressMethod>\n    </PakPS3>\n    <Rsb>\n        <Ptx>\n            <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding and encoding ptx when unpacking or packing rsb-->\n            <ABGR8888Mode value=\"");
-                sw.Write(RsbPtxABGR8888Mode);
-                sw.Write("\" />\n            <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding and encoding ptx when unpacking or packing rsb-->\n            <ARGB8888PaddingMode value=\"");
-                sw.Write(RsbPtxARGB8888PaddingMode);
-                sw.Write("\" />\n        </Ptx>\n    </Rsb>\n    <Cdat>\n        <!--The key to decrypt and encrypt cdat in PVZ Free-->\n        <Key value=\"");
-                sw.Write(CdatKey);
-                sw.Write("\" />\n    </Cdat>\n    <Ptx>\n        <!--Whether the texture 0 format ptx used ABGR8888 texture for decoding ptx-->\n        <ABGR8888Mode value=\"");
-                sw.Write(PtxABGR8888Mode);
-                sw.Write("\" />\n        <!--Whether the texture 0 format ptx used ABGR8888_Padding texture for decoding ptx-->\n        <ARGB8888PaddingMode value=\"");
-                sw.Write(PtxARGB8888PaddingMode);
-                sw.Write("\" />\n    </Ptx>\n    <RTON>\n        <!--The key to decrypt and encrypt RTON in PVZ2(The default key is wrong and you need to fix it there)-->\n        <Key value=\"");
-                sw.Write(RTONKey);
-                sw.Write("\" />\n    </RTON>\n    <ImageString name=\"");
-                sw.Write(ImageConvertName);
-                sw.Write("\">\n        <!--Convert image integer to string or string to integer in reanim, particles and trail. Find the answer from libpvz.so or PVZ.s3e!-->");
-                foreach (KeyValuePair<string, int> keyValuePair in ImageConvertStringToInteger)
-                {
-                    sw.Write("\n        <String id=\"");
-                    sw.Write(keyValuePair.Key);
-                    sw.Write("\" value=\"");
-                    sw.Write(keyValuePair.Value);
-                    sw.Write("\" />");
-                }
-                sw.Write("\n    </ImageString>\n    <ReanimXfl width=\"");
-                sw.Write(ReanimXflWidth);
-                sw.Write("\" height=\"");
-                sw.Write(ReanimXflHeight);
-                sw.Write("\" uselabelname=\"");
-                sw.Write(ReanimXflLabelName);
-                sw.Write("\" scalex=\"");
-                sw.Write(ReanimXflScaleX);
-                sw.Write("\" scaley=\"");
-                sw.Write(ReanimXflScaleY);
-                sw.Write("\" />\n    <AD>");
-                sw.Write(OpenProgramAD);
-                sw.Write("</AD>\n</Description>");
+            }
+            catch (Exception)
+            {
+
             }
         }
 

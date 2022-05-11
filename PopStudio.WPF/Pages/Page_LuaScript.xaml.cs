@@ -21,6 +21,20 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_LuaScript : Page
     {
+        public void ShowScriptByFileName(string s)
+        {
+            richtextbox1.Document.Blocks.Clear();
+            Paragraph para = new Paragraph();
+            s = s.Replace("\\", "\\\\");
+            para.Inlines.Add(new Run($"rainy.dofile(\"{s}\");"));
+            richtextbox1.Document.Blocks.Add(para);
+        }
+
+        public void RunScript()
+        {
+            button_run_Click(button_run, new RoutedEventArgs());
+        }
+
         public Page_LuaScript()
         {
             InitializeComponent();

@@ -103,31 +103,38 @@ namespace PopStudio.WPF
             button10.Content = MAUIStr.Obj.Setting_Title;
             button11.Content = MAUIStr.Obj.Atlas_Title;
             button12.Content = MAUIStr.Obj.Pam_Title;
-            LoadHomePage();
-            Singleten = this;
-            if (Setting.OpenProgramAD)
+            if (Program.ShowScript(out string scriptFilePath))
             {
-                int randomNumber = new Random().Next(1, 4);
-                byte[] img;
-                string url;
-                switch (randomNumber)
+                LoadLuaScript(scriptFilePath);
+            }
+            else
+            {
+                LoadHomePage();
+                Singleten = this;
+                if (Setting.OpenProgramAD)
                 {
-                    case 1:
-                        img = ResourceAD.ImageAD1;
-                        url = ResourceAD.AD1;
-                        break;
-                    case 2:
-                        img = ResourceAD.ImageAD2;
-                        url = ResourceAD.AD2;
-                        break;
-                    case 3:
-                        img = ResourceAD.ImageAD3;
-                        url = ResourceAD.AD3;
-                        break;
-                    default:
-                        return;
+                    int randomNumber = new Random().Next(1, 4);
+                    byte[] img;
+                    string url;
+                    switch (randomNumber)
+                    {
+                        case 1:
+                            img = ResourceAD.ImageAD1;
+                            url = ResourceAD.AD1;
+                            break;
+                        case 2:
+                            img = ResourceAD.ImageAD2;
+                            url = ResourceAD.AD2;
+                            break;
+                        case 3:
+                            img = ResourceAD.ImageAD3;
+                            url = ResourceAD.AD3;
+                            break;
+                        default:
+                            return;
+                    }
+                    _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(img), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", url), true);
                 }
-                _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(img), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", url), true);
             }
         }
 
@@ -344,7 +351,7 @@ namespace PopStudio.WPF
             Label_Head.Content = MAUIStr.Obj.Compress_Title;
         }
 
-        public void LoadLuaScript()
+        public void LoadLuaScript(string sc = null)
         {
             ResetButton();
             button9.Background = Brushes.CornflowerBlue;
@@ -354,6 +361,11 @@ namespace PopStudio.WPF
                 Content = luaScript
             };
             Label_Head.Content = MAUIStr.Obj.LuaScript_Title;
+            if (sc != null)
+            {
+                luaScript.ShowScriptByFileName(sc);
+                luaScript.RunScript();
+            }
         }
 
         public void LoadSetting()

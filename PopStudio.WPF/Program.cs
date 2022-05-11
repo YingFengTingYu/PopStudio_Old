@@ -1,21 +1,13 @@
-﻿namespace PopStudio.GTK
+﻿using System.Windows;
+
+namespace PopStudio.WPF
 {
     class Program
     {
         static bool JumpToScript = false;
         static string ScriptFileName = null;
 
-        static bool init = false;
         static string buffer;
-
-        static void Init()
-        {
-            if (!init)
-            {
-                init = true;
-                Gtk.Application.Init();
-            }
-        }
 
         public static bool ShowScript(out string script)
         {
@@ -30,17 +22,22 @@
             RunAppGUI();
         }
 
+        static void RunAppGUI()
+        {
+            App app = new App();
+            app.InitializeComponent();
+            app.Run();
+        }
+
         static void ShowMessage(string message)
         {
-            Init();
-            Plugin.Dialogs.DisplayAlert("PopStudio", message, "Cancel");
+            MessageBox.Show(message, "PopStudio");
         }
 
         static int GetInteger(string description = null)
         {
-            Init();
             description ??= GUILanguage.Languages.MAUIStr.Obj.Command_EnterInteger;
-            string str = buffer ?? Plugin.Dialogs.DisplayPromptAsync("PopStudio", description);
+            string str = buffer ?? Microsoft.VisualBasic.Interaction.InputBox(description, "PopStudio");
             int num;
             try
             {
@@ -53,7 +50,7 @@
             return num;
         }
 
-
+        [STAThread]
         static void Main(params string[] args)
         {
             try
@@ -316,20 +313,6 @@
             else
             {
                 RunAppGUI();
-            }
-        }
-
-        static void RunAppGUI()
-        {
-            Init();
-            using (MainPage win = new MainPage())
-            {
-                win.DeleteEvent += (s, e) =>
-                {
-                    Gtk.Application.Quit();
-                };
-                win.ShowAll();
-                Gtk.Application.Run();
             }
         }
 

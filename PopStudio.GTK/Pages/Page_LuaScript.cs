@@ -7,6 +7,10 @@ namespace PopStudio.GTK.Pages
 {
     internal class Page_LuaScript : Plugin.Page
     {
+        public void ShowScriptByFileName(string s) => richtextbox1.Buffer.Text = $"rainy.dofile(\"{s.Replace("\\", "\\\\")}\");";
+
+        public void RunScript() => button_run_Click(button_run, new EventArgs());
+
         public Label label_introduction;
         public ScrolledWindow richtextbox1_window;
         public TextView richtextbox1;

@@ -2,6 +2,10 @@
 {
     internal class MAUIZHCN : ILocalization
     {
+        //Command
+        public string Command_EnterInteger => "请输入一个整数";
+        public string Command_EnterString => "请输入一个字符串";
+        public string Command_EnterFormat => "请输入格式序号";
         //Atlas
         public string Atlas_Title => "图集管理";
         public string Atlas_Introduction => "通过图集管理功能，将小图片构建为图集或将图集裁剪为小图片！";
@@ -185,7 +189,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.修复particles-RawXml读取解析负数异常问题；\n2.修复RTON编码解析UInt64整数异常问题；\n3.重新实现dz解包打包以更符合dzip.exe。";
+        public string HomePage_AppNewNotice => "1.支持PAM解码编码；\n2.修复脚本功能rainy.dofile无效问题；\n3.支持Windows，MacOS，Linux端通过命令行调用程序。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

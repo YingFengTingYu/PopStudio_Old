@@ -10,6 +10,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <FileVersion>4.3</FileVersion>
     <AssemblyName>PopStudio</AssemblyName>
+    <StartupObject>PopStudio.WPF.Program</StartupObject>
   </PropertyGroup>
 
   <Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />

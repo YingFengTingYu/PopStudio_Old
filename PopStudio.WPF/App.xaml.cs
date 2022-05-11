@@ -15,11 +15,6 @@ namespace PopStudio.WPF
     {
         public App() : base()
         {
-            string settingxml = "setting.xml";
-            if (File.Exists(settingxml))
-            {
-                Setting.LoadFromXml(settingxml);
-            }
         }
     }
 }
