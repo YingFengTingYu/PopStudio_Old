@@ -1,7 +1,10 @@
-﻿namespace PopStudio.GUILanguage.Languages
+﻿namespace PopStudio.GUI.Languages
 {
     internal class MAUIZHCN : ILocalization
     {
+        //Article
+        public string Article_Title => "文章";
+
         //Command
         public string Command_EnterInteger => "请输入一个整数";
         public string Command_EnterString => "请输入一个字符串";

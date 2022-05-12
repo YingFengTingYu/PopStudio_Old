@@ -40,6 +40,21 @@
 
         public static BinaryStream GetMemoryStream(byte[] bytes = null) => Disposable.Add(bytes == null ? new BinaryStream() : new BinaryStream(bytes));
 
+        public static BinaryStream GetHttpStream(string url)
+        {
+            try
+            {
+                using (var a = new System.Net.Http.HttpClient())
+                {
+                    return Disposable.Add(new BinaryStream(a.GetStreamAsync(url).Result));
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public static TempFilePool GetTempFilePool() => Disposable.Add(new TempFilePool());
 
         public static void Unpack(string inFile, string outFile, int format, bool changeimage = false, bool delete = false)

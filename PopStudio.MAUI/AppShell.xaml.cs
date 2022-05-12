@@ -1,4 +1,4 @@
-﻿using PopStudio.GUILanguage.Languages;
+﻿using PopStudio.GUI.Languages;
 
 namespace PopStudio.MAUI
 {
@@ -16,6 +16,7 @@ namespace PopStudio.MAUI
             fitem_reanim.Title = MAUIStr.Obj.Reanim_Title;
             fitem_particles.Title = MAUIStr.Obj.Particles_Title;
             fitem_trail.Title = MAUIStr.Obj.Trail_Title;
+            fitem_pam.Title = MAUIStr.Obj.Pam_Title;
             fitem_rton.Title = MAUIStr.Obj.RTON_Title;
             fitem_compress.Title = MAUIStr.Obj.Compress_Title;
             fitem_luascript.Title = MAUIStr.Obj.LuaScript_Title;

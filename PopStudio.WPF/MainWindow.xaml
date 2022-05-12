@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PopStudio.WPF"
         mc:Ignorable="d"
-        Title="PopStudio" Height="620" Width="900" MinHeight="580" MinWidth="540"
+        Title="PopStudio" Height="580" Width="900" MinHeight="540" MinWidth="540"
         Icon="/Icon.png">
     <Grid>
         <Grid x:Name="DialogGrid" Visibility="Collapsed" Background="#88000000" Panel.ZIndex="3">
@@ -35,18 +35,18 @@
                         <TextBlock Margin="0 15 0 10" Text="PopStudio" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="White" />
                         <Border Grid.Row="1" Margin="0 0 0 0" Width="140" BorderBrush="FloralWhite" BorderThickness="0 0 0 1" />
                         <StackPanel Margin="0 5 0 0" Grid.Row="2">
-                            <Button FontSize="15" x:Name="button1" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button1_Click" />
-                            <Button FontSize="15" x:Name="button2" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button2_Click" />
-                            <Button FontSize="15" x:Name="button11" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button11_Click" />
-                            <Button FontSize="15" x:Name="button3" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button3_Click" />
-                            <Button FontSize="15" x:Name="button4" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button4_Click" />
-                            <Button FontSize="15" x:Name="button5" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button5_Click" />
-                            <Button FontSize="15" x:Name="button6" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button6_Click" />
-                            <Button FontSize="15" x:Name="button12" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button12_Click" />
-                            <Button FontSize="15" x:Name="button7" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button7_Click" />
-                            <Button FontSize="15" x:Name="button8" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button8_Click" />
-                            <Button FontSize="15" x:Name="button9" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button9_Click" />
-                            <Button FontSize="15" x:Name="button10" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button10_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button1" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button1_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button2" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button2_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button11" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button11_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button3" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button3_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button4" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button4_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button5" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button5_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button6" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button6_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button12" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button12_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button7" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button7_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button8" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button8_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button9" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button9_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button10" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button10_Click" />
                         </StackPanel>
                     </Grid>
                 </Grid>

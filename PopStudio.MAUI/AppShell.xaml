@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PopStudio.MAUI"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}"
     FlyoutWidth="200">
 
     <Shell.ItemTemplate>
@@ -11,6 +12,7 @@
             <Grid ColumnDefinitions="*">
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
+                       TextColor="White"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center" HeightRequest="45" />
             </Grid>
@@ -19,7 +21,7 @@
     
     <Shell.FlyoutHeader>
         <Grid>
-            <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
         </Grid>
     </Shell.FlyoutHeader>
 
@@ -49,6 +51,10 @@
 
     <FlyoutItem x:Name="fitem_trail">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}" />
+    </FlyoutItem>
+
+    <FlyoutItem x:Name="fitem_pam">
+        <ShellContent ContentTemplate="{DataTemplate local:Page_Pam}" />
     </FlyoutItem>
 
     <FlyoutItem x:Name="fitem_rton">

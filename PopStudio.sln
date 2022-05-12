@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.WPF", "PopStudio.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.GTK", "PopStudio.GTK\PopStudio.GTK.csproj", "{9A5B1E6E-209B-451E-BAEB-6E4FFA29AF1B}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.GUILanguage", "PopStudio.GUILanguage\PopStudio.GUILanguage.shproj", "{DA450279-8012-49F0-968D-01216F0E6428}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Package", "Package\Package.csproj", "{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.MAUI", "PopStudio.MAUI\PopStudio.MAUI.csproj", "{C844533D-1D9D-4A47-9C80-2CDDA07F2A71}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.GUI", "PopStudio.GUI\PopStudio.GUI.shproj", "{6639EBDC-4618-4A6D-A4C2-EE2238B07408}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,13 +127,13 @@ Global
 		SolutionGuid = {EBC4D291-1D51-47A2-997F-CF423A66F884}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
+		PopStudio.GUI\PopStudio.GUI.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{5162deba-202f-485f-8b68-0c1c2212382a}*SharedItemsImports = 13
-		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
+		PopStudio.GUI\PopStudio.GUI.projitems*{6639ebdc-4618-4a6d-a4c2-ee2238b07408}*SharedItemsImports = 13
+		PopStudio.GUI\PopStudio.GUI.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
-		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{c844533d-1d9d-4a47-9c80-2cdda07f2a71}*SharedItemsImports = 5
+		PopStudio.GUI\PopStudio.GUI.projitems*{c844533d-1d9d-4a47-9c80-2cdda07f2a71}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{c844533d-1d9d-4a47-9c80-2cdda07f2a71}*SharedItemsImports = 5
-		PopStudio.GUILanguage\PopStudio.GUILanguage.projitems*{da450279-8012-49f0-968d-01216f0e6428}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

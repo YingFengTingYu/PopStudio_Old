@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
-using PopStudio.GUILanguage.Languages;
+using PopStudio.GUI.Languages;
 
 namespace PopStudio.MAUI
 {

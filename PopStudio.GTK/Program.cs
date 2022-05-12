@@ -39,7 +39,7 @@
         static int GetInteger(string description = null)
         {
             Init();
-            description ??= GUILanguage.Languages.MAUIStr.Obj.Command_EnterInteger;
+            description ??= GUI.Languages.MAUIStr.Obj.Command_EnterInteger;
             string str = buffer ?? Plugin.Dialogs.DisplayPromptAsync("PopStudio", description);
             int num;
             try
@@ -142,31 +142,31 @@
                             API.DecodeImage(fileName, $"{fileName}.png", 8);
                             break;
                         case CommandCode.EncodeImage_PtxRsb:
-                            API.EncodeImage(fileName, $"{fileName}.PTX", 0, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.PTX", 0, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_Cdat:
-                            API.EncodeImage(fileName, $"{fileName}.cdat", 1, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.cdat", 1, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_TexiOS:
-                            API.EncodeImage(fileName, $"{fileName}.tex", 2, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.tex", 2, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_Txz:
-                            API.EncodeImage(fileName, $"{fileName}.txz", 3, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.txz", 3, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_TexTV:
-                            API.EncodeImage(fileName, $"{fileName}.tex", 4, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.tex", 4, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_PtxXbox360:
-                            API.EncodeImage(fileName, $"{fileName}.ptx", 5, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.ptx", 5, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_PtxPS3:
-                            API.EncodeImage(fileName, $"{fileName}.ptx", 6, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.ptx", 6, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_PtxPSV:
-                            API.EncodeImage(fileName, $"{fileName}.ptx", 7, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.ptx", 7, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.EncodeImage_Xnb:
-                            API.EncodeImage(fileName, $"{fileName}.xnb", 8, GetInteger(GUILanguage.Languages.MAUIStr.Obj.Command_EnterFormat));
+                            API.EncodeImage(fileName, $"{fileName}.xnb", 8, GetInteger(GUI.Languages.MAUIStr.Obj.Command_EnterFormat));
                             break;
                         case CommandCode.Reanim_ToPCCompiled:
                             API.ParseReanim(fileName, fileName.EndsWith(".reanim") ? $"{fileName}.compiled" : $"{fileName}.reanim.compiled", 0);

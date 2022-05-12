@@ -1,6 +1,6 @@
 ﻿using Android.Provider;
 using Android.Content;
-using PopStudio.GUILanguage.Languages;
+using PopStudio.GUI.Languages;
 
 namespace PopStudio.MAUI
 {

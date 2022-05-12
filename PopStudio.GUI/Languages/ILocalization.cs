@@ -1,7 +1,10 @@
-﻿namespace PopStudio.GUILanguage.Languages
+﻿namespace PopStudio.GUI.Languages
 {
     internal interface ILocalization
     {
+        //Article
+        public string Article_Title { get; }
+
         //Command
         public string Command_EnterInteger { get; }
         public string Command_EnterString { get; }

@@ -3,64 +3,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Atlas">
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-        <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-            <Label x:Name="label_introduction" FontSize="16"/>
-            <Label x:Name="label_choosemode" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Label x:Name="label_mode1" VerticalOptions="Center" />
-                <Switch x:Name="TB_Mode" Grid.Column="1" Toggled="ModeChange" />
-                <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
-            </Grid>
-            <Label x:Name="text1" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="15*" />
-                </Grid.ColumnDefinitions>
-                <Entry x:Name="textbox1" />
-                <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
-            </Grid>
-            <Label x:Name="text2" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="15*" />
-                </Grid.ColumnDefinitions>
-                <Entry x:Name="textbox2" />
-                <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
-            </Grid>
-            <Label x:Name="text3" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="15*" />
-                </Grid.ColumnDefinitions>
-                <Entry x:Name="textbox3" />
-                <Button x:Name="button3" Grid.Column="2" Clicked="Button3_Clicked" />
-            </Grid>
-            <Label x:Name="text4" />
-            <Grid>
-                <Entry x:Name="textbox4" />
-            </Grid>
-            <Label x:Name="text_mode" />
-            <Picker x:Name="CB_Mode" />
-            <StackLayout x:Name="splice_size" IsVisible="false">
-                <Label x:Name="text_maxwidth" />
-                <Picker x:Name="CB_MaxWidth" />
-                <Label x:Name="text_maxheight" />
-                <Picker x:Name="CB_MaxHeight" />
+        <StackLayout>
+            <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
+                <Label x:Name="label_introduction" FontSize="16"/>
+                <Label x:Name="label_choosemode" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="label_mode1" VerticalOptions="Center" />
+                    <Switch x:Name="TB_Mode" Grid.Column="1" Toggled="ModeChange" />
+                    <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
+                </Grid>
+                <Label x:Name="text1" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="15*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="textbox1" />
+                    <Button x:Name="button1" Grid.Column="2" Clicked="Button_Clicked" />
+                </Grid>
+                <Label x:Name="text2" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="15*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="textbox2" />
+                    <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
+                </Grid>
+                <Label x:Name="text3" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="15*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="textbox3" />
+                    <Button x:Name="button3" Grid.Column="2" Clicked="Button3_Clicked" />
+                </Grid>
+                <Label x:Name="text4" />
+                <Grid>
+                    <Entry x:Name="textbox4" />
+                </Grid>
+                <Label x:Name="text_mode" />
+                <Picker x:Name="CB_Mode" />
+                <StackLayout x:Name="splice_size" IsVisible="false">
+                    <Label x:Name="text_maxwidth" />
+                    <Picker x:Name="CB_MaxWidth" />
+                    <Label x:Name="text_maxheight" />
+                    <Picker x:Name="CB_MaxHeight" />
+                </StackLayout>
+                <Button x:Name="button_run" Clicked="Button_Click" />
+                <Label x:Name="label_statue" />
+                <Label x:Name="text5" />
             </StackLayout>
-            <Button x:Name="button_run" Clicked="Button_Click" />
-            <Label x:Name="label_statue" />
-            <Label x:Name="text5" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

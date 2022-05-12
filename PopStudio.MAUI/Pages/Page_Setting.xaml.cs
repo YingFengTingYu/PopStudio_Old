@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using PopStudio.GUILanguage.Languages;
+using PopStudio.GUI.Languages;
 
 namespace PopStudio.MAUI;
 

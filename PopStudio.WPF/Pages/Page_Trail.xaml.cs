@@ -1,4 +1,4 @@
-﻿using PopStudio.GUILanguage.Languages;
+﻿using PopStudio.GUI.Languages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

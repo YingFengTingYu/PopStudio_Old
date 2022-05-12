@@ -157,6 +157,20 @@
             }
         }
 
+        public static BinaryStream GetHttpStream(params object[] args)
+        {
+            try
+            {
+                return API.GetHttpStream(args.Length >= 1 ? args[0].ToString() : null);
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+                return null;
+            }
+        }
+
         public static TempFilePool GetTempFilePool(params object[] args)
         {
             try
@@ -315,6 +329,63 @@
                     n[i] = args[i];
                 }
                 API.EncodeImage(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+            }
+        }
+
+        public static void ParseReanim(params object[] args)
+        {
+            try
+            {
+                object[] n = new object[3];
+                int min = args.Length > n.Length ? n.Length : args.Length;
+                for (int i = 0; i < min; i++)
+                {
+                    n[i] = args[i];
+                }
+                API.ParseReanim(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+            }
+        }
+
+        public static void ParseTrail(params object[] args)
+        {
+            try
+            {
+                object[] n = new object[3];
+                int min = args.Length > n.Length ? n.Length : args.Length;
+                for (int i = 0; i < min; i++)
+                {
+                    n[i] = args[i];
+                }
+                API.ParseTrail(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+            }
+        }
+
+        public static void ParseParticles(params object[] args)
+        {
+            try
+            {
+                object[] n = new object[3];
+                int min = args.Length > n.Length ? n.Length : args.Length;
+                for (int i = 0; i < min; i++)
+                {
+                    n[i] = args[i];
+                }
+                API.ParseParticles(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {

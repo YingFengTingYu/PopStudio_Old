@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PopStudio.GUILanguage.Languages;
+using PopStudio.GUI.Languages;
 
 namespace PopStudio.WPF.Pages
 {

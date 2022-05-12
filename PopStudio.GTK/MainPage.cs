@@ -1,5 +1,5 @@
 ﻿using Gtk;
-using PopStudio.GUILanguage.Languages;
+using PopStudio.GUI.Languages;
 using PopStudio.GTK.Pages;
 using PopStudio.GTK.Plugin;
 

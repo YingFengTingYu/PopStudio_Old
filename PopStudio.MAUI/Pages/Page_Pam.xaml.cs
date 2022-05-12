@@ -1,44 +1,51 @@
-﻿using PopStudio.GUI.Languages;
+﻿using System;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Xaml;
+using PopStudio.GUI.Languages;
 
 namespace PopStudio.MAUI
 {
-	public partial class Page_Reanim : ContentPage
+	public partial class Page_Pam : ContentPage
 	{
-		public Page_Reanim()
+		public Page_Pam()
 		{
 			InitializeComponent();
-            Title = MAUIStr.Obj.Reanim_Title;
-            label_introduction.Text = MAUIStr.Obj.Reanim_Introduction;
-            text1.Text = MAUIStr.Obj.Reanim_Choose1;
-            text2.Text = MAUIStr.Obj.Reanim_Choose2;
-            text_in.Text = MAUIStr.Obj.Reanim_InFormat;
-            text_out.Text = MAUIStr.Obj.Reanim_OutFormat;
+            Title = MAUIStr.Obj.Pam_Title;
+            label_introduction.Text = MAUIStr.Obj.Pam_Introduction;
+            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
+            label_mode1.Text = MAUIStr.Obj.Pam_Mode1;
+            label_mode2.Text = MAUIStr.Obj.Pam_Mode2;
+            text1.Text = MAUIStr.Obj.Pam_Choose1;
+            text2.Text = MAUIStr.Obj.Pam_Choose2;
+            //text3.Text = MAUIStr.Obj.Pam_Choose3;
             button1.Text = MAUIStr.Obj.Share_Choose;
             button2.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;
-            CB_InMode.Items.Clear();
-            CB_InMode.Items.Add("PC_Compiled");
-            CB_InMode.Items.Add("Phone32_Compiled");
-            CB_InMode.Items.Add("Phone64_Compiled");
-            CB_InMode.Items.Add("WP_Xnb");
-            CB_InMode.Items.Add("GameConsole_Compiled");
-            CB_InMode.Items.Add("TV_Compiled");
-            CB_InMode.Items.Add("Studio_Json");
-            CB_InMode.Items.Add("Raw_Xml");
-            CB_InMode.SelectedIndex = 0;
-            CB_OutMode.Items.Clear();
-            CB_OutMode.Items.Add("PC_Compiled");
-            CB_OutMode.Items.Add("Phone32_Compiled");
-            CB_OutMode.Items.Add("Phone64_Compiled");
-            CB_OutMode.Items.Add("WP_Xnb");
-            CB_OutMode.Items.Add("GameConsole_Compiled");
-            CB_OutMode.Items.Add("TV_Compiled");
-            CB_OutMode.Items.Add("Studio_Json");
-            CB_OutMode.Items.Add("Raw_Xml");
-            CB_OutMode.Items.Add("Flash_Xfl_Folder");
-            CB_OutMode.SelectedIndex = 7;
+            //CB_CMode.Items.Clear();
+            //CB_CMode.Items.Add("Simple Pam");
+            //CB_CMode.Items.Add("Encrypted Pam");
+            //CB_CMode.SelectedIndex = 0;
+        }
+
+        private void ToggleButton_Checked(object sender, EventArgs e)
+		{
+            if (((Switch)sender).IsToggled)
+            {
+                text1.Text = MAUIStr.Obj.Pam_Choose4;
+                text2.Text = MAUIStr.Obj.Pam_Choose5;
+                //text3.Text = MAUIStr.Obj.Pam_Choose6;
+                (textbox2.Text, textbox1.Text) = (textbox1.Text, textbox2.Text);
+            }
+            else
+            {
+                text1.Text = MAUIStr.Obj.Pam_Choose1;
+                text2.Text = MAUIStr.Obj.Pam_Choose2;
+                //text3.Text = MAUIStr.Obj.Pam_Choose3;
+                (textbox2.Text, textbox1.Text) = (textbox1.Text, textbox2.Text);
+            }
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -46,10 +53,10 @@ namespace PopStudio.MAUI
             Button b = (Button)sender;
             b.IsEnabled = false;
             text4.Text = MAUIStr.Obj.Share_Running;
+            bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
-            int inmode = CB_InMode.SelectedIndex;
-            int outmode = CB_OutMode.SelectedIndex;
+            //int cmode = CB_CMode.SelectedIndex;
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
@@ -59,7 +66,14 @@ namespace PopStudio.MAUI
                     {
                         throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
-                    API.Reanim(inFile, outFile, inmode, outmode);
+                    if (mode == true)
+                    {
+                        API.EncodePam(inFile, outFile);
+                    }
+                    else
+                    {
+                        API.DecodePam(inFile, outFile);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -97,15 +111,7 @@ namespace PopStudio.MAUI
 		{
 			try
 			{
-                string val;
-                if (CB_OutMode.SelectedIndex == 8)
-                {
-                    val = await this.ChooseFolder(); //Can't default this
-                }
-                else
-                {
-                    val = await this.ChooseSaveFile(); //Can't default this
-                }
+				string val = await this.ChooseSaveFile(); //Can't default this
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
 			}
 			catch (Exception)

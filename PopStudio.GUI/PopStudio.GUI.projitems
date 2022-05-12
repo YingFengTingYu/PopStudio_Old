@@ -3,10 +3,10 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>da450279-8012-49f0-968d-01216f0e6428</SharedGUID>
+    <SharedGUID>6639ebdc-4618-4a6d-a4c2-ee2238b07408</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>PopStudio.GUILanguage</Import_RootNamespace>
+    <Import_RootNamespace>PopStudio.GUI</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Languages\ILocalization.cs" />

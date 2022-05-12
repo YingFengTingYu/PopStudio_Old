@@ -15,7 +15,7 @@
 
   <Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
 
-  <Import Project="..\PopStudio.GUILanguage\PopStudio.GUILanguage.projitems" Label="Shared" />
+  <Import Project="..\PopStudio.GUI\PopStudio.GUI.projitems" Label="Shared" />
 
   <ItemGroup>
     <None Remove="Icon.png" />

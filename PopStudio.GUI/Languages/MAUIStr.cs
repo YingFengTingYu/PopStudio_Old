@@ -1,4 +1,4 @@
-﻿namespace PopStudio.GUILanguage.Languages
+﻿namespace PopStudio.GUI.Languages
 {
     internal class MAUIStr
     {

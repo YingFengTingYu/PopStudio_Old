@@ -3,149 +3,151 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_Setting">
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-        <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-            <Label x:Name="label_introduction" FontSize="16"/>
-            <Label x:Name="label_itemlanguage" />
-            <Button x:Name="button_chooselanguage" Clicked="button_chooselanguage_Clicked" />
-            <Label x:Name="label_itemdz" />
-            <Label x:Name="label_introdz" FontSize="16" />
-            <CollectionView x:Name="Setting_Dz" SelectionMode="Single" SelectionChanged="Setting_Dz_SelectionChanged" ItemsSource="{Binding DzPackInfo}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
-                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button x:Name="button_dz_1" Margin="0,7,0,7" Clicked="Button_Dz_1_Clicked" />
-                <Button x:Name="button_dz_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_Dz_2_Clicked" />
-            </Grid>
-            <Label x:Name="label_itempak" />
-            <Label x:Name="label_intropak" FontSize="16" />
-            <CollectionView x:Name="Setting_PakPS3" SelectionMode="Single" SelectionChanged="Setting_PakPS3_SelectionChanged" ItemsSource="{Binding PakPS3PackInfo}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
-                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button x:Name="button_pak_1" Margin="0,7,0,7" Clicked="Button_PakPS3_1_Clicked" />
-                <Button x:Name="button_pak_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_PakPS3_2_Clicked" />
-            </Grid>
-            <Label x:Name="label_itemrsb" />
-            <Label x:Name="label_introrsb" FontSize="16" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Text="ABGR8888" VerticalTextAlignment="Center" />
-                <Switch x:Name="rsbptx1" Grid.Column="1" Toggled="Switch_RsbPtx_1_Toggled" />
-                <Label Grid.Row="1" Text="ARGB8888_Padding" VerticalTextAlignment="Center" />
-                <Switch x:Name="rsbptx2" Grid.Row="1" Grid.Column="1" Toggled="Switch_RsbPtx_2_Toggled" />
-            </Grid>
-            <Label x:Name="label_itemptx" />
-            <Label x:Name="label_introptx" FontSize="16" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Text="ABGR8888" VerticalTextAlignment="Center" />
-                <Switch x:Name="ptx" Grid.Column="1" Toggled="Switch_Ptx_1_Toggled" />
-                <Label Grid.Row="1" Text="ARGB8888_Padding" VerticalTextAlignment="Center" />
-                <Switch x:Name="ptx2" Grid.Row="1" Grid.Column="1" Toggled="Switch_Ptx_2_Toggled" />
-            </Grid>
-            <Label x:Name="label_itemcdat" />
-            <Label x:Name="label_introcdat" FontSize="16" />
-            <Entry x:Name="cdat" TextChanged="Entry_CdatKey_TextChanged" />
-            <Label x:Name="label_itemrton" />
-            <Label x:Name="label_introrton" FontSize="16" />
-            <Entry x:Name="rton" TextChanged="Entry_RTONKey_TextChanged" />
-            <Label x:Name="label_itemcompiled" />
-            <Label x:Name="label_introcompiled" FontSize="16" />
-            <Label x:Name="imagestring" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button x:Name="button_compiled_1" Margin="0,7,0,7" Clicked="Button_ImageString_1_Clicked" />
-                <Button x:Name="button_compiled_2" Margin="0,7,0,7" Grid.Column="2" Clicked="Button_ImageString_2_Clicked" />
-            </Grid>
-            <Label x:Name="label_itemxfl" />
-            <Label x:Name="label_introxfl" FontSize="16" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label x:Name="label_xflwidth" VerticalTextAlignment="Center" />
-                <Entry x:Name="xflwidth" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Width_TextChanged" />
-                <Label x:Name="label_xflheight" VerticalTextAlignment="Center" Grid.Row="2" />
-                <Entry x:Name="xflheight" Grid.Row="2" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Height_TextChanged" />
-                <Label x:Name="label_xfllabelname" VerticalTextAlignment="Center" Grid.Row="4" />
-                <Entry x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" Keyboard="Numeric" TextChanged="xfllabel_TextChanged" />
-                <Label x:Name="label_xflscalex" VerticalTextAlignment="Center" Grid.Row="6" />
-                <Entry x:Name="xflscalex" Grid.Row="6" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscalex_TextChanged" />
-                <Label x:Name="label_xflscaley" VerticalTextAlignment="Center" Grid.Row="8" />
-                <Entry x:Name="xflscaley" Grid.Row="8" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscaley_TextChanged" />
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Label x:Name="label_ad" VerticalTextAlignment="Center" />
-                <Switch x:Name="switch_ad" Grid.Column="1" Toggled="Switch_AD_1_Toggled" />
-            </Grid>
-            <Button x:Name="button_recover" Clicked="Button_ResetSetting_Clicked" />
+        <StackLayout>
+            <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
+                <Label x:Name="label_introduction" FontSize="16"/>
+                <Label x:Name="label_itemlanguage" />
+                <Button x:Name="button_chooselanguage" Clicked="button_chooselanguage_Clicked" />
+                <Label x:Name="label_itemdz" />
+                <Label x:Name="label_introdz" FontSize="16" />
+                <CollectionView x:Name="Setting_Dz" SelectionMode="Single" SelectionChanged="Setting_Dz_SelectionChanged" ItemsSource="{Binding DzPackInfo}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
+                                <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="button_dz_1" Margin="0,7,0,7" Clicked="Button_Dz_1_Clicked" />
+                    <Button x:Name="button_dz_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_Dz_2_Clicked" />
+                </Grid>
+                <Label x:Name="label_itempak" />
+                <Label x:Name="label_intropak" FontSize="16" />
+                <CollectionView x:Name="Setting_PakPS3" SelectionMode="Single" SelectionChanged="Setting_PakPS3_SelectionChanged" ItemsSource="{Binding PakPS3PackInfo}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
+                                <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="button_pak_1" Margin="0,7,0,7" Clicked="Button_PakPS3_1_Clicked" />
+                    <Button x:Name="button_pak_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_PakPS3_2_Clicked" />
+                </Grid>
+                <Label x:Name="label_itemrsb" />
+                <Label x:Name="label_introrsb" FontSize="16" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="ABGR8888" VerticalTextAlignment="Center" />
+                    <Switch x:Name="rsbptx1" Grid.Column="1" Toggled="Switch_RsbPtx_1_Toggled" />
+                    <Label Grid.Row="1" Text="ARGB8888_Padding" VerticalTextAlignment="Center" />
+                    <Switch x:Name="rsbptx2" Grid.Row="1" Grid.Column="1" Toggled="Switch_RsbPtx_2_Toggled" />
+                </Grid>
+                <Label x:Name="label_itemptx" />
+                <Label x:Name="label_introptx" FontSize="16" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="ABGR8888" VerticalTextAlignment="Center" />
+                    <Switch x:Name="ptx" Grid.Column="1" Toggled="Switch_Ptx_1_Toggled" />
+                    <Label Grid.Row="1" Text="ARGB8888_Padding" VerticalTextAlignment="Center" />
+                    <Switch x:Name="ptx2" Grid.Row="1" Grid.Column="1" Toggled="Switch_Ptx_2_Toggled" />
+                </Grid>
+                <Label x:Name="label_itemcdat" />
+                <Label x:Name="label_introcdat" FontSize="16" />
+                <Entry x:Name="cdat" TextChanged="Entry_CdatKey_TextChanged" />
+                <Label x:Name="label_itemrton" />
+                <Label x:Name="label_introrton" FontSize="16" />
+                <Entry x:Name="rton" TextChanged="Entry_RTONKey_TextChanged" />
+                <Label x:Name="label_itemcompiled" />
+                <Label x:Name="label_introcompiled" FontSize="16" />
+                <Label x:Name="imagestring" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="button_compiled_1" Margin="0,7,0,7" Clicked="Button_ImageString_1_Clicked" />
+                    <Button x:Name="button_compiled_2" Margin="0,7,0,7" Grid.Column="2" Clicked="Button_ImageString_2_Clicked" />
+                </Grid>
+                <Label x:Name="label_itemxfl" />
+                <Label x:Name="label_introxfl" FontSize="16" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="label_xflwidth" VerticalTextAlignment="Center" />
+                    <Entry x:Name="xflwidth" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Width_TextChanged" />
+                    <Label x:Name="label_xflheight" VerticalTextAlignment="Center" Grid.Row="2" />
+                    <Entry x:Name="xflheight" Grid.Row="2" Grid.Column="2" Keyboard="Numeric" TextChanged="Entry_XflSize_Height_TextChanged" />
+                    <Label x:Name="label_xfllabelname" VerticalTextAlignment="Center" Grid.Row="4" />
+                    <Entry x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" Keyboard="Numeric" TextChanged="xfllabel_TextChanged" />
+                    <Label x:Name="label_xflscalex" VerticalTextAlignment="Center" Grid.Row="6" />
+                    <Entry x:Name="xflscalex" Grid.Row="6" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscalex_TextChanged" />
+                    <Label x:Name="label_xflscaley" VerticalTextAlignment="Center" Grid.Row="8" />
+                    <Entry x:Name="xflscaley" Grid.Row="8" Grid.Column="2" Keyboard="Numeric" TextChanged="xflscaley_TextChanged" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="label_ad" VerticalTextAlignment="Center" />
+                    <Switch x:Name="switch_ad" Grid.Column="1" Toggled="Switch_AD_1_Toggled" />
+                </Grid>
+                <Button x:Name="button_recover" Clicked="Button_ResetSetting_Clicked" />
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -1,7 +1,10 @@
-﻿namespace PopStudio.GUILanguage.Languages
+﻿namespace PopStudio.GUI.Languages
 {
     internal class MAUIENUS : ILocalization
     {
+        //Article
+        public string Article_Title => "Article";
+
         //Command
         public string Command_EnterInteger => "Please enter an integer...";
         public string Command_EnterString => "Please enter a string...";

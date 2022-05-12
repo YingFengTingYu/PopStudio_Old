@@ -108,6 +108,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\Page_Pam.xaml.cs">
+	    <DependentUpon>Page_Pam.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\Page_Atlas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -129,6 +135,9 @@
 	  <MauiXaml Update="Pages\Page_Reanim.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_Pam.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_RTON.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -146,8 +155,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<Import Project="..\PopStudio.GUILanguage\PopStudio.GUILanguage.projitems" Label="Shared" />
-
 	<Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
+
+	<Import Project="..\PopStudio.GUI\PopStudio.GUI.projitems" Label="Shared" />
 
 </Project>
