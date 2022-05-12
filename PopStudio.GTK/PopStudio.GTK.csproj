@@ -7,7 +7,7 @@
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>4.3</FileVersion>
+    <FileVersion>4.6</FileVersion>
     <PackageId>$(AssemblyName)</PackageId>
     <AssemblyName>PopStudio</AssemblyName>
   </PropertyGroup>

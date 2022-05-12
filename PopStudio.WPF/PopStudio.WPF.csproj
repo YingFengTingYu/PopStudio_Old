@@ -8,7 +8,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>4.3</FileVersion>
+    <FileVersion>4.6</FileVersion>
     <AssemblyName>PopStudio</AssemblyName>
     <StartupObject>PopStudio.WPF.Program</StartupObject>
   </PropertyGroup>

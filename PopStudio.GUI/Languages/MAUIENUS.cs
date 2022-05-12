@@ -192,7 +192,7 @@
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1. Fix the bug of parsing negative numbers in reading particles-RawXml; \n2. Fix the bug of parsing UInt64 number with RTON encode; \n3. Re-write DZ unpack and pack to be more consistent with \"dzip.exe\".";
+        public string HomePage_AppNewNotice => "1. Support PAM decoding and encoding; \n2. Repair script function \"rainy.dofile\"; \n3. Support calling program by CMD in Windows, MacOS and Linux system.";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

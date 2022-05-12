@@ -21,7 +21,7 @@ namespace PopStudio.MAUI
         //    }
         //}
 
-        public static partial void ModifyFullBar()
+        public static partial void PlatformInit()
         {
             #region Switch
             Microsoft.Maui.Handlers.SwitchHandler.Mapper.AppendToMapping("BlueTrack", (h, v) =>

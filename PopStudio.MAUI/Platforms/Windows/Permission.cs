@@ -2,7 +2,7 @@
 {
     internal static partial class Permission
     {
-        public static partial void ModifyFullBar()
+        public static partial void PlatformInit()
         {
 
         }
