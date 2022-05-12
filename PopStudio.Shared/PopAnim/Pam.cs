@@ -3,6 +3,9 @@ using System.Text.Json;
 
 namespace PopStudio.PopAnim
 {
+    /// <summary>
+    /// It's all from Disassembling PVZ2 and Zuma's Revenge!
+    /// </summary>
     internal class Pam
     {
         public static void Encode(string inFile, string outFile)

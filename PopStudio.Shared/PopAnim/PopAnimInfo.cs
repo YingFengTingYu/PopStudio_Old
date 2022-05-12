@@ -5,8 +5,8 @@
         public static readonly uint Magic = 0xBAF01954;
         public static readonly int MaxVersion = 6;
 
-        public int? version { get; set; }
-        public byte? frame_rate { get; set; }
+        public int version { get; set; } = 6;
+        public byte frame_rate { get; set; } = 30;
         public double[] position { get; set; } //x,y / 20
         public double[] size { get; set; } //width,height / 20
         public ImageInfo[] image { get; set; }
@@ -15,14 +15,12 @@
 
         public void Write(BinaryStream bs)
         {
-            int version = this.version ?? MaxVersion;
             bs.WriteUInt32(Magic);
             bs.WriteInt32(version);
             if (version > MaxVersion)
             {
                 throw new Exception(Str.Obj.TypeMisMatch);
             }
-            byte frame_rate = this.frame_rate ?? 30;
             bs.WriteByte(frame_rate);
             if (position == null || position.Length < 2)
             {
@@ -67,14 +65,12 @@
                 bs.WriteInt16((short)spriteCount);
                 for (int i = 0; i < spriteCount; i++)
                 {
-                    sprite[i].frame_rate ??= frame_rate;
                     sprite[i].Write(bs, version);
                 }
             }
             if (version <= 3)
             {
                 SpriteInfo mMain = main_sprite ?? new SpriteInfo();
-                mMain.frame_rate ??= frame_rate;
                 mMain.Write(bs, version);
             }
             else
@@ -86,7 +82,6 @@
                 else
                 {
                     bs.WriteBoolean(true);
-                    main_sprite.frame_rate ??= frame_rate;
                     main_sprite.Write(bs, version);
                 }
             }
@@ -117,6 +112,7 @@
             image = new ImageInfo[imagesCount];
             for (int i = 0; i < imagesCount; i++)
             {
+                Console.WriteLine(bs.Position);
                 image[i] = new ImageInfo().Read(bs, version);
             }
             int spritesCount = bs.ReadInt16();

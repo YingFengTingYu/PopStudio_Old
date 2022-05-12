@@ -225,7 +225,7 @@
             public bool sprite { get; set; }
             public bool additive { get; set; }
             public int preload_frames { get; set; }
-            public float timescale { get; set; }
+            public float timescale { get; set; } = 1;
 
             public void Write(BinaryStream bs, int version)
             {
@@ -243,7 +243,22 @@
                 }
                 flags |= sprite ? 32768 : 0;
                 flags |= additive ? 16384 : 0;
-                bs.WriteByte((byte)resource);
+                if (version >= 6)
+                {
+                    if (resource >= 255 || resource < 0)
+                    {
+                        bs.WriteByte(0xFF);
+                        bs.WriteInt16((short)resource);
+                    }
+                    else
+                    {
+                        bs.WriteByte((byte)resource);
+                    }
+                }
+                else
+                {
+                    bs.WriteByte((byte)resource);
+                }
                 if (preload_frames != 0)
                 {
                     flags |= 8192;
@@ -254,7 +269,7 @@
                     flags |= 4096;
                     bs.WriteStringByInt16Head(name);
                 }
-                if (timescale != 0)
+                if (timescale != 1)
                 {
                     flags |= 2048;
                     bs.WriteInt32((int)(timescale * 65536));
@@ -276,6 +291,10 @@
                 sprite = (num5 & 32768) != 0;
                 additive = (num5 & 16384) != 0;
                 resource = bs.ReadByte();
+                if (version >= 6 && resource == 255)
+                {
+                    resource = bs.ReadInt16();
+                }
                 if ((num5 & 8192) != 0)
                 {
                     preload_frames = bs.ReadInt16();
@@ -294,7 +313,7 @@
                 }
                 else
                 {
-                    timescale = 0;
+                    timescale = 1;
                 }
                 return this;
             }
@@ -319,7 +338,7 @@
             public double[] transform { get; set; }
             public double[] color { get; set; }
             public int[] src_rect { get; set; }
-            public int? anim_frame_num { get; set; }
+            public int anim_frame_num { get; set; }
 
             public void Write(BinaryStream bs, int version)
             {
@@ -448,7 +467,7 @@
                     bs.WriteByte((byte)(color[2] * 255));
                     bs.WriteByte((byte)(color[3] * 255));
                 }
-                if (anim_frame_num != null)
+                if (anim_frame_num != 0)
                 {
                     f7 |= MoveFlags.AnimFrameNum;
                     bs.WriteInt16((short)anim_frame_num);
@@ -527,6 +546,10 @@
                 if ((f7 & MoveFlags.AnimFrameNum) != 0)
                 {
                     anim_frame_num = bs.ReadInt16();
+                }
+                else
+                {
+                    anim_frame_num = 0;
                 }
                 return this;
             }

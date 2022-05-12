@@ -8,7 +8,7 @@ namespace PopStudio.PopAnim
     {
         public string name { get; set; }
         public string description { get; set; } //?
-        public double? frame_rate { get; set; }
+        public double frame_rate { get; set; }
         public int[] work_area { get; set; }
         public FrameInfo[] frame { get; set; }
 
@@ -85,7 +85,6 @@ namespace PopStudio.PopAnim
                 work_area[1] = framesCount - 1;
             }
             work_area[1] = framesCount;
-            //work_area[1] = Math.Min(work_area[0] + work_area[1], framesCount - 1) - work_area[0] + 1;
             frame = new FrameInfo[framesCount];
             for (int i = 0; i < framesCount; i++)
             {

@@ -74,7 +74,7 @@ namespace PopStudio.WPF.Pages
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
-                try
+                //try
                 {
                     if (!File.Exists(inFile))
                     {
@@ -89,10 +89,10 @@ namespace PopStudio.WPF.Pages
                         API.DecodePam(inFile, outFile);
                     }
                 }
-                catch (Exception ex)
-                {
-                    err = ex.Message;
-                }
+                //catch (Exception ex)
+                //{
+                //    err = ex.Message;
+                //}
                 Dispatcher.Invoke(() =>
                 {
                     if (err == null)
