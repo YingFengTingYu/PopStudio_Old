@@ -33,13 +33,15 @@
 		<BundleAssemblies>False</BundleAssemblies>
 		<AndroidKeyStore>False</AndroidKeyStore>
 		<EnableLLVM>True</EnableLLVM>
-		<RunAOTCompilation>True</RunAOTCompilation>
+		<RunAOTCompilation>False</RunAOTCompilation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <MandroidI18n>CJK;West;</MandroidI18n>
 	  <DefineConstants>$(DefineConstants)ANDROID</DefineConstants>
+	  <Optimize>True</Optimize>
+	  <DebugSymbols>False</DebugSymbols>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
@@ -114,6 +116,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Atlas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

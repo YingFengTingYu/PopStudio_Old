@@ -5,71 +5,86 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PopStudio.MAUI"
     FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}"
-    FlyoutWidth="200">
-
+    FlyoutWidth="200"
+    >
     <Shell.ItemTemplate>
         <DataTemplate>
-            <Grid ColumnDefinitions="*">
-                <Label Grid.Column="1"
-                       Text="{Binding Title}"
+            <Grid>
+                <Label Text="{Binding Title}"
                        TextColor="White"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center" HeightRequest="45" />
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
-    
+
     <Shell.FlyoutHeader>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <CollectionView Grid.Row="1" x:Name="collectionView"
+                    x:FieldModifier="public"
+                    SelectionMode="Single"
+                    SelectionChanged="collectionView_SelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Text="{Binding Title}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HeightRequest="45" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
     </Shell.FlyoutHeader>
 
-    <FlyoutItem x:Name="fitem_homepage">
+    <FlyoutItem x:Name="fitem_homepage" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_HomePage}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_package">
+    <FlyoutItem x:Name="fitem_package" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Package}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_atlas">
+    <FlyoutItem x:Name="fitem_atlas" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Atlas}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_texture">
+    <FlyoutItem x:Name="fitem_texture" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Texture}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_reanim">
+    <FlyoutItem x:Name="fitem_reanim" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Reanim}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_particles">
+    <FlyoutItem x:Name="fitem_particles" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Particles}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_trail">
+    <FlyoutItem x:Name="fitem_trail" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Trail}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_pam">
+    <FlyoutItem x:Name="fitem_pam" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Pam}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_rton">
+    <FlyoutItem x:Name="fitem_rton" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_RTON}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_compress">
+    <FlyoutItem x:Name="fitem_compress" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Compress}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_luascript">
+    <FlyoutItem x:Name="fitem_luascript" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_LuaScript}" />
     </FlyoutItem>
 
-    <FlyoutItem x:Name="fitem_setting">
+    <FlyoutItem x:Name="fitem_setting" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:Page_Setting}" />
     </FlyoutItem>
     

@@ -5,6 +5,5 @@
              x:Class="PopStudio.MAUI.App">
     <Application.Resources>
         <ResourceDictionary Source="Resources/Styles.xaml" />
-        
     </Application.Resources>
 </Application>
