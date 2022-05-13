@@ -22,6 +22,10 @@ namespace PopStudio.RTON
         static readonly string Str_RTID_0 = "RTID(0)";
         static readonly string Str_RTID_2 = "RTID({0}.{1}.{2:x8}@{3})";
         static readonly string Str_RTID_3 = "RTID({0}@{1})";
+        static readonly string Str_Binary = "$BINARY(\"{0}\", {1})";
+        static readonly string Str_Binary_Begin = "$BINARY(\"";
+        static readonly string Str_Binary_End = ")";
+        static readonly string Str_Binary_Middle = "\", ";
 
         /// <summary>
         /// Now it is very fast
@@ -80,6 +84,14 @@ namespace PopStudio.RTON
             }
             R0x90List.Clear();
             R0x92List.Clear();
+        }
+
+        static string ReadBinary(BinaryStream bs)
+        {
+            bs.ReadByte();
+            string s = bs.ReadStringByVarInt32Head();
+            int i = bs.ReadVarInt32();
+            return string.Format(Str_Binary, s, i);
         }
 
         static string ReadRTID(BinaryStream bs)
@@ -229,6 +241,9 @@ namespace PopStudio.RTON
                     case 0x86:
                         ReadJArray(bs, sw);
                         break;
+                    case 0x87:
+                        sw.WriteStringValue(ReadBinary(bs));
+                        break;
                     case 0x90:
                         tempstring = bs.ReadBytes(bs.ReadVarInt32());
                         R0x90List.Add(tempstring);
@@ -303,6 +318,9 @@ namespace PopStudio.RTON
                         break;
                     case 0x84:
                         sw.WritePropertyName(RTID0);
+                        break;
+                    case 0x87:
+                        sw.WritePropertyName(ReadBinary(bs));
                         break;
                     case 0x90:
                         tempstring = bs.ReadBytes(bs.ReadVarInt32());
@@ -434,6 +452,9 @@ namespace PopStudio.RTON
                     case 0x86:
                         ReadJArray(bs, sw);
                         break;
+                    case 0x87:
+                        sw.WriteStringValue(ReadBinary(bs));
+                        break;
                     case 0x90:
                         tempstring = bs.ReadBytes(bs.ReadVarInt32());
                         R0x90List.Add(tempstring);
@@ -534,6 +555,30 @@ namespace PopStudio.RTON
                 if (str[i] > 127) return false;
             }
             return true;
+        }
+
+        static bool WriteBinary(BinaryStream bs, string str)
+        {
+            if (str.StartsWith(Str_Binary_Begin) && str.EndsWith(Str_Binary_End))
+            {
+                int index = str.LastIndexOf(Str_Binary_Middle);
+                if (index == -1) return false;
+                int v;
+                try
+                {
+                    v = Convert.ToInt32(str[(index + 3)..^1]);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                string mString = str[9..index];
+                bs.WriteByte(0x87);
+                bs.WriteByte(0);
+                bs.WriteStringByVarInt32Head(mString);
+                bs.WriteVarInt32(v);
+            }
+            return false;
         }
 
         static bool WriteRTID(BinaryStream bs, string str)
@@ -643,6 +688,10 @@ namespace PopStudio.RTON
                         else if (WriteRTID(bs, str))
                         {
                             //83rton or 84(has already been written by WriteRTID function)
+                        }
+                        else if (WriteBinary(bs, str))
+                        {
+                            //87
                         }
                         else if (IsASCII(str))
                         {
@@ -773,6 +822,10 @@ namespace PopStudio.RTON
                 {
                     //83rton
                 }
+                else if (WriteBinary(bs, key))
+                {
+                    //87
+                }
                 else if (IsASCII(key))
                 {
                     //9091rton
@@ -838,6 +891,10 @@ namespace PopStudio.RTON
                         else if (WriteRTID(bs, str))
                         {
                             //83rton
+                        }
+                        else if (WriteBinary(bs, str))
+                        {
+                            //87
                         }
                         else if (IsASCII(str))
                         {
