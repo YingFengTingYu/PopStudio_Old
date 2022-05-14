@@ -41,8 +41,6 @@ public partial class Page_Setting : ContentPage
 		button_compiled_1.Text = MAUIStr.Obj.Setting_Load;
 		button_compiled_2.Text = MAUIStr.Obj.Setting_Unload;
 		button_recover.Text = MAUIStr.Obj.Setting_Recover;
-		Setting_Dz.ItemsSource = dzpackinfo;
-		Setting_PakPS3.ItemsSource = pakps3packinfo;
 		Setting.CanSave = false;
 		InitDzPackSetting();
 		InitPakPS3PackSetting();
@@ -59,8 +57,7 @@ public partial class Page_Setting : ContentPage
 	/// <summary>
 	/// DZ Setting Begin
 	/// </summary>
-	ObservableCollection<ListInfo> dzpackinfo = new ObservableCollection<ListInfo>();
-	public ObservableCollection<ListInfo> DzPackInfo => dzpackinfo;
+	List<ListInfo> dzpackinfo;
 
 	private void Button_Dz_1_Clicked(object sender, EventArgs e)
 	{
@@ -72,16 +69,9 @@ public partial class Page_Setting : ContentPage
 		ClearDzPackSetting();
 	}
 
-	private void Setting_Dz_SelectionChanged(object sender, SelectionChangedEventArgs e)
-	{
-		if (e.CurrentSelection.Count == 0) return;
-		ChangeDzPackSetting((e.CurrentSelection.First() as ListInfo)?.ItemName);
-		(sender as CollectionView).SelectedItem = null;
-	}
-
 	void InitDzPackSetting()
     {
-		dzpackinfo.Clear();
+		dzpackinfo = new List<ListInfo>();
 		Dictionary<string, Package.Dz.CompressFlags> dzpacksetting = Setting.DzCompressDictionary;
 		Dictionary<Package.Dz.CompressFlags, string> dzcompressname = Setting.DzCompressMethodName;
 		dzpackinfo.Add(new ListInfo("default", dzcompressname[Setting.DzDefaultCompressMethod]));
@@ -89,7 +79,25 @@ public partial class Page_Setting : ContentPage
         {
 			dzpackinfo.Add(new ListInfo(keyValuePair.Key, dzcompressname[keyValuePair.Value]));
 		}
-	}
+		Setting_Dz.Clear();
+        foreach (ListInfo info in dzpackinfo)
+        {
+			Button b = new Button
+			{
+				Text = $"{info.ItemName}------{info.ItemValue}",
+				FontSize = 18,
+				BorderWidth = 1,
+                Padding = new Thickness(0, 5),
+                CornerRadius = 0,
+                BackgroundColor = Colors.Transparent
+			};
+            b.SetAppThemeColor(Button.TextColorProperty, Colors.Black, Colors.White);
+            b.SetAppThemeColor(Button.BorderColorProperty, Colors.Black, Colors.White);
+            string n = info.ItemName;
+            b.Clicked += (s, e) => ChangeDzPackSetting(n);
+            Setting_Dz.Add(b);
+        }
+    }
 
 	async void AddDzPackSetting()
     {
@@ -209,13 +217,6 @@ public partial class Page_Setting : ContentPage
 		ClearPakPS3PackSetting();
 	}
 
-	private void Setting_PakPS3_SelectionChanged(object sender, SelectionChangedEventArgs e)
-	{
-		if (e.CurrentSelection.Count == 0) return;
-		ChangePakPS3PackSetting((e.CurrentSelection.First() as ListInfo)?.ItemName);
-		(sender as CollectionView).SelectedItem = null;
-	}
-
 	void InitPakPS3PackSetting()
 	{
 		pakps3packinfo.Clear();
@@ -226,7 +227,25 @@ public partial class Page_Setting : ContentPage
 		{
 			pakps3packinfo.Add(new ListInfo(keyValuePair.Key, pakps3compressname[keyValuePair.Value]));
 		}
-	}
+		Setting_PakPS3.Clear();
+        foreach (ListInfo info in pakps3packinfo)
+        {
+            Button b = new Button
+            {
+                Text = $"{info.ItemName}------{info.ItemValue}",
+                FontSize = 18,
+                BorderWidth = 1,
+                Padding = new Thickness(0, 5),
+                CornerRadius = 0,
+                BackgroundColor = Colors.Transparent
+            };
+            b.SetAppThemeColor(Button.TextColorProperty, Colors.Black, Colors.White);
+            b.SetAppThemeColor(Button.BorderColorProperty, Colors.Black, Colors.White);
+            string n = info.ItemName;
+            b.Clicked += (s, e) => ChangePakPS3PackSetting(n);
+            Setting_PakPS3.Add(b);
+        }
+    }
 
 	async void AddPakPS3PackSetting()
 	{

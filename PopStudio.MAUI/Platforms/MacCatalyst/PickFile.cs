@@ -1,5 +1,7 @@
 ﻿using Foundation;
 using UIKit;
+using AppKit;
+using MobileCoreServices;
 
 namespace PopStudio.MAUI
 {
@@ -9,9 +11,9 @@ namespace PopStudio.MAUI
 
 		public static partial async Task<string> ChooseOpenFile(this ContentPage page) => (await FilePicker.PickAsync()).FullPath;
 
-		public static partial async Task<string> ChooseFolder(this ContentPage page) => await FolderPicker.PickFolder();
+		public static partial async Task<string> ChooseFolder(this ContentPage page) => await PickerHelper.PickFolder();
 
-		static class FolderPicker
+		static class PickerHelper
         {
 			class PickerDelegate : UIDocumentPickerDelegate
 			{
@@ -40,7 +42,7 @@ namespace PopStudio.MAUI
 			}
 
 			static string filesHead = "file://";
-
+            static string filesEnd = "/";
 
             public static async Task<string> PickFolder()
 			{
@@ -72,7 +74,10 @@ namespace PopStudio.MAUI
                 {
 					ans = ans[filesHead.Length..];
                 }
-
+				if (ans.EndsWith(filesEnd))
+                {
+					ans = ans[..^1];
+                }
 
                 return ans;
 			}
@@ -97,5 +102,5 @@ namespace PopStudio.MAUI
 				}
 			}
 		}
-	}
+    }
 }

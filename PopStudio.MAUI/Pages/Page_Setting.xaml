@@ -11,20 +11,7 @@
                 <Button x:Name="button_chooselanguage" Clicked="button_chooselanguage_Clicked" />
                 <Label x:Name="label_itemdz" />
                 <Label x:Name="label_introdz" FontSize="16" />
-                <CollectionView x:Name="Setting_Dz" SelectionMode="Single" SelectionChanged="Setting_Dz_SelectionChanged" ItemsSource="{Binding DzPackInfo}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
-                                <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <StackLayout x:Name="Setting_Dz" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -36,20 +23,7 @@
                 </Grid>
                 <Label x:Name="label_itempak" />
                 <Label x:Name="label_intropak" FontSize="16" />
-                <CollectionView x:Name="Setting_PakPS3" SelectionMode="Single" SelectionChanged="Setting_PakPS3_SelectionChanged" ItemsSource="{Binding PakPS3PackInfo}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Text="{Binding ItemName}" />
-                                <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding ItemValue}" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <StackLayout x:Name="Setting_PakPS3" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

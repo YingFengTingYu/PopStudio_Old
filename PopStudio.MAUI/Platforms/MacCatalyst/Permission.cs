@@ -4,12 +4,11 @@
     {
         public static partial void PlatformInit()
         {
-
         }
         public static partial bool HiddenPermission() => true;
         public static partial bool HiddenFlyout() => false;
 
-        static string macospath = FileSystem.AppDataDirectory + "/setting.xml";
+        static string macospath = FileSystem.AppDataDirectory + "/popstudio_setting.xml";
 
         public static partial string GetSettingPath() => macospath;
 

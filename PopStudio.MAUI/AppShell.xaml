@@ -26,9 +26,11 @@
             </Grid.RowDefinitions>
             <Label FontSize="28" Margin="0,20,0,20" Text="PopStudio" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
             <CollectionView Grid.Row="1" x:Name="collectionView"
-                    x:FieldModifier="public"
-                    SelectionMode="Single"
-                    SelectionChanged="collectionView_SelectionChanged">
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never"
+                            x:FieldModifier="public"
+                            SelectionMode="Single"
+                            SelectionChanged="collectionView_SelectionChanged">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
