@@ -522,30 +522,13 @@ public partial class Page_Setting : ContentPage
         }
 	}
 
-	public class ListInfo
-    {
-		public string ItemName { get; set; }
-		public string ItemValue { get; set; }
-
-        public ListInfo()
-        {
-
-        }
-
-        public ListInfo(string itemName, string itemValue)
-        {
-            ItemName = itemName;
-            ItemValue = itemValue;
-        }
-    }
-
 	async void ChangeLanguageSetting()
 	{
         try
         {
 			string cancel = MAUIStr.Obj.Setting_Cancel;
 			string ok = MAUIStr.Obj.Setting_OK;
-			string item1 = "¼òÌåÖÐÎÄ";
+			string item1 = "\u7B80\u4F53\u4E2D\u6587";
 			string item2 = "English";
 			string ans = await DisplayActionSheet(MAUIStr.Obj.Setting_ChooseLanguage, cancel, ok, item1, item2);
 			if (ans != cancel && ans != ok && Setting.LanguageEnum[ans] != Setting.AppLanguage)
@@ -572,4 +555,21 @@ public partial class Page_Setting : ContentPage
 		Setting.OpenProgramAD = ((Switch)sender).IsToggled;
 		Setting.SaveAsXml(Permission.GetSettingPath());
 	}
+}
+
+public class ListInfo
+{
+    public string ItemName { get; set; }
+    public string ItemValue { get; set; }
+
+    public ListInfo()
+    {
+
+    }
+
+    public ListInfo(string itemName, string itemValue)
+    {
+        ItemName = itemName;
+        ItemValue = itemValue;
+    }
 }

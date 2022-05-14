@@ -12,8 +12,8 @@ namespace PopStudio
             _ => Language.ENUS
         };
 
-        public static readonly Dictionary<string, Language> LanguageEnum = new Dictionary<string, Language> { { "English", Language.ENUS }, { "简体中文", Language.ZHCN } };
-        public static readonly Dictionary<Language, string> LanguageName = new Dictionary<Language, string> { { Language.ENUS, "English" }, { Language.ZHCN, "简体中文" } };
+        public static readonly Dictionary<string, Language> LanguageEnum = new Dictionary<string, Language> { { "English", Language.ENUS }, { "\u7B80\u4F53\u4E2D\u6587", Language.ZHCN } };
+        public static readonly Dictionary<Language, string> LanguageName = new Dictionary<Language, string> { { Language.ENUS, "English" }, { Language.ZHCN, "\u7B80\u4F53\u4E2D\u6587" } };
 
         public static readonly string DefaultXml_P1 = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <!--Describe some default behaviour-->
