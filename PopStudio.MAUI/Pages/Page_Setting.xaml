@@ -31,7 +31,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button x:Name="button_dz_1" Margin="0,7,0,7" Clicked="Button_Dz_1_Clicked" />
-                    <Button x:Name="button_dz_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_Dz_2_Clicked" />
+                    <Button x:Name="button_dz_2" Margin="0,7,0,7" Grid.Column="2" Clicked="Button_Dz_2_Clicked" />
                 </Grid>
                 <Label x:Name="label_itempak" />
                 <Label x:Name="label_intropak" FontSize="16" />
@@ -56,7 +56,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button x:Name="button_pak_1" Margin="0,7,0,7" Clicked="Button_PakPS3_1_Clicked" />
-                    <Button x:Name="button_pak_2" Margin="0,7,0,7" Grid.Column="3" Clicked="Button_PakPS3_2_Clicked" />
+                    <Button x:Name="button_pak_2" Margin="0,7,0,7" Grid.Column="2" Clicked="Button_PakPS3_2_Clicked" />
                 </Grid>
                 <Label x:Name="label_itemrsb" />
                 <Label x:Name="label_introrsb" FontSize="16" />

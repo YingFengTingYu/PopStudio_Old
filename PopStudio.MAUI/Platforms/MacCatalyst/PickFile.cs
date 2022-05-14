@@ -39,7 +39,10 @@ namespace PopStudio.MAUI
 				}
 			}
 
-			public static async Task<string> PickFolder()
+			static string filesHead = "file://";
+
+
+            public static async Task<string> PickFolder()
 			{
 				var allowedTypes = new string[]
 				{
@@ -64,7 +67,14 @@ namespace PopStudio.MAUI
 
 				parentController.PresentViewController(picker, true, null);
 
-				return await tcs.Task;
+				string ans = await tcs.Task;
+				if (ans.StartsWith(filesHead))
+                {
+					ans = ans[filesHead.Length..];
+                }
+
+
+                return ans;
 			}
 
 			internal class UIPresentationControllerDelegate : UIAdaptivePresentationControllerDelegate

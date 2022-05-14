@@ -1,5 +1,4 @@
 ﻿using Android.Content.Res;
-using Android.Graphics;
 using Microsoft.Maui.Platform;
 using PopStudio.GUI.Languages;
 
@@ -26,7 +25,7 @@ namespace PopStudio.MAUI
             #region Switch
             Microsoft.Maui.Handlers.SwitchHandler.Mapper.AppendToMapping("BlueTrack", (h, v) =>
             {
-                h.PlatformView.TrackTintList = ColorStateList.ValueOf(Microsoft.Maui.Graphics.Color.FromUint(0xFFB9B9B9).ToPlatform());
+                h.PlatformView.TrackTintList = ColorStateList.ValueOf(Color.FromUint(0xFFB9B9B9).ToPlatform());
             });
             #endregion
             #region Underline

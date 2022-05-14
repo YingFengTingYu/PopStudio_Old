@@ -33,19 +33,19 @@
 		<BundleAssemblies>False</BundleAssemblies>
 		<AndroidKeyStore>False</AndroidKeyStore>
 		<EnableLLVM>True</EnableLLVM>
-		<RunAOTCompilation>False</RunAOTCompilation>
+		<RunAOTCompilation>True</RunAOTCompilation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
 	  <DefineConstants>$(DefineConstants)ANDROID</DefineConstants>
 	  <Optimize>True</Optimize>
 	  <DebugSymbols>False</DebugSymbols>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
 	</PropertyGroup>
@@ -72,13 +72,13 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
+	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
 	  <DefineConstants>$(DefineConstants)WINDOWS</DefineConstants>
 	</PropertyGroup>
 
