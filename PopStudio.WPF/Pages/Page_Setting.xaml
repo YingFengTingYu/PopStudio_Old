@@ -38,8 +38,8 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="button_dz_1" Margin="0,7,0,7" Click="Button_Dz_1_Clicked" />
-                <Button x:Name="button_dz_2" Margin="0,7,0,7" Grid.Column="3" Click="Button_Dz_2_Clicked" />
+                <Button x:Name="button_dz_1" Margin="0 7 0 7" Click="Button_Dz_1_Clicked" />
+                <Button x:Name="button_dz_2" Margin="0 7 0 7" Grid.Column="3" Click="Button_Dz_2_Clicked" />
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itempak" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_intropak" FontSize="14" />
@@ -66,8 +66,8 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="button_pak_1" Margin="0,7,0,7" Click="Button_PakPS3_1_Clicked" />
-                <Button x:Name="button_pak_2" Margin="0,7,0,7" Grid.Column="3" Click="Button_PakPS3_2_Clicked" />
+                <Button x:Name="button_pak_1" Margin="0 7 0 7" Click="Button_PakPS3_1_Clicked" />
+                <Button x:Name="button_pak_2" Margin="0 7 0 7" Grid.Column="3" Click="Button_PakPS3_2_Clicked" Cursor="Hand" />
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemrsb" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introrsb" FontSize="14" />
@@ -105,10 +105,26 @@
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemcdat" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introcdat" FontSize="14" />
-            <TextBox Height="30" Margin="0 5 0 5" x:Name="cdat" TextChanged="Entry_CdatKey_TextChanged" />
+            <Grid Margin="0 5 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="cdat" />
+                <Button x:Name="button_cdat" Grid.Column="2" Click="Button_Cdat_Click" />
+            </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemrton" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introrton" FontSize="14" />
-            <TextBox Height="30" Margin="0 5 0 5" x:Name="rton" TextChanged="Entry_RTONKey_TextChanged" />
+            <Grid Margin="0 5 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="rton" />
+                <Button x:Name="button_rton" Grid.Column="2" Click="Button_RTON_Click" />
+            </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemcompiled" />
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introcompiled" FontSize="14" />
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="imagestring" />
@@ -127,7 +143,9 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="15*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -141,15 +159,19 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock FontSize="20" x:Name="label_xflwidth" VerticalAlignment="Center" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflwidth" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflwidth_TextChanged" />
+                <TextBox x:Name="xflwidth" Grid.Column="2" />
+                <Button x:Name="button_xflwidth" Grid.Column="4" Click="Entry_XflSize_Width_TextChanged" />
                 <TextBlock FontSize="20" x:Name="label_xflheight" VerticalAlignment="Center" Grid.Row="2" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflheight" Grid.Row="2" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflheight_TextChanged" />
-                <TextBlock FontSize="20" x:Name="label_xfllabelname" VerticalAlignment="Center" Grid.Row="4" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xfllabel_TextChanged" />
-                <TextBlock FontSize="20" x:Name="label_xflscalex" VerticalAlignment="Center" Grid.Row="6" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflscalex" Grid.Row="6" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflscalex_TextChanged" />
-                <TextBlock FontSize="20" x:Name="label_xflscaley" VerticalAlignment="Center" Grid.Row="8" />
-                <TextBox DataObject.Pasting="NumberOnly" Height="30" x:Name="xflscaley" Grid.Row="8" Grid.Column="2" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="PreviewTextChanged" TextChanged="xflscaley_TextChanged" />
+                <TextBox x:Name="xflheight" Grid.Row="2" Grid.Column="2" />
+                <Button x:Name="button_xflheight" Grid.Row="2" Grid.Column="4" Click="Entry_XflSize_Height_TextChanged" />
+                <TextBlock FontSize="20" x:Name="label_xflscalex" VerticalAlignment="Center" Grid.Row="4" />
+                <TextBox x:Name="xflscalex" Grid.Row="4" Grid.Column="2" />
+                <Button x:Name="button_xflscalex" Grid.Row="4" Grid.Column="4" Click="xflscalex_TextChanged" />
+                <TextBlock FontSize="20" x:Name="label_xflscaley" VerticalAlignment="Center" Grid.Row="6" />
+                <TextBox x:Name="xflscaley" Grid.Row="6" Grid.Column="2" />
+                <Button x:Name="button_xflscaley" Grid.Row="6" Grid.Column="4" Click="xflscaley_TextChanged" />
+                <TextBlock FontSize="20" x:Name="label_xfllabelname" VerticalAlignment="Center" Grid.Row="8" />
+                <ComboBox HorizontalAlignment="Stretch" x:Name="xfllabelname" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" FontSize="16" />
             </Grid>
             <Grid Margin="0 5 0 5">
                 <Grid.ColumnDefinitions>

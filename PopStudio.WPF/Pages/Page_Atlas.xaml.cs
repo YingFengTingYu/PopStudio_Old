@@ -1,19 +1,9 @@
-﻿using PopStudio.GUI.Languages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PopStudio.Language.Languages;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PopStudio.WPF.Pages
 {
@@ -22,9 +12,8 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_Atlas : Page
     {
-        public Page_Atlas()
+        void LoadFont()
         {
-            InitializeComponent();
             Title = MAUIStr.Obj.Atlas_Title;
             label_introduction.Text = MAUIStr.Obj.Atlas_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
@@ -43,6 +32,12 @@ namespace PopStudio.WPF.Pages
             button_run.Content = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text5.Text = MAUIStr.Obj.Share_Waiting;
+        }
+
+        public Page_Atlas()
+        {
+            InitializeComponent();
+            LoadFont();
             CB_Mode.Items.Clear();
             CB_Mode.Items.Add("RESOURCES.XML(Rsb)");
             CB_Mode.Items.Add("resources.xml(Old)");
@@ -68,6 +63,12 @@ namespace PopStudio.WPF.Pages
             CB_MaxHeight.Items.Add("4096");
             CB_MaxHeight.Items.Add("8192");
             CB_MaxHeight.SelectedIndex = 3;
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~Page_Atlas()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
         private void ToggleButton_Checked(object sender, EventArgs e)
@@ -110,6 +111,8 @@ namespace PopStudio.WPF.Pages
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 try
                 {
                     if (mode)
@@ -139,11 +142,13 @@ namespace PopStudio.WPF.Pages
                 {
                     err = ex.Message;
                 }
-                Dispatcher.Invoke(() =>
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
+                Dispatcher.BeginInvoke(() =>
                 {
                     if (err == null)
                     {
-                        text5.Text = MAUIStr.Obj.Share_Finish;
+                        text5.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
                     }
                     else
                     {

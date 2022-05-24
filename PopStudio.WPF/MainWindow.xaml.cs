@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
+using PopStudio.Platform;
 using PopStudio.WPF.Pages;
 
 namespace PopStudio.WPF
@@ -22,212 +13,142 @@ namespace PopStudio.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Singleten
         public static MainWindow Singleten;
-        #endregion
 
-        #region Dialog
-
-        public object Result { get; set; }
-
-        public void OpenAlertDialog(string title, string message, string cancel)
+        public MainWindow()
         {
-            Result = null;
-            DialogControl.Content = new Frame
-            {
-                Content = new Plugin.AlertDialog(title, message, cancel)
-            };
-            DialogGrid.Visibility = Visibility.Visible;
+            Singleten = this;
+            InitializeComponent();
+            LoadFont();
+            LoadHomePage();
+            MAUIStr.OnLanguageChanged += LoadFont;
+            if (Setting.OpenProgramAD) ShowAD(new Random().Next(1, 4));
+            Prepare();
         }
 
-        public void OpenAlertDialog(string title, string message, string accept, string cancel)
+        public async void Prepare()
         {
-            Result = null;
-            DialogControl.Content = new Frame
+            loadingbar.Value = 0;
+            LoadingGrid.Opacity = 1;
+            LoadingGrid.Visibility = Visibility.Visible;
+            for (int i = 1; i <= 50; i++)
             {
-                Content = new Plugin.AlertDialog(title, message, accept, cancel)
-            };
-            DialogGrid.Visibility = Visibility.Visible;
+                await Task.Delay(10);
+                loadingbar.Value = i << 1;
+            }
+            await Task.Delay(200);
+            for (int i = 25; i > 0; i--)
+            {
+                await Task.Delay(10);
+                LoadingGrid.Opacity = (i << 2) / 100d;
+            }
+            LoadingGrid.Visibility = Visibility.Collapsed;
         }
 
-        public void OpenPromptDialog(string title, string message, string accept, string cancel, string initialValue)
+        public async void ShowAD(int index)
         {
-            Result = null;
-            DialogControl.Content = new Frame
+            byte[] img;
+            string url;
+            switch (index)
             {
-                Content = new Plugin.PromptDialog(title, message, accept, cancel, initialValue)
-            };
-            DialogGrid.Visibility = Visibility.Visible;
+                case 1:
+                    img = ResourceAD.ImageAD1;
+                    url = ResourceAD.AD1;
+                    break;
+                case 2:
+                    img = ResourceAD.ImageAD2;
+                    url = ResourceAD.AD2;
+                    break;
+                case 3:
+                    img = ResourceAD.ImageAD3;
+                    url = ResourceAD.AD3;
+                    break;
+                default:
+                    return;
+            }
+            await PopupDialog.DisplayPicture(MAUIStr.Obj.AD_Title, img, MAUIStr.Obj.AD_Cancel, () => Permission.OpenUrl(url), true);
         }
 
-        public void OpenPictureDialog(string title, BitmapImage img, string cancel, Action action, bool TouchLeave)
+        ~MainWindow()
         {
-            Result = null;
-            DialogControl.Content = new Frame
-            {
-                Content = new Plugin.PictureDialog(title, img, cancel, action, TouchLeave)
-            };
-            DialogGrid.Visibility = Visibility.Visible;
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
-        public void OpenSheetDialog(string title, string cancel, string ok, params string[] items)
+        public void ShowDialog(Page page)
         {
-            Result = null;
             DialogControl.Content = new Frame
             {
-                Content = new Plugin.SheetDialog(title, cancel, ok, items)
+                Content = page
             };
             DialogGrid.Visibility = Visibility.Visible;
         }
 
         public void CloseDialog()
         {
+            DialogControl.Content = null;
             DialogGrid.Visibility = Visibility.Collapsed;
         }
 
-        #endregion
+        private void Image_TopMost_Tapped(object sender, MouseButtonEventArgs e) => Topmost = !Topmost;
 
-        #region Init
-        public MainWindow()
+        int CurrentPageIndex = -1;
+
+        public void LoadFont()
         {
-            InitializeComponent();
             button1.Content = MAUIStr.Obj.HomePage_Title;
             button2.Content = MAUIStr.Obj.Package_Title;
-            button3.Content = MAUIStr.Obj.Texture_Title;
-            button4.Content = MAUIStr.Obj.Reanim_Title;
-            button5.Content = MAUIStr.Obj.Particles_Title;
-            button6.Content = MAUIStr.Obj.Trail_Title;
-            button7.Content = MAUIStr.Obj.RTON_Title;
-            button8.Content = MAUIStr.Obj.Compress_Title;
-            button9.Content = MAUIStr.Obj.LuaScript_Title;
-            button10.Content = MAUIStr.Obj.Setting_Title;
-            button11.Content = MAUIStr.Obj.Atlas_Title;
-            button12.Content = MAUIStr.Obj.Pam_Title;
-            if (Program.ShowScript(out string scriptFilePath))
+            button3.Content = MAUIStr.Obj.Atlas_Title;
+            button4.Content = MAUIStr.Obj.Texture_Title;
+            button5.Content = MAUIStr.Obj.Reanim_Title;
+            button6.Content = MAUIStr.Obj.Particles_Title;
+            button7.Content = MAUIStr.Obj.Trail_Title;
+            button8.Content = MAUIStr.Obj.Pam_Title;
+            button9.Content = MAUIStr.Obj.RTON_Title;
+            button10.Content = MAUIStr.Obj.Compress_Title;
+            button11.Content = MAUIStr.Obj.LuaScript_Title;
+            button12.Content = MAUIStr.Obj.Setting_Title;
+            switch (CurrentPageIndex)
             {
-                LoadLuaScript(scriptFilePath);
+                case 0:
+                    SetTitle(MAUIStr.Obj.HomePage_Title);
+                    break;
+                case 1:
+                    SetTitle(MAUIStr.Obj.Package_Title);
+                    break;
+                case 2:
+                    SetTitle(MAUIStr.Obj.Atlas_Title);
+                    break;
+                case 3:
+                    SetTitle(MAUIStr.Obj.Texture_Title);
+                    break;
+                case 4:
+                    SetTitle(MAUIStr.Obj.Reanim_Title);
+                    break;
+                case 5:
+                    SetTitle(MAUIStr.Obj.Particles_Title);
+                    break;
+                case 6:
+                    SetTitle(MAUIStr.Obj.Trail_Title);
+                    break;
+                case 7:
+                    SetTitle(MAUIStr.Obj.Pam_Title);
+                    break;
+                case 8:
+                    SetTitle(MAUIStr.Obj.RTON_Title);
+                    break;
+                case 9:
+                    SetTitle(MAUIStr.Obj.Compress_Title);
+                    break;
+                case 10:
+                    SetTitle(MAUIStr.Obj.LuaScript_Title);
+                    break;
+                case 11:
+                    SetTitle(MAUIStr.Obj.Setting_Title);
+                    break;
             }
-            else
-            {
-                LoadHomePage();
-                Singleten = this;
-                if (Setting.OpenProgramAD)
-                {
-                    int randomNumber = new Random().Next(1, 4);
-                    byte[] img;
-                    string url;
-                    switch (randomNumber)
-                    {
-                        case 1:
-                            img = ResourceAD.ImageAD1;
-                            url = ResourceAD.AD1;
-                            break;
-                        case 2:
-                            img = ResourceAD.ImageAD2;
-                            url = ResourceAD.AD2;
-                            break;
-                        case 3:
-                            img = ResourceAD.ImageAD3;
-                            url = ResourceAD.AD3;
-                            break;
-                        default:
-                            return;
-                    }
-                    _ = Plugin.Dialogs.DisplayPicture(MAUIStr.Obj.AD_Title, GetImage(img), MAUIStr.Obj.AD_Cancel, () => System.Diagnostics.Process.Start("explorer.exe", url), true);
-                }
-            }
         }
 
-        BitmapImage GetImage(byte[] ary)
-        {
-            BitmapImage bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.StreamSource = new MemoryStream(ary);
-            bmp.EndInit();
-            return bmp;
-        }
-        #endregion
-
-        #region Button
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            LoadHomePage();
-        }
-
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            LoadPackage();
-        }
-
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            LoadTexture();
-        }
-
-        private void button4_Click(object sender, RoutedEventArgs e)
-        {
-            LoadReanim();
-        }
-
-        private void button5_Click(object sender, RoutedEventArgs e)
-        {
-            LoadParticles();
-        }
-
-        private void button6_Click(object sender, RoutedEventArgs e)
-        {
-            LoadTrail();
-        }
-
-        private void button7_Click(object sender, RoutedEventArgs e)
-        {
-            LoadRTON();
-        }
-
-        private void button8_Click(object sender, RoutedEventArgs e)
-        {
-            LoadCompress();
-        }
-
-        private void button9_Click(object sender, RoutedEventArgs e)
-        {
-            LoadLuaScript();
-        }
-
-        private void button10_Click(object sender, RoutedEventArgs e)
-        {
-            LoadSetting();
-        }
-
-        private void button11_Click(object sender, RoutedEventArgs e)
-        {
-            LoadAtlas();
-        }
-
-        private void button12_Click(object sender, RoutedEventArgs e)
-        {
-            LoadPam();
-        }
-
-        #endregion
-
-        #region ShowPage
-
-        Page_HomePage homePage = new Page_HomePage();
-        Page_Package package = new Page_Package();
-        Page_Texture texture = new Page_Texture();
-        Page_Reanim reanim = new Page_Reanim();
-        Page_Particles particles = new Page_Particles();
-        Page_Trail trail = new Page_Trail();
-        Page_RTON rton = new Page_RTON();
-        Page_Compress compress = new Page_Compress();
-        Page_LuaScript luaScript = new Page_LuaScript();
-        Page_Setting setting = new Page_Setting();
-        Page_Atlas atlas = new Page_Atlas();
-        Page_Pam pam = new Page_Pam();
-
-        void ResetButton()
+        void ResetShellButton()
         {
             button1.Background = Brushes.White;
             button1.Foreground = Brushes.Black;
@@ -255,159 +176,159 @@ namespace PopStudio.WPF
             button12.Foreground = Brushes.Black;
         }
 
+        void UpButton(Button b)
+        {
+            b.Background = Brushes.CornflowerBlue;
+            b.Foreground = Brushes.White;
+        }
+
+        void LoadPage(Page u) => PageControl.Content = new Frame { Content = u };
+
+        void SetTitle(string s) => Label_Head.Content = s;
+
+        Page_HomePage homePage = new Page_HomePage();
+        Page_Package package = new Page_Package();
+        Page_Atlas atlas = new Page_Atlas();
+        Page_Texture texture = new Page_Texture();
+        Page_Reanim reanim = new Page_Reanim();
+        Page_Particles particles = new Page_Particles();
+        Page_Trail trail = new Page_Trail();
+        Page_Pam pam = new Page_Pam();
+        Page_RTON rton = new Page_RTON();
+        Page_Compress compress = new Page_Compress();
+        Page_LuaScript luaScript = new Page_LuaScript();
+        Page_Setting setting = new Page_Setting();
+
         public void LoadHomePage()
         {
-            ResetButton();
-            button1.Background = Brushes.CornflowerBlue;
-            button1.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = homePage
-            };
-            Label_Head.Content = MAUIStr.Obj.HomePage_Title;
+            ResetShellButton();
+            UpButton(button1);
+            LoadPage(homePage);
+            SetTitle(MAUIStr.Obj.HomePage_Title);
+            CurrentPageIndex = 0;
         }
 
         public void LoadPackage()
         {
-            ResetButton();
-            button2.Background = Brushes.CornflowerBlue;
-            button2.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = package
-            };
-            Label_Head.Content = MAUIStr.Obj.Package_Title;
-        }
-
-        public void LoadTexture()
-        {
-            ResetButton();
-            button3.Background = Brushes.CornflowerBlue;
-            button3.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = texture
-            };
-            Label_Head.Content = MAUIStr.Obj.Texture_Title;
-        }
-
-        public void LoadReanim()
-        {
-            ResetButton();
-            button4.Background = Brushes.CornflowerBlue;
-            button4.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = reanim
-            };
-            Label_Head.Content = MAUIStr.Obj.Reanim_Title;
-        }
-
-        public void LoadParticles()
-        {
-            ResetButton();
-            button5.Background = Brushes.CornflowerBlue;
-            button5.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = particles
-            };
-            Label_Head.Content = MAUIStr.Obj.Particles_Title;
-        }
-
-        public void LoadTrail()
-        {
-            ResetButton();
-            button6.Background = Brushes.CornflowerBlue;
-            button6.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = trail
-            };
-            Label_Head.Content = MAUIStr.Obj.Trail_Title;
-        }
-
-        public void LoadRTON()
-        {
-            ResetButton();
-            button7.Background = Brushes.CornflowerBlue;
-            button7.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = rton
-            };
-            Label_Head.Content = MAUIStr.Obj.RTON_Title;
-        }
-
-        public void LoadCompress()
-        {
-            ResetButton();
-            button8.Background = Brushes.CornflowerBlue;
-            button8.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = compress
-            };
-            Label_Head.Content = MAUIStr.Obj.Compress_Title;
-        }
-
-        public void LoadLuaScript(string sc = null)
-        {
-            ResetButton();
-            button9.Background = Brushes.CornflowerBlue;
-            button9.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = luaScript
-            };
-            Label_Head.Content = MAUIStr.Obj.LuaScript_Title;
-            if (sc != null)
-            {
-                luaScript.ShowScriptByFileName(sc);
-                luaScript.RunScript();
-            }
-        }
-
-        public void LoadSetting()
-        {
-            ResetButton();
-            button10.Background = Brushes.CornflowerBlue;
-            button10.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = setting
-            };
-            Label_Head.Content = MAUIStr.Obj.Setting_Title;
+            ResetShellButton();
+            UpButton(button2);
+            LoadPage(package);
+            SetTitle(MAUIStr.Obj.Package_Title);
+            CurrentPageIndex = 1;
         }
 
         public void LoadAtlas()
         {
-            ResetButton();
-            button11.Background = Brushes.CornflowerBlue;
-            button11.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = atlas
-            };
-            Label_Head.Content = MAUIStr.Obj.Atlas_Title;
+            ResetShellButton();
+            UpButton(button3);
+            LoadPage(atlas);
+            SetTitle(MAUIStr.Obj.Atlas_Title);
+            CurrentPageIndex = 2;
+        }
+
+        public void LoadTexture()
+        {
+            ResetShellButton();
+            UpButton(button4);
+            LoadPage(texture);
+            SetTitle(MAUIStr.Obj.Texture_Title);
+            CurrentPageIndex = 3;
+        }
+
+        public void LoadReanim()
+        {
+            ResetShellButton();
+            UpButton(button5);
+            LoadPage(reanim);
+            SetTitle(MAUIStr.Obj.Reanim_Title);
+            CurrentPageIndex = 4;
+        }
+
+        public void LoadParticles()
+        {
+            ResetShellButton();
+            UpButton(button6);
+            LoadPage(particles);
+            SetTitle(MAUIStr.Obj.Particles_Title);
+            CurrentPageIndex = 5;
+        }
+
+        public void LoadTrail()
+        {
+            ResetShellButton();
+            UpButton(button7);
+            LoadPage(trail);
+            SetTitle(MAUIStr.Obj.Trail_Title);
+            CurrentPageIndex = 6;
         }
 
         public void LoadPam()
         {
-            ResetButton();
-            button12.Background = Brushes.CornflowerBlue;
-            button12.Foreground = Brushes.White;
-            PageControl.Content = new Frame()
-            {
-                Content = pam
-            };
-            Label_Head.Content = MAUIStr.Obj.Pam_Title;
+            ResetShellButton();
+            UpButton(button8);
+            LoadPage(pam);
+            SetTitle(MAUIStr.Obj.Pam_Title);
+            CurrentPageIndex = 7;
         }
-        #endregion
 
-        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        public void LoadRTON()
         {
-            Topmost = !Topmost;
+            ResetShellButton();
+            UpButton(button9);
+            LoadPage(rton);
+            SetTitle(MAUIStr.Obj.RTON_Title);
+            CurrentPageIndex = 8;
         }
+
+        public void LoadCompress()
+        {
+            ResetShellButton();
+            UpButton(button10);
+            LoadPage(compress);
+            SetTitle(MAUIStr.Obj.Compress_Title);
+            CurrentPageIndex = 9;
+        }
+
+        public void LoadLuaScript()
+        {
+            ResetShellButton();
+            UpButton(button11);
+            LoadPage(luaScript);
+            SetTitle(MAUIStr.Obj.LuaScript_Title);
+            CurrentPageIndex = 10;
+        }
+
+        public void LoadSetting()
+        {
+            ResetShellButton();
+            UpButton(button12);
+            LoadPage(setting);
+            SetTitle(MAUIStr.Obj.Setting_Title);
+            CurrentPageIndex = 11;
+        }
+
+        private void Button1_Click(object sender, RoutedEventArgs e) => LoadHomePage();
+
+        private void Button2_Click(object sender, RoutedEventArgs e) => LoadPackage();
+
+        private void Button3_Click(object sender, RoutedEventArgs e) => LoadAtlas();
+
+        private void Button4_Click(object sender, RoutedEventArgs e) => LoadTexture();
+
+        private void Button5_Click(object sender, RoutedEventArgs e) => LoadReanim();
+
+        private void Button6_Click(object sender, RoutedEventArgs e) => LoadParticles();
+
+        private void Button7_Click(object sender, RoutedEventArgs e) => LoadTrail();
+
+        private void Button8_Click(object sender, RoutedEventArgs e) => LoadPam();
+
+        private void Button9_Click(object sender, RoutedEventArgs e) => LoadRTON();
+
+        private void Button10_Click(object sender, RoutedEventArgs e) => LoadCompress();
+
+        private void Button11_Click(object sender, RoutedEventArgs e) => LoadLuaScript();
+
+        private void Button12_Click(object sender, RoutedEventArgs e) => LoadSetting();
     }
 }

@@ -1,0 +1,152 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PopStudio.Avalonia.Pages.Control_Setting">
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel Margin="30 24 30 24">
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introduction" FontSize="14"/>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemlanguage" />
+			<Button Margin="0 5 0 5" x:Name="button_chooselanguage" Click="button_chooselanguage_Clicked" />
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemdz" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introdz" FontSize="14" />
+			<StackPanel x:Name="Setting_Dz" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="button_dz_1" Margin="0 7 0 7" Click="Button_Dz_1_Clicked" />
+				<Button x:Name="button_dz_2" Margin="0 7 0 7" Grid.Column="3" Click="Button_Dz_2_Clicked" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itempak" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_intropak" FontSize="14" />
+			<StackPanel x:Name="Setting_PakPS3" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="button_pak_1" Margin="0 7 0 7" Click="Button_PakPS3_1_Clicked" />
+				<Button x:Name="button_pak_2" Margin="0 7 0 7" Grid.Column="3" Click="Button_PakPS3_2_Clicked" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemrsb" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introrsb" FontSize="14" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock TextWrapping="Wrap" FontSize="17" Text="ABGR8888" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="rsbptx1" Grid.Column="1" Checked="Switch_RsbPtx_1_Toggled" Unchecked="Switch_RsbPtx_1_Toggled" />
+				<TextBlock TextWrapping="Wrap" FontSize="17" Grid.Row="2" Text="ARGB8888_Padding" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="rsbptx2" Grid.Row="2" Grid.Column="1" Checked="Switch_RsbPtx_2_Toggled" Unchecked="Switch_RsbPtx_2_Toggled" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemptx" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introptx" FontSize="14" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock TextWrapping="Wrap" FontSize="17" Text="ABGR8888" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="ptx1" Grid.Column="1" Checked="Switch_Ptx_1_Toggled" Unchecked="Switch_Ptx_1_Toggled" />
+				<TextBlock TextWrapping="Wrap" FontSize="17" Grid.Row="2" Text="ARGB8888_Padding" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="ptx2" Grid.Column="1" Grid.Row="2" Checked="Switch_Ptx_2_Toggled" Unchecked="Switch_Ptx_2_Toggled" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemcdat" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introcdat" FontSize="14" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="cdat" />
+				<Button x:Name="button_cdat" Grid.Column="2" Click="Button_Cdat_Click" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemrton" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introrton" FontSize="14" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="rton" />
+				<Button x:Name="button_rton" Grid.Column="2" Click="Button_RTON_Click" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemcompiled" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introcompiled" FontSize="14" />
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="imagestring" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="button_compiled_1" Margin="0,7,0,7" Click="Button_ImageString_1_Clicked" />
+				<Button x:Name="button_compiled_2" Margin="0,7,0,7" Grid.Column="2" Click="Button_ImageString_2_Clicked" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itemxfl" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introxfl" FontSize="14" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock FontSize="20" x:Name="label_xflwidth" VerticalAlignment="Center" />
+				<TextBox x:Name="xflwidth" Grid.Column="2" />
+				<Button x:Name="button_xflwidth" Grid.Column="4" Click="Entry_XflSize_Width_TextChanged" />
+				<TextBlock FontSize="20" x:Name="label_xflheight" VerticalAlignment="Center" Grid.Row="2" />
+				<TextBox x:Name="xflheight" Grid.Row="2" Grid.Column="2" />
+				<Button x:Name="button_xflheight" Grid.Row="2" Grid.Column="4" Click="Entry_XflSize_Height_TextChanged" />
+				<TextBlock FontSize="20" x:Name="label_xflscalex" VerticalAlignment="Center" Grid.Row="4" />
+				<TextBox x:Name="xflscalex" Grid.Row="4" Grid.Column="2" />
+				<Button x:Name="button_xflscalex" Grid.Row="4" Grid.Column="4" Click="xflscalex_TextChanged" />
+				<TextBlock FontSize="20" x:Name="label_xflscaley" VerticalAlignment="Center" Grid.Row="6" />
+				<TextBox x:Name="xflscaley" Grid.Row="6" Grid.Column="2" />
+				<Button x:Name="button_xflscaley" Grid.Row="6" Grid.Column="4" Click="xflscaley_TextChanged" />
+				<TextBlock FontSize="20" x:Name="label_xfllabelname" VerticalAlignment="Center" Grid.Row="8" />
+				<ComboBox HorizontalAlignment="Stretch" x:Name="xfllabelname" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" FontSize="16" />
+				<!--<TextBox x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" />-->
+			</Grid>
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBlock x:Name="label_ad" TextWrapping="Wrap" FontSize="20" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="switch_ad" Grid.Column="1" Checked="Switch_AD_1_Toggled" Unchecked="Switch_AD_1_Toggled" />
+			</Grid>
+			<Button Margin="0 5 0 5" x:Name="button_recover" Click="Button_ResetSetting_Clicked" />
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

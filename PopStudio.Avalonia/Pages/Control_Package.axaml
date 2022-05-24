@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PopStudio.Avalonia.Pages.Control_Package">
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel Orientation="Vertical" Margin="30,24,30,24">
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introduction" FontSize="16" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_choosemode" FontSize="20" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBlock x:Name="label_mode1" VerticalAlignment="Center" FontSize="20" />
+				<ToggleSwitch x:Name="switchmode" Grid.Column="1" Checked="Switch_Checked" Unchecked="Switch_Checked" />
+				<TextBlock x:Name="label_mode2" Grid.Column="2" VerticalAlignment="Center" FontSize="20" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label1" FontSize="20" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="textbox1" />
+				<Button HorizontalAlignment="Stretch" x:Name="button1" Grid.Column="2" Click="Button1_Click" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label2" FontSize="20" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="textbox2" />
+				<Button HorizontalAlignment="Stretch" x:Name="button2" Grid.Column="2" Click="Button2_Click" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label3" FontSize="20" />
+			<ComboBox HorizontalAlignment="Stretch" Margin="0 5 0 5" x:Name="CB_CMode" FontSize="16" />
+			<Grid Margin="0 5 0 5" x:Name="change">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock TextWrapping="Wrap" x:Name="label_changeimage" FontSize="17" VerticalAlignment="Center"/>
+				<ToggleSwitch x:Name="switchchange1" Grid.Column="1" />
+				<TextBlock TextWrapping="Wrap" x:Name="label_deleteimage" Grid.Row="2" FontSize="17" VerticalAlignment="Center"/>
+				<ToggleSwitch x:Name="switchchange2" Grid.Row="2" Grid.Column="1" />
+			</Grid>
+			<Button Margin="0 5 0 5" x:Name="button_run" Click="ButtonRun_Click"/>
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_statue" FontSize="20" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="text4" FontSize="20" />
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

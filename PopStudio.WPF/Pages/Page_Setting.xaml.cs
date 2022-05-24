@@ -1,22 +1,9 @@
-﻿using PopStudio.GUI.Languages;
-using PopStudio.WPF.Plugin;
-using System;
-using System.Collections.Generic;
+﻿using PopStudio.Language.Languages;
+using PopStudio.Platform;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PopStudio.WPF.Pages
 {
@@ -25,61 +12,85 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_Setting : Page
     {
-		public Page_Setting()
+		void LoadFont()
+        {
+            Title = MAUIStr.Obj.Setting_Title;
+            label_introduction.Text = MAUIStr.Obj.Setting_Introduction;
+            label_itemlanguage.Text = string.Format(MAUIStr.Obj.Setting_ItemLanguage, Setting.LanguageName[Setting.AppLanguage]);
+            button_chooselanguage.Content = MAUIStr.Obj.Setting_SetLanguage;
+            label_itemdz.Text = MAUIStr.Obj.Setting_ItemDz;
+            label_introdz.Text = MAUIStr.Obj.Setting_IntroDz;
+            button_dz_1.Content = MAUIStr.Obj.Setting_Add;
+            button_dz_2.Content = MAUIStr.Obj.Setting_Clear;
+            label_itempak.Text = MAUIStr.Obj.Setting_ItemPak;
+            label_intropak.Text = MAUIStr.Obj.Setting_IntroPak;
+            button_pak_1.Content = MAUIStr.Obj.Setting_Add;
+            button_pak_2.Content = MAUIStr.Obj.Setting_Clear;
+            label_itemrsb.Text = MAUIStr.Obj.Setting_ItemRsb;
+            label_introrsb.Text = MAUIStr.Obj.Setting_IntroRsb;
+            label_itemptx.Text = MAUIStr.Obj.Setting_ItemPtx;
+            label_introptx.Text = MAUIStr.Obj.Setting_IntroPtx;
+            label_itemcdat.Text = MAUIStr.Obj.Setting_ItemCdat;
+            label_introcdat.Text = MAUIStr.Obj.Setting_IntroCdat;
+            label_itemrton.Text = MAUIStr.Obj.Setting_ItemRTON;
+            label_introrton.Text = MAUIStr.Obj.Setting_IntroRTON;
+            label_itemcompiled.Text = MAUIStr.Obj.Setting_ItemCompiled;
+            label_introcompiled.Text = MAUIStr.Obj.Setting_IntroCompiled;
+            label_itemxfl.Text = MAUIStr.Obj.Setting_ItemXfl;
+            label_introxfl.Text = MAUIStr.Obj.Setting_IntroXfl;
+            label_xflwidth.Text = MAUIStr.Obj.Setting_XflWidth;
+            label_xflheight.Text = MAUIStr.Obj.Setting_XflHeight;
+            label_xfllabelname.Text = MAUIStr.Obj.Setting_XflLabelName;
+            label_xflscalex.Text = MAUIStr.Obj.Setting_XflScaleX;
+            label_xflscaley.Text = MAUIStr.Obj.Setting_XflScaleY;
+            label_ad.Text = MAUIStr.Obj.Setting_AD;
+            button_compiled_1.Content = MAUIStr.Obj.Setting_Load;
+            button_compiled_2.Content = MAUIStr.Obj.Setting_Unload;
+            button_recover.Content = MAUIStr.Obj.Setting_Recover;
+            button_cdat.Content = MAUIStr.Obj.Setting_Submit;
+            button_rton.Content = MAUIStr.Obj.Setting_Submit;
+            button_xflwidth.Content = MAUIStr.Obj.Setting_Submit;
+            button_xflheight.Content = MAUIStr.Obj.Setting_Submit;
+            button_xflscalex.Content = MAUIStr.Obj.Setting_Submit;
+            button_xflscaley.Content = MAUIStr.Obj.Setting_Submit;
+        }
+
+        void LoadSetting()
+        {
+            Setting.CanSave = false;
+            InitDzPackSetting();
+            InitPakPS3PackSetting();
+            InitRsbPackSetting();
+            InitPTXDecodeSetting();
+            InitCdatKeySetting();
+            InitRTONKeySetting();
+            InitImageStringSetting();
+            InitXflSetting();
+            switch_ad.IsChecked = Setting.OpenProgramAD;
+            Setting.CanSave = true;
+        }
+
+
+        public Page_Setting()
 		{
 			InitializeComponent();
-			Title = MAUIStr.Obj.Setting_Title;
-			label_introduction.Text = MAUIStr.Obj.Setting_Introduction;
-			label_itemlanguage.Text = string.Format(MAUIStr.Obj.Setting_ItemLanguage, Setting.LanguageName[Setting.AppLanguage]);
-			button_chooselanguage.Content = MAUIStr.Obj.Setting_SetLanguage;
-			label_itemdz.Text = MAUIStr.Obj.Setting_ItemDz;
-			label_introdz.Text = MAUIStr.Obj.Setting_IntroDz;
-			button_dz_1.Content = MAUIStr.Obj.Setting_Add;
-			button_dz_2.Content = MAUIStr.Obj.Setting_Clear;
-			label_itempak.Text = MAUIStr.Obj.Setting_ItemPak;
-			label_intropak.Text = MAUIStr.Obj.Setting_IntroPak;
-			button_pak_1.Content = MAUIStr.Obj.Setting_Add;
-			button_pak_2.Content = MAUIStr.Obj.Setting_Clear;
-			label_itemrsb.Text = MAUIStr.Obj.Setting_ItemRsb;
-			label_introrsb.Text = MAUIStr.Obj.Setting_IntroRsb;
-			label_itemptx.Text = MAUIStr.Obj.Setting_ItemPtx;
-			label_introptx.Text = MAUIStr.Obj.Setting_IntroPtx;
-			label_itemcdat.Text = MAUIStr.Obj.Setting_ItemCdat;
-			label_introcdat.Text = MAUIStr.Obj.Setting_IntroCdat;
-			label_itemrton.Text = MAUIStr.Obj.Setting_ItemRTON;
-			label_introrton.Text = MAUIStr.Obj.Setting_IntroRTON;
-			label_itemcompiled.Text = MAUIStr.Obj.Setting_ItemCompiled;
-			label_introcompiled.Text = MAUIStr.Obj.Setting_IntroCompiled;
-			label_itemxfl.Text = MAUIStr.Obj.Setting_ItemXfl;
-			label_introxfl.Text = MAUIStr.Obj.Setting_IntroXfl;
-			label_xflwidth.Text = MAUIStr.Obj.Setting_XflWidth;
-			label_xflheight.Text = MAUIStr.Obj.Setting_XflHeight;
-			label_xfllabelname.Text = MAUIStr.Obj.Setting_XflLabelName;
-			label_xflscalex.Text = MAUIStr.Obj.Setting_XflScaleX;
-			label_xflscaley.Text = MAUIStr.Obj.Setting_XflScaleY;
-			label_ad.Text = MAUIStr.Obj.Setting_AD;
-			button_compiled_1.Content = MAUIStr.Obj.Setting_Load;
-			button_compiled_2.Content = MAUIStr.Obj.Setting_Unload;
-			button_recover.Content = MAUIStr.Obj.Setting_Recover;
-			Setting_Dz.ItemsSource = dzpackinfo;
-			Setting_PakPS3.ItemsSource = pakps3packinfo;
-			Setting.CanSave = false;
-			InitDzPackSetting();
-			InitPakPS3PackSetting();
-			InitRsbPackSetting();
-			InitPTXDecodeSetting();
-			InitCdatKeySetting();
-			InitRTONKeySetting();
-			InitImageStringSetting();
-			InitXflSetting();
-			switch_ad.IsChecked = Setting.OpenProgramAD;
-			Setting.CanSave = true;
-		}
+			LoadFont();
+            Setting_Dz.ItemsSource = dzpackinfo;
+            Setting_PakPS3.ItemsSource = pakps3packinfo;
+            MAUIStr.OnLanguageChanged += LoadFont;
+            LoadSetting();
+            xfllabelname.SelectionChanged += xfllabel_TextChanged;
+        }
 
-		/// <summary>
-		/// DZ Setting Begin
-		/// </summary>
-		ObservableCollection<ListInfo> dzpackinfo = new ObservableCollection<ListInfo>();
+        ~Page_Setting()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
+        }
+
+        /// <summary>
+        /// DZ Setting Begin
+        /// </summary>
+        ObservableCollection<ListInfo> dzpackinfo = new ObservableCollection<ListInfo>();
 		public ObservableCollection<ListInfo> DzPackInfo => dzpackinfo;
 
 		private void Button_Dz_1_Clicked(object sender, EventArgs e)
@@ -118,7 +129,7 @@ namespace PopStudio.WPF.Pages
 			{
 				string cancel = MAUIStr.Obj.Setting_Cancel;
 				string ok = MAUIStr.Obj.Setting_OK;
-				string ans = await Dialogs.DisplayPromptAsync(MAUIStr.Obj.Setting_EnterExtension, MAUIStr.Obj.Setting_EnterExtensionText, ok, cancel);
+				string ans = await PopupDialog.DisplayPromptAsync(MAUIStr.Obj.Setting_EnterExtension, MAUIStr.Obj.Setting_EnterExtensionText, ok, cancel);
 				if (!string.IsNullOrEmpty(ans))
 				{
 					string itemname = ans;
@@ -130,7 +141,7 @@ namespace PopStudio.WPF.Pages
 					string item2 = "Lzma";
 					string item3 = "Gzip";
 					string item4 = "Bzip2";
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
 					if (ans != cancel && ans != ok)
 					{
 						Dictionary<string, Package.Dz.CompressFlags> tempdic = Setting.DzCompressDictionary;
@@ -171,11 +182,11 @@ namespace PopStudio.WPF.Pages
 				string ans;
 				if (itemname == "default")
 				{
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1);
 				}
 				else
 				{
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1, choose2);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1, choose2);
 				}
 				if (ans == choose1)
 				{
@@ -183,7 +194,7 @@ namespace PopStudio.WPF.Pages
 					string item2 = "Lzma";
 					string item3 = "Gzip";
 					string item4 = "Bzip2";
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2, item3, item4);
 					if (ans != cancel && ans != ok)
 					{
 						if (itemname == "default")
@@ -256,7 +267,7 @@ namespace PopStudio.WPF.Pages
 			{
 				string cancel = MAUIStr.Obj.Setting_Cancel;
 				string ok = MAUIStr.Obj.Setting_OK;
-				string ans = await Dialogs.DisplayPromptAsync(MAUIStr.Obj.Setting_EnterExtension, MAUIStr.Obj.Setting_EnterExtensionText, ok, cancel);
+				string ans = await PopupDialog.DisplayPromptAsync(MAUIStr.Obj.Setting_EnterExtension, MAUIStr.Obj.Setting_EnterExtensionText, ok, cancel);
 				if (!string.IsNullOrEmpty(ans))
 				{
 					string itemname = ans;
@@ -266,7 +277,7 @@ namespace PopStudio.WPF.Pages
 					}
 					string item1 = "Store";
 					string item2 = "Zlib";
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
 					if (ans != cancel && ans != ok)
 					{
 						Dictionary<string, Package.Pak.CompressFlags> tempdic = Setting.PakPS3CompressDictionary;
@@ -307,17 +318,17 @@ namespace PopStudio.WPF.Pages
 				string ans;
 				if (itemname == "default")
 				{
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1);
 				}
 				else
 				{
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1, choose2);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseItem, cancel, ok, choose1, choose2);
 				}
 				if (ans == choose1)
 				{
 					string item1 = "Store";
 					string item2 = "Zlib";
-					ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
+					ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseCompressMode, cancel, ok, item1, item2);
 					if (ans != cancel && ans != ok)
 					{
 						if (itemname == "default")
@@ -359,13 +370,15 @@ namespace PopStudio.WPF.Pages
 
 		private void Switch_RsbPtx_1_Toggled(object sender, EventArgs e)
 		{
-			Setting.RsbPtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
+            if (!Setting.CanSave) return;
+            Setting.RsbPtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
 		private void Switch_RsbPtx_2_Toggled(object sender, EventArgs e)
 		{
-			Setting.RsbPtxARGB8888PaddingMode = ((CheckBox)sender).IsChecked == true;
+            if (!Setting.CanSave) return;
+            Setting.RsbPtxARGB8888PaddingMode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
@@ -380,13 +393,15 @@ namespace PopStudio.WPF.Pages
 
 		private void Switch_Ptx_1_Toggled(object sender, EventArgs e)
 		{
-			Setting.PtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
+			if (!Setting.CanSave) return;
+            Setting.PtxABGR8888Mode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
 		private void Switch_Ptx_2_Toggled(object sender, EventArgs e)
 		{
-			Setting.PtxARGB8888PaddingMode = ((CheckBox)sender).IsChecked == true;
+            if (!Setting.CanSave) return;
+            Setting.PtxARGB8888PaddingMode = ((CheckBox)sender).IsChecked == true;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
@@ -398,11 +413,11 @@ namespace PopStudio.WPF.Pages
 			cdat.Text = Setting.CdatKey;
 		}
 
-		private void Entry_CdatKey_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			Setting.CdatKey = ((TextBox)sender).Text;
-			Setting.SaveAsXml(Permission.GetSettingPath());
-		}
+		private void Button_Cdat_Click(object sender, RoutedEventArgs e)
+        {
+            Setting.CdatKey = cdat.Text;
+            Setting.SaveAsXml(Permission.GetSettingPath());
+        }
 
 		/// <summary>
 		/// RTON Setting Begin
@@ -412,9 +427,9 @@ namespace PopStudio.WPF.Pages
 			rton.Text = Setting.RTONKey;
 		}
 
-		private void Entry_RTONKey_TextChanged(object sender, TextChangedEventArgs e)
+		private void Button_RTON_Click(object sender, RoutedEventArgs e)
 		{
-			Setting.RTONKey = ((TextBox)sender).Text;
+			Setting.RTONKey = rton.Text;
 			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 
@@ -456,33 +471,15 @@ namespace PopStudio.WPF.Pages
 		{
 			xflwidth.Text = Setting.ReanimXflWidth.ToString();
 			xflheight.Text = Setting.ReanimXflHeight.ToString();
-			xfllabelname.Text = Setting.ReanimXflLabelName.ToString();
-			xflscalex.Text = Setting.ReanimXflScaleX.ToString();
+            xfllabelname.ItemsSource = new List<string>
+            {
+                "Image Name",
+                "Short Image Name",
+                "Label Name"
+            };
+            xfllabelname.SelectedIndex = Setting.ReanimXflLabelName + 1;
+            xflscalex.Text = Setting.ReanimXflScaleX.ToString();
 			xflscaley.Text = Setting.ReanimXflScaleY.ToString();
-		}
-
-		Regex number = new Regex("[^0-9.-]");
-
-		private void PreviewTextChanged(object sender, TextCompositionEventArgs e)
-		{
-			e.Handled = number.IsMatch(e.Text);
-		}
-
-		private void NumberOnly(object sender, DataObjectPastingEventArgs e) //Can't really test whether the text is number
-		{
-			if (e.DataObject.GetDataPresent(typeof(string)))
-			{
-				string text = (string)e.DataObject.GetData(typeof(string));
-				Regex re = new Regex("[^0-9.-]+");
-				if (re.IsMatch(text))
-				{
-					e.CancelCommand();
-				}
-			}
-			else
-			{
-				e.CancelCommand();
-			}
 		}
 
 		/// <summary>
@@ -494,13 +491,14 @@ namespace PopStudio.WPF.Pages
 		{
 			string cancel = MAUIStr.Obj.Setting_Cancel;
 			string ok = MAUIStr.Obj.Setting_OK;
-			bool sure = await Dialogs.DisplayAlert(MAUIStr.Obj.Setting_SureRecover, MAUIStr.Obj.Setting_SureRecoverText, ok, cancel);
+			bool sure = await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_SureRecover, MAUIStr.Obj.Setting_SureRecoverText, ok, cancel);
 			if (sure)
 			{
-				Setting.ResetXml(Permission.GetSettingPath());
-				await Dialogs.DisplayAlert(MAUIStr.Obj.Setting_FinishRecover, MAUIStr.Obj.Setting_FinishRecoverText, ok);
-				Permission.Restart();
-			}
+                Setting.ResetXml(Permission.GetSettingPath());
+                Setting.LoadFromXml(Permission.GetSettingPath());
+                LoadSetting();
+                await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_FinishRecover, MAUIStr.Obj.Setting_FinishRecoverText, ok);
+            }
 		}
 
 		public class ListInfo
@@ -526,20 +524,19 @@ namespace PopStudio.WPF.Pages
 			{
 				string cancel = MAUIStr.Obj.Setting_Cancel;
 				string ok = MAUIStr.Obj.Setting_OK;
-				string item1 = "简体中文";
+				string item1 = "\u7B80\u4F53\u4E2D\u6587";
 				string item2 = "English";
-				string ans = await Dialogs.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseLanguage, cancel, ok, item1, item2);
+				string ans = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_ChooseLanguage, cancel, ok, item1, item2);
 				if (ans != cancel && ans != ok && Setting.LanguageEnum[ans] != Setting.AppLanguage)
 				{
 					Setting.AppLanguage = Setting.LanguageEnum[ans];
 					Setting.SaveAsXml(Permission.GetSettingPath());
-					await Dialogs.DisplayAlert(MAUIStr.Obj.Setting_FinishChooseLanguage, MAUIStr.Obj.Setting_FinishChooseLanguageText, ok);
-					Permission.Restart();
-				}
+                    MAUIStr.LoadLanguage();
+                    await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_FinishChooseLanguage, MAUIStr.Obj.Setting_FinishChooseLanguageText, MAUIStr.Obj.Setting_OK);
+                }
 			}
 			catch (Exception)
 			{
-
 			}
 		}
 
@@ -553,64 +550,74 @@ namespace PopStudio.WPF.Pages
 			ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta);
 		}
 
-        private void xflwidth_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Entry_XflSize_Width_TextChanged(object sender, RoutedEventArgs e)
         {
-			try
+            if (!Setting.CanSave) return;
+            try
 			{
-				Setting.ReanimXflWidth = Convert.ToSingle(((TextBox)sender).Text);
+				Setting.ReanimXflWidth = Convert.ToSingle(xflwidth.Text);
 				Setting.SaveAsXml(Permission.GetSettingPath());
 			}
 			catch (Exception)
 			{
+				await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_InvalidData_Title, MAUIStr.Obj.Setting_InvalidData_Text, MAUIStr.Obj.Setting_OK);
 			}
 		}
 
-        private void xflheight_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Entry_XflSize_Height_TextChanged(object sender, RoutedEventArgs e)
         {
-			try
+            if (!Setting.CanSave) return;
+            try
 			{
-				Setting.ReanimXflHeight = Convert.ToSingle(((TextBox)sender).Text);
+				Setting.ReanimXflHeight = Convert.ToSingle(xflheight.Text);
 				Setting.SaveAsXml(Permission.GetSettingPath());
 			}
 			catch (Exception)
 			{
-			}
+                await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_InvalidData_Title, MAUIStr.Obj.Setting_InvalidData_Text, MAUIStr.Obj.Setting_OK);
+            }
 		}
 
-		private void xfllabel_TextChanged(object sender, TextChangedEventArgs e)
+        private void xfllabel_TextChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!Setting.CanSave) return;
+            int n = xfllabelname.SelectedIndex - 1;
+            try
+            {
+                Setting.ReanimXflLabelName = n;
+                Setting.SaveAsXml(Permission.GetSettingPath());
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private async void xflscalex_TextChanged(object sender, RoutedEventArgs e)
 		{
-			try
+            if (!Setting.CanSave) return;
+            try
 			{
-				Setting.ReanimXflLabelName = Convert.ToInt32(((TextBox)sender).Text);
+				Setting.ReanimXflScaleX = Convert.ToInt32(xflscalex.Text);
 				Setting.SaveAsXml(Permission.GetSettingPath());
 			}
 			catch (Exception)
 			{
-			}
+                await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_InvalidData_Title, MAUIStr.Obj.Setting_InvalidData_Text, MAUIStr.Obj.Setting_OK);
+            }
 		}
 
-		private void xflscalex_TextChanged(object sender, TextChangedEventArgs e)
+		private async void xflscaley_TextChanged(object sender, RoutedEventArgs e)
 		{
-			try
+            if (!Setting.CanSave) return;
+            try
 			{
-				Setting.ReanimXflScaleX = Convert.ToDouble(((TextBox)sender).Text);
+				Setting.ReanimXflScaleY = Convert.ToDouble(xflscaley.Text);
 				Setting.SaveAsXml(Permission.GetSettingPath());
 			}
 			catch (Exception)
 			{
-			}
-		}
-
-		private void xflscaley_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			try
-			{
-				Setting.ReanimXflScaleY = Convert.ToDouble(((TextBox)sender).Text);
-				Setting.SaveAsXml(Permission.GetSettingPath());
-			}
-			catch (Exception)
-			{
-			}
+                await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_InvalidData_Title, MAUIStr.Obj.Setting_InvalidData_Text, MAUIStr.Obj.Setting_OK);
+            }
 		}
 
 		private void Switch_AD_1_Toggled(object sender, EventArgs e)

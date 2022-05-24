@@ -204,8 +204,7 @@ public partial class Page_Setting : ContentPage
 	/// <summary>
 	/// PakPS3 Setting Begin
 	/// </summary>
-	ObservableCollection<ListInfo> pakps3packinfo = new ObservableCollection<ListInfo>();
-	public ObservableCollection<ListInfo> PakPS3PackInfo => pakps3packinfo;
+	List<ListInfo> pakps3packinfo;
 
 	private void Button_PakPS3_1_Clicked(object sender, EventArgs e)
 	{
@@ -219,7 +218,7 @@ public partial class Page_Setting : ContentPage
 
 	void InitPakPS3PackSetting()
 	{
-		pakps3packinfo.Clear();
+		pakps3packinfo = new List<ListInfo>();
 		Dictionary<string, Package.Pak.CompressFlags> pakps3packsetting = Setting.PakPS3CompressDictionary;
 		Dictionary<Package.Pak.CompressFlags, string> pakps3compressname = Setting.PakPS3CompressMethodName;
 		pakps3packinfo.Add(new ListInfo("default", pakps3compressname[Setting.PakPS3DefaultCompressMethod]));

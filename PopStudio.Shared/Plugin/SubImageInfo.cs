@@ -1,4 +1,6 @@
-﻿namespace PopStudio.Plugin
+﻿using PopStudio.Platform;
+
+namespace PopStudio.Plugin
 {
     internal struct SubImageInfo
     {
@@ -8,7 +10,7 @@
         public int Height;
         public string ID;
         public bool rotate270;
-        public SkiaSharp.SKBitmap Image = null;
+        public Bitmap Image = null;
 
         public SubImageInfo()
         {
@@ -40,7 +42,7 @@
             rotate270 = false;
         }
 
-        public SubImageInfo(SkiaSharp.SKBitmap Image, string ID)
+        public SubImageInfo(Bitmap Image, string ID)
         {
             this.Image = Image;
             X = 0;

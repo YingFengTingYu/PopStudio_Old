@@ -537,7 +537,7 @@
                 {
                     n[i] = args[i];
                 }
-                API.NewDir(n[0]?.ToString(), (n[2] == null) || n[2] is not bool boolean || (boolean == true));
+                API.NewDir(n[0]?.ToString(), (n[1] == null) || n[1] is not bool boolean || (boolean == true));
             }
             catch (Exception ex)
             {

@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PopStudio.Avalonia.Pages.Control_RTON">
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel Orientation="Vertical" Margin="30,24,30,24">
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introduction" FontSize="16"/>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_choosemode" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock FontSize="20" x:Name="label_mode1" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="TB_Mode" Grid.Column="1" Checked="Switch_Checked" Unchecked="Switch_Checked" />
+				<TextBlock FontSize="20" x:Name="label_mode2" Grid.Column="2" VerticalAlignment="Center" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="text1" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="textbox1" />
+				<Button x:Name="button1" Grid.Column="2" Click="Button1_Click" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="text2" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="15*" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="textbox2" />
+				<Button x:Name="button2" Grid.Column="2" Click="Button2_Click" />
+			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="text3" />
+			<ComboBox FontSize="16" Margin="0 5 0 5" x:Name="CB_CMode" />
+			<Button Margin="0 5 0 5" x:Name="button_run" Click="ButtonRun_Click" />
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_statue" />
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="text4" />
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

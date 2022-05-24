@@ -1,18 +1,7 @@
-﻿using PopStudio.GUI.Languages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using PopStudio.Language.Languages;
+using System.Diagnostics;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PopStudio.WPF.Pages
 {
@@ -21,9 +10,8 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_Trail : Page
     {
-        public Page_Trail()
+        void LoadFont()
         {
-            InitializeComponent();
             Title = MAUIStr.Obj.Trail_Title;
             label_introduction.Text = MAUIStr.Obj.Trail_Introduction;
             text1.Text = MAUIStr.Obj.Trail_Choose1;
@@ -35,6 +23,12 @@ namespace PopStudio.WPF.Pages
             button_run.Content = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;
+        }
+
+        public Page_Trail()
+        {
+            InitializeComponent();
+            LoadFont();
             CB_InMode.Items.Clear();
             CB_InMode.Items.Add("PC_Compiled");
             CB_InMode.Items.Add("Phone32_Compiled");
@@ -55,6 +49,12 @@ namespace PopStudio.WPF.Pages
             CB_OutMode.Items.Add("Studio_Json");
             CB_OutMode.Items.Add("Raw_Xml");
             CB_OutMode.SelectedIndex = 7;
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~Page_Trail()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -69,6 +69,8 @@ namespace PopStudio.WPF.Pages
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 try
                 {
                     if (!File.Exists(inFile))
@@ -81,11 +83,13 @@ namespace PopStudio.WPF.Pages
                 {
                     err = ex.Message;
                 }
-                Dispatcher.Invoke(() =>
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
+                Dispatcher.BeginInvoke(() =>
                 {
                     if (err == null)
                     {
-                        text4.Text = MAUIStr.Obj.Share_Finish;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
                     }
                     else
                     {

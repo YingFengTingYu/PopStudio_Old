@@ -81,9 +81,9 @@
             }
         }
 
-        public static void DecodePam(string inFile, string outFile) => PopAnim.Pam.Decode(inFile, outFile);
+        public static void DecodePam(string inFile, string outFile) => PopAnim.PamJson.Decode(inFile, outFile);
 
-        public static void EncodePam(string inFile, string outFile) => PopAnim.Pam.Encode(inFile, outFile);
+        public static void EncodePam(string inFile, string outFile) => PopAnim.PamJson.Encode(inFile, outFile);
 
         public static void DecodeImage(string inFile, string outFile, int format)
         {

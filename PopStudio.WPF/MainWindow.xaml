@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:PopStudio.WPF"
         mc:Ignorable="d"
         Title="PopStudio" Height="580" Width="900" MinHeight="540" MinWidth="540"
-        Icon="/Icon.png">
+        Icon="Assets/Images/icon.png">
     <Grid>
+        <Grid x:Name="LoadingGrid" Background="SkyBlue" Panel.ZIndex="4">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Source="Assets/Images/icon.png" Width="256" Height="256" />
+                <ProgressBar Foreground="#FF0078D7" Background="#FFE6E6E6" Height="5" Margin="0 30 0 0" x:Name="loadingbar" />
+            </StackPanel>
+        </Grid>
         <Grid x:Name="DialogGrid" Visibility="Collapsed" Background="#88000000" Panel.ZIndex="3">
             <ContentControl x:Name="DialogControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
@@ -17,13 +23,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="#FFFFFF" Panel.ZIndex="1">
-                <Border.Effect>
-                    <DropShadowEffect Color="#828282" BlurRadius="20" ShadowDepth="20" Opacity="0.1" />
-                </Border.Effect>
-            </Border>
-
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Panel.ZIndex="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid Background="SkyBlue">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -35,18 +35,18 @@
                         <TextBlock Margin="0 15 0 10" Text="PopStudio" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="White" />
                         <Border Grid.Row="1" Margin="0 0 0 0" Width="140" BorderBrush="FloralWhite" BorderThickness="0 0 0 1" />
                         <StackPanel Margin="0 5 0 0" Grid.Row="2">
-                            <Button Height="32" FontSize="15" x:Name="button1" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button1_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button2" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button2_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button11" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button11_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button3" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button3_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button4" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button4_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button5" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button5_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button6" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button6_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button12" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button12_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button7" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button7_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button8" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button8_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button9" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button9_Click" />
-                            <Button Height="32" FontSize="15" x:Name="button10" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="button10_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button1" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button1_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button2" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button2_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button3" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button3_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button4" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button4_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button5" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button5_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button6" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button6_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button7" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button7_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button8" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button8_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button9" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button9_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button10" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button10_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button11" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button11_Click" />
+                            <Button Height="32" FontSize="15" x:Name="button12" Foreground="Black" Margin="15 2 15 2" Width="140" Background="White" Cursor="Hand" Click="Button12_Click" />
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -58,7 +58,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Image HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Source="/topmost.png" Panel.ZIndex="1" Cursor="Hand" MouseUp="Image_MouseUp" />
+                <Image HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Source="Assets/Images/topmost.png" Panel.ZIndex="1" Cursor="Hand" MouseUp="Image_TopMost_Tapped" />
 
                 <Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
 

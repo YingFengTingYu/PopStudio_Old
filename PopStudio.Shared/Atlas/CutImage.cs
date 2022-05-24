@@ -1,4 +1,4 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Atlas
 {
@@ -15,7 +15,7 @@ namespace PopStudio.Atlas
                 {
                     if (Path.GetExtension(s).ToLower() == ".png")
                     {
-                        SKBitmap img = pool.Add(SKBitmap.Decode(s));
+                        Bitmap img = pool.Add(Bitmap.Create(s));
                         if (img != null) lst.Add(new SubImageInfo(img, Path.GetFileNameWithoutExtension(s).ToLower()));
                     }
                 }
@@ -23,13 +23,13 @@ namespace PopStudio.Atlas
                 MaxRectsBinPack maxRectsBinPack = new MaxRectsBinPack(width, height, false);
                 int c = lst.Count;
                 Dictionary<string, SubImageInfo> ans = new Dictionary<string, SubImageInfo>();
-                using (SKBitmap bitmap = new SKBitmap(width, height))
+                using (Bitmap bitmap = Bitmap.Create(width, height))
                 {
                     for (int i = 0; i < c; i++)
                     {
                         SubImageInfo temp = lst[i];
                         temp.ResetCoordinate(maxRectsBinPack.Insert(temp, MaxRectsBinPack.FreeRectChoiceHeuristic.RectBestAreaFit));
-                        bitmap.Put(temp.Image, temp.X, temp.Y, temp.Width, temp.Height);
+                        temp.Image.MoveTo(bitmap, temp.X, temp.Y);
                         temp.Image = null; //Will auto-dispose soon by IDisposablePool
                         ans.Add(temp.ID, temp);
                     }
@@ -43,7 +43,7 @@ namespace PopStudio.Atlas
         {
             Dir.NewDir(outFolder);
             outFolder = outFolder + Const.PATHSEPARATOR;
-            using (SKBitmap bitmap = SKBitmap.Decode(inFile))
+            using (Bitmap bitmap = Bitmap.Create(inFile))
             {
                 foreach (SubImageInfo info in cutinfo)
                 {
@@ -51,9 +51,9 @@ namespace PopStudio.Atlas
                     string p = outFolder + info.ID.ToLower() + ".png";
                     if (info.rotate270)
                     {
-                        using (SKBitmap map = bitmap.Cut(info.X, info.Y, info.Height, info.Width))
+                        using (Bitmap map = bitmap.Cut(info.X, info.Y, info.Height, info.Width))
                         {
-                            using (SKBitmap mp2 = map.Rotate270())
+                            using (Bitmap mp2 = map.Rotate270())
                             {
                                 mp2.Save(p);
                             }
@@ -61,7 +61,7 @@ namespace PopStudio.Atlas
                     }
                     else
                     {
-                        using (SKBitmap map = bitmap.Cut(info.X, info.Y, info.Width, info.Height))
+                        using (Bitmap map = bitmap.Cut(info.X, info.Y, info.Width, info.Height))
                         {
                             map.Save(p);
                         }

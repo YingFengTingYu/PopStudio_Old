@@ -5,15 +5,15 @@ namespace PopStudio
     internal static class Setting
     {
         public static bool CanSave = true;
-        public static Language AppLanguage = System.Globalization.CultureInfo.CurrentCulture.Name.ToLower() switch
+        public static Constant.Language AppLanguage = System.Globalization.CultureInfo.CurrentCulture.Name.ToLower() switch
         {
-            "zh-cn" => Language.ZHCN,
-            "zh-hans-cn" => Language.ZHCN,
-            _ => Language.ENUS
+            "zh-cn" => Constant.Language.ZHCN,
+            "zh-hans-cn" => Constant.Language.ZHCN,
+            _ => Constant.Language.ENUS
         };
 
-        public static readonly Dictionary<string, Language> LanguageEnum = new Dictionary<string, Language> { { "English", Language.ENUS }, { "\u7B80\u4F53\u4E2D\u6587", Language.ZHCN } };
-        public static readonly Dictionary<Language, string> LanguageName = new Dictionary<Language, string> { { Language.ENUS, "English" }, { Language.ZHCN, "\u7B80\u4F53\u4E2D\u6587" } };
+        public static readonly Dictionary<string, Constant.Language> LanguageEnum = new Dictionary<string, Constant.Language> { { "English", Constant.Language.ENUS }, { "\u7B80\u4F53\u4E2D\u6587", Constant.Language.ZHCN } };
+        public static readonly Dictionary<Constant.Language, string> LanguageName = new Dictionary<Constant.Language, string> { { Constant.Language.ENUS, "English" }, { Constant.Language.ZHCN, "\u7B80\u4F53\u4E2D\u6587" } };
 
         public static readonly string DefaultXml_P1 = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <!--Describe some default behaviour-->

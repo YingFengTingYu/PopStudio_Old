@@ -11,7 +11,7 @@ namespace PopStudio.Plugin
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             return Setting.AppLanguage switch
             {
-                Language.ZHCN => Encoding.GetEncoding("GB2312"),
+                Constant.Language.ZHCN => Encoding.GetEncoding("GB2312"),
                 _ => Encoding.Latin1
             };
         }

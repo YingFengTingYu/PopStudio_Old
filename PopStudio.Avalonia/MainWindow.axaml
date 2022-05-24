@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="580"
+        x:Class="PopStudio.Avalonia.MainWindow"
+		Width="900"
+		Height="580"
+		MinWidth="540"
+		MinHeight="540"
+		Icon="avares://PopStudio.Avalonia/Assets/Images/icon.png"
+        Title="PopStudio">
+	<Grid>
+		<Grid x:Name="LoadingGrid" Background="SkyBlue" ZIndex="4">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Image Source="avares://PopStudio.Avalonia/Assets/Images/icon.png" Width="256" Height="256" />
+				<ProgressBar Foreground="#FF0078D7" Background="#FFE6E6E6" Height="5" Margin="0 30 0 0" x:Name="loadingbar" />
+			</StackPanel>
+		</Grid>
+		<Grid x:Name="DialogGrid" IsVisible="False" Background="#88000000" ZIndex="3">
+			<ContentControl x:Name="DialogControl" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="190"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<Grid Background="SkyBlue">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<TextBlock Margin="0 15 0 10" Text="PopStudio" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="White" />
+						<Border Grid.Row="1" Margin="0 0 0 0" Width="140" BorderBrush="FloralWhite" BorderThickness="0 0 0 1" />
+						<StackPanel Margin="0 5 0 0" Grid.Row="2">
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button1" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button1_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button2" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button2_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button3" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button3_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button4" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button4_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button5" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button5_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button6" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button6_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button7" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button7_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button8" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button8_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button9" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button9_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button10" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button10_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button11" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button11_Click" />
+							<Button HorizontalAlignment="Center" Height="32" Width="140" FontSize="15" x:Name="button12" Foreground="Black" Margin="15 3 15 3" Background="White" Click="Button12_Click" />
+						</StackPanel>
+					</Grid>
+				</Grid>
+			</ScrollViewer>
+
+			<Grid Grid.Column="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Image x:Name="Image_TopMost" HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio.Avalonia/Assets/Images/topmost.png" ZIndex="2" Tapped="Image_TopMost_Tapped" />
+
+				<Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
+
+				<ContentControl x:Name="PageControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"/>
+			</Grid>
+		</Grid>
+	</Grid>
+</Window>

@@ -15,12 +15,7 @@
 
   <Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
 
-  <Import Project="..\PopStudio.GUI\PopStudio.GUI.projitems" Label="Shared" />
-
-  <ItemGroup>
-    <None Remove="Icon.png" />
-    <None Remove="topmost.png" />
-  </ItemGroup>
+  <Import Project="..\PopStudio.Language\PopStudio.Language.projitems" Label="Shared" />
 
   <ItemGroup>
     <Content Include="Icon.ico" />
@@ -36,10 +31,11 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Icon.png" />
-    <Resource Include="topmost.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Assets/*" />
+		<Resource Include="Assets/Fonts/*" />
+		<Resource Include="Assets/Images/*" />
+	</ItemGroup>
 
   <ItemGroup>
     <Compile Update="ResourceAD.Designer.cs">

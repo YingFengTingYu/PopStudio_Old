@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
 
 namespace PopStudio.WPF.Pages
 {
@@ -22,33 +12,44 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_Package : Page
     {
+		void LoadFont()
+        {
+            Title = MAUIStr.Obj.Package_Title;
+            label_mode1.Text = MAUIStr.Obj.Package_Mode1;
+            label_mode2.Text = MAUIStr.Obj.Package_Mode2;
+            label_introduction.Text = MAUIStr.Obj.Package_Introduction;
+            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
+            label1.Text = MAUIStr.Obj.Package_Choose1;
+            label2.Text = MAUIStr.Obj.Package_Choose2;
+            label3.Text = MAUIStr.Obj.Package_Choose3;
+            label_changeimage.Text = MAUIStr.Obj.Package_ChangeImage;
+            label_deleteimage.Text = MAUIStr.Obj.Package_DeleteImage;
+            button1.Content = MAUIStr.Obj.Share_Choose;
+            button2.Content = MAUIStr.Obj.Share_Choose;
+            label_statue.Text = MAUIStr.Obj.Share_RunStatue;
+            text4.Text = MAUIStr.Obj.Share_Waiting;
+            button_run.Content = MAUIStr.Obj.Share_Run;
+        }
+
         public Page_Package()
         {
             InitializeComponent();
-			Title = MAUIStr.Obj.Package_Title;
-			label_mode1.Text = MAUIStr.Obj.Package_Mode1;
-			label_mode2.Text = MAUIStr.Obj.Package_Mode2;
-			label_introduction.Text = MAUIStr.Obj.Package_Introduction;
-			label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-			label1.Text = MAUIStr.Obj.Package_Choose1;
-			label2.Text = MAUIStr.Obj.Package_Choose2;
-			label3.Text = MAUIStr.Obj.Package_Choose3;
-			label_changeimage.Text = MAUIStr.Obj.Package_ChangeImage;
-			label_deleteimage.Text = MAUIStr.Obj.Package_DeleteImage;
-			button1.Content = MAUIStr.Obj.Share_Choose;
-			button2.Content = MAUIStr.Obj.Share_Choose;
-			label_statue.Text = MAUIStr.Obj.Share_RunStatue;
-			text4.Text = MAUIStr.Obj.Share_Waiting;
-			button_run.Content = MAUIStr.Obj.Share_Run;
-			CB_CMode.Items.Clear();
+			LoadFont();
+            CB_CMode.Items.Clear();
 			CB_CMode.Items.Add("dz");
 			CB_CMode.Items.Add("rsb");
 			CB_CMode.Items.Add("pak");
 			CB_CMode.Items.Add("arcv");
 			CB_CMode.SelectedIndex = 0;
-		}
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
 
-		public void Do(object sender, EventArgs e)
+        ~Page_Package()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
+        }
+
+        public void Do(object sender, EventArgs e)
 		{
 			Button b = (Button)sender;
 			b.IsEnabled = false;
@@ -62,7 +63,9 @@ namespace PopStudio.WPF.Pages
 			new Thread(new ThreadStart(() =>
 			{
 				string err = null;
-				try
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                try
 				{
 					if (mode == true)
 					{
@@ -85,12 +88,14 @@ namespace PopStudio.WPF.Pages
 				{
 					err = ex.Message;
 				}
-				Dispatcher.Invoke(() =>
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
+                Dispatcher.BeginInvoke(() =>
 				{
 					if (err == null)
 					{
-						text4.Text = MAUIStr.Obj.Share_Finish;
-					}
+						text4.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
+                    }
 					else
 					{
 						text4.Text = string.Format(MAUIStr.Obj.Share_Wrong, err);

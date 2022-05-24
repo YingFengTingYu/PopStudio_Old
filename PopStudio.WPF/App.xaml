@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PopStudio.WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <FontFamily x:Key="DefaultFont">Assets/Fonts/#MiSans</FontFamily>
         <Style TargetType="ScrollViewer">
             <Setter Property="PanningMode" Value="Both" />
         </Style>
@@ -11,9 +12,12 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         </Style>
         <Style TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
         <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+            <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Background" Value="CornflowerBlue" />
             <Setter Property="Cursor" Value="Hand" />
@@ -29,8 +33,18 @@
             </Setter>
         </Style>
         <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+        </Style>
+        <Style TargetType="RichTextBox">
+            <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
         </Style>
         <LinearGradientBrush x:Key="ButtonNormalBackgroundFill" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFFFFFFF" Offset="0"/>

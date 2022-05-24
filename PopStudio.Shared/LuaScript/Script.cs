@@ -203,6 +203,7 @@ namespace PopStudio.LuaScript
             rainy["sheet"] = (Func<object[], string>)Function.Sheet;
             rainy["getfilestream"] = (Func<object[], BinaryStream>)Function.GetFileStream;
             rainy["getmemorystream"] = (Func<object[], BinaryStream>)Function.GetMemoryStream;
+            rainy["gethttpstream"] = (Func<object[], BinaryStream>)Function.GetHttpStream;
             rainy["gettempfilepool"] = (Func<object[], TempFilePool>)Function.GetTempFilePool;
             rainy["unpack"] = (Action<object[]>)Function.Unpack;
             rainy["pack"] = (Action<object[]>)Function.Pack;

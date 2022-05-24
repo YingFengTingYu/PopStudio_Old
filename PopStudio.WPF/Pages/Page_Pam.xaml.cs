@@ -1,19 +1,8 @@
-﻿using PopStudio.GUI.Languages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using PopStudio.Language.Languages;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PopStudio.WPF.Pages
 {
@@ -22,9 +11,8 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_Pam : Page
     {
-        public Page_Pam()
+        void LoadFont()
         {
-            InitializeComponent();
             Title = MAUIStr.Obj.Pam_Title;
             label_introduction.Text = MAUIStr.Obj.Pam_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
@@ -38,10 +26,22 @@ namespace PopStudio.WPF.Pages
             button_run.Content = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;
+        }
+
+        public Page_Pam()
+        {
+            InitializeComponent();
+            LoadFont();
             //CB_CMode.Items.Clear();
             //CB_CMode.Items.Add("Simple Pam");
             //CB_CMode.Items.Add("Encrypted Pam");
             //CB_CMode.SelectedIndex = 0;
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~Page_Pam()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
         private void ToggleButton_Checked(object sender, EventArgs e)
@@ -74,7 +74,9 @@ namespace PopStudio.WPF.Pages
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
-                //try
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                try
                 {
                     if (!File.Exists(inFile))
                     {
@@ -89,15 +91,17 @@ namespace PopStudio.WPF.Pages
                         API.DecodePam(inFile, outFile);
                     }
                 }
-                //catch (Exception ex)
-                //{
-                //    err = ex.Message;
-                //}
-                Dispatcher.Invoke(() =>
+                catch (Exception ex)
+                {
+                    err = ex.Message;
+                }
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
+                Dispatcher.BeginInvoke(() =>
                 {
                     if (err == null)
                     {
-                        text4.Text = MAUIStr.Obj.Share_Finish;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
                     }
                     else
                     {

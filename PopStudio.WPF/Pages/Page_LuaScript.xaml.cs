@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
 
 namespace PopStudio.WPF.Pages
 {
@@ -21,28 +11,25 @@ namespace PopStudio.WPF.Pages
     /// </summary>
     public partial class Page_LuaScript : Page
     {
-        public void ShowScriptByFileName(string s)
+        void LoadFont()
         {
-            richtextbox1.Document.Blocks.Clear();
-            Paragraph para = new Paragraph();
-            s = s.Replace("\\", "\\\\");
-            para.Inlines.Add(new Run($"rainy.dofile(\"{s}\");"));
-            richtextbox1.Document.Blocks.Add(para);
-        }
-
-        public void RunScript()
-        {
-            button_run_Click(button_run, new RoutedEventArgs());
+            Title = MAUIStr.Obj.LuaScript_Title;
+            label_introduction.Text = MAUIStr.Obj.LuaScript_Introduction;
+            label_print.Text = MAUIStr.Obj.LuaScript_TracePrint;
+            button_run.Content = MAUIStr.Obj.Share_Run;
         }
 
         public Page_LuaScript()
         {
             InitializeComponent();
-            Title = MAUIStr.Obj.LuaScript_Title;
-            label_introduction.Text = MAUIStr.Obj.LuaScript_Introduction;
-            label_print.Text = MAUIStr.Obj.LuaScript_TracePrint;
-            button_run.Content = MAUIStr.Obj.Share_Run;
+            LoadFont();
             API.box = richtextbox2;
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~Page_LuaScript()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -72,7 +59,7 @@ namespace PopStudio.WPF.Pages
                 {
                     API.Print(MAUIStr.Obj.Share_Finish);
                 }
-                Dispatcher.Invoke(() => { b.IsEnabled = true; });
+                Dispatcher.BeginInvoke(() => { b.IsEnabled = true; });
             }))
             { IsBackground = true }.Start();
         }

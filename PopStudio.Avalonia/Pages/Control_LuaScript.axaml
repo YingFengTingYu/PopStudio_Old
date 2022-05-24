@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PopStudio.Avalonia.Pages.Control_LuaScript">
+	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<StackPanel Orientation="Vertical" Margin="30,24,30,24">
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introduction" FontSize="16"/>
+			<TextBox VerticalContentAlignment="Top" x:Name="richtextbox1" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 5 0 5" FontSize="18" Height="200" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="3*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button Grid.Column="1" x:Name="button_run" Click="ButtonRun_Click" />
+			</Grid>
+			<TextBlock x:Name="label_print" Margin="0 5 0 5" FontSize="16" />
+			<TextBox VerticalContentAlignment="Top" IsReadOnly="True" x:Name="richtextbox2" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 5 0 5" Height="85" FontSize="16" />
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

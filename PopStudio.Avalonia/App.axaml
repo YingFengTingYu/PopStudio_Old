@@ -1,0 +1,40 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PopStudio.Avalonia.App">
+    <Application.Styles>
+        <FluentTheme Mode="Light" />
+		<Style Selector="Button">
+			<Setter Property="FontFamily" Value="avares://PopStudio.Avalonia/Assets/Fonts#MiSans" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+			<Setter Property="FontSize" Value="15" />
+			<Setter Property="Foreground" Value="White" />
+			<Setter Property="Background" Value="CornflowerBlue" />
+			<Setter Property="Cursor" Value="Hand" />
+			<Setter Property="Height" Value="35" />
+		</Style>
+		<Style Selector="ComboBox">
+			<Setter Property="FontFamily" Value="avares://PopStudio.Avalonia/Assets/Fonts#MiSans" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="Cursor" Value="Hand" />
+		</Style>
+		<Style Selector="TextBox">
+			<Setter Property="FontFamily" Value="avares://PopStudio.Avalonia/Assets/Fonts#MiSans" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="FontSize" Value="15" />
+		</Style>
+		<Style Selector="ToggleSwitch">
+			<Setter Property="FontFamily" Value="avares://PopStudio.Avalonia/Assets/Fonts#MiSans" />
+			<Setter Property="Cursor" Value="Hand" />
+			<Setter Property="OnContent" Value="" />
+			<Setter Property="OffContent" Value="" />
+		</Style>
+		<Style Selector="TextBlock">
+			<Setter Property="FontFamily" Value="avares://PopStudio.Avalonia/Assets/Fonts#MiSans" />
+		</Style>
+		<Style Selector="Label">
+			<Setter Property="FontFamily" Value="avares://PopStudio.Avalonia/Assets/Fonts#MiSans" />
+		</Style>
+    </Application.Styles>
+</Application>
