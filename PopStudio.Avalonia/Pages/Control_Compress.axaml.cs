@@ -64,9 +64,7 @@ namespace PopStudio.Avalonia.Pages
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
             label_mode1.Text = MAUIStr.Obj.Compress_Mode1;
             label_mode2.Text = MAUIStr.Obj.Compress_Mode2;
-            text1.Text = MAUIStr.Obj.Compress_Choose1;
-            text2.Text = MAUIStr.Obj.Compress_Choose2;
-            text3.Text = MAUIStr.Obj.Compress_Choose3;
+            LoadFont_Checked(TB_Mode.IsChecked == true);
             button1.Content = MAUIStr.Obj.Share_Choose;
             button2.Content = MAUIStr.Obj.Share_Choose;
             button_run.Content = MAUIStr.Obj.Share_Run;
@@ -74,22 +72,27 @@ namespace PopStudio.Avalonia.Pages
             text4.Text = MAUIStr.Obj.Share_Waiting;
         }
 
+        void LoadFont_Checked(bool v)
+        {
+            if (v)
+            {
+                text1.Text = MAUIStr.Obj.Compress_Choose4;
+                text2.Text = MAUIStr.Obj.Compress_Choose5;
+                text3.Text = MAUIStr.Obj.Compress_Choose6;
+            }
+            else
+            {
+                text1.Text = MAUIStr.Obj.Compress_Choose1;
+                text2.Text = MAUIStr.Obj.Compress_Choose2;
+                text3.Text = MAUIStr.Obj.Compress_Choose3;
+            }
+        }
+
         private void Switch_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is ToggleSwitch s)
             {
-                if (s.IsChecked == true)
-                {
-                    text1.Text = MAUIStr.Obj.Compress_Choose4;
-                    text2.Text = MAUIStr.Obj.Compress_Choose5;
-                    text3.Text = MAUIStr.Obj.Compress_Choose6;
-                }
-                else
-                {
-                    text1.Text = MAUIStr.Obj.Compress_Choose1;
-                    text2.Text = MAUIStr.Obj.Compress_Choose2;
-                    text3.Text = MAUIStr.Obj.Compress_Choose3;
-                }
+                LoadFont_Checked(s.IsChecked == true);
                 (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);
             }
         }

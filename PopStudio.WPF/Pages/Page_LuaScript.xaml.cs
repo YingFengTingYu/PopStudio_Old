@@ -57,7 +57,7 @@ namespace PopStudio.WPF.Pages
                 }
                 if (cg)
                 {
-                    API.Print(MAUIStr.Obj.Share_Finish);
+                    API.Print(MAUIStr.Obj.Share_Finish_NoTime);
                 }
                 Dispatcher.BeginInvoke(() => { b.IsEnabled = true; });
             }))

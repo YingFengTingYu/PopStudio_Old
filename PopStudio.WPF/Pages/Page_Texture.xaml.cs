@@ -19,9 +19,7 @@ namespace PopStudio.WPF.Pages
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
             label_mode1.Text = MAUIStr.Obj.Texture_Mode1;
             label_mode2.Text = MAUIStr.Obj.Texture_Mode2;
-            text1.Text = MAUIStr.Obj.Texture_Choose1;
-            text2.Text = MAUIStr.Obj.Texture_Choose2;
-            text3.Text = MAUIStr.Obj.Texture_Choose3;
+            LoadFont_Checked(TB_Mode.IsChecked == true);
             textN.Text = MAUIStr.Obj.Texture_Choose7;
             button1.Content = MAUIStr.Obj.Share_Choose;
             button2.Content = MAUIStr.Obj.Share_Choose;
@@ -77,28 +75,34 @@ namespace PopStudio.WPF.Pages
             MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
-        private void ToggleButton_Checked(object sender, EventArgs e)
+        void LoadFont_Checked(bool v)
         {
-            if (((ToggleButton)sender).IsChecked == true)
+            if (v)
             {
                 text1.Text = MAUIStr.Obj.Texture_Choose4;
                 text2.Text = MAUIStr.Obj.Texture_Choose5;
                 text3.Text = MAUIStr.Obj.Texture_Choose6;
-                string temp = textbox1.Text;
-                textbox1.Text = textbox2.Text;
-                textbox2.Text = temp;
-                SP_FMode.Visibility = Visibility.Visible;
             }
             else
             {
                 text1.Text = MAUIStr.Obj.Texture_Choose1;
                 text2.Text = MAUIStr.Obj.Texture_Choose2;
                 text3.Text = MAUIStr.Obj.Texture_Choose3;
-                string temp = textbox1.Text;
-                textbox1.Text = textbox2.Text;
-                textbox2.Text = temp;
+            }
+        }
+
+        private void ToggleButton_Checked(object sender, EventArgs e)
+        {
+            LoadFont_Checked(((ToggleButton)sender).IsChecked == true);
+            if (((ToggleButton)sender).IsChecked == true)
+            {
+                SP_FMode.Visibility = Visibility.Visible;
+            }
+            else
+            {
                 SP_FMode.Visibility = Visibility.Collapsed;
             }
+            (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);
         }
 
         private void Button_Click(object sender, EventArgs e)

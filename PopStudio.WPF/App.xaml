@@ -46,98 +46,63 @@
         <Style TargetType="RichTextBox">
             <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
         </Style>
-        <LinearGradientBrush x:Key="ButtonNormalBackgroundFill" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FFFFFFFF" Offset="0"/>
-            <GradientStop Color="#FFF0F0EA" Offset="0.9"/>
-        </LinearGradientBrush>
-        <SolidColorBrush x:Key="ButtonBorder" Color="CornflowerBlue"/>
-        <Style TargetType="{x:Type ToggleButton}">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Background" Value="{StaticResource ButtonNormalBackgroundFill}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#FFB9B9B9" />
+            <Setter Property="Background" Value="#FFB9B9B9" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
                         <ControlTemplate.Resources>
-                            <Storyboard x:Key="OnChecked1">
-                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path">
-                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="40,0,0,0"/>
-                                </ThicknessAnimationUsingKeyFrames>
-                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path1">
-                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="40,0,0,0"/>
-                                </ThicknessAnimationUsingKeyFrames>
-                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path2">
-                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="40,0,0,0"/>
-                                </ThicknessAnimationUsingKeyFrames>
-                                <StringAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Text)" Storyboard.TargetName="displayText">
-                                    <DiscreteStringKeyFrame KeyTime="0" Value=""/>
-                                </StringAnimationUsingKeyFrames>
+                            <Storyboard x:Key="OnChecking">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="17" />
+                                </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
-                            <Storyboard x:Key="OnUnchecked1">
-                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path">
-                                    <EasingThicknessKeyFrame KeyTime="0" Value="40,0,0,0"/>
-                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
-                                </ThicknessAnimationUsingKeyFrames>
-                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path1">
-                                    <EasingThicknessKeyFrame KeyTime="0" Value="40,0,0,0"/>
-                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
-                                </ThicknessAnimationUsingKeyFrames>
-                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="path2">
-                                    <EasingThicknessKeyFrame KeyTime="0" Value="40,0,0,0"/>
-                                    <EasingThicknessKeyFrame KeyTime="0:0:0.1" Value="0"/>
-                                </ThicknessAnimationUsingKeyFrames>
-                                <StringAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Text)" Storyboard.TargetName="displayText">
-                                    <DiscreteStringKeyFrame KeyTime="0" Value=""/>
-                                </StringAnimationUsingKeyFrames>
-                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="displayText">
-                                    <EasingColorKeyFrame KeyTime="0" Value="#777777"/>
-                                    <EasingColorKeyFrame KeyTime="0:0:0.5" Value="#FF63FA00"/>
-                                </ColorAnimationUsingKeyFrames>
+                            <Storyboard x:Key="OnUnchecking">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                         </ControlTemplate.Resources>
-                        <Border CornerRadius="10" Background="#BBBBBB" Width="60" Height="20">
+                        <DockPanel x:Name="dockPanel">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center" />
                             <Grid>
-                                <TextBlock x:Name="displayText" Text="" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                                <Path x:Name="path2" Fill="Black">
-                                    <Path.Data>
-                                        <GeometryGroup>
-                                            <GeometryGroup.Children>
-                                                <EllipseGeometry Center="10,10" RadiusX="8.5" RadiusY="8.5"></EllipseGeometry>
-                                            </GeometryGroup.Children>
-                                        </GeometryGroup>
-                                    </Path.Data>
-                                </Path>
-                                <Path x:Name="path1" Fill="#FF818080">
-                                    <Path.Data>
-                                        <GeometryGroup>
-                                            <GeometryGroup.Children>
-                                                <EllipseGeometry Center="10,10" RadiusX="7" RadiusY="7"></EllipseGeometry>
-                                            </GeometryGroup.Children>
-                                        </GeometryGroup>
-                                    </Path.Data>
-                                </Path>
-                                <Path x:Name="path" Fill="CornflowerBlue">
-                                    <Path.Data>
-                                        <GeometryGroup>
-                                            <GeometryGroup.Children>
-                                                <EllipseGeometry Center="10,10" RadiusX="8" RadiusY="8"></EllipseGeometry>
-                                            </GeometryGroup.Children>
-                                        </GeometryGroup>
-                                    </Path.Data>
-                                </Path>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="2" />
+                                </Grid.ColumnDefinitions>
+                                <Border Background="#FFB9B9B9" Grid.Column="1" x:Name="BackgroundBorder" CornerRadius="9" Height="18" Width="37" />
+                                <Border Grid.ColumnSpan="3" BorderBrush="#FF939393" HorizontalAlignment="Left" x:Name="slider" Width="24" Height="24" BorderThickness="1" CornerRadius="12" RenderTransformOrigin="0.5,0.5" Margin="0">
+                                    <Border.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                            <SkewTransform AngleX="0" AngleY="0" />
+                                            <RotateTransform Angle="0" />
+                                            <TranslateTransform X="0" Y="0" />
+                                        </TransformGroup>
+                                    </Border.RenderTransform>
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0" />
+                                            <GradientStop Color="#FFCDCDCD" Offset="0.1" />
+                                            <GradientStop Color="#FFFBFBFB" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
                             </Grid>
-                        </Border>
+                        </DockPanel>
                         <ControlTemplate.Triggers>
-                            <EventTrigger RoutedEvent="ToggleButton.Checked">
-                                <BeginStoryboard Storyboard="{StaticResource OnChecked1}"/>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="ToggleButton.Unchecked">
-                                <BeginStoryboard x:Name="OnUnchecked1_BeginStoryboard" Storyboard="{StaticResource OnUnchecked1}"/>
-                            </EventTrigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource OnUnchecking}" x:Name="OnUnchecking_BeginStoryboard" />
+                                </Trigger.ExitActions>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource OnChecking}" x:Name="OnChecking_BeginStoryboard" />
+                                </Trigger.EnterActions>
+                                <Setter TargetName="BackgroundBorder" Property="Background" Value="CornflowerBlue" />
+                                <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="CornflowerBlue" />
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>

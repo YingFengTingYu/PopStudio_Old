@@ -96,9 +96,7 @@ namespace PopStudio.Avalonia.Pages
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
             label_mode1.Text = MAUIStr.Obj.Texture_Mode1;
             label_mode2.Text = MAUIStr.Obj.Texture_Mode2;
-            text1.Text = MAUIStr.Obj.Texture_Choose1;
-            text2.Text = MAUIStr.Obj.Texture_Choose2;
-            text3.Text = MAUIStr.Obj.Texture_Choose3;
+            LoadFont_Checked(TB_Mode.IsChecked == true);
             textN.Text = MAUIStr.Obj.Texture_Choose7;
             button1.Content = MAUIStr.Obj.Share_Choose;
             button2.Content = MAUIStr.Obj.Share_Choose;
@@ -107,22 +105,33 @@ namespace PopStudio.Avalonia.Pages
             text4.Text = MAUIStr.Obj.Share_Waiting;
         }
 
+        void LoadFont_Checked(bool v)
+        {
+            if (v)
+            {
+                text1.Text = MAUIStr.Obj.Texture_Choose4;
+                text2.Text = MAUIStr.Obj.Texture_Choose5;
+                text3.Text = MAUIStr.Obj.Texture_Choose6;
+            }
+            else
+            {
+                text1.Text = MAUIStr.Obj.Texture_Choose1;
+                text2.Text = MAUIStr.Obj.Texture_Choose2;
+                text3.Text = MAUIStr.Obj.Texture_Choose3;
+            }
+        }
+
         private void Switch_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is ToggleSwitch s)
             {
+                LoadFont_Checked(s.IsChecked == true);
                 if (s.IsChecked == true)
                 {
-                    text1.Text = MAUIStr.Obj.Texture_Choose4;
-                    text2.Text = MAUIStr.Obj.Texture_Choose5;
-                    text3.Text = MAUIStr.Obj.Texture_Choose6;
                     SP_FMode.IsVisible = true;
                 }
                 else
                 {
-                    text1.Text = MAUIStr.Obj.Texture_Choose1;
-                    text2.Text = MAUIStr.Obj.Texture_Choose2;
-                    text3.Text = MAUIStr.Obj.Texture_Choose3;
                     SP_FMode.IsVisible = false;
                 }
                 (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);

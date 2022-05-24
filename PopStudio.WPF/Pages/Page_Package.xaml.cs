@@ -19,9 +19,7 @@ namespace PopStudio.WPF.Pages
             label_mode2.Text = MAUIStr.Obj.Package_Mode2;
             label_introduction.Text = MAUIStr.Obj.Package_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-            label1.Text = MAUIStr.Obj.Package_Choose1;
-            label2.Text = MAUIStr.Obj.Package_Choose2;
-            label3.Text = MAUIStr.Obj.Package_Choose3;
+			LoadFont_Checked(switchmode.IsChecked == true);
             label_changeimage.Text = MAUIStr.Obj.Package_ChangeImage;
             label_deleteimage.Text = MAUIStr.Obj.Package_DeleteImage;
             button1.Content = MAUIStr.Obj.Share_Choose;
@@ -106,27 +104,36 @@ namespace PopStudio.WPF.Pages
 			{ IsBackground = true }.Start();
 		}
 
-		public void ModeChange(object sender, RoutedEventArgs e)
+		void LoadFont_Checked(bool v)
+        {
+            if (v)
+            {
+                label1.Text = MAUIStr.Obj.Package_Choose4;
+                label2.Text = MAUIStr.Obj.Package_Choose5;
+                label3.Text = MAUIStr.Obj.Package_Choose6;
+            }
+            else
+            {
+                label1.Text = MAUIStr.Obj.Package_Choose1;
+                label2.Text = MAUIStr.Obj.Package_Choose2;
+                label3.Text = MAUIStr.Obj.Package_Choose3;
+            }
+        }
+
+
+        public void ModeChange(object sender, RoutedEventArgs e)
 		{
-			if (((ToggleButton)sender).IsChecked == true)
+			LoadFont_Checked(((ToggleButton)sender).IsChecked == true);
+            if (((ToggleButton)sender).IsChecked == true)
 			{
-				label1.Text = MAUIStr.Obj.Package_Choose4;
-				label2.Text = MAUIStr.Obj.Package_Choose5;
-				label3.Text = MAUIStr.Obj.Package_Choose6;
 				change.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				label1.Text = MAUIStr.Obj.Package_Choose1;
-				label2.Text = MAUIStr.Obj.Package_Choose2;
-				label3.Text = MAUIStr.Obj.Package_Choose3;
 				change.Visibility = Visibility.Visible;
 			}
-			//交换文本框内容
-			string temp = textbox1.Text;
-			textbox1.Text = textbox2.Text;
-			textbox2.Text = temp;
-		}
+            (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);
+        }
 
 		private void Button_Clicked(object sender, EventArgs e)
 		{

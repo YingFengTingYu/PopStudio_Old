@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="label_mode1" VerticalAlignment="Center" FontSize="20" />
-                <ToggleButton x:Name="switchmode" Grid.Column="1" Checked="ModeChange" Unchecked="ModeChange" />
+                <CheckBox Margin="4 0 4 0" x:Name="switchmode" Grid.Column="1" Checked="ModeChange" Unchecked="ModeChange" />
                 <TextBlock x:Name="label_mode2" Grid.Column="2" VerticalAlignment="Center" FontSize="20" />
             </Grid>
             <TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label1" FontSize="20" />

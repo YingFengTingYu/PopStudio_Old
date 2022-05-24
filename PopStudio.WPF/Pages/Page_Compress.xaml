@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock FontSize="20" x:Name="label_mode1" VerticalAlignment="Center" />
-                <ToggleButton x:Name="TB_Mode" Grid.Column="1" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Checked" />
+                <CheckBox Margin="4 0 4 0" x:Name="TB_Mode" Grid.Column="1" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Checked" />
                 <TextBlock FontSize="20" x:Name="label_mode2" Grid.Column="2" VerticalAlignment="Center" />
             </Grid>
             <TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="text1" />

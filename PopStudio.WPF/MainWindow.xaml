@@ -17,7 +17,7 @@
         <Grid x:Name="DialogGrid" Visibility="Collapsed" Background="#88000000" Panel.ZIndex="3">
             <ContentControl x:Name="DialogControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
-        <Grid>
+        <Grid Background="CornflowerBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190"/>
                 <ColumnDefinition Width="*"/>
@@ -62,7 +62,9 @@
 
                 <Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
 
-                <ContentControl x:Name="PageControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Grid Grid.Row="1" Background="White">
+                    <ContentControl x:Name="PageControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

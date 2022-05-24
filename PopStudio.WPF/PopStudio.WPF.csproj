@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
     <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
     <PackageReference Include="LZMA-SDK" Version="19.0.0" />
     <PackageReference Include="MoonSharp" Version="2.0.0" />
@@ -50,19 +49,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceAD.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Pages\Page_Atlas.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\Page_LuaScript.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Pages\Page_Pam.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
   </ItemGroup>
 
 </Project>

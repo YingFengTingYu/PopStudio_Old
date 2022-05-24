@@ -66,9 +66,7 @@ namespace PopStudio.Avalonia.Pages
             label_mode2.Text = MAUIStr.Obj.Package_Mode2;
             label_introduction.Text = MAUIStr.Obj.Package_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-            label1.Text = MAUIStr.Obj.Package_Choose1;
-            label2.Text = MAUIStr.Obj.Package_Choose2;
-            label3.Text = MAUIStr.Obj.Package_Choose3;
+            LoadFont_Checked(switchmode.IsChecked == true);
             label_changeimage.Text = MAUIStr.Obj.Package_ChangeImage;
             label_deleteimage.Text = MAUIStr.Obj.Package_DeleteImage;
             button1.Content = MAUIStr.Obj.Share_Choose;
@@ -78,22 +76,33 @@ namespace PopStudio.Avalonia.Pages
             button_run.Content = MAUIStr.Obj.Share_Run;
         }
 
+        void LoadFont_Checked(bool v)
+        {
+            if (v)
+            {
+                label1.Text = MAUIStr.Obj.Package_Choose4;
+                label2.Text = MAUIStr.Obj.Package_Choose5;
+                label3.Text = MAUIStr.Obj.Package_Choose6;
+            }
+            else
+            {
+                label1.Text = MAUIStr.Obj.Package_Choose1;
+                label2.Text = MAUIStr.Obj.Package_Choose2;
+                label3.Text = MAUIStr.Obj.Package_Choose3;
+            }
+        }
+
         private void Switch_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is ToggleSwitch s)
             {
+                LoadFont_Checked(s.IsChecked == true);
                 if (s.IsChecked == true)
                 {
-                    label1.Text = MAUIStr.Obj.Package_Choose4;
-                    label2.Text = MAUIStr.Obj.Package_Choose5;
-                    label3.Text = MAUIStr.Obj.Package_Choose6;
                     change.IsVisible = false;
                 }
                 else
                 {
-                    label1.Text = MAUIStr.Obj.Package_Choose1;
-                    label2.Text = MAUIStr.Obj.Package_Choose2;
-                    label3.Text = MAUIStr.Obj.Package_Choose3;
                     change.IsVisible = true;
                 }
                 (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);

@@ -94,10 +94,8 @@ namespace PopStudio.Avalonia.Pages
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
             label_mode1.Text = MAUIStr.Obj.Atlas_Mode1;
             label_mode2.Text = MAUIStr.Obj.Atlas_Mode2;
-            text1.Text = MAUIStr.Obj.Atlas_Choose1;
-            text2.Text = MAUIStr.Obj.Atlas_Choose2;
+            LoadFont_Checked(TB_Mode.IsChecked == true);
             text3.Text = MAUIStr.Obj.Atlas_Choose3;
-            text4.Text = MAUIStr.Obj.Atlas_Choose4;
             text_mode.Text = MAUIStr.Obj.Atlas_Format;
             text_maxwidth.Text = MAUIStr.Obj.Atlas_MaxWidth;
             text_maxheight.Text = MAUIStr.Obj.Atlas_MaxHeight;
@@ -227,22 +225,33 @@ namespace PopStudio.Avalonia.Pages
             { IsBackground = true }.Start();
         }
 
+        void LoadFont_Checked(bool v)
+        {
+            if (v)
+            {
+                text1.Text = MAUIStr.Obj.Atlas_Choose5;
+                text2.Text = MAUIStr.Obj.Atlas_Choose6;
+                text4.Text = MAUIStr.Obj.Atlas_Choose7;
+            }
+            else
+            {
+                text1.Text = MAUIStr.Obj.Atlas_Choose1;
+                text2.Text = MAUIStr.Obj.Atlas_Choose2;
+                text4.Text = MAUIStr.Obj.Atlas_Choose4;
+            }
+        }
+
         private void Switch_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is ToggleSwitch s)
             {
+                LoadFont_Checked(s.IsChecked == true);
                 if (s.IsChecked == true)
                 {
-                    text1.Text = MAUIStr.Obj.Atlas_Choose5;
-                    text2.Text = MAUIStr.Obj.Atlas_Choose6;
-                    text4.Text = MAUIStr.Obj.Atlas_Choose7;
                     splice_size.IsVisible = true;
                 }
                 else
                 {
-                    text1.Text = MAUIStr.Obj.Atlas_Choose1;
-                    text2.Text = MAUIStr.Obj.Atlas_Choose2;
-                    text4.Text = MAUIStr.Obj.Atlas_Choose4;
                     splice_size.IsVisible = false;
                 }
                 (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);

@@ -18,9 +18,7 @@ namespace PopStudio.WPF.Pages
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
             label_mode1.Text = MAUIStr.Obj.RTON_Mode1;
             label_mode2.Text = MAUIStr.Obj.RTON_Mode2;
-            text1.Text = MAUIStr.Obj.RTON_Choose1;
-            text2.Text = MAUIStr.Obj.RTON_Choose2;
-            text3.Text = MAUIStr.Obj.RTON_Choose3;
+            LoadFont_Checked(TB_Mode.IsChecked == true);
             button1.Content = MAUIStr.Obj.Share_Choose;
             button2.Content = MAUIStr.Obj.Share_Choose;
             button_run.Content = MAUIStr.Obj.Share_Run;
@@ -44,22 +42,26 @@ namespace PopStudio.WPF.Pages
             MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
-        private void ToggleButton_Checked(object sender, EventArgs e)
+        void LoadFont_Checked(bool v)
         {
-            if (((ToggleButton)sender).IsChecked == true)
+            if (v)
             {
                 text1.Text = MAUIStr.Obj.RTON_Choose4;
                 text2.Text = MAUIStr.Obj.RTON_Choose5;
                 text3.Text = MAUIStr.Obj.RTON_Choose6;
-                (textbox2.Text, textbox1.Text) = (textbox1.Text, textbox2.Text);
             }
             else
             {
                 text1.Text = MAUIStr.Obj.RTON_Choose1;
                 text2.Text = MAUIStr.Obj.RTON_Choose2;
                 text3.Text = MAUIStr.Obj.RTON_Choose3;
-                (textbox2.Text, textbox1.Text) = (textbox1.Text, textbox2.Text);
             }
+        }
+
+        private void ToggleButton_Checked(object sender, EventArgs e)
+        {
+            LoadFont_Checked(((ToggleButton)sender).IsChecked == true);
+            (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);
         }
 
         private void Button_Click(object sender, EventArgs e)
