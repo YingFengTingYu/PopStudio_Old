@@ -1,25 +1,19 @@
-﻿using System;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using PopStudio.GUI.Languages;
+﻿using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.MAUI
 {
 	public partial class Page_Atlas : ContentPage
 	{
-		public Page_Atlas()
-		{
-			InitializeComponent();
+        void LoadFont()
+        {
             Title = MAUIStr.Obj.Atlas_Title;
             label_introduction.Text = MAUIStr.Obj.Atlas_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
             label_mode1.Text = MAUIStr.Obj.Atlas_Mode1;
             label_mode2.Text = MAUIStr.Obj.Atlas_Mode2;
-            text1.Text = MAUIStr.Obj.Atlas_Choose1;
-            text2.Text = MAUIStr.Obj.Atlas_Choose2;
+            LoadFont_Checked(TB_Mode.IsToggled);
             text3.Text = MAUIStr.Obj.Atlas_Choose3;
-            text4.Text = MAUIStr.Obj.Atlas_Choose4;
             text_mode.Text = MAUIStr.Obj.Atlas_Format;
             text_maxwidth.Text = MAUIStr.Obj.Atlas_MaxWidth;
             text_maxheight.Text = MAUIStr.Obj.Atlas_MaxHeight;
@@ -29,6 +23,12 @@ namespace PopStudio.MAUI
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text5.Text = MAUIStr.Obj.Share_Waiting;
+        }
+
+        public Page_Atlas()
+		{
+			InitializeComponent();
+            LoadFont();
             CB_Mode.Items.Clear();
             CB_Mode.Items.Add("RESOURCES.XML(Rsb)");
             CB_Mode.Items.Add("resources.xml(Old)");
@@ -54,30 +54,35 @@ namespace PopStudio.MAUI
             CB_MaxHeight.Items.Add("4096");
             CB_MaxHeight.Items.Add("8192");
             CB_MaxHeight.SelectedIndex = 3;
+            MAUIStr.OnLanguageChanged += LoadFont;
         }
 
-        public void ModeChange(object sender, ToggledEventArgs e)
+        ~Page_Atlas()
         {
-            if (((Switch)sender).IsToggled)
+            MAUIStr.OnLanguageChanged -= LoadFont;
+        }
+
+        void LoadFont_Checked(bool v)
+        {
+            if (v)
             {
                 text1.Text = MAUIStr.Obj.Atlas_Choose5;
                 text2.Text = MAUIStr.Obj.Atlas_Choose6;
                 text4.Text = MAUIStr.Obj.Atlas_Choose7;
-                splice_size.IsVisible = true;
-                string temp = textbox1.Text;
-                textbox1.Text = textbox2.Text;
-                textbox2.Text = temp;
             }
             else
             {
                 text1.Text = MAUIStr.Obj.Atlas_Choose1;
                 text2.Text = MAUIStr.Obj.Atlas_Choose2;
                 text4.Text = MAUIStr.Obj.Atlas_Choose4;
-                splice_size.IsVisible = false;
-                string temp = textbox1.Text;
-                textbox1.Text = textbox2.Text;
-                textbox2.Text = temp;
             }
+        }
+
+        public void ModeChange(object sender, ToggledEventArgs e)
+        {
+            LoadFont_Checked(((Switch)sender).IsToggled);
+            splice_size.IsVisible = ((Switch)sender).IsToggled;
+            (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -96,6 +101,8 @@ namespace PopStudio.MAUI
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
                 try
                 {
                     if (mode)
@@ -125,11 +132,13 @@ namespace PopStudio.MAUI
                 {
                     err = ex.Message;
                 }
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
                 Dispatcher.Dispatch(() =>
                 {
                     if (err == null)
                     {
-                        text5.Text = MAUIStr.Obj.Share_Finish;
+                        text5.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
                     }
                     else
                     {

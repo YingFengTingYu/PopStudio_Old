@@ -1,10 +1,9 @@
-﻿namespace PopStudio.MAUI
+﻿namespace PopStudio.Platform
 {
     internal static partial class Permission
     {
         public static partial void PlatformInit()
         {
-
         }
         public static partial bool HiddenPermission() => true;
         public static partial bool HiddenFlyout() => true;

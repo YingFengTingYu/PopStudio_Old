@@ -1,15 +1,16 @@
-﻿using PopStudio.GUI.Languages;
+﻿using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.MAUI
 {
     public partial class AppShell : Shell
     {
-        Page_HomePage homePage;
-        public Page_HomePage HomePage => homePage ??= new Page_HomePage();
+        void LoadFont() => LoadFont(false);
 
-        public AppShell()
+        void LoadFont(bool selectzero)
         {
-            InitializeComponent();
+            int mIndex = selectzero ? 1 : ((collectionView.SelectedItem as FlyoutPageItem)?.Index ?? 1);
+            mIndex--;
             List<FlyoutPageItem> mItem = new List<FlyoutPageItem>();
             mItem.Add(new FlyoutPageItem
             {
@@ -72,21 +73,21 @@ namespace PopStudio.MAUI
                 Title = fitem_setting.Title = MAUIStr.Obj.Setting_Title
             });
             collectionView.ItemsSource = mItem;
-            collectionView.SelectedItem = mItem[0];
-            //settingHomePage.Title = fitem_homepage.Title = MAUIStr.Obj.HomePage_Title;
-            //settingPackage.Title = fitem_package.Title = MAUIStr.Obj.Package_Title;
-            //settingAtlas.Title = fitem_atlas.Title = MAUIStr.Obj.Atlas_Title;
-            //fitem_texture.Title = MAUIStr.Obj.Texture_Title;
-            //fitem_reanim.Title = MAUIStr.Obj.Reanim_Title;
-            //fitem_particles.Title = MAUIStr.Obj.Particles_Title;
-            //fitem_trail.Title = MAUIStr.Obj.Trail_Title;
-            //fitem_pam.Title = MAUIStr.Obj.Pam_Title;
-            //fitem_rton.Title = MAUIStr.Obj.RTON_Title;
-            //fitem_compress.Title = MAUIStr.Obj.Compress_Title;
-            //fitem_luascript.Title = MAUIStr.Obj.LuaScript_Title;
-            //fitem_setting.Title = MAUIStr.Obj.Setting_Title;
+            collectionView.SelectedItem = mItem[mIndex];
+        }
+
+        public AppShell()
+        {
+            InitializeComponent();
+            LoadFont(true);
             FlyoutBehavior = Permission.HiddenFlyout() ? FlyoutBehavior.Flyout : FlyoutBehavior.Locked;
             Permission.PlatformInit();
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~AppShell()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
         protected override bool OnBackButtonPressed()

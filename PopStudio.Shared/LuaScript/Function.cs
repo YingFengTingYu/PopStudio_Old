@@ -817,5 +817,19 @@
                 return null;
             }
         }
+
+        public static string GetAnsiName(params object[] args)
+        {
+            try
+            {
+                return API.GetAnsiName();
+            }
+            catch (Exception ex)
+            {
+                if (Script.luavm.ErrorThrow) throw;
+                else Print(ex.Message);
+                return null;
+            }
+        }
     }
 }

@@ -3,28 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_HomePage">
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
-        <StackLayout>
-            <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
-                <Label Text="PopStudio" Margin="0,10,0,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="30" FontAttributes="Bold"/>
-                <Label x:Name="label_begin" HorizontalTextAlignment="Center" FontSize="Title" />
-                <Label x:Name="label_function" FontSize="16" />
-                <Label x:Name="label_agreement" FontSize="16" />
-                <StackLayout x:Name="AndroidPermission">
-                    <Label x:Name="label_permission" FontSize="16" />
-                    <Button x:Name="button_permission" Margin="10,10,10,10" Clicked="button_permission_Clicked" />
-                </StackLayout>
-                <Label x:Name="label_ver" FontSize="16"/>
-                <Label x:Name="label_author_string" FontSize="16"/>
-                <Label x:Name="label_author" FontSize="16"/>
-                <Label x:Name="label_thanks_string" FontSize="16"/>
-                <Label x:Name="label_thanks" FontSize="16"/>
-                <Label x:Name="label_qqgroup_string" FontSize="16"/>
-                <Label x:Name="label_qqgroup" FontSize="16"/>
-                <Label x:Name="label_course_string" FontSize="16"/>
-                <Label x:Name="label_course" FontSize="16"/>
-                <Label x:Name="label_appnewnotice_string" FontSize="16"/>
-                <Label x:Name="label_appnewnotice" FontSize="16"/>
+        <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
+            <Label Text="PopStudio" Margin="0,10,0,10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="30" FontAttributes="Bold"/>
+            <Label x:Name="label_begin" HorizontalTextAlignment="Center" FontSize="Title" />
+            <Label x:Name="label_function" FontSize="16" />
+            <Label x:Name="label_agreement" FontSize="16" />
+            <StackLayout x:Name="AndroidPermission">
+                <Label x:Name="label_permission" FontSize="16" />
+                <Button x:Name="button_permission" Margin="10,10,10,10" Clicked="button_permission_Clicked" />
             </StackLayout>
+            <Label x:Name="label_ver" FontSize="16"/>
+            <Label x:Name="label_author_string" FontSize="16"/>
+            <Label x:Name="label_author" FontSize="16"/>
+            <Label x:Name="label_thanks_string" FontSize="16"/>
+            <Label x:Name="label_thanks" FontSize="16"/>
+            <Label x:Name="label_qqgroup_string" FontSize="16"/>
+            <Label x:Name="label_qqgroup" FontSize="16"/>
+            <Label x:Name="label_course_string" FontSize="16"/>
+            <Label x:Name="label_course" FontSize="16"/>
+            <Label x:Name="label_appnewnotice_string" FontSize="16"/>
+            <Label x:Name="label_appnewnotice" FontSize="16"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

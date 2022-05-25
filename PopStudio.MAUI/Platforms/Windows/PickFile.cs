@@ -1,7 +1,7 @@
 ﻿using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace PopStudio.MAUI
+namespace PopStudio.Platform
 {
     internal static partial class PickFile
     {

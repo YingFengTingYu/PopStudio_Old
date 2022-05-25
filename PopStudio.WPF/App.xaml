@@ -47,6 +47,7 @@
             <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
         </Style>
         <Style TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Foreground" Value="#FFB9B9B9" />
             <Setter Property="Background" Value="#FFB9B9B9" />
             <Setter Property="Template">

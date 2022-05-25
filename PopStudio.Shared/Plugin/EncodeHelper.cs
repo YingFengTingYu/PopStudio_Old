@@ -4,16 +4,20 @@ namespace PopStudio.Plugin
 {
     internal static class EncodeHelper
     {
-        public static readonly Encoding ANSI = GetEncodingInternal();
+        public static Encoding ANSI => Setting.AppLanguage switch
+        {
+            Constant.Language.ZHCN => Gb2312,
+            _ => Latin1
+        };
 
-        static Encoding GetEncodingInternal()
+        static readonly Encoding Latin1;
+        static readonly Encoding Gb2312;
+
+        static EncodeHelper()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            return Setting.AppLanguage switch
-            {
-                Constant.Language.ZHCN => Encoding.GetEncoding("GB2312"),
-                _ => Encoding.Latin1
-            };
+            Gb2312 = Encoding.GetEncoding("GB2312");
+            Latin1 = Encoding.Latin1;
         }
     }
 }

@@ -1,7 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net6.0-android;net6.0-windows10.0.19041</TargetFrameworks>
+		<TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
 		<RootNamespace>PopStudio.MAUI</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -13,84 +16,64 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.yingfengtingyu.popstudio</ApplicationId>
-		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">5B7DBF1A-A142-4A27-8F82-02B7627544F2</ApplicationId>
+		<ApplicationIdGuid>C84F4BA7-A986-43E3-96E7-AC7F24564FF1</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>5.0</ApplicationDisplayVersion>
+		<ApplicationVersion>20</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-		<AndroidManifestApplicationName>PopStudio</AndroidManifestApplicationName>
-		<AndroidManifestApplicationPackageName>com.yingfengtingyu.popstudio</AndroidManifestApplicationPackageName>
-		<AndroidManifestApplicationVersionNumber>12</AndroidManifestApplicationVersionNumber>
-		<AndroidManifestApplicationVersionName>4.2</AndroidManifestApplicationVersionName>
-		<BundleAssemblies>False</BundleAssemblies>
-		<AndroidKeyStore>False</AndroidKeyStore>
-		<EnableLLVM>True</EnableLLVM>
-		<RunAOTCompilation>True</RunAOTCompilation>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)ANDROID</DefineConstants>
-	  <Optimize>True</Optimize>
-	  <DebugSymbols>False</DebugSymbols>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
-	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
-	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
 	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)IOS</DefineConstants>
+	  <DefineConstants>$(DefineConstants)TRACE;IOS</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-maccatalyst|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-maccatalyst|AnyCPU'">
-	  <MandroidI18n>CJK;West;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)MACOS</DefineConstants>
+	  <DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041|AnyCPU'">
-	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows10.0.19041.0|AnyCPU'">
+	  <DefineConstants>WINDOWS</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041|AnyCPU'">
-	  <MandroidI18n>CJK;Mideast;</MandroidI18n>
-	  <DefineConstants>$(DefineConstants)WINDOWS</DefineConstants>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows10.0.19041.0|AnyCPU'">
+	  <DefineConstants>WINDOWS</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#00000000" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00000000" />
+
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appload.svg" Color="#6495ED" BaseSize="256,256" />
+		<MauiSplashScreen Include="Resources\Splash\appload.svg" Color="#6495ED" BaseSize="256,256" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
+		
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
@@ -99,25 +82,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
-	  <PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
-	  <PackageReference Include="LZMA-SDK" Version="19.0.0" />
-	  <PackageReference Include="MoonSharp" Version="2.0.0" />
-	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.254" />
-	  <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.2-mauipre.1.22102.15" />
+		<PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
+		<PackageReference Include="K4os.Compression.LZ4.Streams" Version="1.2.16" />
+		<PackageReference Include="LZMA-SDK" Version="19.0.0" />
+		<PackageReference Include="MoonSharp" Version="2.0.0" />
+		<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+		<PackageReference Include="SkiaSharp" Version="2.88.0-preview.254" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.2-mauipre.1.22102.15" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="Pages\Page_Pam.xaml.cs">
-	    <DependentUpon>Page_Pam.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
+	<Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
+
+	<Import Project="..\PopStudio.Language\PopStudio.Language.projitems" Label="Shared" />
 
 	<ItemGroup>
-	  <MauiXaml Update="AppShell.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Atlas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -133,13 +111,13 @@
 	  <MauiXaml Update="Pages\Page_Package.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Page_Pam.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Particles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_Reanim.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Page_Pam.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Page_RTON.xaml">
@@ -154,13 +132,17 @@
 	  <MauiXaml Update="Pages\Page_Trail.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Plugin\Page_AD.xaml">
+	  <MauiXaml Update="Resources\Styles\Styles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
-	<Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
+	<ItemGroup>
+	  <Folder Include="Resources\Images\" />
+	</ItemGroup>
 
-	<Import Project="..\PopStudio.GUI\PopStudio.GUI.projitems" Label="Shared" />
+	<ItemGroup>
+	  <Resource Include="Resources\Fonts\MiSans-Normal.ttf" />
+	</ItemGroup>
 
 </Project>

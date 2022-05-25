@@ -242,6 +242,7 @@ namespace PopStudio.LuaScript
             rainy["fileexists"] = (Func<object[], int?>)Function.FileExists;
             rainy["sleep"] = (Action<object[]>)Function.Sleep;
             rainy["httpget"] = (Func<object[], string>)Function.HttpGet;
+            rainy["getansiname"] = (Func<object[], string>)Function.GetAnsiName;
             Globals["rainy"] = rainy;
         }
 

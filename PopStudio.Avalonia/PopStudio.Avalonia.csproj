@@ -9,6 +9,45 @@
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-x64'">
+		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm'">
+		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm64'">
+		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-x64'">
+		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm'">
+		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
+		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-x64'">
+		<DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-arm64'">
+		<DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
+	</PropertyGroup>
   <ItemGroup>
 	<!--This helps with theme dll-s trimming.
 	If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.

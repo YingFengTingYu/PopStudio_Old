@@ -1,14 +1,13 @@
-﻿namespace PopStudio.MAUI
+﻿namespace PopStudio.Platform
 {
     internal static partial class Permission
     {
         public static partial void PlatformInit()
         {
-
         }
         public static partial bool HiddenPermission() => true;
         public static partial bool HiddenFlyout() => false;
-        static string windowspath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\setting.xml";
+        static readonly string windowspath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\setting.xml";
 
         public static partial string GetSettingPath() => windowspath;
 

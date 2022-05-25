@@ -463,5 +463,7 @@
                 return null;
             }
         }
+
+        public static string GetAnsiName() => EncodeHelper.ANSI.BodyName;
     }
 }

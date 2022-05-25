@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:PopStudio.MAUI"
              x:Class="PopStudio.MAUI.App">
     <Application.Resources>
-        <ResourceDictionary Source="Resources/Styles.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
     </Application.Resources>
 </Application>

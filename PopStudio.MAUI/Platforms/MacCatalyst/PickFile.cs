@@ -1,9 +1,7 @@
 ﻿using Foundation;
 using UIKit;
-using AppKit;
-using MobileCoreServices;
 
-namespace PopStudio.MAUI
+namespace PopStudio.Platform
 {
     internal static partial class PickFile
     {
@@ -65,7 +63,7 @@ namespace PopStudio.MAUI
 						new UIPresentationControllerDelegate(() => GetFileResults(null, tcs));
 				}
 
-				var parentController = Platform.GetCurrentUIViewController();
+				var parentController = Microsoft.Maui.ApplicationModel.Platform.GetCurrentUIViewController();
 
 				parentController.PresentViewController(picker, true, null);
 

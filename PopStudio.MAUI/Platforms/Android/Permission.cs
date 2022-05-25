@@ -1,8 +1,8 @@
 ﻿using Android.Content.Res;
 using Microsoft.Maui.Platform;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
 
-namespace PopStudio.MAUI
+namespace PopStudio.Platform
 {
     internal static partial class Permission
     {
@@ -81,14 +81,14 @@ namespace PopStudio.MAUI
             }
             return true;
         }
-    }
 
-    public class ReadWriteStoragePermission : Permissions.BasePlatformPermission
-    {
-        public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new (string androidPermission, bool isRuntime)[2]
+        private class ReadWriteStoragePermission : Permissions.BasePlatformPermission
         {
+            public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new (string androidPermission, bool isRuntime)[2]
+            {
             (Android.Manifest.Permission.ReadExternalStorage, true),
             (Android.Manifest.Permission.WriteExternalStorage, true)
-        };
+            };
+        }
     }
 }

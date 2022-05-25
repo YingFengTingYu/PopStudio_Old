@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.WPF
 {
@@ -7,9 +7,10 @@ namespace PopStudio.WPF
         [STAThread]
         static void Main(params string[] args)
         {
+            Bitmap.RegistPlatform<GDIBitmap>();
             try
             {
-                string settingxml = "setting.xml";
+                string settingxml = Permission.GetSettingPath();
                 if (File.Exists(settingxml))
                 {
                     Setting.LoadFromXml(settingxml);

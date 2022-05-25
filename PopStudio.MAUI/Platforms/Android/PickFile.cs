@@ -1,25 +1,11 @@
-﻿using Android.Provider;
-using Android.Content;
-using PopStudio.GUI.Languages;
+﻿using PopStudio.Language.Languages;
 
-namespace PopStudio.MAUI
+namespace PopStudio.Platform
 {
     internal static partial class PickFile
     {
-		//public static bool finish = false;
-		//public static string answer;
-
 		public static partial async Task<string> ChooseOpenFile(this ContentPage page)
 		{
-			//finish = false;
-			//var action = Intent.ActionOpenDocument;
-			//var intent = new Intent(action);
-			//intent.SetType("*/*");
-			//intent.PutExtra(Intent.ExtraAllowMultiple, false);
-			//var pickerIntent = Intent.CreateChooser(intent, "Select file");
-			//Platform.CurrentActivity.StartActivityForResult(pickerIntent, 1);
-			//while (!finish) await Task.Delay(200);
-			//return answer;
             string file = "/sdcard";
             string createnew = MAUIStr.Obj.PickFile_NewFolder;
             string back = MAUIStr.Obj.PickFile_Back;
@@ -105,15 +91,6 @@ namespace PopStudio.MAUI
 
 		public static partial async Task<string> ChooseSaveFile(this ContentPage page)
 		{
-			//finish = false;
-			//var action = Intent.ActionCreateDocument;
-			//var intent = new Intent(action);
-			//intent.SetType("*/*");
-			//intent.PutExtra(Intent.ExtraAllowMultiple, false);
-			//var pickerIntent = Intent.CreateChooser(intent, "Select file");
-			//Platform.CurrentActivity.StartActivityForResult(pickerIntent, 1);
-			//while (!finish) await Task.Delay(200);
-			//return answer;
             string file = "/sdcard";
             string createnew = MAUIStr.Obj.PickFile_NewFolder;
             string back = MAUIStr.Obj.PickFile_Back;
@@ -204,28 +181,8 @@ namespace PopStudio.MAUI
             }
         }
 
-	    static string ChangeToUri(string path)
-		{
-			if (path.EndsWith("/"))
-			{
-				path = path[..^1];
-			}
-			string path2 = path.Replace("/storage/emulated/0/", "").Replace("/", "%2F");
-			return "content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata/document/primary%3A" + path2;
-		}
-
 		public static partial async Task<string> ChooseFolder(this ContentPage page)
 		{
-            //finish = false;
-            //var action = Intent.ActionOpenDocumentTree;
-            //var intent = new Intent(action);
-
-            //  //intent.SetType("*/*");
-            //  //intent.PutExtra(Intent.ExtraAllowMultiple, false);
-            //var pickerIntent = Intent.CreateChooser(intent, "Select file");
-            //Platform.CurrentActivity.StartActivityForResult(pickerIntent, 1);
-            //while (!finish) await Task.Delay(200);
-            //return answer;
             string file = "/sdcard";
             string createnew = MAUIStr.Obj.PickFile_NewFolder;
             string back = MAUIStr.Obj.PickFile_Back;

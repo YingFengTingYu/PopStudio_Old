@@ -1,16 +1,12 @@
-﻿using System;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using PopStudio.GUI.Languages;
+﻿using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.MAUI
 {
 	public partial class Page_Trail : ContentPage
 	{
-		public Page_Trail()
-		{
-			InitializeComponent();
+        void LoadFont()
+        {
             Title = MAUIStr.Obj.Trail_Title;
             label_introduction.Text = MAUIStr.Obj.Trail_Introduction;
             text1.Text = MAUIStr.Obj.Trail_Choose1;
@@ -22,6 +18,13 @@ namespace PopStudio.MAUI
             button_run.Text = MAUIStr.Obj.Share_Run;
             label_statue.Text = MAUIStr.Obj.Share_RunStatue;
             text4.Text = MAUIStr.Obj.Share_Waiting;
+        }
+
+
+        public Page_Trail()
+		{
+			InitializeComponent();
+            LoadFont();
             CB_InMode.Items.Clear();
             CB_InMode.Items.Add("PC_Compiled");
             CB_InMode.Items.Add("Phone32_Compiled");
@@ -42,6 +45,12 @@ namespace PopStudio.MAUI
             CB_OutMode.Items.Add("Studio_Json");
             CB_OutMode.Items.Add("Raw_Xml");
             CB_OutMode.SelectedIndex = 7;
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~Page_Trail()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -56,6 +65,8 @@ namespace PopStudio.MAUI
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
                 try
                 {
                     if (!File.Exists(inFile))
@@ -68,11 +79,13 @@ namespace PopStudio.MAUI
                 {
                     err = ex.Message;
                 }
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
                 Dispatcher.Dispatch(() =>
                 {
                     if (err == null)
                     {
-                        text4.Text = MAUIStr.Obj.Share_Finish;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
                     }
                     else
                     {

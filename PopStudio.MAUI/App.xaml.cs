@@ -1,16 +1,24 @@
-﻿namespace PopStudio.MAUI
+﻿using PopStudio.Platform;
+
+namespace PopStudio.MAUI
 {
     public partial class App : Application
     {
         public App()
         {
             InitializeComponent();
-            string settingxml = Permission.GetSettingPath();
-            if (!File.Exists(settingxml))
+            Bitmap.RegistPlatform<SkiaBitmap>();
+            try
             {
-                Setting.SaveAsXml(settingxml);
+                string settingxml = Permission.GetSettingPath();
+                if (File.Exists(settingxml))
+                {
+                    Setting.LoadFromXml(settingxml);
+                }
             }
-            Setting.LoadFromXml(settingxml);
+            catch (Exception)
+            {
+            }
             MainPage = new AppShell();
         }
     }

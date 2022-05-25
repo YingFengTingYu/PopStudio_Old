@@ -1,22 +1,31 @@
-﻿using System;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using PopStudio.GUI.Languages;
+﻿using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.MAUI
 {
 	public partial class Page_LuaScript : ContentPage
 	{
-		public Page_LuaScript()
+        void LoadFont()
+        {
+            Title = MAUIStr.Obj.LuaScript_Title;
+            label_introduction.Text = MAUIStr.Obj.LuaScript_Introduction;
+            label_print.Text = MAUIStr.Obj.LuaScript_TracePrint;
+            button_run.Text = MAUIStr.Obj.Share_Run;
+        }
+
+
+        public Page_LuaScript()
 		{
 			InitializeComponent();
-			Title = MAUIStr.Obj.LuaScript_Title;
-			label_introduction.Text = MAUIStr.Obj.LuaScript_Introduction;
-			label_print.Text = MAUIStr.Obj.LuaScript_TracePrint;
-			button_run.Text = MAUIStr.Obj.Share_Run;
-			API.box = this;
-		}
+            LoadFont();
+            API.box = this;
+            MAUIStr.OnLanguageChanged += LoadFont;
+        }
+
+        ~Page_LuaScript()
+        {
+            MAUIStr.OnLanguageChanged -= LoadFont;
+        }
 
         private void button_run_Click(object sender, EventArgs e)
         {
@@ -38,7 +47,7 @@ namespace PopStudio.MAUI
                 }
                 if (cg)
                 {
-                    API.Print(MAUIStr.Obj.Share_Finish);
+                    API.Print(MAUIStr.Obj.Share_Finish_NoTime);
                 }
                 Dispatcher.Dispatch(() => { b.IsEnabled = true; });
             }))

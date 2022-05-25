@@ -1,4 +1,4 @@
-﻿namespace PopStudio.MAUI
+﻿namespace PopStudio.Platform
 {
     internal static partial class PickFile
     {

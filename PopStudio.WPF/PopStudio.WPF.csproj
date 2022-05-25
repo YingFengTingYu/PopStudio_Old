@@ -13,6 +13,14 @@
     <StartupObject>PopStudio.WPF.Program</StartupObject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+  </PropertyGroup>
+
   <Import Project="..\PopStudio.Shared\PopStudio.projitems" Label="Shared" />
 
   <Import Project="..\PopStudio.Language\PopStudio.Language.projitems" Label="Shared" />
