@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page_ActionSheet"
-       Width="320"
-			 Background="White">
+      Width="320"
+	  Background="White">
     <Grid Margin="10 10 10 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Margin="10 5 0 5" x:Name="title" FontSize="19" />
-        <ListBox Grid.Row="1" Margin="10 0 10 0" x:Name="list" SelectionMode="Single">
+        <ListBox MaxHeight="380" Grid.Row="1" Margin="10 0 10 0" x:Name="list" SelectionMode="Single">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Height="25" FontSize="17" VerticalAlignment="Center" Text="{Binding ItemName}" />

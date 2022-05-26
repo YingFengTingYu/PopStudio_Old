@@ -1,5 +1,5 @@
 ﻿using Gtk;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
 
 #pragma warning disable 0612, 0618
 
@@ -97,6 +97,8 @@ namespace PopStudio.GTK.Pages
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
                 try
                 {
                     if (!File.Exists(inFile))
@@ -116,11 +118,13 @@ namespace PopStudio.GTK.Pages
                 {
                     err = ex.Message;
                 }
+                sw.Stop();
+                decimal time = sw.ElapsedMilliseconds / 1000m;
                 Application.Invoke((s, e) =>
                 {
                     if (err == null)
                     {
-                        text4.Text = MAUIStr.Obj.Share_Finish;
+                        text4.Text = string.Format(MAUIStr.Obj.Share_Finish, time.ToString("F3"));
                     }
                     else
                     {

@@ -73,7 +73,13 @@
 		<AvaloniaResource Include="Assets\Images\*" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Assets\Images\shell.png" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Content Include="Icon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Assets\Images\shell.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Resource_AD.Designer.cs">
@@ -81,11 +87,20 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resource_AD.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="YFRes.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>YFRes.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Resource_AD.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resource_AD.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="YFRes.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>YFRes.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 <!--<ItemGroup>

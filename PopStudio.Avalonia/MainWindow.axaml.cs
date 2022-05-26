@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -19,6 +20,8 @@ namespace PopStudio.Avalonia
             MAUIStr.OnLanguageChanged += LoadFont;
             if (Setting.OpenProgramAD) ShowAD(new Random().Next(1, 4));
             Prepare();
+            //Binding size changed event
+            this.GetObservable(ClientSizeProperty).Subscribe(Window_SizeChanged);
         }
 
         public async void Prepare()
@@ -81,7 +84,70 @@ namespace PopStudio.Avalonia
             DialogGrid.IsVisible = false;
         }
 
+        bool ShellState = false;
+
+        private async void OpenShellPage()
+        {
+            if (ShellState) return;
+            MyShellContent_Small.Opacity = 0;
+            MyShellContent_Small.IsVisible = true;
+            for (int i = 1; i <= 7; i++)
+            {
+                await Task.Delay(10);
+                MyShellContent_Small.Opacity = i / 7d;
+            }
+            ShellState = true;
+        }
+
+        private async void CloseShellPage()
+        {
+            if (!ShellState) return;
+            MyShellContent_Small.Opacity = 1;
+            for (int i = 7; i > 0; i--)
+            {
+                await Task.Delay(10);
+                MyShellContent_Small.Opacity = i / 7d;
+            }
+            MyShellContent_Small.IsVisible = false;
+            ShellState = false;
+        }
+
+        private void CloseShellPage_Suddenly()
+        {
+            MyShellContent_Small.IsVisible = false;
+            ShellState = false;
+        }
+
+        private void ButtonCloseShellPage_Click(object sender, RoutedEventArgs e) => CloseShellPage();
+
+        void HideShell()
+        {
+            MyShellContent.IsVisible = false;
+            Image_Shell.IsVisible = true;
+        }
+
+        void ShowShell()
+        {
+            MyShellContent.IsVisible = true;
+            Image_Shell.IsVisible = false;
+            CloseShellPage_Suddenly();
+        }
+
         private void Image_TopMost_Tapped(object sender, RoutedEventArgs e) => Topmost = !Topmost;
+
+        private void Image_Shell_Tapped(object sender, RoutedEventArgs e) => OpenShellPage();
+
+        private void Window_SizeChanged(Size size)
+        {
+            if (size.Width < 500)
+            {
+                HideShell();
+            }
+            else
+            {
+                ShowShell();
+            }
+        }
 
         int CurrentPageIndex = -1;
 
@@ -99,6 +165,18 @@ namespace PopStudio.Avalonia
             button10.Content = MAUIStr.Obj.Compress_Title;
             button11.Content = MAUIStr.Obj.LuaScript_Title;
             button12.Content = MAUIStr.Obj.Setting_Title;
+            button1_Small.Content = MAUIStr.Obj.HomePage_Title;
+            button2_Small.Content = MAUIStr.Obj.Package_Title;
+            button3_Small.Content = MAUIStr.Obj.Atlas_Title;
+            button4_Small.Content = MAUIStr.Obj.Texture_Title;
+            button5_Small.Content = MAUIStr.Obj.Reanim_Title;
+            button6_Small.Content = MAUIStr.Obj.Particles_Title;
+            button7_Small.Content = MAUIStr.Obj.Trail_Title;
+            button8_Small.Content = MAUIStr.Obj.Pam_Title;
+            button9_Small.Content = MAUIStr.Obj.RTON_Title;
+            button10_Small.Content = MAUIStr.Obj.Compress_Title;
+            button11_Small.Content = MAUIStr.Obj.LuaScript_Title;
+            button12_Small.Content = MAUIStr.Obj.Setting_Title;
             switch (CurrentPageIndex)
             {
                 case 0:
@@ -166,12 +244,29 @@ namespace PopStudio.Avalonia
             button10.Background = Brushes.White;
             button11.Background = Brushes.White;
             button12.Background = Brushes.White;
+            button1_Small.Background = Brushes.Transparent;
+            button2_Small.Background = Brushes.Transparent;
+            button3_Small.Background = Brushes.Transparent;
+            button4_Small.Background = Brushes.Transparent;
+            button5_Small.Background = Brushes.Transparent;
+            button6_Small.Background = Brushes.Transparent;
+            button7_Small.Background = Brushes.Transparent;
+            button8_Small.Background = Brushes.Transparent;
+            button9_Small.Background = Brushes.Transparent;
+            button10_Small.Background = Brushes.Transparent;
+            button11_Small.Background = Brushes.Transparent;
+            button12_Small.Background = Brushes.Transparent;
         }
 
         void UpButton(Button b)
         {
             b.Background = Brushes.CornflowerBlue;
             b.Foreground = Brushes.White;
+        }
+
+        void UpShellButton(Button b)
+        {
+            b.Background = Brushes.RoyalBlue;
         }
 
         void LoadPage(UserControl u) => PageControl.Content = u;
@@ -195,108 +290,132 @@ namespace PopStudio.Avalonia
         {
             ResetShellButton();
             UpButton(button1);
+            UpShellButton(button1_Small);
             LoadPage(homePage);
             SetTitle(MAUIStr.Obj.HomePage_Title);
             CurrentPageIndex = 0;
+            CloseShellPage();
         }
 
         public void LoadPackage()
         {
             ResetShellButton();
             UpButton(button2);
+            UpShellButton(button2_Small);
             LoadPage(package);
             SetTitle(MAUIStr.Obj.Package_Title);
             CurrentPageIndex = 1;
+            CloseShellPage();
         }
 
         public void LoadAtlas()
         {
             ResetShellButton();
             UpButton(button3);
+            UpShellButton(button3_Small);
             LoadPage(atlas);
             SetTitle(MAUIStr.Obj.Atlas_Title);
             CurrentPageIndex = 2;
+            CloseShellPage();
         }
 
         public void LoadTexture()
         {
             ResetShellButton();
             UpButton(button4);
+            UpShellButton(button4_Small);
             LoadPage(texture);
             SetTitle(MAUIStr.Obj.Texture_Title);
             CurrentPageIndex = 3;
+            CloseShellPage();
         }
 
         public void LoadReanim()
         {
             ResetShellButton();
             UpButton(button5);
+            UpShellButton(button5_Small);
             LoadPage(reanim);
             SetTitle(MAUIStr.Obj.Reanim_Title);
             CurrentPageIndex = 4;
+            CloseShellPage();
         }
 
         public void LoadParticles()
         {
             ResetShellButton();
             UpButton(button6);
+            UpShellButton(button6_Small);
             LoadPage(particles);
             SetTitle(MAUIStr.Obj.Particles_Title);
             CurrentPageIndex = 5;
+            CloseShellPage();
         }
 
         public void LoadTrail()
         {
             ResetShellButton();
             UpButton(button7);
+            UpShellButton(button7_Small);
             LoadPage(trail);
             SetTitle(MAUIStr.Obj.Trail_Title);
             CurrentPageIndex = 6;
+            CloseShellPage();
         }
 
         public void LoadPam()
         {
             ResetShellButton();
             UpButton(button8);
+            UpShellButton(button8_Small);
             LoadPage(pam);
             SetTitle(MAUIStr.Obj.Pam_Title);
             CurrentPageIndex = 7;
+            CloseShellPage();
         }
 
         public void LoadRTON()
         {
             ResetShellButton();
             UpButton(button9);
+            UpShellButton(button9_Small);
             LoadPage(rton);
             SetTitle(MAUIStr.Obj.RTON_Title);
             CurrentPageIndex = 8;
+            CloseShellPage();
         }
 
         public void LoadCompress()
         {
             ResetShellButton();
             UpButton(button10);
+            UpShellButton(button10_Small);
             LoadPage(compress);
             SetTitle(MAUIStr.Obj.Compress_Title);
             CurrentPageIndex = 9;
+            CloseShellPage();
         }
 
         public void LoadLuaScript()
         {
             ResetShellButton();
             UpButton(button11);
+            UpShellButton(button11_Small);
             LoadPage(luaScript);
             SetTitle(MAUIStr.Obj.LuaScript_Title);
             CurrentPageIndex = 10;
+            CloseShellPage();
         }
 
         public void LoadSetting()
         {
             ResetShellButton();
             UpButton(button12);
+            UpShellButton(button12_Small);
             LoadPage(setting);
             SetTitle(MAUIStr.Obj.Setting_Title);
             CurrentPageIndex = 11;
+            CloseShellPage();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e) => LoadHomePage();

@@ -37,6 +37,7 @@
         public string Shell_Cancel => "取消\0";
         public string Shell_ExitTitle => "确定要退出吗";
         public string Shell_ExitText => "确定要退出吗？";
+        public string Shell_ChoosePageTitle => "请选择页面";
 
         //Setting
         public string Setting_Title => "设置";
@@ -61,6 +62,13 @@
         public string Setting_IntroRTON => "部分RTON为加密格式，程序不提供密钥，需要你自行提供密钥来解密加密。";
         public string Setting_ItemCompiled => "compiled自动转换数字i标签";
         public string Setting_IntroCompiled => "PVZ在部分平台compiled文件中Image标签由标准字符串形式变为数字形式，你可以自行在so中找到对应关系并提供给程序，来将数字变为字符串。";
+        public string Setting_CompiledLoadMethod => "请选择加载方式";
+        public string Setting_CompiledLoadFileName => "请选择加载文件";
+        public string Setting_CompiledLoadFromProgram => "从程序中加载";
+        public string Setting_CompiledLoadFromFile => "从文件中加载";
+        public string Setting_CompiledLoadError_Title => "加载错误";
+        public string Setting_CompiledLoadError_Text_NoFile => "无可用的文件，请联系作者！";
+        public string Setting_CompiledLoadError_Text => "文件似乎已损坏，该设置已清空！";
         public string Setting_ItemXfl => "Xfl生成设置";
         public string Setting_IntroXfl => "当使用reanim转码生成Flash_Xfl文档以供使用Adobe Animate查看时，可指定画布大小、生成图片名是使用i标签名还是name标签名、横纵坐标缩放倍数。";
         public string Setting_XflWidth => "画布宽度";
@@ -195,7 +203,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持PAM解码编码；\n2.修复脚本功能rainy.dofile无效问题；\n3.支持Windows，MacOS，Linux端通过命令行调用程序。";
+        public string HomePage_AppNewNotice => "1.优化界面相关内容；\n2.更改rsb解包生成数据以支持不同压缩方式；\n3.取消带界面版本程序的命令行支持，改为发布命令行版程序。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

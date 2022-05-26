@@ -421,19 +421,48 @@ namespace PopStudio.MAUI
 
 		private async void Button_ImageString_1_Clicked(object sender, EventArgs e)
 		{
-			try
-			{
-				string path = await this.ChooseOpenFile();
-				if (string.IsNullOrEmpty(path)) return;
-				Setting.LoadImageConvertXml(path);
-				InitImageStringSetting();
-				Setting.SaveAsXml(Permission.GetSettingPath());
-			}
-			catch (Exception)
-			{
-
-			}
-		}
+            try
+            {
+                string result = await DisplayActionSheet(MAUIStr.Obj.Setting_CompiledLoadMethod, MAUIStr.Obj.Setting_Cancel, MAUIStr.Obj.Setting_OK, MAUIStr.Obj.Setting_CompiledLoadFromProgram, MAUIStr.Obj.Setting_CompiledLoadFromFile);
+                if (result == MAUIStr.Obj.Setting_CompiledLoadFromProgram)
+                {
+                    string[] l = YFFileListStream.GetStringList();
+                    if (l == null)
+                    {
+                        await DisplayAlert(MAUIStr.Obj.Setting_CompiledLoadError_Title, MAUIStr.Obj.Setting_CompiledLoadError_Text_NoFile, MAUIStr.Obj.Setting_OK);
+                    }
+                    else
+                    {
+                        string cancel = MAUIStr.Obj.Setting_Cancel;
+                        string ok = MAUIStr.Obj.Setting_OK;
+                        result = await DisplayActionSheet(MAUIStr.Obj.Setting_CompiledLoadFileName, cancel, ok, l);
+                        if (result != null && result != cancel && result != ok)
+                        {
+                            Setting.ClearImageConvertXml();
+                            Setting.LoadImageConvertXml(YFFileListStream.GetFile(result));
+                            InitImageStringSetting();
+                            Setting.SaveAsXml(Permission.GetSettingPath());
+                        }
+                    }
+                }
+                else if (result == MAUIStr.Obj.Setting_CompiledLoadFromFile)
+                {
+                    string path = await this.ChooseOpenFile();
+                    if (string.IsNullOrEmpty(path)) return;
+                    Setting.ClearImageConvertXml();
+                    Setting.LoadImageConvertXml(path);
+                    InitImageStringSetting();
+                    Setting.SaveAsXml(Permission.GetSettingPath());
+                }
+            }
+            catch (Exception)
+            {
+                await DisplayAlert(MAUIStr.Obj.Setting_CompiledLoadError_Title, MAUIStr.Obj.Setting_CompiledLoadError_Text, MAUIStr.Obj.Setting_OK);
+                Setting.ClearImageConvertXml();
+                InitImageStringSetting();
+                Setting.SaveAsXml(Permission.GetSettingPath());
+            }
+        }
 
 		private void Button_ImageString_2_Clicked(object sender, EventArgs e)
 		{
@@ -452,7 +481,7 @@ namespace PopStudio.MAUI
             xfllabelname.ItemsSource = new List<string>
             {
                 "Image Name",
-                "Short Image Name",
+                "Short Name",
                 "Label Name"
             };
             xfllabelname.SelectedIndex = Setting.ReanimXflLabelName + 1;
@@ -545,7 +574,7 @@ namespace PopStudio.MAUI
 				Setting.ResetXml(Permission.GetSettingPath());
                 Setting.LoadFromXml(Permission.GetSettingPath());
                 LoadSetting();
-                await DisplayAlert(MAUIStr.Obj.Setting_FinishRecover, MAUIStr.Obj.Setting_FinishRecoverText, ok);
+                await DisplayAlert(MAUIStr.Obj.Setting_FinishRecover, MAUIStr.Obj.Setting_FinishRecoverText, MAUIStr.Obj.Setting_OK);
 			}
 		}
 
@@ -563,7 +592,7 @@ namespace PopStudio.MAUI
 					Setting.AppLanguage = Setting.LanguageEnum[ans];
 					Setting.SaveAsXml(Permission.GetSettingPath());
                     MAUIStr.LoadLanguage();
-                    await DisplayAlert(MAUIStr.Obj.Setting_FinishChooseLanguage, MAUIStr.Obj.Setting_FinishChooseLanguageText, ok);
+                    await DisplayAlert(MAUIStr.Obj.Setting_FinishChooseLanguage, MAUIStr.Obj.Setting_FinishChooseLanguageText, MAUIStr.Obj.Setting_OK);
 				}
 			}
 			catch (Exception)

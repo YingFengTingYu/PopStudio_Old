@@ -143,9 +143,9 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="15*" />
+                    <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

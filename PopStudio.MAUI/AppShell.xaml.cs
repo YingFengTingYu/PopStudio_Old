@@ -92,6 +92,11 @@ namespace PopStudio.MAUI
 
         protected override bool OnBackButtonPressed()
         {
+            if (FlyoutIsPresented)
+            {
+                FlyoutIsPresented = false;
+                return true;
+            }
             Dispatcher.Dispatch(async () =>
             {
                 if (await DisplayAlert(MAUIStr.Obj.Shell_ExitTitle, MAUIStr.Obj.Shell_ExitText, MAUIStr.Obj.Shell_OK, MAUIStr.Obj.Shell_Cancel)) Environment.Exit(0);
@@ -99,7 +104,7 @@ namespace PopStudio.MAUI
             return true;
         }
 
-        private async void collectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void collectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.FirstOrDefault() is FlyoutPageItem item)
             {
@@ -118,7 +123,6 @@ namespace PopStudio.MAUI
                     12 => fitem_setting,
                     _ => fitem_homepage
                 };
-                await Task.Delay(200);
                 FlyoutIsPresented = false;
             }
         }

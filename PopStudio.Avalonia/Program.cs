@@ -11,6 +11,7 @@ namespace PopStudio.Avalonia
         public static void Main(string[] args)
         {
             Platform.Bitmap.RegistPlatform<Platform.SkiaBitmap>();
+            YFFileListStream.RegistPlatform(YFRes.CompiledImageList);
             try
             {
                 string settingxml = Platform.Permission.GetSettingPath();

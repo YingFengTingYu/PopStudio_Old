@@ -1,5 +1,5 @@
 ﻿using Gtk;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
 
 #pragma warning disable 0612, 0618
 

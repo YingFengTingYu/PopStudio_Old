@@ -107,9 +107,9 @@
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="10" />
-					<ColumnDefinition Width="50*" />
+					<ColumnDefinition Width="5*" />
 					<ColumnDefinition Width="10" />
-					<ColumnDefinition Width="15*" />
+					<ColumnDefinition Width="3*" />
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -136,7 +136,6 @@
 				<Button x:Name="button_xflscaley" Grid.Row="6" Grid.Column="4" Click="xflscaley_TextChanged" />
 				<TextBlock FontSize="20" x:Name="label_xfllabelname" VerticalAlignment="Center" Grid.Row="8" />
 				<ComboBox HorizontalAlignment="Stretch" x:Name="xfllabelname" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" FontSize="16" />
-				<!--<TextBox x:Name="xfllabelname" Grid.Row="4" Grid.Column="2" />-->
 			</Grid>
 			<Grid Margin="0 5 0 5">
 				<Grid.ColumnDefinitions>

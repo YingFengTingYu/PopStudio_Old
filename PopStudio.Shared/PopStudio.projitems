@@ -109,6 +109,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\TempFilePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\YFFileListStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PopAnim\JsonTokenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PopAnim\FrameFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PopAnim\FrameInfo.cs" />

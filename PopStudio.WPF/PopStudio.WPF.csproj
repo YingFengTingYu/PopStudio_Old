@@ -50,12 +50,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ResourceAD.resx</DependentUpon>
     </Compile>
+    <Compile Update="YFRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>YFRes.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="ResourceAD.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceAD.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="YFRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>YFRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

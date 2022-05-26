@@ -8,6 +8,7 @@ namespace PopStudio.WPF
         static void Main(params string[] args)
         {
             Bitmap.RegistPlatform<GDIBitmap>();
+            YFFileListStream.RegistPlatform(YFRes.CompiledImageList);
             try
             {
                 string settingxml = Permission.GetSettingPath();

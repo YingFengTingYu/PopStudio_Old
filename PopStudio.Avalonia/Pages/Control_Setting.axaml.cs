@@ -492,15 +492,44 @@ namespace PopStudio.Avalonia.Pages
         {
             try
             {
-                string path = (await new OpenFileDialog().ShowAsync(MainWindow.Singleten))?[0];
-                if (string.IsNullOrEmpty(path)) return;
-                Setting.LoadImageConvertXml(path);
-                InitImageStringSetting();
-                Setting.SaveAsXml(Permission.GetSettingPath());
+                string result = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_CompiledLoadMethod, MAUIStr.Obj.Setting_Cancel, MAUIStr.Obj.Setting_OK, MAUIStr.Obj.Setting_CompiledLoadFromProgram, MAUIStr.Obj.Setting_CompiledLoadFromFile);
+                if (result == MAUIStr.Obj.Setting_CompiledLoadFromProgram)
+                {
+                    string[] l = YFFileListStream.GetStringList();
+                    if (l == null)
+                    {
+                        await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_CompiledLoadError_Title, MAUIStr.Obj.Setting_CompiledLoadError_Text_NoFile, MAUIStr.Obj.Setting_OK);
+                    }
+                    else
+                    {
+                        string cancel = MAUIStr.Obj.Setting_Cancel;
+                        string ok = MAUIStr.Obj.Setting_OK;
+                        result = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_CompiledLoadFileName, cancel, ok, l);
+                        if (result != null && result != cancel && result != ok)
+                        {
+                            Setting.ClearImageConvertXml();
+                            Setting.LoadImageConvertXml(YFFileListStream.GetFile(result));
+                            InitImageStringSetting();
+                            Setting.SaveAsXml(Permission.GetSettingPath());
+                        }
+                    }
+                }
+                else if (result == MAUIStr.Obj.Setting_CompiledLoadFromFile)
+                {
+                    string path = (await new OpenFileDialog().ShowAsync(MainWindow.Singleten))?[0];
+                    if (string.IsNullOrEmpty(path)) return;
+                    Setting.ClearImageConvertXml();
+                    Setting.LoadImageConvertXml(path);
+                    InitImageStringSetting();
+                    Setting.SaveAsXml(Permission.GetSettingPath());
+                }
             }
             catch (Exception)
             {
-
+                await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_CompiledLoadError_Title, MAUIStr.Obj.Setting_CompiledLoadError_Text, MAUIStr.Obj.Setting_OK);
+                Setting.ClearImageConvertXml();
+                InitImageStringSetting();
+                Setting.SaveAsXml(Permission.GetSettingPath());
             }
         }
 
@@ -521,7 +550,7 @@ namespace PopStudio.Avalonia.Pages
             xfllabelname.Items = new List<string>
             {
                 "Image Name",
-                "Short Image Name",
+                "Short Name",
                 "Label Name"
             };
             xfllabelname.SelectedIndex = Setting.ReanimXflLabelName + 1;

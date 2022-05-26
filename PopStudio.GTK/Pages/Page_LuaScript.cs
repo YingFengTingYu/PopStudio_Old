@@ -1,5 +1,5 @@
 ﻿using Gtk;
-using PopStudio.GUI.Languages;
+using PopStudio.Language.Languages;
 
 #pragma warning disable 0612, 0618
 
@@ -59,7 +59,7 @@ namespace PopStudio.GTK.Pages
                 }
                 if (cg)
                 {
-                    API.Print(MAUIStr.Obj.Share_Finish);
+                    API.Print(MAUIStr.Obj.Share_Finish_NoTime);
                 }
                 Application.Invoke((s, e) => { b.Sensitive = true; });
             }))

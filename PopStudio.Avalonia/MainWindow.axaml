@@ -6,7 +6,7 @@
         x:Class="PopStudio.Avalonia.MainWindow"
 		Width="900"
 		Height="580"
-		MinWidth="540"
+		MinWidth="350"
 		MinHeight="540"
 		Icon="avares://PopStudio.Avalonia/Assets/Images/icon.png"
         Title="PopStudio">
@@ -22,12 +22,12 @@
 		</Grid>
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="190"/>
+				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 
-			<ScrollViewer VerticalScrollBarVisibility="Auto">
-				<Grid Background="SkyBlue">
+			<ScrollViewer x:Name="MyShellContent" VerticalScrollBarVisibility="Auto">
+				<Grid Width="190" Background="SkyBlue">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
@@ -61,11 +61,50 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
+				<Image x:Name="Image_Shell" HorizontalAlignment="Left" Margin="10 0 0 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio.Avalonia/Assets/Images/shell.png" ZIndex="2" Tapped="Image_Shell_Tapped" />
+
 				<Image x:Name="Image_TopMost" HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio.Avalonia/Assets/Images/topmost.png" ZIndex="2" Tapped="Image_TopMost_Tapped" />
 
 				<Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
 
 				<ContentControl x:Name="PageControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"/>
+			</Grid>
+
+			<Grid Grid.Column="1" Background="#66000000" ZIndex="2" IsVisible="False" x:Name="MyShellContent_Small">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<ScrollViewer VerticalScrollBarVisibility="Auto">
+					<Grid Background="CornflowerBlue" Width="190">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<TextBlock Margin="0 15 0 10" Text="PopStudio" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="White" />
+
+							<StackPanel Margin="0 5 0 0" Grid.Row="1">
+								<Button Height="32" FontSize="15" x:Name="button1_Small" Foreground="White" Margin="0 1 0 1" Background="RoyalBlue" Cursor="Hand" Click="Button1_Click" />
+								<Button Height="32" FontSize="15" x:Name="button2_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button2_Click" />
+								<Button Height="32" FontSize="15" x:Name="button3_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button3_Click" />
+								<Button Height="32" FontSize="15" x:Name="button4_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button4_Click" />
+								<Button Height="32" FontSize="15" x:Name="button5_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button5_Click" />
+								<Button Height="32" FontSize="15" x:Name="button6_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button6_Click" />
+								<Button Height="32" FontSize="15" x:Name="button7_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button7_Click" />
+								<Button Height="32" FontSize="15" x:Name="button8_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button8_Click" />
+								<Button Height="32" FontSize="15" x:Name="button9_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button9_Click" />
+								<Button Height="32" FontSize="15" x:Name="button10_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button10_Click" />
+								<Button Height="32" FontSize="15" x:Name="button11_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button11_Click" />
+								<Button Height="32" FontSize="15" x:Name="button12_Small" Foreground="White" Margin="0 1 0 1" Background="Transparent" Cursor="Hand" Click="Button12_Click" />
+							</StackPanel>
+						</Grid>
+					</Grid>
+				</ScrollViewer>
+				<Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" Tapped="ButtonCloseShellPage_Click" />
 			</Grid>
 		</Grid>
 	</Grid>

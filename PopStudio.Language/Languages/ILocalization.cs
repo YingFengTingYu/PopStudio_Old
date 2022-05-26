@@ -40,6 +40,7 @@
         public string Shell_Cancel { get; }
         public string Shell_ExitTitle { get; }
         public string Shell_ExitText { get; }
+        public string Shell_ChoosePageTitle { get; }
 
         //Setting
         public string Setting_Title { get; }
@@ -64,6 +65,13 @@
         public string Setting_IntroRTON { get; }
         public string Setting_ItemCompiled { get; }
         public string Setting_IntroCompiled { get; }
+        public string Setting_CompiledLoadMethod { get; }
+        public string Setting_CompiledLoadFileName { get; }
+        public string Setting_CompiledLoadFromProgram { get; }
+        public string Setting_CompiledLoadFromFile { get; }
+        public string Setting_CompiledLoadError_Title { get; }
+        public string Setting_CompiledLoadError_Text_NoFile { get; }
+        public string Setting_CompiledLoadError_Text { get; }
         public string Setting_ItemXfl { get; }
         public string Setting_IntroXfl { get; }
         public string Setting_XflWidth { get; }

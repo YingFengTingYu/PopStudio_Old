@@ -15,10 +15,10 @@ namespace PopStudio.Platform
             cancelstring = cancel;
             this.ok.Content = ok.Replace("\0", string.Empty);
             this.cancel.Content = cancel.Replace("\0", string.Empty);
-            List<SingleItem> items2 = new List<SingleItem>();
+            List<string> items2 = new List<string>();
             for (int i = 0; i < l; i++)
             {
-                items2.Add(new SingleItem(items[i]));
+                items2.Add(items[i]);
             }
             list.Items = items2;
             list.SelectedIndex = 0;
@@ -67,21 +67,6 @@ namespace PopStudio.Platform
         {
             result = cancelstring;
             Close?.Invoke();
-        }
-
-        private class SingleItem
-        {
-            public string ItemName { get; set; }
-
-            public SingleItem()
-            {
-
-            }
-
-            public SingleItem(string ItemName)
-            {
-                this.ItemName = ItemName;
-            }
         }
     }
 }

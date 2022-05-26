@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.GTK", "PopStudio.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Package", "Package\Package.csproj", "{1562BB2B-F8BC-4A3B-BAD4-D889CBC6EE26}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.GUI", "PopStudio.GUI\PopStudio.GUI.shproj", "{6639EBDC-4618-4A6D-A4C2-EE2238B07408}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PopStudio.Language", "PopStudio.Language\PopStudio.Language.shproj", "{D0BD09DB-2395-44E3-8CE2-76704C51F30B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.Avalonia", "PopStudio.Avalonia\PopStudio.Avalonia.csproj", "{C1B125D8-D837-4707-B18C-A05717A693D8}"
@@ -154,8 +152,7 @@ Global
 		PopStudio.Language\PopStudio.Language.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{02c9f77b-5c7d-4efe-8bd9-aca709d8caa9}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{5162deba-202f-485f-8b68-0c1c2212382a}*SharedItemsImports = 13
-		PopStudio.GUI\PopStudio.GUI.projitems*{6639ebdc-4618-4a6d-a4c2-ee2238b07408}*SharedItemsImports = 13
-		PopStudio.GUI\PopStudio.GUI.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
+		PopStudio.Language\PopStudio.Language.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{9a5b1e6e-209b-451e-baeb-6e4ffa29af1b}*SharedItemsImports = 5
 		PopStudio.Language\PopStudio.Language.projitems*{a64a682a-c5a1-4a2c-b1f7-e6aa9550a3a3}*SharedItemsImports = 5
 		PopStudio.Shared\PopStudio.projitems*{a64a682a-c5a1-4a2c-b1f7-e6aa9550a3a3}*SharedItemsImports = 5

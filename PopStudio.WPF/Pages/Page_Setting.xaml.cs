@@ -441,20 +441,49 @@ namespace PopStudio.WPF.Pages
 			imagestring.Text = Setting.ImageConvertName;
 		}
 
-		private void Button_ImageString_1_Clicked(object sender, EventArgs e)
+		private async void Button_ImageString_1_Clicked(object sender, EventArgs e)
 		{
 			try
 			{
-				string path = this.ChooseOpenFile();
-				if (string.IsNullOrEmpty(path)) return;
-				Setting.LoadImageConvertXml(path);
-				InitImageStringSetting();
-				Setting.SaveAsXml(Permission.GetSettingPath());
+				string result = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_CompiledLoadMethod, MAUIStr.Obj.Setting_Cancel, MAUIStr.Obj.Setting_OK, MAUIStr.Obj.Setting_CompiledLoadFromProgram, MAUIStr.Obj.Setting_CompiledLoadFromFile);
+				if (result == MAUIStr.Obj.Setting_CompiledLoadFromProgram)
+                {
+					string[] l = YFFileListStream.GetStringList();
+					if (l == null)
+					{
+						await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_CompiledLoadError_Title, MAUIStr.Obj.Setting_CompiledLoadError_Text_NoFile, MAUIStr.Obj.Setting_OK);
+					}
+					else
+					{
+						string cancel = MAUIStr.Obj.Setting_Cancel;
+						string ok = MAUIStr.Obj.Setting_OK;
+                        result = await PopupDialog.DisplayActionSheet(MAUIStr.Obj.Setting_CompiledLoadFileName, cancel, ok, l);
+						if (result != null && result != cancel && result != ok)
+						{
+                            Setting.ClearImageConvertXml();
+                            Setting.LoadImageConvertXml(YFFileListStream.GetFile(result));
+							InitImageStringSetting();
+							Setting.SaveAsXml(Permission.GetSettingPath());
+						}
+					}
+				}
+				else if (result == MAUIStr.Obj.Setting_CompiledLoadFromFile)
+                {
+                    string path = this.ChooseOpenFile();
+                    if (string.IsNullOrEmpty(path)) return;
+                    Setting.ClearImageConvertXml();
+                    Setting.LoadImageConvertXml(path);
+                    InitImageStringSetting();
+                    Setting.SaveAsXml(Permission.GetSettingPath());
+                }
 			}
 			catch (Exception)
 			{
-
-			}
+				await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_CompiledLoadError_Title, MAUIStr.Obj.Setting_CompiledLoadError_Text, MAUIStr.Obj.Setting_OK);
+                Setting.ClearImageConvertXml();
+                InitImageStringSetting();
+                Setting.SaveAsXml(Permission.GetSettingPath());
+            }
 		}
 
 		private void Button_ImageString_2_Clicked(object sender, EventArgs e)
@@ -474,7 +503,7 @@ namespace PopStudio.WPF.Pages
             xfllabelname.ItemsSource = new List<string>
             {
                 "Image Name",
-                "Short Image Name",
+                "Short Name",
                 "Label Name"
             };
             xfllabelname.SelectedIndex = Setting.ReanimXflLabelName + 1;

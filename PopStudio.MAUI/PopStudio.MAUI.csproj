@@ -145,4 +145,19 @@
 	  <Resource Include="Resources\Fonts\MiSans-Normal.ttf" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="YFRes.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>YFRes.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="YFRes.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>YFRes.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>

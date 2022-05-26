@@ -8,6 +8,7 @@ namespace PopStudio.MAUI
         {
             InitializeComponent();
             Bitmap.RegistPlatform<SkiaBitmap>();
+            YFFileListStream.RegistPlatform(YFRes.CompiledImageList);
             try
             {
                 string settingxml = Permission.GetSettingPath();

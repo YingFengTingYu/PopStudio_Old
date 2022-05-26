@@ -67,6 +67,6 @@
         public const string DOUBLEUNUSEDPATHSEPARATOR = @"//";
         public const int SYSTEM = 0b00000001;
 #endif
-        public const int RAINYVERSION = 15;
+        public const int RAINYVERSION = 20;
     }
 }

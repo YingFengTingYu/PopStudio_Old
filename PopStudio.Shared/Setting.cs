@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Xml;
 
 namespace PopStudio
 {
@@ -320,8 +321,6 @@ namespace PopStudio
         {
             try
             {
-
-
                 if (!CanSave) return;
                 using (StreamWriter sw = new StreamWriter(xmlPath, false))
                 {
@@ -431,7 +430,7 @@ namespace PopStudio
         /// PVZ android, iOS, bada and blackberry reanim, particles and trail image integer and string converter
         /// </summary>
         public static string ImageConvertName = "PopStudio Example";
-        public static Dictionary<string, int> ImageConvertStringToInteger = new Dictionary<string, int> { { "PopStudioExample", 99999 } };
+        public static Dictionary<string, int> ImageConvertStringToInteger = new Dictionary<string, int>(new CPR()) { { "PopStudioExample", 99999 } };
         public static Dictionary<int, string> ImageConvertIntegerToString = new Dictionary<int, string> { { 99999, "PopStudioExample" } };
 
         public static void ClearImageConvertXml()
@@ -441,11 +440,38 @@ namespace PopStudio
             ImageConvertStringToInteger.Clear();
         }
 
+        public static void LoadImageConvertXml(byte[] xmlData)
+        {
+            if (xmlData.Length >= 2097152) throw new Exception();
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(System.Text.Encoding.UTF8.GetString(xmlData));
+            XmlNode root = xml.SelectSingleNode("/ImageString");
+            XmlNodeList childlist = root.ChildNodes;
+            ImageConvertIntegerToString.Clear();
+            ImageConvertStringToInteger.Clear();
+            ImageConvertName = root.Attributes["name"].Value;
+            foreach (XmlNode child in childlist)
+            {
+                switch (child.Name)
+                {
+                    case "String":
+                        {
+                            int value = Convert.ToInt32(child.Attributes["value"].Value);
+                            string id = child.Attributes["id"].Value;
+                            ImageConvertIntegerToString.Add(value, id);
+                            ImageConvertStringToInteger.Add(id, value);
+                        }
+                        break;
+                }
+            }
+        }
+
         public static void LoadImageConvertXml(string xmlPath)
         {
             string xmlData;
             using (StreamReader sr = new StreamReader(xmlPath))
             {
+                if (sr.BaseStream.Length >= 2097152) throw new Exception();
                 xmlData = sr.ReadToEnd();
             }
             XmlDocument xml = new XmlDocument();
@@ -499,6 +525,13 @@ namespace PopStudio
                 }
             }
             return o;
+        }
+
+        private class CPR : IEqualityComparer<string>
+        {
+            public bool Equals(string x, string y) => x != y;
+
+            public int GetHashCode([DisallowNull] string obj) => obj.GetHashCode();
         }
     }
 }
