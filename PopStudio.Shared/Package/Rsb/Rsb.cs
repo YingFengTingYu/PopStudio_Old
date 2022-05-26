@@ -98,20 +98,32 @@ namespace PopStudio.Package.Rsb
             rsb.autopoolInfo = new RsbAutoPoolInfo[childlist.Count];
             int ptxNumber = 0;
             List<RsbPtxInfo> ptxList = new List<RsbPtxInfo>();
-            int f = 0;
+            int f_global = 0;
             if (compressPart0)
             {
-                f |= 0b10;
+                f_global |= 0b10;
             }
             if (compressPart1)
             {
-                f |= 0b1;
+                f_global |= 0b1;
             }
             for (int i = 0; i < childlist.Count; i++)
             {
                 long off = bs_rsgpfile.Position;
                 int thisPtxNumber = 0;
                 var rsgpinfo = rsb.rsgpInfo[i] = new RsbRsgpInfo();
+                int f;
+                string tpstring = childlist[i].Attributes["compressmethod"]?.Value;
+                if (tpstring == null)
+                {
+                    f = f_global;
+                }
+                else
+                {
+                    f = Convert.ToInt32(tpstring);
+                }
+                compressPart0 = (f & 0b10) != 0;
+                compressPart1 = (f & 0b01) != 0;
                 rsgpinfo.ID = childlist[i].Attributes["id"].Value;
                 rsgpinfo.index = i;
                 rsgpinfo.flags = f;
@@ -480,7 +492,7 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("<ResourcesGroupInfo>");
                         for (int i = 0; i < rsb.head.rsgp_Number; i++)
                         {
-                            sw.WriteLine("\n  <Group id=\"" + rsb.rsgpInfo[i].ID + "\">");
+                            sw.WriteLine($"\n  <Group id=\"{rsb.rsgpInfo[i].ID}\" compressmethod=\"{rsb.rsgpInfo[i].flags}\">");
                             int rback = rsb.rsgpInfo[i].offset;
                             using (BinaryStream bs_p0 = new BinaryStream())
                             {
