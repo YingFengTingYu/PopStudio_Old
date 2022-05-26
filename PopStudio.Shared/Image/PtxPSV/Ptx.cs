@@ -1,4 +1,4 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Image.PtxPSV
 {
@@ -11,7 +11,7 @@ namespace PopStudio.Image.PtxPSV
         {
             using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
             {
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     PtxHead head = new PtxHead
                     {
@@ -31,7 +31,7 @@ namespace PopStudio.Image.PtxPSV
             using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
             {
                 PtxHead head = new PtxHead().Read(bs);
-                using (SKBitmap sKBitmap = Texture.DXT5_RGBA_Morton.Read(bs, head.width, head.height))
+                using (YFBitmap sKBitmap = Texture.DXT5_RGBA_Morton.Read(bs, head.width, head.height))
                 {
                     sKBitmap.Save(outFile);
                 }

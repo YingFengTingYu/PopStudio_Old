@@ -1,8 +1,6 @@
-﻿using SkiaSharp;
-
-namespace PopStudio.Plugin
+﻿namespace PopStudio.Plugin
 {
-    internal class ETCEncode
+    internal unsafe class ETCEncode
     {
 		public static readonly int[,] ETC1Modifiers =
 		{
@@ -16,7 +14,7 @@ namespace PopStudio.Plugin
 			{ 47, 183 }
 		};
 
-		public static ulong GenETC1(SKColor[] Colors)
+		public static ulong GenETC1(YFColor* Colors)
 		{
 			ulong Horizontal = GenHorizontal(Colors);
 			ulong Vertical = GenVertical(Colors);
@@ -25,9 +23,9 @@ namespace PopStudio.Plugin
 			return (HorizontalScore < VerticalScore) ? Horizontal : Vertical;
 		}
 
-	    static SKColor[] DecodeETC1(ulong temp)
+	    static YFColor[] DecodeETC1(ulong temp)
 		{
-			SKColor[] Result = new SKColor[16];
+			YFColor[] Result = new YFColor[16];
 			bool diffbit = ((temp >> 33) & 1) == 1;
 			bool flipbit = ((temp >> 32) & 1) == 1;
 			int r1, r2, g1, g2, b1, b2;
@@ -66,19 +64,19 @@ namespace PopStudio.Plugin
 					if ((flipbit && i < 2) || (!flipbit && j < 2))
 					{
 						int add = ETC1Modifiers[Table1, val] * (neg ? -1 : 1);
-						Result[(i << 2) | j] = new SKColor(ColorClamp(r1 + add), ColorClamp(g1 + add), ColorClamp(b1 + add));
+						Result[(i << 2) | j] = new YFColor(ColorClamp(r1 + add), ColorClamp(g1 + add), ColorClamp(b1 + add));
 					}
 					else
 					{
 						int add = ETC1Modifiers[Table2, val] * (neg ? -1 : 1);
-						Result[(i << 2) | j] = new SKColor(ColorClamp(r2 + add), ColorClamp(g2 + add), ColorClamp(b2 + add));
+						Result[(i << 2) | j] = new YFColor(ColorClamp(r2 + add), ColorClamp(g2 + add), ColorClamp(b2 + add));
 					}
 				}
 			}
 			return Result;
 		}
 
-		private static int GetScore(SKColor[] Original, SKColor[] Encode)
+		private static int GetScore(YFColor* Original, YFColor[] Encode)
 		{
 			int Diff = 0;
 			for (int i = 0; i < 4 * 4; i++)
@@ -102,9 +100,9 @@ namespace PopStudio.Plugin
 			Data |= (Mode ? 1ul : 0ul) << 33;
 		}
 
-		static SKColor[] GetLeftColors(SKColor[] Pixels)
+		static YFColor[] GetLeftColors(YFColor* Pixels)
 		{
-			SKColor[] Left = new SKColor[8];
+			YFColor[] Left = new YFColor[8];
 			for (int y = 0; y < 4; y++)
 			{
 				for (int x = 0; x < 2; x++)
@@ -115,9 +113,9 @@ namespace PopStudio.Plugin
 			return Left;
 		}
 
-		static SKColor[] GetRightColors(SKColor[] Pixels)
+		static YFColor[] GetRightColors(YFColor* Pixels)
 		{
-			SKColor[] Right = new SKColor[8];
+			YFColor[] Right = new YFColor[8];
 			for (int y = 0; y < 4; y++)
 			{
 				for (int x = 2; x < 4; x++)
@@ -128,9 +126,9 @@ namespace PopStudio.Plugin
 			return Right;
 		}
 
-		static SKColor[] GetTopColors(SKColor[] Pixels)
+		static YFColor[] GetTopColors(YFColor* Pixels)
 		{
-			SKColor[] Top = new SKColor[8];
+			YFColor[] Top = new YFColor[8];
 			for (int y = 0; y < 2; y++)
 			{
 				for (int x = 0; x < 4; x++)
@@ -141,9 +139,9 @@ namespace PopStudio.Plugin
 			return Top;
 		}
 
-		static SKColor[] GetBottomColors(SKColor[] Pixels)
+		static YFColor[] GetBottomColors(YFColor* Pixels)
 		{
-			SKColor[] Bottom = new SKColor[8];
+			YFColor[] Bottom = new YFColor[8];
 			for (int y = 2; y < 4; y++)
 			{
 				for (int x = 0; x < 4; x++)
@@ -154,19 +152,19 @@ namespace PopStudio.Plugin
 			return Bottom;
 		}
 
-		static ulong GenHorizontal(SKColor[] Colors)
+		static ulong GenHorizontal(YFColor* Colors)
 		{
 			ulong data = 0;
 			SetFlipMode(ref data, false);
 			//Left
-			SKColor[] Left = GetLeftColors(Colors);
-			SKColor basec1;
+			YFColor[] Left = GetLeftColors(Colors);
+			YFColor basec1;
 			int mod = GenModifier(out basec1, Left);
 			SetTable1(ref data, mod);
 			GenPixDiff(ref data, Left, basec1, mod, 0, 2, 0, 4);
 			//Right
-			SKColor[] Right = GetRightColors(Colors);
-			SKColor basec2;
+			YFColor[] Right = GetRightColors(Colors);
+			YFColor basec2;
 			mod = GenModifier(out basec2, Right);
 			SetTable2(ref data, mod);
 			GenPixDiff(ref data, Right, basec2, mod, 2, 4, 0, 4);
@@ -174,19 +172,19 @@ namespace PopStudio.Plugin
 			return data;
 		}
 
-		static ulong GenVertical(SKColor[] Colors)
+		static ulong GenVertical(YFColor* Colors)
 		{
 			ulong data = 0;
 			SetFlipMode(ref data, true);
 			//Top
-			SKColor[] Top = GetTopColors(Colors);
-			SKColor basec1;
+			YFColor[] Top = GetTopColors(Colors);
+			YFColor basec1;
 			int mod = GenModifier(out basec1, Top);
 			SetTable1(ref data, mod);
 			GenPixDiff(ref data, Top, basec1, mod, 0, 4, 0, 2);
 			//Bottom
-			SKColor[] Bottom = GetBottomColors(Colors);
-			SKColor basec2;
+			YFColor[] Bottom = GetBottomColors(Colors);
+			YFColor basec2;
 			mod = GenModifier(out basec2, Bottom);
 			SetTable2(ref data, mod);
 			GenPixDiff(ref data, Bottom, basec2, mod, 0, 4, 2, 4);
@@ -194,7 +192,7 @@ namespace PopStudio.Plugin
 			return data;
 		}
 
-		static void SetBaseColors(ref ulong Data, SKColor Color1, SKColor Color2)
+		static void SetBaseColors(ref ulong Data, YFColor Color1, YFColor Color2)
 		{
 			int R1 = Color1.Red;
 			int G1 = Color1.Green;
@@ -231,7 +229,7 @@ namespace PopStudio.Plugin
 			}
 		}
 
-		static void GenPixDiff(ref ulong Data, SKColor[] Pixels, SKColor BaseColor, int Modifier, int XOffs, int XEnd, int YOffs, int YEnd)
+		static void GenPixDiff(ref ulong Data, YFColor[] Pixels, YFColor BaseColor, int Modifier, int XOffs, int XEnd, int YOffs, int YEnd)
 		{
 			int BaseMean = (BaseColor.Red + BaseColor.Green + BaseColor.Blue) / 3;
 			int i = 0;
@@ -251,10 +249,10 @@ namespace PopStudio.Plugin
 			}
 		}
 
-		static int GenModifier(out SKColor BaseColor, SKColor[] Pixels)
+		static int GenModifier(out YFColor BaseColor, YFColor[] Pixels)
 		{
-			SKColor Max = new SKColor(255, 255, 255);
-			SKColor Min = new SKColor(0, 0, 0);
+			YFColor Max = new YFColor(255, 255, 255);
+			YFColor Min = new YFColor(0, 0, 0);
 			int MinY = int.MaxValue;
 			int MaxY = int.MinValue;
 			for (int i = 0; i < 8; i++)
@@ -307,11 +305,11 @@ namespace PopStudio.Plugin
 			{
 				float div1 = ETC1Modifiers[Modifier, 0] / (float)ETC1Modifiers[Modifier, 1];
 				float div2 = 1f - div1;
-				BaseColor = new SKColor(ColorClamp(Min.Red * div1 + Max.Red * div2), ColorClamp(Min.Green * div1 + Max.Green * div2), ColorClamp(Min.Blue * div1 + Max.Blue * div2));
+				BaseColor = new YFColor(ColorClamp(Min.Red * div1 + Max.Red * div2), ColorClamp(Min.Green * div1 + Max.Green * div2), ColorClamp(Min.Blue * div1 + Max.Blue * div2));
 			}
 			else
 			{
-				BaseColor = new SKColor((byte)((Min.Red + Max.Red) >> 1), (byte)((Min.Green + Max.Green) >> 1), (byte)((Min.Blue + Max.Blue) >> 1));
+				BaseColor = new YFColor((byte)((Min.Red + Max.Red) >> 1), (byte)((Min.Green + Max.Green) >> 1), (byte)((Min.Blue + Max.Blue) >> 1));
 			}
 			return Modifier;
 		}

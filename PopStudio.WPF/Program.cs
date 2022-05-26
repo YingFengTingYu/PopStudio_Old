@@ -7,7 +7,7 @@ namespace PopStudio.WPF
         [STAThread]
         static void Main(params string[] args)
         {
-            Bitmap.RegistPlatform<GDIBitmap>();
+            YFBitmap.RegistPlatform<GDIBitmap>();
             YFFileListStream.RegistPlatform(YFRes.CompiledImageList);
             try
             {

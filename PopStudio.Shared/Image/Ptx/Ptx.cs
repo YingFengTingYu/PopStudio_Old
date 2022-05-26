@@ -1,4 +1,4 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Image.Ptx
 {
@@ -8,7 +8,7 @@ namespace PopStudio.Image.Ptx
         {
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     long off = bs.Position;
                     PtxHead head = new PtxHead
@@ -134,7 +134,7 @@ namespace PopStudio.Image.Ptx
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {
                 bs.Endian = encodeendian;
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     long off = bs.Position;
                     PtxHead head = new PtxHead
@@ -248,7 +248,7 @@ namespace PopStudio.Image.Ptx
                         {
                             if ((fromrsb && Setting.RsbPtxABGR8888Mode) || ((!fromrsb) && Setting.PtxABGR8888Mode))
                             {
-                                using (SKBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
+                                using (YFBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
                                 {
                                     sKBitmap.Save(outFile);
                                 }
@@ -257,14 +257,14 @@ namespace PopStudio.Image.Ptx
                             {
                                 int w = head.width;
                                 if ((w % 64) != 0) w = (w / 64) * 64 + 64;
-                                using (SKBitmap sKBitmap = Texture.ARGB8888_Padding.Read(bs, head.width, head.height, w << 2))
+                                using (YFBitmap sKBitmap = Texture.ARGB8888_Padding.Read(bs, head.width, head.height, w << 2))
                                 {
                                     sKBitmap.Save(outFile);
                                 }
                             }
                             else
                             {
-                                using (SKBitmap sKBitmap = Texture.ARGB8888.Read(bs, head.width, head.height))
+                                using (YFBitmap sKBitmap = Texture.ARGB8888.Read(bs, head.width, head.height))
                                 {
                                     sKBitmap.Save(outFile);
                                 }
@@ -272,80 +272,80 @@ namespace PopStudio.Image.Ptx
                         }
                         break;
                     case PtxFormat.RGBA4444:
-                        using (SKBitmap sKBitmap = Texture.RGBA4444.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGBA4444.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.RGB565:
-                        using (SKBitmap sKBitmap = Texture.RGB565.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGB565.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.RGBA5551:
-                        using (SKBitmap sKBitmap = Texture.RGBA5551.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGBA5551.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.DXT5:
                         bs.Endian = Endian.Small;
-                        using (SKBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.RGBA4444_Block:
-                        using (SKBitmap sKBitmap = Texture.RGBA4444_Block.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGBA4444_Block.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.RGB565_Block:
-                        using (SKBitmap sKBitmap = Texture.RGB565_Block.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGB565_Block.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.RGBA5551_Block:
-                        using (SKBitmap sKBitmap = Texture.RGBA5551_Block.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGBA5551_Block.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.PVRTC_4BPP_RGBA:
-                        using (SKBitmap sKBitmap = Texture.PVRTC_4BPP_RGBA.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.PVRTC_4BPP_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.PVRTC_2BPP_RGBA:
-                        using (SKBitmap sKBitmap = Texture.PVRTC_2BPP_RGBA.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.PVRTC_2BPP_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.ETC1_RGB:
-                        using (SKBitmap sKBitmap = Texture.ETC1_RGB.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.ETC1_RGB.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.DXT1_RGB:
-                        using (SKBitmap sKBitmap = Texture.DXT1_RGB.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.DXT1_RGB.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.DXT3_RGBA:
-                        using (SKBitmap sKBitmap = Texture.DXT3_RGBA.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.DXT3_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.DXT5_RGBA:
-                        using (SKBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
@@ -353,7 +353,7 @@ namespace PopStudio.Image.Ptx
                     case PtxFormat.ETC1_RGB_A8:
                         if (head.alphaFormat == 0x64)
                         {
-                            using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
+                            using (YFBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
                             {
                                 sKBitmap.Save(outFile);
                             }
@@ -361,26 +361,26 @@ namespace PopStudio.Image.Ptx
                         else
                         {
                             if (head.alphaFormat != 0x0) throw new Exception();
-                            using (SKBitmap sKBitmap = Texture.ETC1_RGB_A8.Read(bs, head.width, head.height))
+                            using (YFBitmap sKBitmap = Texture.ETC1_RGB_A8.Read(bs, head.width, head.height))
                             {
                                 sKBitmap.Save(outFile);
                             }
                         }
                         break;
                     case PtxFormat.PVRTC_4BPP_RGB_A8:
-                        using (SKBitmap sKBitmap = Texture.PVRTC_4BPP_RGB_A8.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.PVRTC_4BPP_RGB_A8.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.XRGB8888_A8:
-                        using (SKBitmap sKBitmap = Texture.XRGB8888_A8.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.XRGB8888_A8.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case PtxFormat.ETC1_RGB_A_Palette:
-                        using (SKBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }

@@ -1,29 +1,33 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Texture
 {
-    internal static class A8
+    internal static unsafe class A8
     {
-        public static SKBitmap Read(BinaryStream bs, int width, int height)
+        public static YFBitmap Read(BinaryStream bs, int width, int height)
         {
+            YFBitmap image = YFBitmap.Create(width, height);
             int S = width * height;
-            SKColor[] pixels = new SKColor[S];
+            byte* pixels = (byte*)image.GetPixels().ToPointer();
             for (int i = 0; i < S; i++)
             {
-                pixels[i] = new SKColor(255, 255, 255, bs.ReadByte());
+                *pixels++ = 255; // b
+                *pixels++ = 255; // g
+                *pixels++ = 255; // r
+                *pixels++ = bs.ReadByte(); // a
             }
-            SKBitmap image = new SKBitmap(width, height);
-            image.Pixels = pixels;
             return image;
         }
 
-        public static int Write(BinaryStream bs, SKBitmap image)
+        public static int Write(BinaryStream bs, YFBitmap image)
         {
-            SKColor[] pixels = image.Pixels;
-            int S = pixels.Length;
+            byte* pixels = (byte*)image.GetPixels().ToPointer();
+            int S = image.Square;
+            pixels += 3;
             for (int i = 0; i < S; i++)
             {
-                bs.WriteByte(pixels[i].Alpha);
+                bs.WriteByte(*pixels);
+                pixels += 4;
             }
             return image.Width;
         }

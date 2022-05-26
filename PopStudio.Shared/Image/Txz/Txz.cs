@@ -1,4 +1,4 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Image.Txz
 {
@@ -8,7 +8,7 @@ namespace PopStudio.Image.Txz
         {
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     TxzHead head = new TxzHead
                     {
@@ -56,7 +56,7 @@ namespace PopStudio.Image.Txz
         {
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     TxzHead head = new TxzHead
                     {
@@ -111,25 +111,25 @@ namespace PopStudio.Image.Txz
                 switch (head.format)
                 {
                     case TxzFormat.ABGR8888:
-                        using (SKBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case TxzFormat.RGBA4444:
-                        using (SKBitmap sKBitmap = Texture.RGBA4444.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGBA4444.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case TxzFormat.RGBA5551:
-                        using (SKBitmap sKBitmap = Texture.RGBA5551.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGBA5551.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
                     case TxzFormat.RGB565:
-                        using (SKBitmap sKBitmap = Texture.RGB565.Read(bs, head.width, head.height))
+                        using (YFBitmap sKBitmap = Texture.RGB565.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }

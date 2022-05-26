@@ -1,4 +1,4 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Image.PtxXbox360
 {
@@ -9,7 +9,7 @@ namespace PopStudio.Image.PtxXbox360
             using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
             {
                 bs.Endian = Endian.Big;
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     int newwidth = sKBitmap.Width;
                     if (newwidth % 128 != 0) newwidth = newwidth / 128 * 128 + 128;
@@ -35,7 +35,7 @@ namespace PopStudio.Image.PtxXbox360
                 PtxHead head = new PtxHead().Read(bs);
                 bs.Position = 0;
                 //Console.WriteLine("name:{4} width:{0} height:{1} storewidth:{2} wrong:{3}", head.width, head.height, head.blockSize >> 2, (head.width % 4 == 0 && head.height % 4 == 0), inFile);
-                using (SKBitmap sKBitmap = Texture.DXT5_RGBA_Padding.Read(bs, head.width, head.height, head.blockSize))
+                using (YFBitmap sKBitmap = Texture.DXT5_RGBA_Padding.Read(bs, head.width, head.height, head.blockSize))
                 {
                     sKBitmap.Save(outFile);
                 }

@@ -1,40 +1,27 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Texture
 {
     /// <summary>
     /// untested
     /// </summary>
-    internal static class DXT2_RGBA
+    internal static unsafe class DXT2_RGBA
     {
-        public static SKBitmap Read(BinaryStream bs, int width, int height)
+        public static YFBitmap Read(BinaryStream bs, int width, int height)
         {
-            bool t = false;
-            int newwidth = width;
-            int newheight = height;
-            if (newwidth % 4 != 0)
-            {
-                newwidth += 4 - newwidth % 4;
-                t = true;
-            }
-            if (newheight % 4 != 0)
-            {
-                newheight += 4 - newheight % 4;
-                t = true;
-            }
-            int S = newwidth * newheight;
-            SKColor[] pixels = new SKColor[S];
-            SKColor[] color = new SKColor[16];
-            ushort[] tempa = new ushort[4];
-            ushort[] tempc = new ushort[2];
-            SKColor[] tempcolor = new SKColor[4];
-            byte[] ColorByte = new byte[4];
-            byte[] alpha = new byte[16];
+            YFBitmap image = YFBitmap.Create(width, height);
+            YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
+            YFColor* color = stackalloc YFColor[16];
+            ushort* tempa = stackalloc ushort[4];
+            ushort* tempc = stackalloc ushort[2];
+            YFColor* tempcolor = stackalloc YFColor[4];
+            byte* ColorByte = stackalloc byte[4];
+            byte* alpha = stackalloc byte[16];
             int temp;
             int r, g, b;
-            for (int y = 0; y < newheight; y += 4)
+            for (int y = 0; y < height; y += 4)
             {
-                for (int x = 0; x < newwidth; x += 4)
+                for (int x = 0; x < width; x += 4)
                 {
                     for (int i = 0; i < 4; i++)
                     {
@@ -62,20 +49,27 @@ namespace PopStudio.Texture
                     b = tempc[0] & 0x1F;
                     g = (tempc[0] & 0x7E0) >> 5;
                     r = (tempc[0] & 0xF800) >> 11;
-                    tempcolor[0] = new SKColor((byte)(r << 3 | r >> 2), (byte)(g << 2 | g >> 3), (byte)(b << 3 | b >> 2));
+                    tempcolor[0] = new YFColor((byte)(r << 3 | r >> 2), (byte)(g << 2 | g >> 3), (byte)(b << 3 | b >> 2));
                     b = tempc[1] & 0x1F;
                     g = (tempc[1] & 0x7E0) >> 5;
                     r = (tempc[1] & 0xF800) >> 11;
-                    tempcolor[1] = new SKColor((byte)(r << 3 | r >> 2), (byte)(g << 2 | g >> 3), (byte)(b << 3 | b >> 2));
-                    tempcolor[2] = new SKColor((byte)(((tempcolor[0].Red << 1) + tempcolor[1].Red + 1) / 3), (byte)(((tempcolor[0].Green << 1) + tempcolor[1].Green + 1) / 3), (byte)(((tempcolor[0].Blue << 1) + tempcolor[1].Blue + 1) / 3));
-                    tempcolor[3] = new SKColor((byte)((tempcolor[0].Red + (tempcolor[1].Red << 1) + 1) / 3), (byte)((tempcolor[0].Green + (tempcolor[1].Green << 1) + 1) / 3), (byte)((tempcolor[0].Blue + (tempcolor[1].Blue << 1) + 1) / 3));
+                    tempcolor[1] = new YFColor((byte)(r << 3 | r >> 2), (byte)(g << 2 | g >> 3), (byte)(b << 3 | b >> 2));
+                    tempcolor[2] = new YFColor((byte)(((tempcolor[0].Red << 1) + tempcolor[1].Red + 1) / 3), (byte)(((tempcolor[0].Green << 1) + tempcolor[1].Green + 1) / 3), (byte)(((tempcolor[0].Blue << 1) + tempcolor[1].Blue + 1) / 3));
+                    tempcolor[3] = new YFColor((byte)((tempcolor[0].Red + (tempcolor[1].Red << 1) + 1) / 3), (byte)((tempcolor[0].Green + (tempcolor[1].Green << 1) + 1) / 3), (byte)((tempcolor[0].Blue + (tempcolor[1].Blue << 1) + 1) / 3));
                     for (int i = 0; i < 4; i++)
                     {
                         for (int j = 0; j < 4; j++)
                         {
                             int k = (i << 2) | j;
                             int bb = ColorByte[i] & 0b11;
-                            color[k] = new SKColor(C((tempcolor[bb].Red << 8) / alpha[k]), C((tempcolor[bb].Green << 8) / alpha[k]), C((tempcolor[bb].Blue << 8) / alpha[k]), alpha[k]);
+                            if (alpha[k] == 0)
+                            {
+                                color[k] = YFColor.Empty;
+                            }
+                            else
+                            {
+                                color[k] = new YFColor(C((tempcolor[bb].Red << 8) / alpha[k]), C((tempcolor[bb].Green << 8) / alpha[k]), C((tempcolor[bb].Blue << 8) / alpha[k]), alpha[k]);
+                            }
                             ColorByte[i] >>= 2;
                         }
                     }
@@ -84,22 +78,13 @@ namespace PopStudio.Texture
                     {
                         for (int j = 0; j < 4; j++)
                         {
-                            pixels[(i + y) * newwidth + x + j] = color[(i << 2) | j];
+                            if ((x + j) < width && (y + i) < height)
+                            {
+                                pixels[(i + y) * width + x + j] = color[(i << 2) | j];
+                            }
                         }
                     }
                 }
-            }
-            SKBitmap image = new SKBitmap(newwidth, newheight);
-            image.Pixels = pixels;
-            if (t)
-            {
-                SKBitmap image2 = new SKBitmap(width, height);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, newwidth, newheight));
-                }
-                image.Dispose();
-                return image2;
             }
             return image;
         }
@@ -111,39 +96,18 @@ namespace PopStudio.Texture
             return (byte)v;
         }
 
-        public static int Write(BinaryStream bs, SKBitmap image)
+        public static int Write(BinaryStream bs, YFBitmap image)
         {
-            int ans = image.Width;
-            bool t = false;
-            int newwidth = image.Width;
-            int newheight = image.Height;
-            if (newwidth % 4 != 0)
-            {
-                newwidth += 4 - newwidth % 4;
-                t = true;
-            }
-            if (newheight % 4 != 0)
-            {
-                newheight += 4 - newheight % 4;
-                t = true;
-            }
-            if (t)
-            {
-                SKBitmap image2 = new SKBitmap(newwidth, newheight);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
-                }
-                image = image2;
-            }
-            SKColor[] pixels = image.Pixels;
+            YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
+            int width = image.Width;
+            int height = image.Height;
             ushort temp;
-            SKColor[] color = new SKColor[16];
-            SKColor min, max;
+            YFColor* color = stackalloc YFColor[16];
+            YFColor min, max;
             int result;
-            for (int i = 0; i < newheight; i += 4)
+            for (int i = 0; i < height; i += 4)
             {
-                for (int w = 0; w < newwidth; w += 4)
+                for (int w = 0; w < width; w += 4)
                 {
                     //Copy color
                     for (int j = 0; j < 4; j++)
@@ -151,16 +115,23 @@ namespace PopStudio.Texture
                         temp = 0;
                         for (int k = 0; k < 4; k++)
                         {
-                            int n = (j << 2) | k;
-                            int index = (i + j) * newwidth + w + k;
-                            byte apix = pixels[index].Alpha;
-                            color[n] = new SKColor(C((pixels[index].Red * apix) >> 8), C((pixels[index].Green * apix) >> 8), C((pixels[index].Blue * apix) >> 8), apix);
-                            temp |= (ushort)((color[n].Alpha >> 4) << (k << 2));
+                            if ((i + j) < height && (w + k) < width)
+                            {
+                                int n = (j << 2) | k;
+                                int index = (i + j) * width + w + k;
+                                byte apix = pixels[index].Alpha;
+                                color[n] = new YFColor(C((pixels[index].Red * apix) >> 8), C((pixels[index].Green * apix) >> 8), C((pixels[index].Blue * apix) >> 8), apix);
+                                temp |= (ushort)((color[n].Alpha >> 4) << (k << 2));
+                            }
+                            else
+                            {
+                                color[(j << 2) | k] = YFColor.Empty;
+                            }
                         }
                         bs.WriteUInt16(temp);
                     }
                     //Color code
-                    DXTEncode.GetMinMaxColorsByEuclideanDistance(color, out min, out max);
+                    DXTEncode.GetMinMaxColorsByEuclideanDistance(color, &min, &max);
                     result = DXTEncode.EmitColorIndices(color, min, max);
                     //Write
                     bs.WriteUInt16(DXTEncode.ColorTo565(max));
@@ -169,11 +140,7 @@ namespace PopStudio.Texture
                     bs.WriteUInt16((ushort)(result >> 16));
                 }
             }
-            if (t)
-            {
-                image.Dispose();
-            }
-            return ans;
+            return width;
         }
     }
 }

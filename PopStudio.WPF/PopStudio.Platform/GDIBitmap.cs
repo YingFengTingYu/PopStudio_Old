@@ -6,7 +6,7 @@ namespace PopStudio.Platform
     /// <summary>
     /// It's fast but just support Windows in dotnet 7 and later version
     /// </summary>
-    internal class GDIBitmap : Bitmap
+    internal class GDIBitmap : YFBitmap
     {
         public override int Width => m_width;
         public override int Height => m_height;
@@ -45,9 +45,9 @@ namespace PopStudio.Platform
             m_data = m_bitmap.LockBits(new Rectangle(0, 0, m_width, m_height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
         }
 
-        protected override Bitmap InternalCreate(int width, int height) => new GDIBitmap(width, height);
-        protected override Bitmap InternalCreate(Stream stream) => new GDIBitmap(stream);
-        protected override Bitmap InternalCreate(string filePath) => new GDIBitmap(filePath);
+        protected override YFBitmap InternalCreate(int width, int height) => new GDIBitmap(width, height);
+        protected override YFBitmap InternalCreate(Stream stream) => new GDIBitmap(stream);
+        protected override YFBitmap InternalCreate(string filePath) => new GDIBitmap(filePath);
 
         /// <summary>
         /// BB GG RR AA

@@ -22,7 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\Bitmap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\YFBitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BitStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\IDisposablePool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SubImageInfo.cs" />
@@ -104,7 +104,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\MaxRectsBinPack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\PVRTCEncode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\RijndaelHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Plugin\SKPlugin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\StringPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Str.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\ZHCN.cs" />
@@ -164,6 +163,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA4444_Block.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA5551.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA5551_Block.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\YFColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\GameConsole.cs" />
@@ -179,5 +179,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailTrackNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BinaryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Platform\" />
   </ItemGroup>
 </Project>

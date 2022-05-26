@@ -5,7 +5,7 @@ namespace PopStudio.Platform
     /// <summary>
     /// It is slower than GDIBitmap
     /// </summary>
-    public class SkiaBitmap : Bitmap
+    public class SkiaBitmap : YFBitmap
     {
         public override int Width => m_width;
         public override int Height => m_height;
@@ -59,9 +59,9 @@ namespace PopStudio.Platform
             m_height = m_bitmap.Height;
         }
 
-        protected override Bitmap InternalCreate(int width, int height) => new SkiaBitmap(width, height);
-        protected override Bitmap InternalCreate(Stream stream) => new SkiaBitmap(stream);
-        protected override Bitmap InternalCreate(string filePath) => new SkiaBitmap(filePath);
+        protected override YFBitmap InternalCreate(int width, int height) => new SkiaBitmap(width, height);
+        protected override YFBitmap InternalCreate(Stream stream) => new SkiaBitmap(stream);
+        protected override YFBitmap InternalCreate(string filePath) => new SkiaBitmap(filePath);
 
         /// <summary>
         /// BB GG RR AA

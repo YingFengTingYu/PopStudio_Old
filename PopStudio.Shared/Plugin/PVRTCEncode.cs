@@ -1,14 +1,11 @@
-﻿using SkiaSharp;
-
-namespace PopStudio.Plugin
+﻿namespace PopStudio.Plugin
 {
-    internal class PVRTCEncode
+    internal unsafe class PVRTCEncode
     {
-		public static SKColor[] Decode4Bpp(PvrTcPacket[] packets, int width)
+		public static void Decode4Bpp(PvrTcPacket[] packets, int width, YFColor* result)
 		{
 			int blocks = width >> 2;
 			int blockMask = blocks - 1;
-			SKColor[] result = new SKColor[width * width];
 			for (int y = 0; y < blocks; y++)
 			{
 				for (int x = 0; x < blocks; x++)
@@ -37,17 +34,16 @@ namespace PopStudio.Plugin
 							ColorRGBA ca = p0.GetColorA_ColorRGBA() * factor[0] + p1.GetColorA_ColorRGBA() * factor[1] + p2.GetColorA_ColorRGBA() * factor[2] + p3.GetColorA_ColorRGBA() * factor[3];
 							ColorRGBA cb = p0.GetColorB_ColorRGBA() * factor[0] + p1.GetColorB_ColorRGBA() * factor[1] + p2.GetColorB_ColorRGBA() * factor[2] + p3.GetColorB_ColorRGBA() * factor[3];
 							int index = weightindex + (((int)mod & 0b11) << 2);
-							result[(py + (y << 2)) * width + px + (x << 2)] = new SKColor((byte)((ca.r * weights[index] + cb.r * weights[index + 1]) >> 7), (byte)((ca.g * weights[index] + cb.g * weights[index + 1]) >> 7), (byte)((ca.b * weights[index] + cb.b * weights[index + 1]) >> 7), (byte)((ca.a * weights[index + 2] + cb.a * weights[index + 3]) >> 7));
+							result[(py + (y << 2)) * width + px + (x << 2)] = new YFColor((byte)((ca.r * weights[index] + cb.r * weights[index + 1]) >> 7), (byte)((ca.g * weights[index] + cb.g * weights[index + 1]) >> 7), (byte)((ca.b * weights[index] + cb.b * weights[index + 1]) >> 7), (byte)((ca.a * weights[index + 2] + cb.a * weights[index + 3]) >> 7));
 							mod >>= 2;
 							factorindex++;
 						}
 					}
 				}
 			}
-			return result;
 		}
 
-		public static PvrTcPacket[] EncodeRGBA4Bpp(SKColor[] colors, int width)
+		public static PvrTcPacket[] EncodeRGBA4Bpp(YFColor* colors, int width)
 		{
 			int blocks = width >> 2;
 			int blockMask = blocks - 1;
@@ -56,7 +52,7 @@ namespace PopStudio.Plugin
 			{
 				for (int x = 0; x < blocks; x++)
 				{
-					CalculateBoundingBox(colors, width, x, y, out SKColor min, out SKColor max);
+					CalculateBoundingBox(colors, width, x, y, out YFColor min, out YFColor max);
 					PvrTcPacket packet = new PvrTcPacket();
 					packet.usePunchthroughAlpha = false;
 					packet.SetColorA_RGBA(min);
@@ -89,7 +85,7 @@ namespace PopStudio.Plugin
 							PvrTcPacket p3 = packets[GetMortonNumber(x1, y1)];
 							ColorRGBA ca = p0.GetColorA_ColorRGBA() * factor[0] + p1.GetColorA_ColorRGBA() * factor[1] + p2.GetColorA_ColorRGBA() * factor[2] + p3.GetColorA_ColorRGBA() * factor[3];
 							ColorRGBA cb = p0.GetColorB_ColorRGBA() * factor[0] + p1.GetColorB_ColorRGBA() * factor[1] + p2.GetColorB_ColorRGBA() * factor[2] + p3.GetColorB_ColorRGBA() * factor[3];
-							SKColor pixel = colors[dataindex + py * width + px];
+							YFColor pixel = colors[dataindex + py * width + px];
 							ColorRGBA d = cb - ca;
 							ColorRGBA p = new ColorRGBA(pixel.Red << 4, pixel.Green << 4, pixel.Blue << 4, pixel.Alpha << 4);
 							ColorRGBA v = p - ca;
@@ -108,7 +104,7 @@ namespace PopStudio.Plugin
 			return packets;
 		}
 
-		public static PvrTcPacket[] EncodeRGB4Bpp(SKColor[] colors, int width)
+		public static PvrTcPacket[] EncodeRGB4Bpp(YFColor* colors, int width)
         {
 			int blocks = width >> 2;
 			int blockMask = blocks - 1;
@@ -117,7 +113,7 @@ namespace PopStudio.Plugin
 			{
 				for (int x = 0; x < blocks; x++)
 				{
-					CalculateBoundingBox(colors, width, x, y, out SKColor min, out SKColor max);
+					CalculateBoundingBox(colors, width, x, y, out YFColor min, out YFColor max);
 					PvrTcPacket packet = new PvrTcPacket();
 					packet.usePunchthroughAlpha = false;
 					packet.SetColorA_RGB(min);
@@ -150,7 +146,7 @@ namespace PopStudio.Plugin
 							PvrTcPacket p3 = packets[GetMortonNumber(x1, y1)];
 							ColorRGB ca = p0.GetColorA_ColorRGB() * factor[0] + p1.GetColorA_ColorRGB() * factor[1] + p2.GetColorA_ColorRGB() * factor[2] + p3.GetColorA_ColorRGB() * factor[3];
 							ColorRGB cb = p0.GetColorB_ColorRGB() * factor[0] + p1.GetColorB_ColorRGB() * factor[1] + p2.GetColorB_ColorRGB() * factor[2] + p3.GetColorB_ColorRGB() * factor[3];
-							SKColor pixel = colors[dataindex + py * width + px];
+							YFColor pixel = colors[dataindex + py * width + px];
 							ColorRGB d = cb - ca;
 							ColorRGB p = new ColorRGB(pixel.Red << 4, pixel.Green << 4, pixel.Blue << 4);
 							ColorRGB v = p - ca;
@@ -169,7 +165,7 @@ namespace PopStudio.Plugin
 			return packets;
 		}
 
-		static void CalculateBoundingBox(SKColor[] colors, int width, int blockX, int blockY, out SKColor min, out SKColor max)
+		static void CalculateBoundingBox(YFColor* colors, int width, int blockX, int blockY, out YFColor min, out YFColor max)
         {
 			//same as DXT
 			byte maxr = 0, maxg = 0, maxb = 0, maxa = 0;
@@ -196,8 +192,8 @@ namespace PopStudio.Plugin
 					if (temp < mina) mina = temp;
 				}
             }
-			min = new SKColor(minr, ming, minb, mina);
-			max = new SKColor(maxr, maxg, maxb, maxa);
+			min = new YFColor(minr, ming, minb, mina);
+			max = new YFColor(maxr, maxg, maxb, maxa);
 		}
 
 		static uint RotateRight(uint value, int shift)
@@ -383,7 +379,7 @@ namespace PopStudio.Plugin
 				set => PvrTcWord |= (value ? 1ul : 0ul) << 63;
 			}
 
-			public SKColor GetColorA()
+			public YFColor GetColorA()
 			{
 				int colorA = this.colorA;
 				if (colorAIsOpaque)
@@ -391,7 +387,7 @@ namespace PopStudio.Plugin
 					int r = colorA >> 9;
 					int g = (colorA >> 4) & 0x1F;
 					int b = colorA & 0xF;
-					return new SKColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 4) | b));
+					return new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 4) | b));
 				}
 				else
 				{
@@ -399,11 +395,11 @@ namespace PopStudio.Plugin
 					int r = (colorA >> 7) & 0xF;
 					int g = (colorA >> 3) & 0xF;
 					int b = colorA & 0x7;
-					return new SKColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 5) | (b << 2) | (b >> 1)), (byte)((a << 5) | (a << 2) | (a >> 1)));
+					return new YFColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 5) | (b << 2) | (b >> 1)), (byte)((a << 5) | (a << 2) | (a >> 1)));
 				}
 			}
 
-			public SKColor GetColorB()
+			public YFColor GetColorB()
 			{
 				int colorB = this.colorB;
 				if (colorBIsOpaque)
@@ -411,7 +407,7 @@ namespace PopStudio.Plugin
 					int r = colorB >> 10;
 					int g = (colorB >> 5) & 0x1F;
 					int b = colorB & 0x1F;
-					return new SKColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)));
+					return new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)));
 				}
 				else
 				{
@@ -419,7 +415,7 @@ namespace PopStudio.Plugin
 					int r = (colorB >> 8) & 0xF;
 					int g = (colorB >> 4) & 0xF;
 					int b = colorB & 0xF;
-					return new SKColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 4) | b), (byte)((a << 5) | (a << 2) | (a >> 1)));
+					return new YFColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 4) | b), (byte)((a << 5) | (a << 2) | (a >> 1)));
 				}
 			}
 
@@ -501,7 +497,7 @@ namespace PopStudio.Plugin
 				}
 			}
 
-			public void SetColorA_RGBA(SKColor color)
+			public void SetColorA_RGBA(YFColor color)
             {
 				int a = color.Alpha >> 5;
 				if (a == 0x7)
@@ -522,7 +518,7 @@ namespace PopStudio.Plugin
 				}
             }
 
-			public void SetColorB_RGBA(SKColor color)
+			public void SetColorB_RGBA(YFColor color)
 			{
 				int a = color.Alpha >> 5;
 				if (a == 0x7)
@@ -543,7 +539,7 @@ namespace PopStudio.Plugin
 				}
 			}
 
-			public void SetColorA_RGB(SKColor color)
+			public void SetColorA_RGB(YFColor color)
 			{
                 int r = color.Red >> 3;
                 int g = color.Green >> 3;
@@ -552,7 +548,7 @@ namespace PopStudio.Plugin
                 colorAIsOpaque = true;
             }
 
-			public void SetColorB_RGB(SKColor color)
+			public void SetColorB_RGB(YFColor color)
 			{
                 int r = color.Red >> 3;
                 int g = color.Green >> 3;

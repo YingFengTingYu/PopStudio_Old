@@ -1,33 +1,43 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Texture
 {
-    internal static class L8
+    internal static unsafe class L8
     {
-        public static SKBitmap Read(BinaryStream bs, int width, int height)
+        public static YFBitmap Read(BinaryStream bs, int width, int height)
         {
+            YFBitmap image = YFBitmap.Create(width, height);
             int S = width * height;
-            SKColor[] pixels = new SKColor[S];
+            byte* pixels = (byte*)image.GetPixels().ToPointer();
             byte l;
             for (int i = 0; i < S; i++)
             {
                 l = bs.ReadByte();
-                pixels[i] = new SKColor(l, l, l);
+                *pixels++ = l;
+                *pixels++ = l;
+                *pixels++ = l;
+                *pixels++ = 255;
             }
-            SKBitmap image = new SKBitmap(width, height);
-            image.Pixels = pixels;
             return image;
         }
 
-        public static int Write(BinaryStream bs, SKBitmap image)
+        public static int Write(BinaryStream bs, YFBitmap image)
         {
-            SKColor[] pixels = image.Pixels;
-            int S = pixels.Length;
+            YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
+            int S = image.Square;
             for (int i = 0; i < S; i++)
             {
-                bs.WriteByte((byte)Math.Max(pixels[i].Red * 0.299 + pixels[i].Green * 0.587 + pixels[i].Blue * 0.114, 255));
+                bs.WriteByte(Max(pixels->Red * 0.299 + pixels->Green * 0.587 + pixels->Blue * 0.114));
+                pixels++;
             }
             return image.Width;
+        }
+
+        static byte Max(double a)
+        {
+            int k = (int)a;
+            if (k >= 255) return 255;
+            return (byte)k;
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Texture
 {
-    internal static class PVRTC_4BPP_RGB
+    internal static unsafe class PVRTC_4BPP_RGB
     {
-        public static SKBitmap Read(BinaryStream bs, int width, int height)
+        public static YFBitmap Read(BinaryStream bs, int width, int height)
         {
             bool t = false;
             int newwidth = width;
@@ -40,23 +40,19 @@ namespace PopStudio.Texture
             {
                 packets[i] = new PVRTCEncode.PvrTcPacket(bs.ReadUInt64());
             }
-            SKColor[] pixels = PVRTCEncode.Decode4Bpp(packets, newwidth);
-            SKBitmap image = new SKBitmap(newwidth, newheight);
-            image.Pixels = pixels;
+            YFBitmap image = YFBitmap.Create(newwidth, newheight);
+            YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
+            PVRTCEncode.Decode4Bpp(packets, newwidth, pixels);
             if (t)
             {
-                SKBitmap image2 = new SKBitmap(width, height);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, newwidth, newheight));
-                }
+                YFBitmap image2 = image.Cut(0, 0, width, height);
                 image.Dispose();
                 return image2;
             }
             return image;
         }
 
-        public static int Write(BinaryStream bs, SKBitmap image)
+        public static int Write(BinaryStream bs, YFBitmap image)
         {
             int ans = image.Width;
             bool t = false;
@@ -89,14 +85,11 @@ namespace PopStudio.Texture
             }
             if (t)
             {
-                SKBitmap image2 = new SKBitmap(newwidth, newheight);
-                using (SKCanvas canvas = new SKCanvas(image2))
-                {
-                    canvas.DrawBitmap(image, new SKRect(0, 0, image.Width, image.Height));
-                }
+                YFBitmap image2 = YFBitmap.Create(newwidth, newheight);
+                image.MoveTo(image2, 0, 0);
                 image = image2;
             }
-            SKColor[] pixels = image.Pixels;
+            YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
             PVRTCEncode.PvrTcPacket[] words = PVRTCEncode.EncodeRGB4Bpp(pixels, newwidth);
             int index = words.Length;
             for (int i = 0; i < index; i++)
@@ -107,7 +100,7 @@ namespace PopStudio.Texture
             {
                 image.Dispose();
             }
-            return ans >> 1;
+            return newwidth >> 1;
         }
     }
 }

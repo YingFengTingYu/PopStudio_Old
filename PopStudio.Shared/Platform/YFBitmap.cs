@@ -1,8 +1,8 @@
 ﻿namespace PopStudio.Platform
 {
-    public abstract class Bitmap : IDisposable
+    public abstract class YFBitmap : IDisposable
     {
-        public virtual unsafe void MoveTo(Bitmap decimg, int mX, int mY)
+        public virtual unsafe void MoveTo(YFBitmap decimg, int mX, int mY)
         {
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)decimg.GetPixels().ToPointer();
@@ -25,9 +25,9 @@
             }
         }
 
-        public virtual unsafe Bitmap Cut(int mX, int mY, int mWidth, int mHeight)
+        public virtual unsafe YFBitmap Cut(int mX, int mY, int mWidth, int mHeight)
         {
-            Bitmap ans = Create(mWidth, mHeight);
+            YFBitmap ans = Create(mWidth, mHeight);
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)ans.GetPixels().ToPointer();
             for (int y = 0; y < mHeight; y++)
@@ -50,11 +50,11 @@
             return ans;
         }
 
-        public virtual unsafe Bitmap Rotate0()
+        public virtual unsafe YFBitmap Rotate0()
         {
             int resH = Height;
             int resW = Width;
-            Bitmap N = Create(resW, resH);
+            YFBitmap N = Create(resW, resH);
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)N.GetPixels().ToPointer();
             for (int y = 0; y < resH; y++)
@@ -67,11 +67,11 @@
             return N;
         }
 
-        public virtual unsafe Bitmap Rotate90()
+        public virtual unsafe YFBitmap Rotate90()
         {
             int resH = Height;
             int resW = Width;
-            Bitmap N = Create(resH, resW);
+            YFBitmap N = Create(resH, resW);
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)N.GetPixels().ToPointer();
             for (int y = 0; y < resH; y++)
@@ -84,11 +84,11 @@
             return N;
         }
 
-        public virtual unsafe Bitmap Rotate180()
+        public virtual unsafe YFBitmap Rotate180()
         {
             int resH = Height;
             int resW = Width;
-            Bitmap N = Create(resW, resH);
+            YFBitmap N = Create(resW, resH);
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)N.GetPixels().ToPointer() + resH * resW;
             for (int y = 0; y < resH; y++)
@@ -101,11 +101,11 @@
             return N;
         }
 
-        public virtual unsafe Bitmap Rotate270()
+        public virtual unsafe YFBitmap Rotate270()
         {
             int resH = Height;
             int resW = Width;
-            Bitmap N = Create(resH, resW);
+            YFBitmap N = Create(resH, resW);
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)N.GetPixels().ToPointer();
             for (int y = 0; y < resH; y++)
@@ -120,6 +120,7 @@
 
         public abstract int Width { get; }
         public abstract int Height { get; }
+        public virtual int Square => Width * Height;
 
         /// <summary>
         /// must be BB GG RR AA
@@ -131,21 +132,21 @@
 
         public abstract void Save(Stream stream);
 
-        internal static Bitmap InternalCreateBitmap;
+        internal static YFBitmap InternalCreateBitmap;
 
-        public static void RegistPlatform<T>() where T : Bitmap, new() => InternalCreateBitmap = new T();
+        public static void RegistPlatform<T>() where T : YFBitmap, new() => InternalCreateBitmap = new T();
 
-        public static void RegistPlatform(object o) => InternalCreateBitmap = (o is Bitmap bitmap) ? bitmap : InternalCreateBitmap;
+        public static void RegistPlatform(object o) => InternalCreateBitmap = (o is YFBitmap bitmap) ? bitmap : InternalCreateBitmap;
 
-        public static Bitmap Create(int width, int height) => InternalCreateBitmap?.InternalCreate(width, height);
+        public static YFBitmap Create(int width, int height) => InternalCreateBitmap?.InternalCreate(width, height);
 
-        public static Bitmap Create(Stream stream) => InternalCreateBitmap?.InternalCreate(stream);
+        public static YFBitmap Create(Stream stream) => InternalCreateBitmap?.InternalCreate(stream);
 
-        public static Bitmap Create(string filePath) => InternalCreateBitmap?.InternalCreate(filePath);
+        public static YFBitmap Create(string filePath) => InternalCreateBitmap?.InternalCreate(filePath);
 
-        protected abstract Bitmap InternalCreate(int width, int height);
-        protected abstract Bitmap InternalCreate(Stream stream);
-        protected abstract Bitmap InternalCreate(string filePath);
+        protected abstract YFBitmap InternalCreate(int width, int height);
+        protected abstract YFBitmap InternalCreate(Stream stream);
+        protected abstract YFBitmap InternalCreate(string filePath);
 
         //public static Texture.TextureInfo EncodeTexture(Bitmap map, Texture.TextureFormat format) => Texture.Coder.Encode(map, format);
 

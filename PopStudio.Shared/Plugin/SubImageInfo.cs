@@ -10,7 +10,7 @@ namespace PopStudio.Plugin
         public int Height;
         public string ID;
         public bool rotate270;
-        public Bitmap Image = null;
+        public YFBitmap Image = null;
 
         public SubImageInfo()
         {
@@ -42,7 +42,7 @@ namespace PopStudio.Plugin
             rotate270 = false;
         }
 
-        public SubImageInfo(Bitmap Image, string ID)
+        public SubImageInfo(YFBitmap Image, string ID)
         {
             this.Image = Image;
             X = 0;

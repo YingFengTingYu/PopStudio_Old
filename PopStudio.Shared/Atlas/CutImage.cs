@@ -15,7 +15,7 @@ namespace PopStudio.Atlas
                 {
                     if (Path.GetExtension(s).ToLower() == ".png")
                     {
-                        Bitmap img = pool.Add(Bitmap.Create(s));
+                        YFBitmap img = pool.Add(YFBitmap.Create(s));
                         if (img != null) lst.Add(new SubImageInfo(img, Path.GetFileNameWithoutExtension(s).ToLower()));
                     }
                 }
@@ -23,7 +23,7 @@ namespace PopStudio.Atlas
                 MaxRectsBinPack maxRectsBinPack = new MaxRectsBinPack(width, height, false);
                 int c = lst.Count;
                 Dictionary<string, SubImageInfo> ans = new Dictionary<string, SubImageInfo>();
-                using (Bitmap bitmap = Bitmap.Create(width, height))
+                using (YFBitmap bitmap = YFBitmap.Create(width, height))
                 {
                     for (int i = 0; i < c; i++)
                     {
@@ -43,7 +43,7 @@ namespace PopStudio.Atlas
         {
             Dir.NewDir(outFolder);
             outFolder = outFolder + Const.PATHSEPARATOR;
-            using (Bitmap bitmap = Bitmap.Create(inFile))
+            using (YFBitmap bitmap = YFBitmap.Create(inFile))
             {
                 foreach (SubImageInfo info in cutinfo)
                 {
@@ -51,9 +51,9 @@ namespace PopStudio.Atlas
                     string p = outFolder + info.ID.ToLower() + ".png";
                     if (info.rotate270)
                     {
-                        using (Bitmap map = bitmap.Cut(info.X, info.Y, info.Height, info.Width))
+                        using (YFBitmap map = bitmap.Cut(info.X, info.Y, info.Height, info.Width))
                         {
-                            using (Bitmap mp2 = map.Rotate270())
+                            using (YFBitmap mp2 = map.Rotate270())
                             {
                                 mp2.Save(p);
                             }
@@ -61,7 +61,7 @@ namespace PopStudio.Atlas
                     }
                     else
                     {
-                        using (Bitmap map = bitmap.Cut(info.X, info.Y, info.Width, info.Height))
+                        using (YFBitmap map = bitmap.Cut(info.X, info.Y, info.Width, info.Height))
                         {
                             map.Save(p);
                         }

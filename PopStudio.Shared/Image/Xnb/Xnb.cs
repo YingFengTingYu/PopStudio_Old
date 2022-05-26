@@ -1,4 +1,4 @@
-﻿using SkiaSharp;
+﻿using PopStudio.Platform;
 
 namespace PopStudio.Image.Xnb
 {
@@ -11,7 +11,7 @@ namespace PopStudio.Image.Xnb
         {
             using (BinaryStream bs = new BinaryStream(outFile, FileMode.Create))
             {
-                using (SKBitmap sKBitmap = SKBitmap.Decode(inFile))
+                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
                 {
                     XnbHead head = new XnbHead
                     {
@@ -31,7 +31,7 @@ namespace PopStudio.Image.Xnb
             using (BinaryStream bs = new BinaryStream(inFile, FileMode.Open))
             {
                 XnbHead head = new XnbHead().Read(bs);
-                using (SKBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
+                using (YFBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
                 {
                     sKBitmap.Save(outFile);
                 }

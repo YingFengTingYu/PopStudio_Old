@@ -1,22 +1,20 @@
-﻿using SkiaSharp;
-
-namespace PopStudio.Plugin
+﻿namespace PopStudio.Plugin
 {
     /// <summary>
     /// reference: https://www.researchgate.net/publication/259000525_Real-Time_DXT_Compression
     /// </summary>
-    internal class DXTEncode
+    internal unsafe class DXTEncode
     {
-        public static ushort ColorTo565(SKColor color)
+        public static ushort ColorTo565(YFColor color)
         {
             return (ushort)(((color.Red >> 3) << 11) | ((color.Green >> 2) << 5) | (color.Blue >> 3));
         }
 
-        static void SwapColors(ref SKColor c1, ref SKColor c2)
+        static void SwapColors(YFColor* c1, YFColor* c2)
         {
-            SKColor temp = c1;
-            c1 = c2;
-            c2 = temp;
+            YFColor temp = *c1;
+            *c1 = *c2;
+            *c2 = temp;
         }
 
         ////use luminance
@@ -50,7 +48,7 @@ namespace PopStudio.Plugin
         //}
 
         //use euclidean distance
-        static int ColorDistance(SKColor c1, SKColor c2)
+        static int ColorDistance(YFColor c1, YFColor c2)
         {
             return Pow2(c1.Red - c2.Red) + Pow2(c1.Green - c2.Green) + Pow2(c1.Blue - c2.Blue);
         }
@@ -60,10 +58,10 @@ namespace PopStudio.Plugin
             return input * input;
         }
 
-        public static void GetMinMaxColorsByEuclideanDistance(SKColor[] colorBlock, out SKColor minColor, out SKColor maxColor)
+        public static void GetMinMaxColorsByEuclideanDistance(YFColor* colorBlock, YFColor* minColor, YFColor* maxColor)
         {
-            minColor = SKColor.Empty;
-            maxColor = SKColor.Empty;
+            *minColor = YFColor.Empty;
+            *maxColor = YFColor.Empty;
             int maxDistance = -1;
             for (int i = 0; i < 15; i++)
             {
@@ -73,21 +71,21 @@ namespace PopStudio.Plugin
                     if (distance > maxDistance)
                     {
                         maxDistance = distance;
-                        minColor = colorBlock[i];
-                        maxColor = colorBlock[j];
+                        *minColor = colorBlock[i];
+                        *maxColor = colorBlock[j];
                     }
                 }
             }
-            if (ColorTo565(maxColor) < ColorTo565(minColor))
+            if (ColorTo565(*maxColor) < ColorTo565(*minColor))
             {
-                SwapColors(ref minColor, ref maxColor);
+                SwapColors(minColor, maxColor);
             }
         }
 
-        public static void GetMinMaxColorsByEuclideanDistanceForDXT1RGBA(SKColor[] colorBlock, out SKColor minColor, out SKColor maxColor)
+        public static void GetMinMaxColorsByEuclideanDistanceForDXT1RGBA(YFColor* colorBlock, YFColor* minColor, YFColor* maxColor)
         {
-            minColor = SKColor.Empty;
-            maxColor = SKColor.Empty;
+            *minColor = YFColor.Empty;
+            *maxColor = YFColor.Empty;
             int maxDistance = -1;
             for (int i = 0; i < 15; i++)
             {
@@ -99,14 +97,14 @@ namespace PopStudio.Plugin
                     if (distance > maxDistance)
                     {
                         maxDistance = distance;
-                        minColor = colorBlock[i];
-                        maxColor = colorBlock[j];
+                        *minColor = colorBlock[i];
+                        *maxColor = colorBlock[j];
                     }
                 }
             }
-            if (ColorTo565(maxColor) < ColorTo565(minColor))
+            if (ColorTo565(*maxColor) < ColorTo565(*minColor))
             {
-                SwapColors(ref minColor, ref maxColor);
+                SwapColors(minColor, maxColor);
             }
         }
 
@@ -116,31 +114,31 @@ namespace PopStudio.Plugin
             return v;
         }
 
-        public static int EmitColorIndices(SKColor[] colorBlock, SKColor minColor, SKColor maxColor)
+        public static int EmitColorIndices(YFColor* colorBlock, YFColor minColor, YFColor maxColor)
         {
-            int[,] colors = new int[4, 4];
+            int* colors = stackalloc int[16];
             int result = 0;
-            colors[0, 0] = (maxColor.Red & 0xF8) | (maxColor.Red >> 5);
-            colors[0, 1] = (maxColor.Green & 0xFC) | (maxColor.Green >> 6);
-            colors[0, 2] = (maxColor.Blue & 0xF8) | (maxColor.Blue >> 5);
-            colors[1, 0] = (minColor.Red & 0xF8) | (minColor.Red >> 5);
-            colors[1, 1] = (minColor.Green & 0xFC) | (minColor.Green >> 6);
-            colors[1, 2] = (minColor.Blue & 0xF8) | (minColor.Blue >> 5);
-            colors[2, 0] = ((colors[0, 0] << 1) + colors[1, 0]) / 3;
-            colors[2, 1] = ((colors[0, 1] << 1) + colors[1, 1]) / 3;
-            colors[2, 2] = ((colors[0, 2] << 1) + colors[1, 2]) / 3;
-            colors[3, 0] = (colors[0, 0] + (colors[1, 0] << 1)) / 3;
-            colors[3, 1] = (colors[0, 1] + (colors[1, 1] << 1)) / 3;
-            colors[3, 2] = (colors[0, 2] + (colors[1, 2] << 1)) / 3;
+            colors[0] = (maxColor.Red & 0xF8) | (maxColor.Red >> 5);
+            colors[1] = (maxColor.Green & 0xFC) | (maxColor.Green >> 6);
+            colors[2] = (maxColor.Blue & 0xF8) | (maxColor.Blue >> 5);
+            colors[4] = (minColor.Red & 0xF8) | (minColor.Red >> 5);
+            colors[5] = (minColor.Green & 0xFC) | (minColor.Green >> 6);
+            colors[6] = (minColor.Blue & 0xF8) | (minColor.Blue >> 5);
+            colors[8] = ((colors[0] << 1) + colors[4]) / 3;
+            colors[9] = ((colors[1] << 1) + colors[5]) / 3;
+            colors[10] = ((colors[2] << 1) + colors[6]) / 3;
+            colors[12] = (colors[0] + (colors[4] << 1)) / 3;
+            colors[13] = (colors[1] + (colors[5] << 1)) / 3;
+            colors[14] = (colors[2] + (colors[6] << 1)) / 3;
             for (int i = 15; i >= 0; i--)
             {
                 int c0 = colorBlock[i].Red;
                 int c1 = colorBlock[i].Green;
                 int c2 = colorBlock[i].Blue;
-                int d0 = abs(colors[0, 0] - c0) + abs(colors[0, 1] - c1) + abs(colors[0, 2] - c2);
-                int d1 = abs(colors[1, 0] - c0) + abs(colors[1, 1] - c1) + abs(colors[1, 2] - c2);
-                int d2 = abs(colors[2, 0] - c0) + abs(colors[2, 1] - c1) + abs(colors[2, 2] - c2);
-                int d3 = abs(colors[3, 0] - c0) + abs(colors[3, 1] - c1) + abs(colors[3, 2] - c2);
+                int d0 = abs(colors[0] - c0) + abs(colors[1] - c1) + abs(colors[2] - c2);
+                int d1 = abs(colors[4] - c0) + abs(colors[5] - c1) + abs(colors[6] - c2);
+                int d2 = abs(colors[8] - c0) + abs(colors[9] - c1) + abs(colors[10] - c2);
+                int d3 = abs(colors[12] - c0) + abs(colors[13] - c1) + abs(colors[14] - c2);
                 int b0 = d0 > d3 ? 1 : 0;
                 int b1 = d1 > d2 ? 1 : 0;
                 int b2 = d0 > d2 ? 1 : 0;
@@ -151,26 +149,25 @@ namespace PopStudio.Plugin
                 int x2 = b0 & b4;
                 result |= (x2 | ((x0 | x1) << 1)) << (i << 1);
             }
-            colors = null;
             return result;
         }
 
-        public static int EmitColorIndicesForDXT1RGBA(SKColor[] colorBlock, SKColor minColor, SKColor maxColor)
+        public static int EmitColorIndicesForDXT1RGBA(YFColor* colorBlock, YFColor minColor, YFColor maxColor)
         {
-            int[,] colors = new int[4, 4];
+            int* colors = stackalloc int[16];
             int result = 0;
-            colors[0, 0] = (maxColor.Red & 0xF8) | (maxColor.Red >> 5);
-            colors[0, 1] = (maxColor.Green & 0xFC) | (maxColor.Green >> 6);
-            colors[0, 2] = (maxColor.Blue & 0xF8) | (maxColor.Blue >> 5);
-            colors[1, 0] = (minColor.Red & 0xF8) | (minColor.Red >> 5);
-            colors[1, 1] = (minColor.Green & 0xFC) | (minColor.Green >> 6);
-            colors[1, 2] = (minColor.Blue & 0xF8) | (minColor.Blue >> 5);
-            colors[2, 0] = (colors[0, 0] + colors[1, 0]) >> 1;
-            colors[2, 1] = (colors[0, 1] + colors[1, 1]) >> 1;
-            colors[2, 2] = (colors[0, 2] + colors[1, 2]) >> 1;
-            colors[3, 0] = 0;
-            colors[3, 1] = 0;
-            colors[3, 2] = 0;
+            colors[0] = (maxColor.Red & 0xF8) | (maxColor.Red >> 5);
+            colors[1] = (maxColor.Green & 0xFC) | (maxColor.Green >> 6);
+            colors[2] = (maxColor.Blue & 0xF8) | (maxColor.Blue >> 5);
+            colors[4] = (minColor.Red & 0xF8) | (minColor.Red >> 5);
+            colors[5] = (minColor.Green & 0xFC) | (minColor.Green >> 6);
+            colors[6] = (minColor.Blue & 0xF8) | (minColor.Blue >> 5);
+            colors[8] = (colors[0] + colors[4]) >> 1;
+            colors[9] = (colors[1] + colors[5]) >> 1;
+            colors[10] = (colors[2] + colors[6]) >> 1;
+            colors[12] = 0;
+            colors[13] = 0;
+            colors[14] = 0;
             for (int i = 15; i >= 0; i--)
             {
                 if (colorBlock[i].Alpha < 0x80)
@@ -182,9 +179,9 @@ namespace PopStudio.Plugin
                     int c0 = colorBlock[i].Red;
                     int c1 = colorBlock[i].Green;
                     int c2 = colorBlock[i].Blue;
-                    int d0 = abs(colors[0, 0] - c0) + abs(colors[0, 1] - c1) + abs(colors[0, 2] - c2);
-                    int d1 = abs(colors[1, 0] - c0) + abs(colors[1, 1] - c1) + abs(colors[1, 2] - c2);
-                    int d2 = abs(colors[2, 0] - c0) + abs(colors[2, 1] - c1) + abs(colors[2, 2] - c2);
+                    int d0 = abs(colors[0] - c0) + abs(colors[1] - c1) + abs(colors[2] - c2);
+                    int d1 = abs(colors[4] - c0) + abs(colors[5] - c1) + abs(colors[6] - c2);
+                    int d2 = abs(colors[8] - c0) + abs(colors[9] - c1) + abs(colors[10] - c2);
                     if (d0 > d2 && d1 > d2)
                     {
                         result |= (0b10) << (i << 1);
@@ -199,7 +196,7 @@ namespace PopStudio.Plugin
             return result;
         }
 
-        public static byte[] EmitAlphaIndices(SKColor[] colorBlock, byte minAlpha, byte maxAlpha)
+        public static byte[] EmitAlphaIndices(YFColor* colorBlock, byte minAlpha, byte maxAlpha)
         {
             byte[] indices = new byte[16];
             byte[] alphas = new byte[8];
