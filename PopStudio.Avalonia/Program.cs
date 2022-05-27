@@ -10,7 +10,7 @@ namespace PopStudio.Avalonia
         [STAThread]
         public static void Main(string[] args)
         {
-            Platform.API.RegistPlatform<Platform.AvaloniaAPI>();
+            Platform.YFAPI.RegistPlatform<Platform.AvaloniaAPI>();
             Platform.YFBitmap.RegistPlatform<Platform.SkiaBitmap>();
             YFFileListStream.RegistPlatform(YFRes.CompiledImageList);
             try

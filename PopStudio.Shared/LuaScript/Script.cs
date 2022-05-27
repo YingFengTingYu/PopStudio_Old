@@ -183,7 +183,7 @@ namespace PopStudio.LuaScript
             //
             // 异常:
             //   T:System.NotImplementedException:
-            public override void DefaultPrint(string content) => API.Print(content);
+            public override void DefaultPrint(string content) => YFAPI.Print(content);
         }
 
         static Script()
@@ -259,7 +259,7 @@ namespace PopStudio.LuaScript
         public static void Unload()
         {
             luavm = null;
-            API.DisposeAll();
+            YFAPI.DisposeAll();
         }
         public static void Do(string str)
         {

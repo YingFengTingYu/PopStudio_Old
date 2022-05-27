@@ -108,11 +108,11 @@ namespace PopStudio.GTK.Pages
                     }
                     if (mode)
                     {
-                        API.Compress(inFile, outFile, cmode);
+                        YFAPI.Compress(inFile, outFile, cmode);
                     }
                     else
                     {
-                        API.Decompress(inFile, outFile, cmode);
+                        YFAPI.Decompress(inFile, outFile, cmode);
                     }
                 }
                 catch (Exception ex)

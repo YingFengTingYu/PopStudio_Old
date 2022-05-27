@@ -128,7 +128,7 @@ namespace PopStudio.Avalonia.Pages
                     {
                         throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
-                    API.Trail(inFile, outFile, inmode, outmode);
+                    YFAPI.Trail(inFile, outFile, inmode, outmode);
                 }
                 catch (Exception ex)
                 {

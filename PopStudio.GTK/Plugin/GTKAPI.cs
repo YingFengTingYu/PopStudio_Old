@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PopStudio.Platform
 {
-    internal class GTKAPI : API
+    internal class GTKAPI : YFAPI
     {
         TextView box;
 

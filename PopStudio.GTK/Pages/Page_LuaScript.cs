@@ -36,7 +36,7 @@ namespace PopStudio.GTK.Pages
             PackStart(button_parent, false, false, 5);
             PackStart(label_print, false, false, 5);
             PackStart(richtextbox2_window, false, false, 5);
-            API.LoadTextBox(richtextbox2);
+            YFAPI.LoadTextBox(richtextbox2);
         }
 
         private void button_run_Click(object sender, EventArgs e)
@@ -50,16 +50,16 @@ namespace PopStudio.GTK.Pages
                 bool cg = true;
                 try
                 {
-                    API.DoScript(script);
+                    YFAPI.DoScript(script);
                 }
                 catch (Exception ex)
                 {
                     cg = false;
-                    API.Print(string.Format(MAUIStr.Obj.Share_Wrong, ex.Message));
+                    YFAPI.Print(string.Format(MAUIStr.Obj.Share_Wrong, ex.Message));
                 }
                 if (cg)
                 {
-                    API.Print(MAUIStr.Obj.Share_Finish_NoTime);
+                    YFAPI.Print(MAUIStr.Obj.Share_Finish_NoTime);
                 }
                 Application.Invoke((s, e) => { b.Sensitive = true; });
             }))

@@ -4,7 +4,7 @@ using System.Windows.Documents;
 
 namespace PopStudio.Platform
 {
-    internal partial class WPFAPI : API
+    internal partial class WPFAPI : YFAPI
     {
         RichTextBox box;
 

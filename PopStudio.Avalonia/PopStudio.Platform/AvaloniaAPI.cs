@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PopStudio.Platform
 {
-    internal class AvaloniaAPI : API
+    internal class AvaloniaAPI : YFAPI
     {
         TextBox box;
 

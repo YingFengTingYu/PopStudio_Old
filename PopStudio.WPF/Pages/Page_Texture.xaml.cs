@@ -129,11 +129,11 @@ namespace PopStudio.WPF.Pages
                     }
                     if (mode)
                     {
-                        API.EncodeImage(inFile, outFile, cmode, fmode);
+                        YFAPI.EncodeImage(inFile, outFile, cmode, fmode);
                     }
                     else
                     {
-                        API.DecodeImage(inFile, outFile, cmode);
+                        YFAPI.DecodeImage(inFile, outFile, cmode);
                     }
                 }
                 catch (Exception ex)

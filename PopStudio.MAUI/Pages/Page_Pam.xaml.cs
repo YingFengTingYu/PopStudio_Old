@@ -75,11 +75,11 @@ namespace PopStudio.MAUI
                     }
                     if (mode == true)
                     {
-                        API.EncodePam(inFile, outFile);
+                        YFAPI.EncodePam(inFile, outFile);
                     }
                     else
                     {
-                        API.DecodePam(inFile, outFile);
+                        YFAPI.DecodePam(inFile, outFile);
                     }
                 }
                 catch (Exception ex)

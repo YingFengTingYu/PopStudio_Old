@@ -1,12 +1,12 @@
 ﻿namespace PopStudio.Platform
 {
-    internal abstract class API
+    internal abstract class YFAPI
     {
-        internal static API InternalYFAPI;
+        internal static YFAPI InternalYFAPI;
 
-        public static void RegistPlatform<T>() where T : API, new() => InternalYFAPI = new T();
+        public static void RegistPlatform<T>() where T : YFAPI, new() => InternalYFAPI = new T();
 
-        public static void RegistPlatform(object o) => InternalYFAPI = (o is API api) ? api : InternalYFAPI;
+        public static void RegistPlatform(object o) => InternalYFAPI = (o is YFAPI api) ? api : InternalYFAPI;
 
         public static void LoadTextBox(object o) => InternalYFAPI.InternalLoadTextBox(o);
 

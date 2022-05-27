@@ -3,7 +3,7 @@ using System.Text;
 
 namespace PopStudio.Platform
 {
-    internal class MAUIAPI : API
+    internal class MAUIAPI : YFAPI
     {
         Page_LuaScript box;
 

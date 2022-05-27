@@ -175,7 +175,7 @@ namespace PopStudio.Avalonia.Pages
                         {
                             throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
                         }
-                        API.Pack(inFile, outFile, pmode);
+                        YFAPI.Pack(inFile, outFile, pmode);
                     }
                     else
                     {
@@ -183,7 +183,7 @@ namespace PopStudio.Avalonia.Pages
                         {
                             throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                         }
-                        API.Unpack(inFile, outFile, pmode, c1, c2);
+                        YFAPI.Unpack(inFile, outFile, pmode, c1, c2);
                     }
                 }
                 catch (Exception ex)

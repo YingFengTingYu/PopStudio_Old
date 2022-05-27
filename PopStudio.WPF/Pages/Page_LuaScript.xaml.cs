@@ -24,7 +24,7 @@ namespace PopStudio.WPF.Pages
         {
             InitializeComponent();
             LoadFont();
-            API.LoadTextBox(richtextbox2);
+            YFAPI.LoadTextBox(richtextbox2);
             MAUIStr.OnLanguageChanged += LoadFont;
         }
 
@@ -49,16 +49,16 @@ namespace PopStudio.WPF.Pages
                 bool cg = true;
                 try
                 {
-                    API.DoScript(script);
+                    YFAPI.DoScript(script);
                 }
                 catch (Exception ex)
                 {
                     cg = false;
-                    API.Print(string.Format(MAUIStr.Obj.Share_Wrong, ex.Message));
+                    YFAPI.Print(string.Format(MAUIStr.Obj.Share_Wrong, ex.Message));
                 }
                 if (cg)
                 {
-                    API.Print(MAUIStr.Obj.Share_Finish_NoTime);
+                    YFAPI.Print(MAUIStr.Obj.Share_Finish_NoTime);
                 }
                 Dispatcher.BeginInvoke(() => { b.IsEnabled = true; });
             }))

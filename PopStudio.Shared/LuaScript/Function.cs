@@ -8,7 +8,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                API.CloseException();
+                YFAPI.CloseException();
             }
             catch (Exception ex)
             {
@@ -21,7 +21,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                API.OpenException();
+                YFAPI.OpenException();
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                API.ThrowException(args.Length > 0 ? args[0]?.ToString() : null);
+                YFAPI.ThrowException(args.Length > 0 ? args[0]?.ToString() : null);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                API.Print(args);
+                YFAPI.Print(args);
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                return API.Alert(n[0]?.ToString() ?? "", n[1]?.ToString() ?? "PopStudio", (n[2] != null) && (n[2] is not bool boolean || (boolean == true)));
+                return YFAPI.Alert(n[0]?.ToString() ?? "", n[1]?.ToString() ?? "PopStudio", (n[2] != null) && (n[2] is not bool boolean || (boolean == true)));
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                return API.Prompt(n[0]?.ToString() ?? "", n[1]?.ToString() ?? "PopStudio", n[2]?.ToString() ?? "");
+                return YFAPI.Prompt(n[0]?.ToString() ?? "", n[1]?.ToString() ?? "PopStudio", n[2]?.ToString() ?? "");
             }
             catch (Exception ex)
             {
@@ -103,7 +103,7 @@ namespace PopStudio.LuaScript
                 if (args.Length <= 1)
                 {
                     string title = (args.Length == 0) ? "PopStudio" : args[0]?.ToString() ?? "PopStudio";
-                    return API.Sheet(title);
+                    return YFAPI.Sheet(title);
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace PopStudio.LuaScript
                     {
                         n[i] = args[i + 1]?.ToString() ?? "";
                     }
-                    return API.Sheet(args[0]?.ToString() ?? "PopStudio", n);
+                    return YFAPI.Sheet(args[0]?.ToString() ?? "PopStudio", n);
                 }
             }
             catch (Exception ex)
@@ -134,7 +134,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                return API.GetFileStream(n[0]?.ToString(), Convert.ToInt32(n[1] ?? "-1"));
+                return YFAPI.GetFileStream(n[0]?.ToString(), Convert.ToInt32(n[1] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -149,7 +149,7 @@ namespace PopStudio.LuaScript
             try
             {
                 byte[] arg = (args.Length >= 1 && args[0] is byte[] b) ? b : null;
-                return API.GetMemoryStream(arg);
+                return YFAPI.GetMemoryStream(arg);
             }
             catch (Exception ex)
             {
@@ -163,7 +163,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetHttpStream(args.Length >= 1 ? args[0].ToString() : null);
+                return YFAPI.GetHttpStream(args.Length >= 1 ? args[0].ToString() : null);
             }
             catch (Exception ex)
             {
@@ -177,7 +177,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetTempFilePool();
+                return YFAPI.GetTempFilePool();
             }
             catch (Exception ex)
             {
@@ -197,7 +197,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Unpack(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), (n[3] != null) && (n[3] is not bool boolean || (boolean == true)), (n[4] != null) && (n[4] is not bool boolean2 || (boolean2 == true)));
+                YFAPI.Unpack(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), (n[3] != null) && (n[3] is not bool boolean || (boolean == true)), (n[4] != null) && (n[4] is not bool boolean2 || (boolean2 == true)));
             }
             catch (Exception ex)
             {
@@ -216,7 +216,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Pack(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.Pack(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -235,7 +235,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.CutImage(n[0]?.ToString(), n[1]?.ToString(), n[2]?.ToString(), n[3]?.ToString(), Convert.ToInt32(n[4] ?? "-1"));
+                YFAPI.CutImage(n[0]?.ToString(), n[1]?.ToString(), n[2]?.ToString(), n[3]?.ToString(), Convert.ToInt32(n[4] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -254,7 +254,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.SpliceImage(n[0]?.ToString(), n[1]?.ToString(), n[2]?.ToString(), n[3]?.ToString(), Convert.ToInt32(n[4] ?? "-1"), Convert.ToInt32(n[5] ?? "2048"), Convert.ToInt32(n[6] ?? "2048"));
+                YFAPI.SpliceImage(n[0]?.ToString(), n[1]?.ToString(), n[2]?.ToString(), n[3]?.ToString(), Convert.ToInt32(n[4] ?? "-1"), Convert.ToInt32(n[5] ?? "2048"), Convert.ToInt32(n[6] ?? "2048"));
             }
             catch (Exception ex)
             {
@@ -273,7 +273,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.DecodePam(n[0]?.ToString(), n[1]?.ToString());
+                YFAPI.DecodePam(n[0]?.ToString(), n[1]?.ToString());
             }
             catch (Exception ex)
             {
@@ -292,7 +292,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.EncodePam(n[0]?.ToString(), n[1]?.ToString());
+                YFAPI.EncodePam(n[0]?.ToString(), n[1]?.ToString());
             }
             catch (Exception ex)
             {
@@ -311,7 +311,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.DecodeImage(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.DecodeImage(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -330,7 +330,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.EncodeImage(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
+                YFAPI.EncodeImage(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -349,7 +349,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.ParseReanim(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.ParseReanim(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -368,7 +368,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.ParseTrail(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.ParseTrail(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -387,7 +387,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.ParseParticles(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.ParseParticles(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -406,7 +406,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Reanim(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
+                YFAPI.Reanim(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -425,7 +425,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Particles(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
+                YFAPI.Particles(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -444,7 +444,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Trail(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
+                YFAPI.Trail(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -463,7 +463,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.DecodeRTON(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.DecodeRTON(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -482,7 +482,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.EncodeRTON(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.EncodeRTON(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -501,7 +501,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Decompress(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.Decompress(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -520,7 +520,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.Compress(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
+                YFAPI.Compress(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"));
             }
             catch (Exception ex)
             {
@@ -539,7 +539,7 @@ namespace PopStudio.LuaScript
                 {
                     n[i] = args[i];
                 }
-                API.NewDir(n[0]?.ToString(), (n[1] == null) || n[1] is not bool boolean || (boolean == true));
+                YFAPI.NewDir(n[0]?.ToString(), (n[1] == null) || n[1] is not bool boolean || (boolean == true));
             }
             catch (Exception ex)
             {
@@ -552,7 +552,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetFiles(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.GetFiles(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -566,7 +566,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetFileExtension(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.GetFileExtension(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -580,7 +580,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetFileName(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.GetFileName(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -594,7 +594,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetFilePath(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.GetFilePath(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -608,7 +608,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetFileNameWithoutExtension(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.GetFileNameWithoutExtension(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -622,7 +622,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetVersion();
+                return YFAPI.GetVersion();
             }
             catch (Exception ex)
             {
@@ -636,7 +636,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetSystem();
+                return YFAPI.GetSystem();
             }
             catch (Exception ex)
             {
@@ -650,7 +650,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetLanguage();
+                return YFAPI.GetLanguage();
             }
             catch (Exception ex)
             {
@@ -664,7 +664,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.FormatPath(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.FormatPath(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -680,13 +680,13 @@ namespace PopStudio.LuaScript
             {
                 if (args.Length <= 1)
                 {
-                    API.DoFile((args.Length == 0) ? null : args[0]?.ToString());
+                    YFAPI.DoFile((args.Length == 0) ? null : args[0]?.ToString());
                 }
                 else
                 {
                     object[] n = new object[args.Length - 1];
                     Array.Copy(args, 1, n, 0, n.Length);
-                    API.DoFile(args[0]?.ToString(), n);
+                    YFAPI.DoFile(args[0]?.ToString(), n);
                 }
             }
             catch (Exception ex)
@@ -700,7 +700,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.ChooseOpenFile();
+                return YFAPI.ChooseOpenFile();
             }
             catch (Exception ex)
             {
@@ -714,7 +714,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.ChooseSaveFile();
+                return YFAPI.ChooseSaveFile();
             }
             catch (Exception ex)
             {
@@ -728,7 +728,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.ChooseFolder();
+                return YFAPI.ChooseFolder();
             }
             catch (Exception ex)
             {
@@ -742,7 +742,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.DeleteFile(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.DeleteFile(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -756,7 +756,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                API.OpenUrl(args.Length > 0 ? (args[0]?.ToString()) : null);
+                YFAPI.OpenUrl(args.Length > 0 ? (args[0]?.ToString()) : null);
             }
             catch (Exception ex)
             {
@@ -769,7 +769,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.FileExists(args.Length == 0 ? null : args[0]?.ToString());
+                return YFAPI.FileExists(args.Length == 0 ? null : args[0]?.ToString());
             }
             catch (Exception ex)
             {
@@ -783,7 +783,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                API.Sleep(args.Length == 0 ? 0 : Convert.ToInt32(args[0]));
+                YFAPI.Sleep(args.Length == 0 ? 0 : Convert.ToInt32(args[0]));
             }
             catch (Exception ex)
             {
@@ -796,7 +796,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.HttpGet(args.Length > 0 ? (args[0]?.ToString()) : null);
+                return YFAPI.HttpGet(args.Length > 0 ? (args[0]?.ToString()) : null);
             }
             catch (Exception ex)
             {
@@ -810,7 +810,7 @@ namespace PopStudio.LuaScript
         {
             try
             {
-                return API.GetAnsiName();
+                return YFAPI.GetAnsiName();
             }
             catch (Exception ex)
             {

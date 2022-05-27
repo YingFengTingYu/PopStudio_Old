@@ -81,11 +81,11 @@ namespace PopStudio.MAUI
                     }
                     if (mode == true)
                     {
-                        API.EncodeRTON(inFile, outFile, cmode);
+                        YFAPI.EncodeRTON(inFile, outFile, cmode);
                     }
                     else
                     {
-                        API.DecodeRTON(inFile, outFile, cmode);
+                        YFAPI.DecodeRTON(inFile, outFile, cmode);
                     }
                 }
                 catch (Exception ex)

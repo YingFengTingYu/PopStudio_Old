@@ -76,7 +76,7 @@ namespace PopStudio.GTK.Pages
                     {
                         throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                     }
-                    API.Reanim(inFile, outFile, inmode, outmode);
+                    YFAPI.Reanim(inFile, outFile, inmode, outmode);
                 }
                 catch (Exception ex)
                 {

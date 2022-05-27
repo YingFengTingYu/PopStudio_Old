@@ -137,7 +137,7 @@ namespace PopStudio.GTK.Pages
                         {
                             throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
                         }
-                        if (!API.SpliceImage(inFile, outFile, infoFile, ID, cmode, MaxWidth, MaxHeight))
+                        if (!YFAPI.SpliceImage(inFile, outFile, infoFile, ID, cmode, MaxWidth, MaxHeight))
                         {
                             err = MAUIStr.Obj.Atlas_NotFound2;
                         }
@@ -148,7 +148,7 @@ namespace PopStudio.GTK.Pages
                         {
                             throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
                         }
-                        if (!API.CutImage(inFile, outFile, infoFile, ID, cmode))
+                        if (!YFAPI.CutImage(inFile, outFile, infoFile, ID, cmode))
                         {
                             err = MAUIStr.Obj.Atlas_NotFound1;
                         }
