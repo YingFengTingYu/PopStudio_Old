@@ -8,6 +8,7 @@
         public static partial bool HiddenPermission() => true;
         public static partial bool HiddenFlyout() => true;
         public static partial string GetSettingPath() => null;
+        public static partial async Task<bool> CheckPermissionAsync() => null;
 
         public static partial Task<bool> CheckAndRequestPermissionAsync(this ContentPage page) => null;
     }

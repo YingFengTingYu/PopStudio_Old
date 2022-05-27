@@ -11,6 +11,8 @@
 
         public static partial string GetSettingPath() => windowspath;
 
+        public static partial Task<bool> CheckPermissionAsync() => Task.FromResult(true);
+
         public static partial Task<bool> CheckAndRequestPermissionAsync(this ContentPage page) => Task.FromResult(true);
     }
 }

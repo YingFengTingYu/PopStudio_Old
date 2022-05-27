@@ -146,6 +146,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Resource_AD.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resource_AD.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="YFRes.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -154,6 +159,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Resource_AD.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resource_AD.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="YFRes.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>YFRes.Designer.cs</LastGenOutput>

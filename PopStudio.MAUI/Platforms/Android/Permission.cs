@@ -51,16 +51,25 @@ namespace PopStudio.Platform
         static readonly string androidpath = Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath + "/setting.xml";
         public static partial string GetSettingPath() => androidpath;
 
+        public static partial async Task<bool> CheckPermissionAsync()
+        {
+            ReadWriteStoragePermission readwritepermission = new ReadWriteStoragePermission();
+            PermissionStatus status = await readwritepermission.CheckStatusAsync();
+            if (status != PermissionStatus.Granted) return false;
+#pragma warning disable CA1416
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R && !Android.OS.Environment.IsExternalStorageManager) return false;
+#pragma warning restore CA1416
+            return true;
+        }
+
         public static partial async Task<bool> CheckAndRequestPermissionAsync(this ContentPage page)
         {
-            bool showfinishalert = true;
             ReadWriteStoragePermission readwritepermission = new ReadWriteStoragePermission();
             PermissionStatus status = await readwritepermission.CheckStatusAsync();
             bool HavePermission = true;
             if (status != PermissionStatus.Granted)
             {
                 HavePermission = (await readwritepermission.RequestAsync()) == PermissionStatus.Granted;
-                showfinishalert = false;
             }
             if (!HavePermission) return false;
 #pragma warning disable CA1416
@@ -72,13 +81,8 @@ namespace PopStudio.Platform
                     bb.SetFlags(Android.Content.ActivityFlags.NewTask);
                     Android.App.Application.Context.StartActivity(bb);
                 }
-                showfinishalert = false;
             }
 #pragma warning restore CA1416
-            if (showfinishalert)
-            {
-                await page.DisplayAlert(MAUIStr.Obj.Permission_Title, MAUIStr.Obj.Permission_RequestFinish, MAUIStr.Obj.Permission_OK);
-            }
             return true;
         }
 
@@ -86,8 +90,8 @@ namespace PopStudio.Platform
         {
             public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new (string androidPermission, bool isRuntime)[2]
             {
-            (Android.Manifest.Permission.ReadExternalStorage, true),
-            (Android.Manifest.Permission.WriteExternalStorage, true)
+                (Android.Manifest.Permission.ReadExternalStorage, true),
+                (Android.Manifest.Permission.WriteExternalStorage, true)
             };
         }
     }

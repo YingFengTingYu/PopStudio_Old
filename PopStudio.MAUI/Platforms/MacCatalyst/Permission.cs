@@ -12,6 +12,8 @@
 
         public static partial string GetSettingPath() => macospath;
 
+        public static partial Task<bool> CheckPermissionAsync() => Task.FromResult(true);
+
         public static partial Task<bool> CheckAndRequestPermissionAsync(this ContentPage page) => Task.FromResult(true);
     }
 }

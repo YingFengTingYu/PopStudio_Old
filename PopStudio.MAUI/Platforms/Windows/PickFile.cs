@@ -19,7 +19,7 @@ namespace PopStudio.Platform
         {
             FileSavePicker filePicker = new FileSavePicker();
             IntPtr hwnd = ((MauiWinUIWindow)Application.Current.Windows[0].Handler.PlatformView).WindowHandle;
-            filePicker.FileTypeChoices.Add(GUI.Languages.MAUIStr.Obj.PickFile_AllFiles, new List<string>() { ".", ".tex", ".txz", ".ptx", ".rton", ".compiled", ".reanim", ".trail", ".xml", ".xnb", ".json", ".png", ".jpg", ".gif", ".lzma", ".gz", ".lz4", ".dz", ".rsb", ".pak" });
+            filePicker.FileTypeChoices.Add(Language.Languages.MAUIStr.Obj.PickFile_AllFiles, new List<string>() { ".", ".tex", ".txz", ".ptx", ".rton", ".compiled", ".reanim", ".trail", ".xml", ".xnb", ".json", ".png", ".jpg", ".gif", ".lzma", ".gz", ".lz4", ".dz", ".rsb", ".pak" });
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, hwnd);
             StorageFile result = await filePicker.PickSaveFileAsync();
             return result?.Path;
