@@ -1,31 +1,40 @@
 ﻿using Gtk;
 using PopStudio.GTK;
 using PopStudio.GTK.Plugin;
+using System.Text;
 
-namespace PopStudio.Plugin
+namespace PopStudio.Platform
 {
-    internal static partial class API
+    internal class GTKAPI : API
     {
-        public static TextView box;
-        public static bool FirstTime = true;
+        TextView box;
 
-        public static partial void Print(params object[] os)
+        public override void InternalLoadTextBox(object o)
         {
-            string str = FirstTime ? string.Empty : "\n";
-            FirstTime = false;
+            if (o is TextView b)
+            {
+                box = b;
+            }
+        }
+
+        public override void InternalPrint(params object[] os)
+        {
+            StringBuilder str = new StringBuilder();
             if (os.Length != 0)
             {
                 string nil = "nil";
                 for (int i = 0; i < os.Length; i++)
                 {
-                    str += ((os[i]?.ToString()) ?? nil) + ' ';
+                    str.Append((os[i]?.ToString()) ?? nil);
+                    str.Append(' ');
                 }
-                str = str[0..^1];
+                str.Remove(str.Length - 1, 1);
             }
+            str.Append('\n');
             Application.Invoke((s, e) => box.Buffer.Text += str);
         }
 
-        public static partial bool? Alert(string text, string title, bool ask)
+        public override bool? InternalAlert(string text, string title, bool ask)
         {
             bool? ans = null;
             bool a = false;
@@ -49,7 +58,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string Prompt(string text, string title, string defaulttext)
+        public override string InternalPrompt(string text, string title, string defaulttext)
         {
             string ans = string.Empty;
             bool a = false;
@@ -62,7 +71,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string Sheet(string title, params string[] items)
+        public override string InternalSheet(string title, params string[] items)
         {
             string ans = null;
             bool a = false;
@@ -75,7 +84,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string ChooseFolder()
+        public override string InternalChooseFolder()
         {
             string ans = null;
             bool a = false;
@@ -84,7 +93,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string ChooseOpenFile()
+        public override string InternalChooseOpenFile()
         {
             string ans = null;
             bool a = false;
@@ -93,7 +102,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string ChooseSaveFile()
+        public override string InternalChooseSaveFile()
         {
             string ans = null;
             bool a = false;
@@ -102,7 +111,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial void OpenUrl(string url) => Permission.OpenUrl(url);
+        public override void InternalOpenUrl(string url) => Permission.OpenUrl(url);
     }
 }
 

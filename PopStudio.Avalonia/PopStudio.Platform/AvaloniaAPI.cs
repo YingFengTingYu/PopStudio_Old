@@ -1,21 +1,25 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Threading;
 using PopStudio.Avalonia;
-using PopStudio.Platform;
 using System.Text;
 
-namespace PopStudio.Plugin
+namespace PopStudio.Platform
 {
-    internal static partial class API
+    internal class AvaloniaAPI : API
     {
-        public static TextBox box;
-        public static bool FirstTime = true;
+        TextBox box;
 
-        public static partial void Print(params object[] os)
+        public override void InternalLoadTextBox(object o)
+        {
+            if (o is TextBox b)
+            {
+                box = b;
+            }
+        }
+
+        public override void InternalPrint(params object[] os)
         {
             StringBuilder str = new StringBuilder();
-            str.Append(FirstTime ? string.Empty : "\n");
-            FirstTime = false;
             if (os.Length != 0)
             {
                 string nil = "nil";
@@ -26,10 +30,11 @@ namespace PopStudio.Plugin
                 }
                 str.Remove(str.Length - 1, 1);
             }
+            str.Append('\n');
             Dispatcher.UIThread.InvokeAsync(() => box.Text += str);
         }
 
-        public static partial bool? Alert(string text, string title, bool ask)
+        public override bool? InternalAlert(string text, string title, bool ask)
         {
             bool? ans = null;
             bool a = false;
@@ -53,7 +58,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string Prompt(string text, string title, string defaulttext)
+        public override string InternalPrompt(string text, string title, string defaulttext)
         {
             string ans = string.Empty;
             bool a = false;
@@ -66,7 +71,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string Sheet(string title, params string[] items)
+        public override string InternalSheet(string title, params string[] items)
         {
             string ans = null;
             bool a = false;
@@ -83,7 +88,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string ChooseFolder()
+        public override string InternalChooseFolder()
         {
             string ans = null;
             bool a = false;
@@ -103,7 +108,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string ChooseOpenFile()
+        public override string InternalChooseOpenFile()
         {
             string ans = null;
             bool a = false;
@@ -123,7 +128,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial string ChooseSaveFile()
+        public override string InternalChooseSaveFile()
         {
             string ans = null;
             bool a = false;
@@ -143,7 +148,7 @@ namespace PopStudio.Plugin
             return ans;
         }
 
-        public static partial void OpenUrl(string url) => Permission.OpenUrl(url);
+        public override void InternalOpenUrl(string url) => Permission.OpenUrl(url);
     }
 }
 

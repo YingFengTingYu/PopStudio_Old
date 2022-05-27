@@ -2,6 +2,7 @@
 
 namespace PopStudio.Texture
 {
+    //I think it's kind of complex
     internal static unsafe class DXT5_RGBA_Morton
     {
         static readonly int[] Order = { 0, 2, 8, 10, 1, 3, 9, 11, 4, 6, 12, 14, 5, 7, 13, 15 };
@@ -21,7 +22,7 @@ namespace PopStudio.Texture
                 newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
                 t = true;
             }
-            YFBitmap image = YFBitmap.Create(width, height);
+            YFBitmap image = YFBitmap.Create(newwidth, newheight);
             YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
             YFColor* color = stackalloc YFColor[16];
             int* tempa = stackalloc int[2];

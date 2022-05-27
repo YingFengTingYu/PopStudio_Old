@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using PopStudio.Language.Languages;
 using System.Diagnostics;
+using PopStudio.Platform;
 
 namespace PopStudio.Avalonia.Pages
 {

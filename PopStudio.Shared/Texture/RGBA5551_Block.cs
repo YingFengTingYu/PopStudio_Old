@@ -22,10 +22,10 @@ namespace PopStudio.Texture
                             temp = bs.ReadUInt16();
                             if ((i + j) < height && (w + k) < width)
                             {
-                                r = (temp & 0xF800) >> 11;
+                                r = temp >> 11;
                                 g = (temp & 0x7C0) >> 6;
                                 b = (temp & 0x3E) >> 1;
-                                pixels[(i + j) * width + w + k] = new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)), (byte)((temp & 0x1) == 0 ? 0 : 255));
+                                pixels[(i + j) * width + w + k] = new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)), (byte)-(temp & 0x1));
                             }
                         }
                     }
@@ -63,7 +63,7 @@ namespace PopStudio.Texture
                             if ((i + j) < height && (w + k) < width)
                             {
                                 temp = (i + j) * width + w + k;
-                                bs.WriteUInt16((ushort)(((pixels[temp].Alpha & 0b10000000) >> 7) | ((pixels[temp].Blue & 0xF8) >> 2) | ((pixels[temp].Green & 0xF8) << 3) | ((pixels[temp].Red & 0xF8) << 8)));
+                                bs.WriteUInt16((ushort)(((pixels[temp].Alpha & 0x80) >> 7) | ((pixels[temp].Blue & 0xF8) >> 2) | ((pixels[temp].Green & 0xF8) << 3) | ((pixels[temp].Red & 0xF8) << 8)));
                             }
                             else
                             {

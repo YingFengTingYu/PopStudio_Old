@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.WPF.Pages
 {
@@ -23,7 +24,7 @@ namespace PopStudio.WPF.Pages
         {
             InitializeComponent();
             LoadFont();
-            API.box = richtextbox2;
+            API.LoadTextBox(richtextbox2);
             MAUIStr.OnLanguageChanged += LoadFont;
         }
 

@@ -14,7 +14,7 @@ namespace PopStudio.Texture
             for (int i = 0; i < S; i++)
             {
                 temp = bs.ReadUInt16();
-                r = (temp & 0xF000) >> 12;
+                r = temp >> 12;
                 g = (temp & 0xF00) >> 8;
                 b = (temp & 0xF0) >> 4;
                 a = temp & 0xF;

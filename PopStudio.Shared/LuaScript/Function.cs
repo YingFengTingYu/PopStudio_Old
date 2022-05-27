@@ -1,4 +1,6 @@
-﻿namespace PopStudio.LuaScript
+﻿using PopStudio.Platform;
+
+namespace PopStudio.LuaScript
 {
     internal class Function
     {
@@ -691,20 +693,6 @@
             {
                 if (Script.luavm.ErrorThrow) throw;
                 else Print(ex.Message);
-            }
-        }
-
-        public static object[] CreateArray(params object[] args)
-        {
-            try
-            {
-                return API.CreateArray(args.Length == 0 ? -1 : Convert.ToInt32(args[0] ?? "-1"));
-            }
-            catch (Exception ex)
-            {
-                if (Script.luavm.ErrorThrow) throw;
-                else Print(ex.Message);
-                return null;
             }
         }
 

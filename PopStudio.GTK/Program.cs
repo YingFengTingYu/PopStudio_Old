@@ -59,6 +59,7 @@ namespace PopStudio.GTK
         static void Main(params string[] args)
         {
             YFBitmap.RegistPlatform<Plugin.SkiaBitmap>();
+            API.RegistPlatform<Platform.GTKAPI>();
             try
             {
                 string settingxml = "setting.xml";

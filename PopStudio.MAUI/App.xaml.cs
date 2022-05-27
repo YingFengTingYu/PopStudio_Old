@@ -8,6 +8,7 @@ namespace PopStudio.MAUI
         {
             InitializeComponent();
             YFBitmap.RegistPlatform<SkiaBitmap>();
+            API.RegistPlatform<MAUIAPI>();
             YFFileListStream.RegistPlatform(YFRes.CompiledImageList);
             try
             {

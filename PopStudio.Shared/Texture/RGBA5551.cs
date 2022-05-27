@@ -17,7 +17,7 @@ namespace PopStudio.Texture
                 r = (temp & 0xF800) >> 11;
                 g = (temp & 0x7C0) >> 6;
                 b = (temp & 0x3E) >> 1;
-                *pixels++ = new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)), (byte)((temp & 0x1) == 0 ? 0 : 255));
+                *pixels++ = new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)), (byte)-(temp & 0x1));
             }
             return image;
         }
@@ -28,7 +28,7 @@ namespace PopStudio.Texture
             int S = image.Square;
             for (int i = 0; i < S; i++)
             {
-                bs.WriteUInt16((ushort)(((pixels->Alpha & 0b10000000) >> 7) | ((pixels->Blue & 0xF8) >> 2) | ((pixels->Green & 0xF8) << 3) | ((pixels->Red & 0xF8) << 8)));
+                bs.WriteUInt16((ushort)(((pixels->Alpha & 0x80) >> 7) | ((pixels->Blue & 0xF8) >> 2) | ((pixels->Green & 0xF8) << 3) | ((pixels->Red & 0xF8) << 8)));
                 pixels++;
             }
             return image.Width << 1;

@@ -1,8 +1,36 @@
 ﻿namespace PopStudio.Platform
 {
-    public abstract class YFBitmap : IDisposable
+    public abstract unsafe class YFBitmap : IDisposable
     {
-        public virtual unsafe void MoveTo(YFBitmap decimg, int mX, int mY)
+        internal static YFBitmap InternalCreateBitmap;
+
+        public static void RegistPlatform<T>() where T : YFBitmap, new() => InternalCreateBitmap = new T();
+
+        public static void RegistPlatform(object o) => InternalCreateBitmap = (o is YFBitmap bitmap) ? bitmap : InternalCreateBitmap;
+
+        public static YFBitmap Create(int width, int height) => InternalCreateBitmap?.InternalCreate(width, height);
+
+        public static YFBitmap Create(Stream stream) => InternalCreateBitmap?.InternalCreate(stream);
+
+        public static YFBitmap Create(string filePath) => InternalCreateBitmap?.InternalCreate(filePath);
+
+
+        public abstract int Width { get; }
+        public abstract int Height { get; }
+        /// <summary>
+        /// must be BB GG RR AA
+        /// </summary>
+        /// <returns></returns>
+        public abstract IntPtr GetPixels();
+        public abstract void Save(string filePath);
+        public abstract void Save(Stream stream);
+        protected abstract YFBitmap InternalCreate(int width, int height);
+        protected abstract YFBitmap InternalCreate(Stream stream);
+        protected abstract YFBitmap InternalCreate(string filePath);
+        public abstract void Dispose();
+
+        public virtual int Square => Width * Height;
+        public virtual void MoveTo(YFBitmap decimg, int mX, int mY)
         {
             uint* res = (uint*)GetPixels().ToPointer();
             uint* dec = (uint*)decimg.GetPixels().ToPointer();
@@ -24,8 +52,7 @@
                 }
             }
         }
-
-        public virtual unsafe YFBitmap Cut(int mX, int mY, int mWidth, int mHeight)
+        public virtual YFBitmap Cut(int mX, int mY, int mWidth, int mHeight)
         {
             YFBitmap ans = Create(mWidth, mHeight);
             uint* res = (uint*)GetPixels().ToPointer();
@@ -49,8 +76,7 @@
             }
             return ans;
         }
-
-        public virtual unsafe YFBitmap Rotate0()
+        public virtual YFBitmap Rotate0()
         {
             int resH = Height;
             int resW = Width;
@@ -66,8 +92,7 @@
             }
             return N;
         }
-
-        public virtual unsafe YFBitmap Rotate90()
+        public virtual YFBitmap Rotate90()
         {
             int resH = Height;
             int resW = Width;
@@ -83,8 +108,7 @@
             }
             return N;
         }
-
-        public virtual unsafe YFBitmap Rotate180()
+        public virtual YFBitmap Rotate180()
         {
             int resH = Height;
             int resW = Width;
@@ -100,8 +124,7 @@
             }
             return N;
         }
-
-        public virtual unsafe YFBitmap Rotate270()
+        public virtual YFBitmap Rotate270()
         {
             int resH = Height;
             int resW = Width;
@@ -117,43 +140,5 @@
             }
             return N;
         }
-
-        public abstract int Width { get; }
-        public abstract int Height { get; }
-        public virtual int Square => Width * Height;
-
-        /// <summary>
-        /// must be BB GG RR AA
-        /// </summary>
-        /// <returns></returns>
-        public abstract IntPtr GetPixels();
-
-        public abstract void Save(string filePath);
-
-        public abstract void Save(Stream stream);
-
-        internal static YFBitmap InternalCreateBitmap;
-
-        public static void RegistPlatform<T>() where T : YFBitmap, new() => InternalCreateBitmap = new T();
-
-        public static void RegistPlatform(object o) => InternalCreateBitmap = (o is YFBitmap bitmap) ? bitmap : InternalCreateBitmap;
-
-        public static YFBitmap Create(int width, int height) => InternalCreateBitmap?.InternalCreate(width, height);
-
-        public static YFBitmap Create(Stream stream) => InternalCreateBitmap?.InternalCreate(stream);
-
-        public static YFBitmap Create(string filePath) => InternalCreateBitmap?.InternalCreate(filePath);
-
-        protected abstract YFBitmap InternalCreate(int width, int height);
-        protected abstract YFBitmap InternalCreate(Stream stream);
-        protected abstract YFBitmap InternalCreate(string filePath);
-
-        //public static Texture.TextureInfo EncodeTexture(Bitmap map, Texture.TextureFormat format) => Texture.Coder.Encode(map, format);
-
-        //public static Bitmap DecodeTexture(Texture.TextureInfo info) => Texture.Coder.Decode(info);
-
-        //public Texture.TextureInfo EncodeAsTexture(Texture.TextureFormat format) => Texture.Coder.Encode(this, format);
-
-        public abstract void Dispose();
     }
 }

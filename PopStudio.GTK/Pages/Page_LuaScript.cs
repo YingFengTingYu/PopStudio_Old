@@ -1,5 +1,6 @@
 ﻿using Gtk;
 using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 #pragma warning disable 0612, 0618
 
@@ -35,7 +36,7 @@ namespace PopStudio.GTK.Pages
             PackStart(button_parent, false, false, 5);
             PackStart(label_print, false, false, 5);
             PackStart(richtextbox2_window, false, false, 5);
-            API.box = richtextbox2;
+            API.LoadTextBox(richtextbox2);
         }
 
         private void button_run_Click(object sender, EventArgs e)
@@ -43,7 +44,6 @@ namespace PopStudio.GTK.Pages
             Button b = (Button)sender;
             b.Sensitive = false;
             richtextbox2.Buffer.Text = string.Empty;
-            API.FirstTime = true;
             string script = richtextbox1.Buffer.Text;
             new Thread(new ThreadStart(() =>
             {

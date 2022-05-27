@@ -1,36 +1,149 @@
-﻿namespace PopStudio.Plugin
+﻿namespace PopStudio.Platform
 {
-    internal static partial class API
+    internal abstract class API
     {
+        internal static API InternalYFAPI;
+
+        public static void RegistPlatform<T>() where T : API, new() => InternalYFAPI = new T();
+
+        public static void RegistPlatform(object o) => InternalYFAPI = (o is API api) ? api : InternalYFAPI;
+
+        public static void LoadTextBox(object o) => InternalYFAPI.InternalLoadTextBox(o);
+
+        public static void CloseException() => InternalYFAPI.InternalCloseException();
+
+        public static void OpenException() => InternalYFAPI.InternalOpenException();
+
+        public static void ThrowException(string msg) => InternalYFAPI.InternalThrowException(msg);
+
+        public static void DoScript(string script) => InternalYFAPI.InternalDoScript(script);
+
+        public static void DisposeAll() => InternalYFAPI.InternalDisposeAll();
+
+        public static void Print(params object[] os) => InternalYFAPI.InternalPrint(os);
+
+        public static bool? Alert(string text = "", string title = "PopStudio", bool ask = false) => InternalYFAPI.InternalAlert(text, title, ask);
+
+        public static string Prompt(string text = "", string title = "PopStudio", string defaulttext = "") => InternalYFAPI.InternalPrompt(text, title, defaulttext);
+
+        public static string Sheet(string title = "PopStudio", params string[] items) => InternalYFAPI.InternalSheet(title, items);
+
+        public static string ChooseFolder() => InternalYFAPI.InternalChooseFolder();
+
+        public static string ChooseOpenFile() => InternalYFAPI.InternalChooseOpenFile();
+
+        public static string ChooseSaveFile() => InternalYFAPI.InternalChooseSaveFile();
+
+        public static void OpenUrl(string url = "") => InternalYFAPI.InternalOpenUrl(url);
+
+        public static BinaryStream GetFileStream(string path, int mode) => InternalYFAPI.InternalGetFileStream(path, mode);
+
+        public static BinaryStream GetMemoryStream(byte[] bytes = null) => InternalYFAPI.InternalGetMemoryStream(bytes);
+
+        public static BinaryStream GetHttpStream(string url) => InternalYFAPI.InternalGetHttpStream(url);
+
+        public static TempFilePool GetTempFilePool() => InternalYFAPI.InternalGetTempFilePool();
+
+        public static void Unpack(string inFile, string outFile, int format, bool changeimage = false, bool delete = false) => InternalYFAPI.InternalUnpack(inFile, outFile, format, changeimage, delete);
+
+        public static void Pack(string inFile, string outFile, int format) => InternalYFAPI.InternalPack(inFile, outFile, format);
+
+        public static void DecodePam(string inFile, string outFile) => InternalYFAPI.InternalDecodePam(inFile, outFile);
+
+        public static void EncodePam(string inFile, string outFile) => InternalYFAPI.InternalEncodePam(inFile, outFile);
+
+        public static void DecodeImage(string inFile, string outFile, int format) => InternalYFAPI.InternalDecodeImage(inFile, outFile, format);
+
+        public static void EncodeImage(string inFile, string outFile, int format, int format2) => InternalYFAPI.InternalEncodeImage(inFile, outFile, format, format2);
+
+        public static void ParseReanim(string inFile, string outFile, int outformat) => InternalYFAPI.InternalParseReanim(inFile, outFile, outformat);
+
+        public static void ParseTrail(string inFile, string outFile, int outformat) => InternalYFAPI.InternalParseTrail(inFile, outFile, outformat);
+
+        public static void ParseParticles(string inFile, string outFile, int outformat) => InternalYFAPI.InternalParseParticles(inFile, outFile, outformat);
+
+        public static void Reanim(string inFile, string outFile, int informat, int outformat) => InternalYFAPI.InternalReanim(inFile, outFile, informat, outformat);
+
+        public static void Trail(string inFile, string outFile, int informat, int outformat) => InternalYFAPI.InternalTrail(inFile, outFile, informat, outformat);
+
+        public static void Particles(string inFile, string outFile, int informat, int outformat) => InternalYFAPI.InternalParticles(inFile, outFile, informat, outformat);
+
+        public static void DecodeRTON(string inFile, string outFile, int format) => InternalYFAPI.InternalDecodeRTON(inFile, outFile, format);
+
+        public static void EncodeRTON(string inFile, string outFile, int format) => InternalYFAPI.InternalEncodeRTON(inFile, outFile, format);
+
+        public static void Decompress(string inFile, string outFile, int format) => InternalYFAPI.InternalDecompress(inFile, outFile, format);
+
+        public static void Compress(string inFile, string outFile, int format) => InternalYFAPI.InternalCompress(inFile, outFile, format);
+
+        public static bool CutImage(string inFile, string outFolder, string infoFile, string itemName, int format) => InternalYFAPI.InternalCutImage(inFile, outFolder, infoFile, itemName, format);
+
+        public static bool SpliceImage(string inFile, string outFolder, string infoFile, string itemName, int format, int maxWidth = 2048, int maxHeight = 2048) => InternalYFAPI.InternalSpliceImage(inFile, outFolder, infoFile, itemName, format, maxWidth, maxHeight);
+
+        public static void NewDir(string filePath, bool toEnd = true) => InternalYFAPI.InternalNewDir(filePath, toEnd);
+
+        public static string[] GetFiles(string filePath) => InternalYFAPI.InternalGetFiles(filePath);
+
+        public static string GetFileExtension(string fileName) => InternalYFAPI.InternalGetFileExtension(fileName);
+
+        public static string GetFileName(string fileName) => InternalYFAPI.InternalGetFileName(fileName);
+
+        public static string GetFilePath(string fileName) => InternalYFAPI.InternalGetFilePath(fileName);
+
+        public static string GetFileNameWithoutExtension(string fileName) => InternalYFAPI.InternalGetFileNameWithoutExtension(fileName);
+
+        public static int GetVersion() => InternalYFAPI.InternalGetVersion();
+
+        public static int GetSystem() => InternalYFAPI.InternalGetSystem();
+
+        public static int GetLanguage() => InternalYFAPI.InternalGetLanguage();
+
+        public static string FormatPath(string path) => InternalYFAPI.InternalFormatPath(path);
+
+        public static void DoFile(string filepath, params object[] args) => InternalYFAPI.InternalDoFile(filepath, args);
+
+        public static bool DeleteFile(string filePath) => InternalYFAPI.InternalDeleteFile(filePath);
+
+        public static int FileExists(string filePath) => InternalYFAPI.InternalFileExists(filePath);
+
+        public static void Sleep(int ms) => InternalYFAPI.InternalSleep(ms);
+
+        public static string HttpGet(string url) => InternalYFAPI.InternalHttpGet(url);
+
+        public static string GetAnsiName() => InternalYFAPI.InternalGetAnsiName();
+
+
         static IDisposablePool Disposable = new IDisposablePool();
 
-        public static void CloseException() => LuaScript.Script.luavm.ErrorThrow = false;
+        public abstract void InternalLoadTextBox(object o);
 
-        public static void OpenException() => LuaScript.Script.luavm.ErrorThrow = true;
+        public virtual void InternalCloseException() => LuaScript.Script.luavm.ErrorThrow = false;
 
-        public static void ThrowException(string msg) => throw new Exception(msg);
+        public virtual void InternalOpenException() => LuaScript.Script.luavm.ErrorThrow = true;
 
-        public static void DoScript(string script) => LuaScript.Script.Do(script ?? string.Empty);
+        public virtual void InternalThrowException(string msg) => throw new Exception(msg);
 
-        public static void DisposeAll() => Disposable.Dispose();
+        public virtual void InternalDoScript(string script) => LuaScript.Script.Do(script ?? string.Empty);
 
-        public static partial void Print(params object[] os);
+        public virtual void InternalDisposeAll() => Disposable.Dispose();
 
-        public static partial bool? Alert(string text = "", string title = "PopStudio", bool ask = false);
+        public abstract void InternalPrint(params object[] os);
 
-        public static partial string Prompt(string text = "", string title = "PopStudio", string defaulttext = "");
+        public abstract bool? InternalAlert(string text, string title, bool ask);
 
-        public static partial string Sheet(string title = "PopStudio", params string[] items);
+        public abstract string InternalPrompt(string text, string title, string defaulttext);
 
-        public static partial string ChooseFolder();
+        public abstract string InternalSheet(string title, params string[] items);
 
-        public static partial string ChooseOpenFile();
+        public abstract string InternalChooseFolder();
 
-        public static partial string ChooseSaveFile();
+        public abstract string InternalChooseOpenFile();
 
-        public static partial void OpenUrl(string url = "");
+        public abstract string InternalChooseSaveFile();
 
-        public static BinaryStream GetFileStream(string path, int mode) => Disposable.Add(mode switch
+        public abstract void InternalOpenUrl(string url);
+
+        public virtual BinaryStream InternalGetFileStream(string path, int mode) => Disposable.Add(mode switch
         {
             0 => new BinaryStream(path, FileMode.Open),
             1 => new BinaryStream(path, FileMode.Create),
@@ -38,9 +151,9 @@
             _ => throw new Exception(Str.Obj.TypeMisMatch)
         });
 
-        public static BinaryStream GetMemoryStream(byte[] bytes = null) => Disposable.Add(bytes == null ? new BinaryStream() : new BinaryStream(bytes));
+        public virtual BinaryStream InternalGetMemoryStream(byte[] bytes) => Disposable.Add(bytes == null ? new BinaryStream() : new BinaryStream(bytes));
 
-        public static BinaryStream GetHttpStream(string url)
+        public virtual BinaryStream InternalGetHttpStream(string url)
         {
             try
             {
@@ -55,9 +168,9 @@
             }
         }
 
-        public static TempFilePool GetTempFilePool() => Disposable.Add(new TempFilePool());
+        public virtual TempFilePool InternalGetTempFilePool() => Disposable.Add(new TempFilePool());
 
-        public static void Unpack(string inFile, string outFile, int format, bool changeimage = false, bool delete = false)
+        public virtual void InternalUnpack(string inFile, string outFile, int format, bool changeimage, bool delete)
         {
             switch (format)
             {
@@ -69,7 +182,7 @@
             }
         }
 
-        public static void Pack(string inFile, string outFile, int format)
+        public virtual void InternalPack(string inFile, string outFile, int format)
         {
             switch (format)
             {
@@ -81,11 +194,11 @@
             }
         }
 
-        public static void DecodePam(string inFile, string outFile) => PopAnim.PamJson.Decode(inFile, outFile);
+        public virtual void InternalDecodePam(string inFile, string outFile) => PopAnim.PamJson.Decode(inFile, outFile);
 
-        public static void EncodePam(string inFile, string outFile) => PopAnim.PamJson.Encode(inFile, outFile);
+        public virtual void InternalEncodePam(string inFile, string outFile) => PopAnim.PamJson.Encode(inFile, outFile);
 
-        public static void DecodeImage(string inFile, string outFile, int format)
+        public virtual void InternalDecodeImage(string inFile, string outFile, int format)
         {
             switch (format)
             {
@@ -102,7 +215,7 @@
             }
         }
 
-        public static void EncodeImage(string inFile, string outFile, int format, int format2)
+        public virtual void InternalEncodeImage(string inFile, string outFile, int format, int format2)
         {
             switch (format)
             {
@@ -119,7 +232,7 @@
             }
         }
 
-        public static void ParseReanim(string inFile, string outFile, int outformat)
+        public virtual void InternalParseReanim(string inFile, string outFile, int outformat)
         {
             Reanim.Reanim reanim = null;
             for (int i = 0; i < 8; i++)
@@ -161,7 +274,7 @@
             }
         }
 
-        public static void ParseTrail(string inFile, string outFile, int outformat)
+        public virtual void InternalParseTrail(string inFile, string outFile, int outformat)
         {
             Trail.Trail trail = null;
             for (int i = 0; i < 8; i++)
@@ -201,7 +314,7 @@
             }
         }
 
-        public static void ParseParticles(string inFile, string outFile, int outformat)
+        public virtual void InternalParseParticles(string inFile, string outFile, int outformat)
         {
             Particles.Particles particles = null;
             for (int i = 0; i < 8; i++)
@@ -241,7 +354,7 @@
             }
         }
 
-        public static void Reanim(string inFile, string outFile, int informat, int outformat)
+        public virtual void InternalReanim(string inFile, string outFile, int informat, int outformat)
         {
             Reanim.Reanim reanim = informat switch
             {
@@ -270,7 +383,7 @@
             }
         }
 
-        public static void Trail(string inFile, string outFile, int informat, int outformat)
+        public virtual void InternalTrail(string inFile, string outFile, int informat, int outformat)
         {
             Trail.Trail trail = informat switch
             {
@@ -298,7 +411,7 @@
             }
         }
 
-        public static void Particles(string inFile, string outFile, int informat, int outformat)
+        public virtual void InternalParticles(string inFile, string outFile, int informat, int outformat)
         {
             Particles.Particles particles = informat switch
             {
@@ -326,7 +439,7 @@
             }
         }
 
-        public static void DecodeRTON(string inFile, string outFile, int format)
+        public virtual void InternalDecodeRTON(string inFile, string outFile, int format)
         {
             switch (format)
             {
@@ -336,7 +449,7 @@
             }
         }
 
-        public static void EncodeRTON(string inFile, string outFile, int format)
+        public virtual void InternalEncodeRTON(string inFile, string outFile, int format)
         {
             switch (format)
             {
@@ -346,7 +459,7 @@
             }
         }
 
-        public static void Decompress(string inFile, string outFile, int format)
+        public virtual void InternalDecompress(string inFile, string outFile, int format)
         {
             switch (format)
             {
@@ -361,7 +474,7 @@
             }
         }
 
-        public static void Compress(string inFile, string outFile, int format)
+        public virtual void InternalCompress(string inFile, string outFile, int format)
         {
             switch (format)
             {
@@ -376,7 +489,7 @@
             }
         }
 
-        public static bool CutImage(string inFile, string outFolder, string infoFile, string itemName, int format) => format switch
+        public virtual bool InternalCutImage(string inFile, string outFolder, string infoFile, string itemName, int format) => format switch
         {
             0 => Atlas.NewXml.Cut(inFile, outFolder, infoFile, itemName),
             1 => Atlas.OldXml.Cut(inFile, outFolder, infoFile, itemName),
@@ -388,7 +501,7 @@
             _ => throw new Exception(Str.Obj.TypeMisMatch)
         };
 
-        public static bool SpliceImage(string inFile, string outFolder, string infoFile, string itemName, int format, int maxWidth = 2048, int maxHeight = 2048) => format switch
+        public virtual bool InternalSpliceImage(string inFile, string outFolder, string infoFile, string itemName, int format, int maxWidth, int maxHeight) => format switch
         {
             0 => Atlas.NewXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
             1 => Atlas.OldXml.Splice(inFile, outFolder, infoFile, itemName, maxWidth, maxHeight),
@@ -400,27 +513,27 @@
             _ => throw new Exception(Str.Obj.TypeMisMatch)
         };
 
-        public static void NewDir(string filePath, bool toEnd = true) => Dir.NewDir(filePath, toEnd);
+        public virtual void InternalNewDir(string filePath, bool toEnd) => Dir.NewDir(filePath, toEnd);
 
-        public static string[] GetFiles(string filePath) => Dir.GetFiles(Dir.FormatPath(filePath));
+        public virtual string[] InternalGetFiles(string filePath) => Dir.GetFiles(Dir.FormatPath(filePath));
 
-        public static string GetFileExtension(string fileName) => Path.GetExtension(fileName);
+        public virtual string InternalGetFileExtension(string fileName) => Path.GetExtension(fileName);
 
-        public static string GetFileName(string fileName) => Path.GetFileName(Dir.FormatPath(fileName));
+        public virtual string InternalGetFileName(string fileName) => Path.GetFileName(Dir.FormatPath(fileName));
 
-        public static string GetFilePath(string fileName) => Path.GetDirectoryName(Dir.FormatPath(fileName));
+        public virtual string InternalGetFilePath(string fileName) => Path.GetDirectoryName(Dir.FormatPath(fileName));
 
-        public static string GetFileNameWithoutExtension(string fileName) => Path.GetFileNameWithoutExtension(Dir.FormatPath(fileName));
+        public virtual string InternalGetFileNameWithoutExtension(string fileName) => Path.GetFileNameWithoutExtension(Dir.FormatPath(fileName));
 
-        public static int GetVersion() => Const.RAINYVERSION;
+        public virtual int InternalGetVersion() => Const.RAINYVERSION;
 
-        public static int GetSystem() => Const.SYSTEM;
+        public virtual int InternalGetSystem() => Const.SYSTEM;
 
-        public static int GetLanguage() => (int)Setting.AppLanguage;
+        public virtual int InternalGetLanguage() => (int)Setting.AppLanguage;
 
-        public static string FormatPath(string path) => Dir.FormatPath(path);
+        public virtual string InternalFormatPath(string path) => Dir.FormatPath(path);
 
-        public static void DoFile(string filepath, params object[] args)
+        public virtual void InternalDoFile(string filepath, params object[] args)
         {
             string s;
             (LuaScript.Script.luavm.Globals["rainy"] as MoonSharp.Interpreter.Table)["cache"] = args;
@@ -431,9 +544,7 @@
             LuaScript.Script.luavm.DoString(s);
         }
 
-        public static object[] CreateArray(int length) => new object[length];
-
-        public static bool DeleteFile(string filePath)
+        public virtual bool InternalDeleteFile(string filePath)
         {
             if (Directory.Exists(filePath))
             {
@@ -448,11 +559,11 @@
             return false;
         }
 
-        public static int FileExists(string filePath) => (File.Exists(filePath) ? 0b1 : 0b0) | (Directory.Exists(filePath) ? 0b10 : 0b00);
+        public virtual int InternalFileExists(string filePath) => (File.Exists(filePath) ? 0b1 : 0b0) | (Directory.Exists(filePath) ? 0b10 : 0b00);
 
-        public static void Sleep(int ms) => Thread.Sleep(ms);
+        public virtual void InternalSleep(int ms) => Thread.Sleep(ms);
 
-        public static string HttpGet(string url)
+        public virtual string InternalHttpGet(string url)
         {
             try
             {
@@ -464,6 +575,6 @@
             }
         }
 
-        public static string GetAnsiName() => EncodeHelper.ANSI.BodyName;
+        public virtual string InternalGetAnsiName() => EncodeHelper.ANSI.BodyName;
     }
 }

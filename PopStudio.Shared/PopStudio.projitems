@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\CompressFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\DtrzInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Package\Dz\Dz.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\YFAPI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\YFBitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BitStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\IDisposablePool.cs" />
@@ -32,7 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Particles\RawXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\EncodeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LuaScript\Script.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Plugin\API.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\Language.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\Particles.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Particles\ParticlesEmitter.cs" />
@@ -179,8 +179,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailTrackNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BinaryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\Endian.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Platform\" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.Avalonia.Pages
 {
@@ -14,7 +15,7 @@ namespace PopStudio.Avalonia.Pages
             LoadControl();
             LoadFont();
             MAUIStr.OnLanguageChanged += LoadFont;
-            API.box = richtextbox2;
+            API.LoadTextBox(richtextbox2);
         }
 
         ~Control_LuaScript()
@@ -48,7 +49,6 @@ namespace PopStudio.Avalonia.Pages
             Button b = (Button)sender;
             b.IsEnabled = false;
             richtextbox2.Text = string.Empty;
-            API.FirstTime = true;
             string script = richtextbox1.Text;
             new Thread(new ThreadStart(() =>
             {

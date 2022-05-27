@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using PopStudio.Language.Languages;
+using PopStudio.Platform;
 
 namespace PopStudio.WPF.Pages
 {

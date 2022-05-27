@@ -22,7 +22,7 @@ namespace PopStudio.Texture
                             temp = bs.ReadUInt16();
                             if ((i + j) < height && (w + k) < width)
                             {
-                                r = (temp & 0xF000) >> 12;
+                                r = temp >> 12;
                                 g = (temp & 0xF00) >> 8;
                                 b = (temp & 0xF0) >> 4;
                                 a = temp & 0xF;

@@ -18,7 +18,7 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
             LoadFont();
-            API.box = this;
+            API.LoadTextBox(this);
             MAUIStr.OnLanguageChanged += LoadFont;
         }
 
