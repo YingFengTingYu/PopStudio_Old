@@ -34,15 +34,14 @@ namespace PopStudio.Texture
                 newwidth = newheight = Math.Max(newwidth, newheight);
                 t = true;
             }
-            PVRTCEncode.PvrTcPacket[] packets = new PVRTCEncode.PvrTcPacket[(newwidth * newwidth) >> 4];
-            int index = packets.Length;
-            for (int i = 0; i < index; i++)
-            {
-                packets[i] = new PVRTCEncode.PvrTcPacket(bs.ReadUInt64());
-            }
+            byte[] packets = new byte[(newwidth * newwidth) >> 1];
+            bs.Read(packets, 0, packets.Length);
             YFBitmap image = YFBitmap.Create(newwidth, newheight);
             YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
-            PVRTCEncode.Decode4Bpp(packets, newwidth, pixels);
+            fixed (byte* bbb = packets)
+            {
+                PVRTCDecode.PvrtcDecompress(bbb, pixels, (uint)newwidth, (uint)newheight, 4);
+            }
             if (t)
             {
                 YFBitmap image2 = image.Cut(0, 0, width, height);

@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Platform\YFBitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\BitStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\IDisposablePool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Plugin\PVRTCDecode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\SubImageInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\Xnb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Image\Xnb\XnbHead.cs" />

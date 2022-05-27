@@ -2,47 +2,6 @@
 {
     internal unsafe class PVRTCEncode
     {
-		public static void Decode4Bpp(PvrTcPacket[] packets, int width, YFColor* result)
-		{
-			int blocks = width >> 2;
-			int blockMask = blocks - 1;
-			for (int y = 0; y < blocks; y++)
-			{
-				for (int x = 0; x < blocks; x++)
-                {
-					PvrTcPacket packet = packets[GetMortonNumber(x, y)];
-					uint mod = packet.modulationData;
-					byte[] weights = PvrTcPacket.WEIGHTS;
-					int weightindex = packet.usePunchthroughAlpha ? 16 : 0;
-					byte[][] factorfather = PvrTcPacket.BILINEAR_FACTORS;
-					int factorindex = 0;
-					for (int py = 0; py < 4; py++)
-                    {
-						int yOffset = (py < 2) ? -1 : 0;
-						int y0 = (y + yOffset) & blockMask;
-						int y1 = (y0 + 1) & blockMask;
-						for (int px = 0; px < 4; px++)
-                        {
-							byte[] factor = factorfather[factorindex];
-							int xOffset = (px < 2) ? -1 : 0;
-							int x0 = (x + xOffset) & blockMask;
-							int x1 = (x0 + 1) & blockMask;
-							PvrTcPacket p0 = packets[GetMortonNumber(x0, y0)];
-							PvrTcPacket p1 = packets[GetMortonNumber(x1, y0)];
-							PvrTcPacket p2 = packets[GetMortonNumber(x0, y1)];
-							PvrTcPacket p3 = packets[GetMortonNumber(x1, y1)];
-							ColorRGBA ca = p0.GetColorA_ColorRGBA() * factor[0] + p1.GetColorA_ColorRGBA() * factor[1] + p2.GetColorA_ColorRGBA() * factor[2] + p3.GetColorA_ColorRGBA() * factor[3];
-							ColorRGBA cb = p0.GetColorB_ColorRGBA() * factor[0] + p1.GetColorB_ColorRGBA() * factor[1] + p2.GetColorB_ColorRGBA() * factor[2] + p3.GetColorB_ColorRGBA() * factor[3];
-							int index = weightindex + (((int)mod & 0b11) << 2);
-							result[(py + (y << 2)) * width + px + (x << 2)] = new YFColor((byte)((ca.r * weights[index] + cb.r * weights[index + 1]) >> 7), (byte)((ca.g * weights[index] + cb.g * weights[index + 1]) >> 7), (byte)((ca.b * weights[index] + cb.b * weights[index + 1]) >> 7), (byte)((ca.a * weights[index + 2] + cb.a * weights[index + 3]) >> 7));
-							mod >>= 2;
-							factorindex++;
-						}
-					}
-				}
-			}
-		}
-
 		public static PvrTcPacket[] EncodeRGBA4Bpp(YFColor* colors, int width)
 		{
 			int blocks = width >> 2;
@@ -245,7 +204,7 @@
 			0x5540, 0x5541, 0x5544, 0x5545, 0x5550, 0x5551, 0x5554, 0x5555
 		};
 
-		internal class ColorRGBA
+		internal struct ColorRGBA
         {
 			public int r, g, b, a;
 
@@ -291,7 +250,7 @@
 			}
 		}
 
-		internal class ColorRGB
+		internal struct ColorRGB
 		{
 			public int r, g, b;
 
@@ -328,14 +287,13 @@
 			}
 		}
 
-		internal struct PvrTcPacket
+        internal struct PvrTcPacket
 		{
 			public ulong PvrTcWord;
 
             public PvrTcPacket()
             {
 				PvrTcWord = 0;
-
 			}
 
             public PvrTcPacket(ulong PvrTcWord)
@@ -377,46 +335,6 @@
             {
 				get => (PvrTcWord >> 63) == 1;
 				set => PvrTcWord |= (value ? 1ul : 0ul) << 63;
-			}
-
-			public YFColor GetColorA()
-			{
-				int colorA = this.colorA;
-				if (colorAIsOpaque)
-				{
-					int r = colorA >> 9;
-					int g = (colorA >> 4) & 0x1F;
-					int b = colorA & 0xF;
-					return new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 4) | b));
-				}
-				else
-				{
-					int a = (colorA >> 11) & 0x7;
-					int r = (colorA >> 7) & 0xF;
-					int g = (colorA >> 3) & 0xF;
-					int b = colorA & 0x7;
-					return new YFColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 5) | (b << 2) | (b >> 1)), (byte)((a << 5) | (a << 2) | (a >> 1)));
-				}
-			}
-
-			public YFColor GetColorB()
-			{
-				int colorB = this.colorB;
-				if (colorBIsOpaque)
-				{
-					int r = colorB >> 10;
-					int g = (colorB >> 5) & 0x1F;
-					int b = colorB & 0x1F;
-					return new YFColor((byte)((r << 3) | (r >> 2)), (byte)((g << 3) | (g >> 2)), (byte)((b << 3) | (b >> 2)));
-				}
-				else
-				{
-					int a = (colorB >> 12) & 0x7;
-					int r = (colorB >> 8) & 0xF;
-					int g = (colorB >> 4) & 0xF;
-					int b = colorB & 0xF;
-					return new YFColor((byte)((r << 4) | r), (byte)((g << 4) | g), (byte)((b << 4) | b), (byte)((a << 5) | (a << 2) | (a >> 1)));
-				}
 			}
 
 			public ColorRGBA GetColorA_ColorRGBA()
