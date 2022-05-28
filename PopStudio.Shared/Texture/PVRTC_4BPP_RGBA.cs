@@ -89,6 +89,12 @@ namespace PopStudio.Texture
                 image = image2;
             }
             YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
+            //byte[] packets = new byte[(newwidth * newwidth) >> 1];
+            //fixed (byte* bbb = packets)
+            //{
+            //    PVRTCDecode.Encode_RGBA_4BPP(pixels, bbb, (uint)newwidth, (uint)newheight);
+            //}
+            //bs.Write(packets, 0, packets.Length);
             PVRTCEncode.PvrTcPacket[] words = PVRTCEncode.EncodeRGBA4Bpp(pixels, newwidth);
             int index = words.Length;
             for (int i = 0; i < index; i++)

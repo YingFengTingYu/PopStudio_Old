@@ -8,8 +8,8 @@
 		Height="580"
 		MinWidth="350"
 		MinHeight="540"
-		Icon="avares://PopStudio.Avalonia/Assets/Images/icon.png"
         Title="PopStudio">
+		<!--ICON使用NativeAOT会报错，暂时不设置-->
 	<Grid>
 		<Grid x:Name="LoadingGrid" Background="SkyBlue" ZIndex="4">
 			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

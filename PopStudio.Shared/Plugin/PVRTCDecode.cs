@@ -459,6 +459,14 @@
             return (uint)((word + numWords) % numWords);
         }
 
+        /// <summary>
+        /// Get Morton Number by Position and Size
+        /// </summary>
+        /// <param name="XSize"></param>
+        /// <param name="YSize"></param>
+        /// <param name="XPos"></param>
+        /// <param name="YPos"></param>
+        /// <returns></returns>
         static uint TwiddleUV(uint XSize, uint YSize, uint XPos, uint YPos)
         {
             uint MinDimension = XSize;
@@ -525,59 +533,292 @@
             int NumXWords = (int)(Width / WordWidth);
             int NumYWords = (int)(Height / WordHeight);
             PVRTCWordIndices indices;
-            YFColor[] pPixels = new YFColor[WordWidth * WordHeight];
+            YFColor* pPixels = stackalloc YFColor[(int)(WordWidth * WordHeight)];
             uint* WordOffsets = stackalloc uint[4];
-            fixed (YFColor* ppp = pPixels)
+            //Alloc Memory
+            int* backup = stackalloc int[16 * 8 * 2];
+            int** ModulationValues = stackalloc int*[16];
+            for (int i = 0; i < 16; i++)
             {
-                //Alloc Memory
-                int* backup = stackalloc int[16 * 8 * 2];
-                int** ModulationValues = stackalloc int*[16];
-                for (int i = 0; i < 16; i++)
+                ModulationValues[i] = backup;
+                backup += 8;
+            }
+            int** ModulationModes = stackalloc int*[16];
+            for (int i = 0; i < 16; i++)
+            {
+                ModulationModes[i] = backup;
+                backup += 8;
+            }
+            Pixel128S* upscaledColorA = stackalloc Pixel128S[32];
+            Pixel128S* upscaledColorB = stackalloc Pixel128S[32];
+            //Decompress
+            for (int wordY = -1; wordY < NumYWords - 1; wordY++)
+            {
+                for (int wordX = -1; wordX < NumXWords - 1; wordX++)
                 {
-                    ModulationValues[i] = backup;
-                    backup += 8;
-                }
-                int** ModulationModes = stackalloc int*[16];
-                for (int i = 0; i < 16; i++)
-                {
-                    ModulationModes[i] = backup;
-                    backup += 8;
-                }
-                Pixel128S* upscaledColorA = stackalloc Pixel128S[32];
-                Pixel128S* upscaledColorB = stackalloc Pixel128S[32];
-                //Decompress
-                for (int wordY = -1; wordY < NumYWords - 1; wordY++)
-                {
-                    for (int wordX = -1; wordX < NumXWords - 1; wordX++)
-                    {
-                        indices.P[0] = (int)WrapWordIndex((uint)NumXWords, wordX);
-                        indices.P[1] = (int)WrapWordIndex((uint)NumYWords, wordY);
-                        indices.Q[0] = (int)WrapWordIndex((uint)NumXWords, wordX + 1);
-                        indices.Q[1] = (int)WrapWordIndex((uint)NumYWords, wordY);
-                        indices.R[0] = (int)WrapWordIndex((uint)NumXWords, wordX);
-                        indices.R[1] = (int)WrapWordIndex((uint)NumYWords, wordY + 1);
-                        indices.S[0] = (int)WrapWordIndex((uint)NumXWords, wordX + 1);
-                        indices.S[1] = (int)WrapWordIndex((uint)NumYWords, wordY + 1);
-                        WordOffsets[0] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.P[0], (uint)indices.P[1]) << 1;
-                        WordOffsets[1] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.Q[0], (uint)indices.Q[1]) << 1;
-                        WordOffsets[2] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.R[0], (uint)indices.R[1]) << 1;
-                        WordOffsets[3] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.S[0], (uint)indices.S[1]) << 1;
-                        PVRTCWord P, Q, R, S;
-                        P.ColorData = pWordMembers[WordOffsets[0] + 1];
-                        P.ModulationData = pWordMembers[WordOffsets[0]];
-                        Q.ColorData = pWordMembers[WordOffsets[1] + 1];
-                        Q.ModulationData = pWordMembers[WordOffsets[1]];
-                        R.ColorData = pWordMembers[WordOffsets[2] + 1];
-                        R.ModulationData = pWordMembers[WordOffsets[2]];
-                        S.ColorData = pWordMembers[WordOffsets[3] + 1];
-                        S.ModulationData = pWordMembers[WordOffsets[3]];
-                        PvrtcGetDecompressedPixels(P, Q, R, S, ppp, bpp, ModulationValues, ModulationModes, upscaledColorA, upscaledColorB);
-                        MapDecompressedData(pDecompressedData, (int)Width, ppp, indices, bpp);
-                    }
+                    indices.P[0] = (int)WrapWordIndex((uint)NumXWords, wordX);
+                    indices.P[1] = (int)WrapWordIndex((uint)NumYWords, wordY);
+                    indices.Q[0] = (int)WrapWordIndex((uint)NumXWords, wordX + 1);
+                    indices.Q[1] = (int)WrapWordIndex((uint)NumYWords, wordY);
+                    indices.R[0] = (int)WrapWordIndex((uint)NumXWords, wordX);
+                    indices.R[1] = (int)WrapWordIndex((uint)NumYWords, wordY + 1);
+                    indices.S[0] = (int)WrapWordIndex((uint)NumXWords, wordX + 1);
+                    indices.S[1] = (int)WrapWordIndex((uint)NumYWords, wordY + 1);
+                    WordOffsets[0] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.P[0], (uint)indices.P[1]) << 1;
+                    WordOffsets[1] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.Q[0], (uint)indices.Q[1]) << 1;
+                    WordOffsets[2] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.R[0], (uint)indices.R[1]) << 1;
+                    WordOffsets[3] = TwiddleUV((uint)NumXWords, (uint)NumYWords, (uint)indices.S[0], (uint)indices.S[1]) << 1;
+                    PVRTCWord P, Q, R, S;
+                    P.ColorData = pWordMembers[WordOffsets[0] + 1];
+                    P.ModulationData = pWordMembers[WordOffsets[0]];
+                    Q.ColorData = pWordMembers[WordOffsets[1] + 1];
+                    Q.ModulationData = pWordMembers[WordOffsets[1]];
+                    R.ColorData = pWordMembers[WordOffsets[2] + 1];
+                    R.ModulationData = pWordMembers[WordOffsets[2]];
+                    S.ColorData = pWordMembers[WordOffsets[3] + 1];
+                    S.ModulationData = pWordMembers[WordOffsets[3]];
+                    PvrtcGetDecompressedPixels(P, Q, R, S, pPixels, bpp, ModulationValues, ModulationModes, upscaledColorA, upscaledColorB);
+                    MapDecompressedData(pDecompressedData, (int)Width, pPixels, indices, bpp);
                 }
             }
         }
 
         //I'm trying to write PVRTC Encode by myself...
+        //But there're some bugs I can't find.
+        //
+        //public static void Encode_RGBA_4BPP(YFColor* pDecompressedData, byte* pCompressedData, uint Width, uint Height)
+        //{
+        //    uint* pWordMembers = (uint*)pCompressedData;
+        //    uint NumXWords = (Width >> 2);
+        //    uint NumYWords = (Height >> 2);
+        //    //First, we need to get all min max colors
+        //    for (uint y = 0; y < NumYWords; y++)
+        //    {
+        //        for (uint x = 0; x < NumXWords; x++)
+        //        {
+        //            CalculateBoundingBoxToPVRTCWord(pDecompressedData, (int)Width, (int)x, (int)y, (PVRTCWord*)pWordMembers + TwiddleUV(Width, Height, x, y));
+        //        }
+        //    }
+        //    //Then we need to get each color's index
+        //    PVRTCWordIndices indices;
+        //    YFColor* pPixels = stackalloc YFColor[16];
+        //    uint* WordOffsets = stackalloc uint[4];
+        //    //Alloc Memory
+        //    Pixel128S* upscaledColorA = stackalloc Pixel128S[16];
+        //    Pixel128S* upscaledColorB = stackalloc Pixel128S[16];
+        //    //Decompress
+        //    for (int wordY = -1; wordY < NumYWords - 1; wordY++)
+        //    {
+        //        for (int wordX = -1; wordX < NumXWords - 1; wordX++)
+        //        {
+        //            indices.P[0] = (int)WrapWordIndex(NumXWords, wordX);
+        //            indices.P[1] = (int)WrapWordIndex(NumYWords, wordY);
+        //            indices.Q[0] = (int)WrapWordIndex(NumXWords, wordX + 1);
+        //            indices.Q[1] = (int)WrapWordIndex(NumYWords, wordY);
+        //            indices.R[0] = (int)WrapWordIndex(NumXWords, wordX);
+        //            indices.R[1] = (int)WrapWordIndex(NumYWords, wordY + 1);
+        //            indices.S[0] = (int)WrapWordIndex(NumXWords, wordX + 1);
+        //            indices.S[1] = (int)WrapWordIndex(NumYWords, wordY + 1);
+        //            //System.Windows.Forms.MessageBox.Show($"P({indices.P[0]},{indices.P[1]}),Q({indices.Q[0]},{indices.Q[1]}),R({indices.R[0]},{indices.R[1]}),S({indices.S[0]},{indices.S[1]})");
+        //            WordOffsets[0] = TwiddleUV(NumXWords, NumYWords, (uint)indices.P[0], (uint)indices.P[1]) << 1;
+        //            WordOffsets[1] = TwiddleUV(NumXWords, NumYWords, (uint)indices.Q[0], (uint)indices.Q[1]) << 1;
+        //            WordOffsets[2] = TwiddleUV(NumXWords, NumYWords, (uint)indices.R[0], (uint)indices.R[1]) << 1;
+        //            WordOffsets[3] = TwiddleUV(NumXWords, NumYWords, (uint)indices.S[0], (uint)indices.S[1]) << 1;
+        //            CopyDecompressedData(pDecompressedData, (int)Width, pPixels, indices);
+        //            SetModulationValues((PVRTCWord*)&pWordMembers[WordOffsets[0]], (PVRTCWord*)&pWordMembers[WordOffsets[1]], (PVRTCWord*)&pWordMembers[WordOffsets[2]], (PVRTCWord*)&pWordMembers[WordOffsets[3]], pPixels, upscaledColorA, upscaledColorB);
+        //        }
+        //    }
+        //}
+
+        //static void CopyDecompressedData(YFColor* pWord, int width, YFColor* pOutput, PVRTCWordIndices words)
+        //{
+        //    for (uint y = 0; y < 2; y++)
+        //    {
+        //        for (uint x = 0; x < 2; x++)
+        //        {
+        //            pOutput[y * 4 + x] = pWord[((words.P[1] * 4) + y + 2) * width + words.P[0] * 4 + x + 2];
+        //            pOutput[y * 4 + x + 2] = pWord[((words.Q[1] * 4) + y + 2) * width + words.Q[0] * 4 + x];
+        //            pOutput[(y + 2) * 4 + x] = pWord[((words.R[1] * 4) + y) * width + words.R[0] * 4 + x + 2];
+        //            pOutput[(y + 2) * 4 + x + 2] = pWord[((words.S[1] * 4) + y) * width + words.S[0] * 4 + x];
+        //        }
+        //    }
+        //}
+
+        //static int[] SeparateIndex = { 0, 3, 5, 8 };
+
+        //static void SetModulationValues(PVRTCWord* P, PVRTCWord* Q, PVRTCWord* R, PVRTCWord* S, YFColor* pColorData, Pixel128S* upscaledColorA, Pixel128S* upscaledColorB)
+        //{
+        //    InterpolateColors(GetColorA(P->ColorData), GetColorA(Q->ColorData), GetColorA(R->ColorData), GetColorA(S->ColorData), upscaledColorA, 4);
+        //    InterpolateColors(GetColorB(P->ColorData), GetColorB(Q->ColorData), GetColorB(R->ColorData), GetColorB(S->ColorData), upscaledColorB, 4);
+        //    uint index;
+        //    for (int y = 0; y < 2; y++)
+        //    {
+        //        for (int x = 0; x < 2; x++)
+        //        {
+        //            index = GetSimpleDistanceCode(upscaledColorA[y * 4 + x], upscaledColorB[y * 4 + x], 0, pColorData[y * 4 + x]);
+        //            P->ModulationData |= (uint)index << ((y * 4 + x + 10) << 1);
+
+        //            index = GetSimpleDistanceCode(upscaledColorA[y * 4 + x + 2], upscaledColorB[y * 4 + x + 2], 0, pColorData[y * 4 + x + 2]);
+        //            Q->ModulationData |= (uint)index << ((y * 4 + x + 8) << 1);
+
+        //            index = GetSimpleDistanceCode(upscaledColorA[y * 4 + x + 8], upscaledColorB[y * 4 + x + 8], 0, pColorData[y * 4 + x + 8]);
+        //            R->ModulationData |= (uint)index << ((y * 4 + x + 2) << 1);
+
+        //            index = GetSimpleDistanceCode(upscaledColorA[y * 4 + x + 10], upscaledColorB[y * 4 + x + 10], 0, pColorData[y * 4 + x + 10]);
+        //            S->ModulationData |= (uint)index << ((y * 4 + x) << 1);
+        //        }
+        //    }
+                    
+                    
+
+        //    //        for (int y = 0; y < 4; y++)
+        //    //{
+        //    //    for (int x = 0; x < 4; x++)
+        //    //    {
+        //    //        //Check which mode is suit
+        //    //        //int minDistance = int.MaxValue;
+        //    //        uint index = 0;
+        //    //        //for (int i = 0; i < 4; i++)
+        //    //        //{
+        //    //        //    int distance = GetAbsDistance(upscaledColorA[(y << 2) | x], upscaledColorB[(y << 2) | x], SeparateIndex[i], pColorData[(y << 2) | x]);
+        //    //        //    if (distance < minDistance)
+        //    //        //    {
+        //    //        //        index = i;
+        //    //        //        minDistance = distance;
+        //    //        //    }
+        //    //        //}
+        //    //        index = GetSimpleDistanceCode(upscaledColorA[(y << 2) | x], upscaledColorB[(y << 2) | x], 0, pColorData[(y << 2) | x]);
+        //    //        if (x < 2)
+        //    //        {
+        //    //            if (y < 2)
+        //    //            {
+        //    //                // P
+        //    //                // 10 11 14 15
+
+        //    //                P->ModulationData |= (uint)index << ((10 + 4 * y + x) << 1);
+        //    //            }
+        //    //            else
+        //    //            {
+        //    //                // R
+        //    //                // 8 9 12 13
+        //    //                R->ModulationData |= (uint)index << ((4 * y + x) << 1);
+        //    //            }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            if (y < 2)
+        //    //            {
+        //    //                // Q
+        //    //                // 2 3 6 7
+        //    //                Q->ModulationData |= (uint)index << ((4 * y + x) << 1);
+        //    //            }
+        //    //            else
+        //    //            {
+        //    //                // S
+        //    //                //0 1 4 5
+        //    //                S->ModulationData |= (uint)index << ((-10 + 4 * y + x) << 1);
+        //    //            }
+        //    //        }
+        //    //    }
+        //    //}
+        //}
+
+        //static uint GetSimpleDistanceCode(Pixel128S colorA, Pixel128S colorB, int separate, YFColor color)
+        //{
+        //    Pixel128S colorN = new Pixel128S
+        //    {
+        //        red = color.Red,
+        //        green = color.Green,
+        //        blue = color.Blue,
+        //        alpha = color.Alpha
+        //    };
+        //    Pixel128S d = delta(colorB, colorA);
+        //    Pixel128S v = delta(colorN, colorA);
+        //    int projection = distance(v, d) << 4;
+        //    int lengthSquared = distance(d, d);
+        //    uint ans = 0;
+        //    if (projection > 3 * lengthSquared) ans++;
+        //    if (projection > 8 * lengthSquared) ans++;
+        //    if (projection > 13 * lengthSquared) ans++;
+        //    return ans;
+        //}
+
+        //static Pixel128S delta(Pixel128S a, Pixel128S b)
+        //{
+        //    return new Pixel128S
+        //    {
+        //        red = a.red - b.red,
+        //        green = a.green - b.green,
+        //        blue = a.blue - b.blue,
+        //        alpha = a.alpha - b.alpha
+        //    };
+        //}
+
+        //static int distance(Pixel128S a, Pixel128S b)
+        //{
+        //    return a.red * b.red + a.green * b.green + a.blue * b.blue + a.alpha * b.alpha;
+        //}
+
+        //static int GetAbsDistance(Pixel128S colorA, Pixel128S colorB, int separate, YFColor color)
+        //{
+        //    return abs(colorA.red * (8 - separate) + colorB.red * separate - color.Red * 8) + abs(colorA.green * (8 - separate) + colorB.green * separate - color.Green * 8) + abs(colorA.blue * (8 - separate) + colorB.blue * separate - color.Blue * 8) + abs(colorA.alpha * (8 - separate) + colorB.alpha * separate - color.Alpha * 8);
+        //}
+
+        //static int abs(int v)
+        //{
+        //    if (v < 0) return -v;
+        //    return v;
+        //}
+
+        //static void CalculateBoundingBoxToPVRTCWord(YFColor* colors, int width, int blockX, int blockY, PVRTCWord* outData)
+        //{
+        //    //same as DXT
+        //    byte maxr = 0, maxg = 0, maxb = 0, maxa = 0;
+        //    byte minr = 255, ming = 255, minb = 255, mina = 255;
+        //    int beginindex = (blockY << 2) * width + (blockX << 2);
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        int nindex = beginindex + i * width;
+        //        for (int j = 0; j < 4; j++)
+        //        {
+        //            int index = nindex + j;
+        //            byte temp;
+        //            temp = colors[index].Red;
+        //            if (temp > maxr) maxr = temp;
+        //            if (temp < minr) minr = temp;
+        //            temp = colors[index].Green;
+        //            if (temp > maxg) maxg = temp;
+        //            if (temp < ming) ming = temp;
+        //            temp = colors[index].Blue;
+        //            if (temp > maxb) maxb = temp;
+        //            if (temp < minb) minb = temp;
+        //            temp = colors[index].Alpha;
+        //            if (temp > maxa) maxa = temp;
+        //            if (temp < mina) mina = temp;
+        //        }
+        //    }
+        //    //Color A is min, Color B is max
+        //    int a;
+        //    int colorA, colorB;
+        //    a = mina >> 5;
+        //    if (a == 0x7)
+        //    {
+        //        colorA = 0b100000000000000 | ((minr >> 3) << 9) | ((ming >> 3) << 4) | (minb >> 4);
+        //    }
+        //    else
+        //    {
+        //        colorA = a << 11 | ((minr >> 4) << 7) | ((ming >> 4) << 3) | (minb >> 5);
+        //    }
+        //    a = maxa >> 5;
+        //    if (a == 0x7)
+        //    {
+        //        colorB = 0b1000000000000000 | ((maxr >> 3) << 10) | ((maxg >> 3) << 5) | (maxb >> 3);
+        //    }
+        //    else
+        //    {
+        //        colorB = a << 12 | (maxr >> 4) << 8 | (maxg >> 4) << 4 | (maxb >> 4);
+        //    }
+        //    outData->ColorData = ((uint)colorB << 16) | ((uint)colorA << 1);
+        //}
     }
 }
