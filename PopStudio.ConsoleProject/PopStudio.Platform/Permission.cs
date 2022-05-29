@@ -7,15 +7,17 @@ namespace PopStudio.Platform
     {
         public static void OpenUrl(string url)
         {
-#if LINUX
+#if LINUXCONSOLE
             Process.Start("xdg-open", url);
-#elif MACOS
+#elif MACOSCONSOLE
             Process.Start("open", url);
 #else
             Process.Start(new ProcessStartInfo(url.Replace("&", "^&")) { UseShellExecute = true });
 #endif
         }
 
-        public static string GetSettingPath() => "setting.xml";
+        static string InternalPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "setting.xml");
+
+        public static string GetSettingPath() => InternalPath;
     }
 }
