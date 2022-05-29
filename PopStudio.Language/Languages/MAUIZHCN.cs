@@ -203,7 +203,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.优化界面相关内容；\n2.更改rsb解包生成数据以支持不同压缩方式；\n3.取消带界面版本程序的命令行支持，改为发布命令行版程序。";
+        public string HomePage_AppNewNotice => "1.优化界面相关内容；\n2.更改rsb解包生成数据以支持不同压缩方式和特殊Pool段；\n3.启用Native AOT以提升运行速度；\n4.取消带界面版本程序的命令行支持，改为发布命令行版程序。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

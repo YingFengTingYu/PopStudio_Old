@@ -16,7 +16,7 @@
 		<Assembly Name="Avalonia.Visuals" Dynamic="Required All">
 			<Type Name="Avalonia.Media.SolidColorBrush" Dynamic="Required All" />
 		</Assembly>
-		<Assembly Name="SkiaSharp" Dynamic="Required All"></Assembly>
+		<!--<Assembly Name="SkiaSharp" Dynamic="Required All" />-->
 
 		<!-- To support Fluent themes trimming the final assembly we need to add this entry -->
 		<Assembly Name="Avalonia.Themes.Fluent" Dynamic="Required All" />

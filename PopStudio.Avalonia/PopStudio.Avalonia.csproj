@@ -58,15 +58,11 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-x64'">
 		<RdXmlFile Include="rd.xml" />
-		<DirectPInvoke Include="libHarfBuzzSharp" />
-		<DirectPInvoke Include="libSkiaSharp" />
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-arm64'">
 		<RdXmlFile Include="rd.xml" />
-		<DirectPInvoke Include="libHarfBuzzSharp" />
-		<DirectPInvoke Include="libSkiaSharp" />
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-arm64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
