@@ -5,7 +5,7 @@
         public string ID;
         public int offset;
         public int size;
-        public int index;
+        public int pool_Index; //AutoPool index
         public int flags = 0b1;
         public int fileOffset;
         public int part0_Offset;
@@ -23,7 +23,7 @@
             bs.WriteString(ID, 0x80);
             bs.WriteInt32(offset);
             bs.WriteInt32(size);
-            bs.WriteInt32(index);
+            bs.WriteInt32(pool_Index);
             bs.WriteInt32(flags);
             bs.WriteInt32(fileOffset);
             bs.WriteInt32(part0_Offset);
@@ -47,7 +47,7 @@
             ID = bs.ReadString(0x80).Replace("\0", "");
             offset = bs.ReadInt32();
             size = bs.ReadInt32();
-            index = bs.ReadInt32();
+            pool_Index = bs.ReadInt32();
             flags = bs.ReadInt32();
             fileOffset = bs.ReadInt32();
             part0_Offset = bs.ReadInt32();

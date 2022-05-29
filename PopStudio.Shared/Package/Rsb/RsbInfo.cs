@@ -17,6 +17,7 @@
             head = new RsbHeadInfo().Read(bs);
             compositeInfo = new RsbCompositeInfo[head.composite_Number];
             rsgpInfo = new RsbRsgpInfo[head.rsgp_Number];
+            autopoolInfo = new RsbAutoPoolInfo[head.autopool_Number];
             ptxInfo = new RsbPtxInfo[head.ptx_Number];
             rsgp = new RsgpInfo[head.rsgp_Number];
             bs.Position = head.compositeInfo_BeginOffset;
@@ -28,6 +29,11 @@
             for (int i = 0; i < rsgpInfo.Length; i++)
             {
                 rsgpInfo[i] = new RsbRsgpInfo().Read(bs);
+            }
+            bs.Position = head.autopoolInfo_BeginOffset;
+            for (int i = 0; i < autopoolInfo.Length; i++)
+            {
+                autopoolInfo[i] = new RsbAutoPoolInfo().Read(bs);
             }
             bs.Position = head.ptxInfo_BeginOffset;
             for (int i = 0; i < ptxInfo.Length; i++)

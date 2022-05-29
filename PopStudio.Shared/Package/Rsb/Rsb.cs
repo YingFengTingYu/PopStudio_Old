@@ -26,6 +26,7 @@ namespace PopStudio.Package.Rsb
             bool compressPart1 = true;
             int ptxEachLength = 0x10;
             bool smf = false;
+            bool usePoolXml = false;
             CompressionLevel level = CompressionLevel.Optimal;
             string xmldata;
             XmlDocument xml;
@@ -73,6 +74,10 @@ namespace PopStudio.Package.Rsb
                             _ => CompressionLevel.Optimal
                         };
                     }
+                    else if (child.Name == "SpecialPool")
+                    {
+                        usePoolXml = Convert.ToBoolean(child.InnerText);
+                    }
                 }
             }
             byte emptyfilecompresshead = level switch
@@ -85,190 +90,405 @@ namespace PopStudio.Package.Rsb
             using BinaryStream bs_rsgpfile = new BinaryStream(tempFilePool.Add(), FileMode.Create);
             bs_rsgpfile.Endian = endian;
             rsb.head.version = version;
-            xmldata = File.ReadAllText(studioPath + "RESOURCESGROUP.XML");
-            xml = new XmlDocument();
-            xml.LoadXml(xmldata);
-            root = xml.SelectSingleNode("/ResourcesGroupInfo");
-            childlist = root.ChildNodes;
-            if (childlist == null) return;
-            rsb.head.rsgp_Number = childlist.Count;
-            rsb.rsgpInfo = new RsbRsgpInfo[childlist.Count];
-            rsb.rsgp = new RsgpInfo[childlist.Count];
-            rsb.head.autopool_Number = childlist.Count;
-            rsb.autopoolInfo = new RsbAutoPoolInfo[childlist.Count];
             int ptxNumber = 0;
             List<RsbPtxInfo> ptxList = new List<RsbPtxInfo>();
-            int f_global = 0;
-            if (compressPart0)
+            if (usePoolXml)
             {
-                f_global |= 0b10;
-            }
-            if (compressPart1)
-            {
-                f_global |= 0b1;
-            }
-            for (int i = 0; i < childlist.Count; i++)
-            {
-                long off = bs_rsgpfile.Position;
-                int thisPtxNumber = 0;
-                var rsgpinfo = rsb.rsgpInfo[i] = new RsbRsgpInfo();
-                int f;
-                string tpstring = childlist[i].Attributes["compressmethod"]?.Value;
-                if (tpstring == null)
+                #region Use Special Pool
+                xmldata = File.ReadAllText(studioPath + "POOL.XML");
+                xml = new XmlDocument();
+                xml.LoadXml(xmldata);
+                root = xml.SelectSingleNode("/PoolInfo");
+                childlist = root.ChildNodes;
+                if (childlist == null) return;
+                rsb.autopoolInfo = new RsbAutoPoolInfo[childlist.Count];
+                rsb.head.autopool_Number = childlist.Count;
+                for (int i = 0; i < childlist.Count; i++)
                 {
-                    f = f_global;
+                    var pool = new RsbAutoPoolInfo();
+                    pool.ID = childlist[i].Attributes["id"]?.Value;
+                    pool.type = Convert.ToInt32(childlist[i].Attributes["type"]?.Value);
+                    pool.part1_MaxOffset_InDecompress = 0;
+                    pool.part1_MaxSize = 0;
+                    rsb.autopoolInfo[i] = pool;
                 }
-                else
+                xmldata = File.ReadAllText(studioPath + "RESOURCESGROUP.XML");
+                xml = new XmlDocument();
+                xml.LoadXml(xmldata);
+                root = xml.SelectSingleNode("/ResourcesGroupInfo");
+                childlist = root.ChildNodes;
+                if (childlist == null) return;
+                rsb.head.rsgp_Number = childlist.Count;
+                rsb.rsgpInfo = new RsbRsgpInfo[childlist.Count];
+                rsb.rsgp = new RsgpInfo[childlist.Count];
+                int f_global = 0;
+                if (compressPart0)
                 {
-                    f = Convert.ToInt32(tpstring);
+                    f_global |= 0b10;
                 }
-                compressPart0 = (f & 0b10) != 0;
-                compressPart1 = (f & 0b01) != 0;
-                rsgpinfo.ID = childlist[i].Attributes["id"].Value;
-                rsgpinfo.index = i;
-                rsgpinfo.flags = f;
-                rsgpinfo.offset = (int)off;
-                var autopool = rsb.autopoolInfo[i] = new RsbAutoPoolInfo();
-                autopool.ID = rsgpinfo.ID + autopoolname;
-                var rsgp = rsb.rsgp[i] = new RsgpInfo();
-                rsgp.head = new RsgpHeadInfo();
-                rsgp.head.flags = f;
-                rsgp.head.version = version;
-                rsb.rsgpInfo[i].ptx_BeforeNumber = ptxNumber;
-                rsb.rsgpList.Add(new CompressString(rsgpinfo.ID.ToUpper(), new RsbExtraInfo(i)));
-                using (BinaryStream bsP0over = new BinaryStream())
+                if (compressPart1)
                 {
-                    using (BinaryStream bsP1over = new BinaryStream())
+                    f_global |= 0b1;
+                }
+                for (int i = 0; i < childlist.Count; i++)
+                {
+                    long off = bs_rsgpfile.Position;
+                    int thisPtxNumber = 0;
+                    var rsgpinfo = rsb.rsgpInfo[i] = new RsbRsgpInfo();
+                    int f;
+                    string tpstring = childlist[i].Attributes["compressmethod"]?.Value;
+                    if (tpstring == null)
                     {
-                        using (BinaryStream bsP0 = new BinaryStream())
+                        f = f_global;
+                    }
+                    else
+                    {
+                        f = Convert.ToInt32(tpstring);
+                    }
+                    compressPart0 = (f & 0b10) != 0;
+                    compressPart1 = (f & 0b01) != 0;
+                    rsgpinfo.ID = childlist[i].Attributes["id"].Value;
+                    rsgpinfo.pool_Index = Convert.ToInt32(childlist[i].Attributes["poolindex"]?.Value ?? i.ToString());
+                    rsgpinfo.flags = f;
+                    rsgpinfo.offset = (int)off;
+                    var autopool = rsb.autopoolInfo[rsgpinfo.pool_Index];
+                    var rsgp = rsb.rsgp[i] = new RsgpInfo();
+                    rsgp.head = new RsgpHeadInfo();
+                    rsgp.head.flags = f;
+                    rsgp.head.version = version;
+                    rsb.rsgpInfo[i].ptx_BeforeNumber = ptxNumber;
+                    rsb.rsgpList.Add(new CompressString(rsgpinfo.ID.ToUpper(), new RsbExtraInfo(i)));
+                    using (BinaryStream bsP0over = new BinaryStream())
+                    {
+                        using (BinaryStream bsP1over = new BinaryStream())
                         {
-                            using (BinaryStream bsP1 = new BinaryStream())
+                            using (BinaryStream bsP0 = new BinaryStream())
                             {
-                                var childchildlist = childlist[i].ChildNodes;
-                                for (int j = 0; j < childchildlist.Count; j++)
+                                using (BinaryStream bsP1 = new BinaryStream())
                                 {
-                                    string fileid = childchildlist[j].Attributes["id"].Value;
-                                    rsb.fileList.Add(new CompressString(fileid, new RsbExtraInfo(i)));
-                                    if (childchildlist[j].Name == "Img")
+                                    var childchildlist = childlist[i].ChildNodes;
+                                    for (int j = 0; j < childchildlist.Count; j++)
                                     {
-                                        //p1
-                                        var ptx = new RsbPtxInfo(ptxEachLength);
-                                        string name = Dir.FormatPath(inFolder + fileid);
-                                        bool delete = false;
-                                        if (!File.Exists(name))
+                                        string fileid = childchildlist[j].Attributes["id"].Value;
+                                        rsb.fileList.Add(new CompressString(fileid, new RsbExtraInfo(i)));
+                                        if (childchildlist[j].Name == "Img")
                                         {
-                                            string name2 = Path.ChangeExtension(name, ".PNG");
-                                            if (File.Exists(name2))
+                                            //p1
+                                            var ptx = new RsbPtxInfo(ptxEachLength);
+                                            string name = Dir.FormatPath(inFolder + fileid);
+                                            bool delete = false;
+                                            if (!File.Exists(name))
                                             {
-                                                Image.Ptx.PtxFormat format = (Image.Ptx.PtxFormat)Convert.ToInt32(childchildlist[j].Attributes["defaultformat"].Value);
-                                                Image.Ptx.Ptx.Encode(name2, name, format, bs_rsgpfile.Endian, ptxEachLength != 0x10);
-                                                delete = true;
+                                                string name2 = Path.ChangeExtension(name, ".PNG");
+                                                if (File.Exists(name2))
+                                                {
+                                                    Image.Ptx.PtxFormat format = (Image.Ptx.PtxFormat)Convert.ToInt32(childchildlist[j].Attributes["defaultformat"].Value);
+                                                    Image.Ptx.Ptx.Encode(name2, name, format, bs_rsgpfile.Endian, ptxEachLength != 0x10);
+                                                    delete = true;
+                                                }
+                                            }
+                                            using (BinaryStream bsindexunknow = BinaryStream.Open(name))
+                                            {
+                                                bsindexunknow.Endian = endian;
+                                                bsindexunknow.IdInt32(1886681137);
+                                                bsindexunknow.IdInt32(1);
+                                                ptx.width = bsindexunknow.ReadInt32();
+                                                ptx.height = bsindexunknow.ReadInt32();
+                                                ptx.check = bsindexunknow.ReadInt32();
+                                                ptx.format = bsindexunknow.ReadInt32();
+                                                ptx.alphaSize = bsindexunknow.ReadInt32();
+                                                ptx.alphaFormat = bsindexunknow.ReadInt32();
+                                                rsgp.fileList.Add(new CompressString(fileid, new RsgpPart1ExtraInfo((int)bsP1.Position, (int)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
+                                                bsindexunknow.CopyTo(bsP1);
+                                                bsP1.Length = FourK(bsP1.Position);
+                                                bsP1.Position = bsP1.Length;
+                                            }
+                                            ptxList.Add(ptx);
+                                            if (delete) File.Delete(name);
+                                        }
+                                        else
+                                        {
+                                            //p0
+                                            using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value)))
+                                            {
+                                                rsgp.fileList.Add(new CompressString(fileid, new RsgpPart0ExtraInfo((int)bsP0.Position, (int)bsindexunknow.Length)));
+                                                bsindexunknow.CopyTo(bsP0);
+                                                bsP0.Length = FourK(bsP0.Position);
+                                                bsP0.Position = bsP0.Length;
                                             }
                                         }
-                                        using (BinaryStream bsindexunknow = BinaryStream.Open(name))
+                                    }
+                                    rsgpinfo.part0_Size = rsgpinfo.part0_Size2 = rsgp.head.part0_Size = (int)bsP0.Length;
+                                    rsgpinfo.part1_Size = rsgp.head.part1_Size = (int)bsP1.Length;
+                                    if (rsgp.head.part1_Size > autopool.part1_MaxSize)
+                                    {
+                                        autopool.part1_MaxSize = rsgp.head.part1_Size;
+                                    }
+                                    bsP0.Position = 0;
+                                    bsP1.Position = 0;
+                                    if (compressPart0)
+                                    {
+                                        using (ZLibStream zLibStream = new ZLibStream(bsP0over, level, true))
                                         {
-                                            bsindexunknow.Endian = endian;
-                                            bsindexunknow.IdInt32(1886681137);
-                                            bsindexunknow.IdInt32(1);
-                                            ptx.width = bsindexunknow.ReadInt32();
-                                            ptx.height = bsindexunknow.ReadInt32();
-                                            ptx.check = bsindexunknow.ReadInt32();
-                                            ptx.format = bsindexunknow.ReadInt32();
-                                            ptx.alphaSize = bsindexunknow.ReadInt32();
-                                            ptx.alphaFormat = bsindexunknow.ReadInt32();
-                                            rsgp.fileList.Add(new CompressString(fileid, new RsgpPart1ExtraInfo((int)bsP1.Position, (int)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
-                                            bsindexunknow.CopyTo(bsP1);
-                                            bsP1.Length = FourK(bsP1.Position);
-                                            bsP1.Position = bsP1.Length;
+                                            bsP0.CopyTo(zLibStream);
                                         }
-                                        ptxList.Add(ptx);
-                                        if (delete) File.Delete(name);
+                                        if (bsP0over.Length == 0)
+                                        {
+                                            bsP0over.WriteUInt8(0x78);
+                                            bsP0over.WriteUInt8(emptyfilecompresshead);
+                                            bsP0over.WriteUInt8(0x03);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x01);
+                                        }
                                     }
                                     else
                                     {
-                                        //p0
-                                        using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value)))
+                                        bsP0.CopyTo(bsP0over);
+                                    }
+                                    if (compressPart1)
+                                    {
+                                        using (ZLibStream zLibStream = new ZLibStream(bsP1over, level, true))
                                         {
-                                            rsgp.fileList.Add(new CompressString(fileid, new RsgpPart0ExtraInfo((int)bsP0.Position, (int)bsindexunknow.Length)));
-                                            bsindexunknow.CopyTo(bsP0);
-                                            bsP0.Length = FourK(bsP0.Position);
-                                            bsP0.Position = bsP0.Length;
+                                            bsP1.CopyTo(zLibStream);
                                         }
                                     }
-                                }
-                                rsgpinfo.part0_Size = rsgpinfo.part0_Size2 = rsgp.head.part0_Size = (int)bsP0.Length;
-                                rsgpinfo.part1_Size = autopool.part1_Size = rsgp.head.part1_Size = (int)bsP1.Length;
-                                bsP0.Position = 0;
-                                bsP1.Position = 0;
-                                if (compressPart0)
-                                {
-                                    using (ZLibStream zLibStream = new ZLibStream(bsP0over, level, true))
+                                    else
                                     {
-                                        bsP0.CopyTo(zLibStream);
+                                        bsP1.CopyTo(bsP1over);
                                     }
-                                    if (bsP0over.Length == 0)
-                                    {
-                                        bsP0over.WriteUInt8(0x78);
-                                        bsP0over.WriteUInt8(emptyfilecompresshead);
-                                        bsP0over.WriteUInt8(0x03);
-                                        bsP0over.WriteUInt8(0x00);
-                                        bsP0over.WriteUInt8(0x00);
-                                        bsP0over.WriteUInt8(0x00);
-                                        bsP0over.WriteUInt8(0x00);
-                                        bsP0over.WriteUInt8(0x01);
-                                    }
+                                    bsP0over.Length = FourK(bsP0over.Position);
+                                    bsP1over.Length = FourK(bsP1over.Position);
+                                    bsP0over.Position = 0;
+                                    bsP1over.Position = 0;
                                 }
-                                else
-                                {
-                                    bsP0.CopyTo(bsP0over);
-                                }
-                                if (compressPart1)
-                                {
-                                    using (ZLibStream zLibStream = new ZLibStream(bsP1over, level, true))
-                                    {
-                                        bsP1.CopyTo(zLibStream);
-                                    }
-                                }
-                                else
-                                {
-                                    bsP1.CopyTo(bsP1over);
-                                }
-                                bsP0over.Length = FourK(bsP0over.Position);
-                                bsP1over.Length = FourK(bsP1over.Position);
-                                bsP0over.Position = 0;
-                                bsP1over.Position = 0;
                             }
-                        }
-                        rsgp.head.part0_ZSize = rsgpinfo.part0_ZSize = (int)bsP0over.Length;
-                        rsgp.head.part1_ZSize = rsgpinfo.part1_ZSize = (int)bsP1over.Length;
-                        bs_rsgpfile.Position = off + rsgp.head.fileList_BeginOffset;
-                        byte[] list = rsgp.fileList.Write();
-                        rsgp.head.fileList_Length = list.Length;
-                        using (BinaryStream bs_list = new BinaryStream(list))
-                        {
-                            int times = list.Length >> 2;
-                            for (int i_xj = 0; i_xj < times; i_xj++)
+                            rsgp.head.part0_ZSize = rsgpinfo.part0_ZSize = (int)bsP0over.Length;
+                            rsgp.head.part1_ZSize = rsgpinfo.part1_ZSize = (int)bsP1over.Length;
+                            bs_rsgpfile.Position = off + rsgp.head.fileList_BeginOffset;
+                            byte[] list = rsgp.fileList.Write();
+                            rsgp.head.fileList_Length = list.Length;
+                            using (BinaryStream bs_list = new BinaryStream(list))
                             {
-                                bs_rsgpfile.WriteInt32(bs_list.ReadInt32());
+                                int times = list.Length >> 2;
+                                for (int i_xj = 0; i_xj < times; i_xj++)
+                                {
+                                    bs_rsgpfile.WriteInt32(bs_list.ReadInt32());
+                                }
                             }
+                            bs_rsgpfile.Length = FourK(bs_rsgpfile.Position);
+                            bs_rsgpfile.Position = bs_rsgpfile.Length;
+                            rsgp.head.fileOffset = rsgp.head.part0_Offset = rsgpinfo.fileOffset = rsgpinfo.part0_Offset = (int)(bs_rsgpfile.Position - off);
+                            bsP0over.CopyTo(bs_rsgpfile);
+                            rsgp.head.part1_Offset = rsgpinfo.part1_Offset = (int)(bs_rsgpfile.Position - off);
+                            int poolp1size = rsgp.head.part0_Offset + rsgp.head.part0_Size;
+                            if (poolp1size > autopool.part1_MaxOffset_InDecompress)
+                            {
+                                autopool.part1_MaxOffset_InDecompress = poolp1size;
+                            }
+                            bsP1over.CopyTo(bs_rsgpfile);
                         }
-                        bs_rsgpfile.Length = FourK(bs_rsgpfile.Position);
-                        bs_rsgpfile.Position = bs_rsgpfile.Length;
-                        rsgp.head.fileOffset = rsgp.head.part0_Offset = rsgpinfo.fileOffset = rsgpinfo.part0_Offset = (int)(bs_rsgpfile.Position - off);
-                        bsP0over.CopyTo(bs_rsgpfile);
-                        rsgp.head.part1_Offset = rsgpinfo.part1_Offset = (int)(bs_rsgpfile.Position - off);
-                        autopool.part1_Offset_InDecompress = rsgp.head.part0_Offset + rsgp.head.part0_Size; //Not zsize
-                        bsP1over.CopyTo(bs_rsgpfile);
                     }
+                    //write head
+                    bs_rsgpfile.Position = off;
+                    rsgp.head.Write(bs_rsgpfile);
+                    rsgpinfo.ptx_Number = thisPtxNumber;
+                    ptxNumber += thisPtxNumber;
+                    bs_rsgpfile.Position = bs_rsgpfile.Length;
+                    rsb.rsgpInfo[i].size = (int)(bs_rsgpfile.Length - off);
+                    GC.Collect();
                 }
-                //write head
-                bs_rsgpfile.Position = off;
-                rsgp.head.Write(bs_rsgpfile);
-                rsgpinfo.ptx_Number = thisPtxNumber;
-                ptxNumber += thisPtxNumber;
-                bs_rsgpfile.Position = bs_rsgpfile.Length;
-                rsb.rsgpInfo[i].size = (int)(bs_rsgpfile.Length - off);
-                GC.Collect();
+                #endregion
+            }
+            else
+            {
+                #region Simple AutoPool
+                xmldata = File.ReadAllText(studioPath + "RESOURCESGROUP.XML");
+                xml = new XmlDocument();
+                xml.LoadXml(xmldata);
+                root = xml.SelectSingleNode("/ResourcesGroupInfo");
+                childlist = root.ChildNodes;
+                if (childlist == null) return;
+                rsb.head.rsgp_Number = childlist.Count;
+                rsb.rsgpInfo = new RsbRsgpInfo[childlist.Count];
+                rsb.rsgp = new RsgpInfo[childlist.Count];
+                rsb.head.autopool_Number = childlist.Count;
+                rsb.autopoolInfo = new RsbAutoPoolInfo[childlist.Count];
+                int f_global = 0;
+                if (compressPart0)
+                {
+                    f_global |= 0b10;
+                }
+                if (compressPart1)
+                {
+                    f_global |= 0b1;
+                }
+                for (int i = 0; i < childlist.Count; i++)
+                {
+                    long off = bs_rsgpfile.Position;
+                    int thisPtxNumber = 0;
+                    var rsgpinfo = rsb.rsgpInfo[i] = new RsbRsgpInfo();
+                    int f;
+                    string tpstring = childlist[i].Attributes["compressmethod"]?.Value;
+                    if (tpstring == null)
+                    {
+                        f = f_global;
+                    }
+                    else
+                    {
+                        f = Convert.ToInt32(tpstring);
+                    }
+                    compressPart0 = (f & 0b10) != 0;
+                    compressPart1 = (f & 0b01) != 0;
+                    rsgpinfo.ID = childlist[i].Attributes["id"].Value;
+                    rsgpinfo.pool_Index = i;
+                    rsgpinfo.flags = f;
+                    rsgpinfo.offset = (int)off;
+                    var autopool = rsb.autopoolInfo[i] = new RsbAutoPoolInfo();
+                    autopool.ID = rsgpinfo.ID + autopoolname;
+                    var rsgp = rsb.rsgp[i] = new RsgpInfo();
+                    rsgp.head = new RsgpHeadInfo();
+                    rsgp.head.flags = f;
+                    rsgp.head.version = version;
+                    rsb.rsgpInfo[i].ptx_BeforeNumber = ptxNumber;
+                    rsb.rsgpList.Add(new CompressString(rsgpinfo.ID.ToUpper(), new RsbExtraInfo(i)));
+                    using (BinaryStream bsP0over = new BinaryStream())
+                    {
+                        using (BinaryStream bsP1over = new BinaryStream())
+                        {
+                            using (BinaryStream bsP0 = new BinaryStream())
+                            {
+                                using (BinaryStream bsP1 = new BinaryStream())
+                                {
+                                    var childchildlist = childlist[i].ChildNodes;
+                                    for (int j = 0; j < childchildlist.Count; j++)
+                                    {
+                                        string fileid = childchildlist[j].Attributes["id"].Value;
+                                        rsb.fileList.Add(new CompressString(fileid, new RsbExtraInfo(i)));
+                                        if (childchildlist[j].Name == "Img")
+                                        {
+                                            //p1
+                                            var ptx = new RsbPtxInfo(ptxEachLength);
+                                            string name = Dir.FormatPath(inFolder + fileid);
+                                            bool delete = false;
+                                            if (!File.Exists(name))
+                                            {
+                                                string name2 = Path.ChangeExtension(name, ".PNG");
+                                                if (File.Exists(name2))
+                                                {
+                                                    Image.Ptx.PtxFormat format = (Image.Ptx.PtxFormat)Convert.ToInt32(childchildlist[j].Attributes["defaultformat"].Value);
+                                                    Image.Ptx.Ptx.Encode(name2, name, format, bs_rsgpfile.Endian, ptxEachLength != 0x10);
+                                                    delete = true;
+                                                }
+                                            }
+                                            using (BinaryStream bsindexunknow = BinaryStream.Open(name))
+                                            {
+                                                bsindexunknow.Endian = endian;
+                                                bsindexunknow.IdInt32(1886681137);
+                                                bsindexunknow.IdInt32(1);
+                                                ptx.width = bsindexunknow.ReadInt32();
+                                                ptx.height = bsindexunknow.ReadInt32();
+                                                ptx.check = bsindexunknow.ReadInt32();
+                                                ptx.format = bsindexunknow.ReadInt32();
+                                                ptx.alphaSize = bsindexunknow.ReadInt32();
+                                                ptx.alphaFormat = bsindexunknow.ReadInt32();
+                                                rsgp.fileList.Add(new CompressString(fileid, new RsgpPart1ExtraInfo((int)bsP1.Position, (int)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
+                                                bsindexunknow.CopyTo(bsP1);
+                                                bsP1.Length = FourK(bsP1.Position);
+                                                bsP1.Position = bsP1.Length;
+                                            }
+                                            ptxList.Add(ptx);
+                                            if (delete) File.Delete(name);
+                                        }
+                                        else
+                                        {
+                                            //p0
+                                            using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value)))
+                                            {
+                                                rsgp.fileList.Add(new CompressString(fileid, new RsgpPart0ExtraInfo((int)bsP0.Position, (int)bsindexunknow.Length)));
+                                                bsindexunknow.CopyTo(bsP0);
+                                                bsP0.Length = FourK(bsP0.Position);
+                                                bsP0.Position = bsP0.Length;
+                                            }
+                                        }
+                                    }
+                                    rsgpinfo.part0_Size = rsgpinfo.part0_Size2 = rsgp.head.part0_Size = (int)bsP0.Length;
+                                    rsgpinfo.part1_Size = autopool.part1_MaxSize = rsgp.head.part1_Size = (int)bsP1.Length;
+                                    bsP0.Position = 0;
+                                    bsP1.Position = 0;
+                                    if (compressPart0)
+                                    {
+                                        using (ZLibStream zLibStream = new ZLibStream(bsP0over, level, true))
+                                        {
+                                            bsP0.CopyTo(zLibStream);
+                                        }
+                                        if (bsP0over.Length == 0)
+                                        {
+                                            bsP0over.WriteUInt8(0x78);
+                                            bsP0over.WriteUInt8(emptyfilecompresshead);
+                                            bsP0over.WriteUInt8(0x03);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x00);
+                                            bsP0over.WriteUInt8(0x01);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        bsP0.CopyTo(bsP0over);
+                                    }
+                                    if (compressPart1)
+                                    {
+                                        using (ZLibStream zLibStream = new ZLibStream(bsP1over, level, true))
+                                        {
+                                            bsP1.CopyTo(zLibStream);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        bsP1.CopyTo(bsP1over);
+                                    }
+                                    bsP0over.Length = FourK(bsP0over.Position);
+                                    bsP1over.Length = FourK(bsP1over.Position);
+                                    bsP0over.Position = 0;
+                                    bsP1over.Position = 0;
+                                }
+                            }
+                            rsgp.head.part0_ZSize = rsgpinfo.part0_ZSize = (int)bsP0over.Length;
+                            rsgp.head.part1_ZSize = rsgpinfo.part1_ZSize = (int)bsP1over.Length;
+                            bs_rsgpfile.Position = off + rsgp.head.fileList_BeginOffset;
+                            byte[] list = rsgp.fileList.Write();
+                            rsgp.head.fileList_Length = list.Length;
+                            using (BinaryStream bs_list = new BinaryStream(list))
+                            {
+                                int times = list.Length >> 2;
+                                for (int i_xj = 0; i_xj < times; i_xj++)
+                                {
+                                    bs_rsgpfile.WriteInt32(bs_list.ReadInt32());
+                                }
+                            }
+                            bs_rsgpfile.Length = FourK(bs_rsgpfile.Position);
+                            bs_rsgpfile.Position = bs_rsgpfile.Length;
+                            rsgp.head.fileOffset = rsgp.head.part0_Offset = rsgpinfo.fileOffset = rsgpinfo.part0_Offset = (int)(bs_rsgpfile.Position - off);
+                            bsP0over.CopyTo(bs_rsgpfile);
+                            rsgp.head.part1_Offset = rsgpinfo.part1_Offset = (int)(bs_rsgpfile.Position - off);
+                            autopool.part1_MaxOffset_InDecompress = rsgp.head.part0_Offset + rsgp.head.part0_Size; //Not zsize
+                            bsP1over.CopyTo(bs_rsgpfile);
+                        }
+                    }
+                    //write head
+                    bs_rsgpfile.Position = off;
+                    rsgp.head.Write(bs_rsgpfile);
+                    rsgpinfo.ptx_Number = thisPtxNumber;
+                    ptxNumber += thisPtxNumber;
+                    bs_rsgpfile.Position = bs_rsgpfile.Length;
+                    rsb.rsgpInfo[i].size = (int)(bs_rsgpfile.Length - off);
+                    GC.Collect();
+                }
+                #endregion
             }
             rsb.head.ptx_Number = ptxNumber;
             string mfile = outFile;
@@ -448,6 +668,23 @@ namespace PopStudio.Package.Rsb
                         throw new Exception(Str.Obj.DataMisMatch);
                     }
                     RsbInfo rsb = new RsbInfo().Read(bs);
+                    //We need to test if it's necessary to use Pool.xml
+                    bool usePoolXml = false;
+                    if (rsb.rsgpInfo.Length != rsb.autopoolInfo.Length)
+                    {
+                        usePoolXml = true;
+                    }
+                    else
+                    {
+                        for (int rsgp_info_index = 0; rsgp_info_index < rsb.rsgpInfo.Length; rsgp_info_index++)
+                        {
+                            if (rsb.rsgpInfo[rsgp_info_index].pool_Index != rsgp_info_index || rsb.autopoolInfo[rsgp_info_index].type != 1)
+                            {
+                                usePoolXml = true;
+                                break;
+                            }
+                        }
+                    }
                     string lst = outFolder + "POPSTUDIOINFO";
                     Dir.NewDir(lst);
                     lst += Const.PATHSEPARATOR;
@@ -492,7 +729,12 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("<ResourcesGroupInfo>");
                         for (int i = 0; i < rsb.head.rsgp_Number; i++)
                         {
-                            sw.WriteLine($"\n  <Group id=\"{rsb.rsgpInfo[i].ID}\" compressmethod=\"{rsb.rsgpInfo[i].flags}\">");
+                            sw.Write($"\n  <Group id=\"{rsb.rsgpInfo[i].ID}\" compressmethod=\"{rsb.rsgpInfo[i].flags}\"");
+                            if (usePoolXml)
+                            {
+                                sw.Write($" poolindex=\"{rsb.rsgpInfo[i].pool_Index}\"");
+                            }
+                            sw.WriteLine(">");
                             int rback = rsb.rsgpInfo[i].offset;
                             using (BinaryStream bs_p0 = new BinaryStream())
                             {
@@ -603,6 +845,20 @@ namespace PopStudio.Package.Rsb
                         }
                         sw.WriteLine("</ResourcesGroupInfo>");
                     }
+                    if (usePoolXml)
+                    {
+                        using (StreamWriter sw = new StreamWriter(lst + "POOL.XML", false))
+                        {
+                            sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                            sw.WriteLine("<!-- DO NOT EDIT THIS FILE. This file is generated by PopStudio. You can see this file only by special AutoPool parts. -->");
+                            sw.WriteLine("<PoolInfo>");
+                            for (int i = 0; i < rsb.autopoolInfo.Length; i++)
+                            {
+                                sw.WriteLine($"  <Pool id=\"{rsb.autopoolInfo[i].ID.Replace("&", "&amp;")}\" type=\"{rsb.autopoolInfo[i].type}\" />");
+                            }
+                            sw.WriteLine("</PoolInfo>");
+                        }
+                    }
                     string compresslevelinfo = getlevel ? "Optimal" : compresslevel switch
                     {
                         0 => "Fastest",
@@ -620,6 +876,7 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("    <CompressLevel>" + compresslevelinfo + "</CompressLevel>");
                         sw.WriteLine("    <PtxInfoLength>" + rsb.head.ptxInfo_EachLength + "</PtxInfoLength>");
                         sw.WriteLine("    <ZlibAll>" + usesmf + "</ZlibAll>");
+                        sw.WriteLine("    <SpecialPool>" + usePoolXml + "</SpecialPool>");
                         sw.WriteLine("</PackInfo>");
                     }
                 }
