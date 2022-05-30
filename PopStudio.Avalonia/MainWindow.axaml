@@ -13,7 +13,7 @@
 	<Grid>
 		<Grid x:Name="LoadingGrid" Background="SkyBlue" ZIndex="4">
 			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-				<Image Source="avares://PopStudio.Avalonia/Assets/Images/icon.png" Width="256" Height="256" />
+				<Image Source="avares://PopStudio/Assets/Images/icon.png" Width="256" Height="256" />
 				<ProgressBar Foreground="#FF0078D7" Background="#FFE6E6E6" Height="5" Margin="0 30 0 0" x:Name="loadingbar" />
 			</StackPanel>
 		</Grid>
@@ -61,9 +61,9 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<Image x:Name="Image_Shell" HorizontalAlignment="Left" Margin="10 0 0 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio.Avalonia/Assets/Images/shell.png" ZIndex="2" Tapped="Image_Shell_Tapped" />
+				<Image x:Name="Image_Shell" HorizontalAlignment="Left" Margin="10 0 0 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio/Assets/Images/shell.png" ZIndex="2" Tapped="Image_Shell_Tapped" />
 
-				<Image x:Name="Image_TopMost" HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio.Avalonia/Assets/Images/topmost.png" ZIndex="2" Tapped="Image_TopMost_Tapped" />
+				<Image x:Name="Image_TopMost" HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio/Assets/Images/topmost.png" ZIndex="2" Tapped="Image_TopMost_Tapped" />
 
 				<Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
 
