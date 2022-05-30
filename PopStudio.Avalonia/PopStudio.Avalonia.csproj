@@ -8,6 +8,8 @@
 	<TrimMode>link</TrimMode>
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
+    <FileVersion>5.0</FileVersion>
+	<AssemblyName>PopStudio</AssemblyName>
 	<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
 	<TrimmerDefaultAction>link</TrimmerDefaultAction>
 	<IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
@@ -65,7 +67,7 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-arm64'">
 		<RdXmlFile Include="rd.xml" />
-		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-arm64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-x64'">
@@ -80,17 +82,17 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-x64'">
 		<RdXmlFile Include="rd.xml" />
-		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-musl-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm64'">
 		<RdXmlFile Include="rd.xml" />
-		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-arm64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
 		<RdXmlFile Include="rd.xml" />
-		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-musl-arm64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
     <ItemGroup>

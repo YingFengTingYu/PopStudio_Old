@@ -101,7 +101,7 @@ namespace PopStudio.Avalonia.Pages
         {
             try
             {
-                string val = await new SaveFileDialog().ShowAsync(MainWindow.Singleten);
+                string val = CB_OutMode.SelectedIndex == 8 ? await new OpenFolderDialog().ShowAsync(MainWindow.Singleten) : await new SaveFileDialog().ShowAsync(MainWindow.Singleten);
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
             }
             catch (Exception)
