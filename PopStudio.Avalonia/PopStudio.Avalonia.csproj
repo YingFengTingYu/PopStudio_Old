@@ -4,15 +4,17 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	  <!--<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>-->
+	<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>
+	<TrimMode>copyused</TrimMode>
 	<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
-	<TrimMode>link</TrimMode>
+	<!--<TrimmerDefaultAction>link</TrimmerDefaultAction>-->
+	<!--<TrimMode>link</TrimMode>-->
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
     <FileVersion>5.0</FileVersion>
 	<AssemblyName>PopStudio</AssemblyName>
 	<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-	<TrimmerDefaultAction>link</TrimmerDefaultAction>
+	
 	<IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
 	<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
 	<IlcDisableUnhandledExceptionExperience>true</IlcDisableUnhandledExceptionExperience>
@@ -65,7 +67,7 @@
 		<RdXmlFile Include="rd.xml" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-x64'">
+	<!--<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-x64'">
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
@@ -91,7 +93,7 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
-	</ItemGroup>
+	</ItemGroup>-->
 
     <ItemGroup>
 	<!--This helps with theme dll-s trimming.
