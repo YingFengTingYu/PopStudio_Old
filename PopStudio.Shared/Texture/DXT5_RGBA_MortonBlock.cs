@@ -3,7 +3,7 @@
 namespace PopStudio.Texture
 {
     /// <summary>
-    /// Must be power 2
+    /// Must be power of 2
     /// </summary>
     internal static unsafe class DXT5_RGBA_MortonBlock
     {
@@ -24,19 +24,38 @@ namespace PopStudio.Texture
             byte* alpha = stackalloc byte[16];
             int temp;
             int r, g, b;
+            int max = width > height ? width : height;
             int newwidth = width;
             int newheight = height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (max < 32)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                //POT2 and equal
+                if ((newwidth & (newwidth - 1)) != 0)
+                {
+                    newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                }
+                if ((newheight & (newheight - 1)) != 0)
+                {
+                    newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                }
+                if (newwidth != newheight)
+                {
+                    newwidth = newheight = Math.Max(newwidth, newheight);
+                }
             }
-            if ((newheight & (newheight - 1)) != 0)
+            else
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
-            }
-            if (newwidth != newheight)
-            {
-                newwidth = newheight = Math.Max(newwidth, newheight);
+                //32
+                if ((newwidth & 31) != 0)
+                {
+                    newwidth |= 31;
+                    newwidth++;
+                }
+                if ((newheight & 31) != 0)
+                {
+                    newheight |= 31;
+                    newheight++;
+                }
             }
             if (newwidth < 32)
             {
@@ -228,19 +247,38 @@ namespace PopStudio.Texture
             YFColor min, max;
             int result;
             int tempvalue;
+            int max_a = width > height ? width : height;
             int newwidth = width;
             int newheight = height;
-            if ((newwidth & (newwidth - 1)) != 0)
+            if (max_a < 32)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                //POT2 and equal
+                if ((newwidth & (newwidth - 1)) != 0)
+                {
+                    newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                }
+                if ((newheight & (newheight - 1)) != 0)
+                {
+                    newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                }
+                if (newwidth != newheight)
+                {
+                    newwidth = newheight = Math.Max(newwidth, newheight);
+                }
             }
-            if ((newheight & (newheight - 1)) != 0)
+            else
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
-            }
-            if (newwidth != newheight)
-            {
-                newwidth = newheight = Math.Max(newwidth, newheight);
+                //32
+                if ((newwidth & 31) != 0)
+                {
+                    newwidth |= 31;
+                    newwidth++;
+                }
+                if ((newheight & 31) != 0)
+                {
+                    newheight |= 31;
+                    newheight++;
+                }
             }
             if (newwidth < 32)
             {
