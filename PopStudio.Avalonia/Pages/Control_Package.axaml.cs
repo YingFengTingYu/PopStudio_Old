@@ -186,10 +186,17 @@ namespace PopStudio.Avalonia.Pages
                         YFAPI.Unpack(inFile, outFile, pmode, c1, c2);
                     }
                 }
+#if !DEBUG
                 catch (Exception ex)
                 {
                     err = ex.Message;
                 }
+#else
+                finally
+                {
+
+                }
+#endif
                 sw.Stop();
                 decimal time = sw.ElapsedMilliseconds / 1000m;
                 Dispatcher.UIThread.InvokeAsync(() =>

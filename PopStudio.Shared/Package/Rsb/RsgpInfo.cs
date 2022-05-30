@@ -13,8 +13,8 @@
             byte[] b_file = new byte[head.fileList_Length];
             using (BinaryStream b_file_stream = new BinaryStream(b_file))
             {
-                int dividefour = head.fileList_Length >> 2;
-                for (int i = 0; i < dividefour; i++)
+                uint dividefour = head.fileList_Length >> 2;
+                for (uint i = 0; i < dividefour; i++)
                 {
                     b_file_stream.WriteInt32(bs.ReadInt32());
                 }

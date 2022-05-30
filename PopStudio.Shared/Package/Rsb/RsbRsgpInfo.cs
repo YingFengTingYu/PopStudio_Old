@@ -3,67 +3,67 @@
     internal class RsbRsgpInfo
     {
         public string ID;
-        public int offset;
-        public int size;
-        public int pool_Index; //AutoPool index
-        public int flags = 0b1;
-        public int fileOffset;
-        public int part0_Offset;
-        public int part0_ZSize;
-        public int part0_Size;
-        public int part0_Size2;
-        public int part1_Offset;
-        public int part1_ZSize;
-        public int part1_Size;
-        public int ptx_Number;
-        public int ptx_BeforeNumber;
+        public uint offset;
+        public uint size;
+        public uint pool_Index; //AutoPool index
+        public uint flags = 0b1;
+        public uint fileOffset;
+        public uint part0_Offset;
+        public uint part0_ZSize;
+        public uint part0_Size;
+        public uint part0_Size2;
+        public uint part1_Offset;
+        public uint part1_ZSize;
+        public uint part1_Size;
+        public uint ptx_Number;
+        public uint ptx_BeforeNumber;
 
         public void Write(BinaryStream bs)
         {
             bs.WriteString(ID, 0x80);
-            bs.WriteInt32(offset);
-            bs.WriteInt32(size);
-            bs.WriteInt32(pool_Index);
-            bs.WriteInt32(flags);
-            bs.WriteInt32(fileOffset);
-            bs.WriteInt32(part0_Offset);
-            bs.WriteInt32(part0_ZSize);
-            bs.WriteInt32(part0_Size);
-            bs.WriteInt32(part0_Size2 == 0 ? part0_Size : part0_Size2);
-            bs.WriteInt32(part1_Offset);
-            bs.WriteInt32(part1_ZSize);
-            bs.WriteInt32(part1_Size);
+            bs.WriteUInt32(offset);
+            bs.WriteUInt32(size);
+            bs.WriteUInt32(pool_Index);
+            bs.WriteUInt32(flags);
+            bs.WriteUInt32(fileOffset);
+            bs.WriteUInt32(part0_Offset);
+            bs.WriteUInt32(part0_ZSize);
+            bs.WriteUInt32(part0_Size);
+            bs.WriteUInt32(part0_Size2 == 0 ? part0_Size : part0_Size2);
+            bs.WriteUInt32(part1_Offset);
+            bs.WriteUInt32(part1_ZSize);
+            bs.WriteUInt32(part1_Size);
             bs.WriteInt32(0);
             bs.WriteInt32(0);
             bs.WriteInt32(0);
             bs.WriteInt32(0);
             bs.WriteInt32(0);
-            bs.WriteInt32(ptx_Number);
-            bs.WriteInt32(ptx_BeforeNumber);
+            bs.WriteUInt32(ptx_Number);
+            bs.WriteUInt32(ptx_BeforeNumber);
         }
 
         public RsbRsgpInfo Read(BinaryStream bs)
         {
             ID = bs.ReadString(0x80).Replace("\0", "");
-            offset = bs.ReadInt32();
-            size = bs.ReadInt32();
-            pool_Index = bs.ReadInt32();
-            flags = bs.ReadInt32();
-            fileOffset = bs.ReadInt32();
-            part0_Offset = bs.ReadInt32();
-            part0_ZSize = bs.ReadInt32();
-            part0_Size = bs.ReadInt32();
-            part0_Size2 = bs.ReadInt32();
-            part1_Offset = bs.ReadInt32();
-            part1_ZSize = bs.ReadInt32();
-            part1_Size = bs.ReadInt32();
+            offset = bs.ReadUInt32();
+            size = bs.ReadUInt32();
+            pool_Index = bs.ReadUInt32();
+            flags = bs.ReadUInt32();
+            fileOffset = bs.ReadUInt32();
+            part0_Offset = bs.ReadUInt32();
+            part0_ZSize = bs.ReadUInt32();
+            part0_Size = bs.ReadUInt32();
+            part0_Size2 = bs.ReadUInt32();
+            part1_Offset = bs.ReadUInt32();
+            part1_ZSize = bs.ReadUInt32();
+            part1_Size = bs.ReadUInt32();
             bs.IdInt32(0);
             bs.IdInt32(0);
             bs.IdInt32(0);
             bs.IdInt32(0);
             bs.IdInt32(0);
-            ptx_Number = bs.ReadInt32();
-            ptx_BeforeNumber = bs.ReadInt32();
+            ptx_Number = bs.ReadUInt32();
+            ptx_BeforeNumber = bs.ReadUInt32();
             return this;
         }
     }

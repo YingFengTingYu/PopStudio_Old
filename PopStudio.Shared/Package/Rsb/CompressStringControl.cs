@@ -177,7 +177,9 @@ namespace PopStudio.Package.Rsb
             bytes[location + 3] = (byte)((cover & 0x00ff0000) >> 16);
         }
 
-        static void WriteInt32(byte[] bytes, int location, int cover)
+        static void WriteInt32(byte[] bytes, int location, int cover) => WriteInt32(bytes, location, (uint)cover);
+
+        static void WriteInt32(byte[] bytes, int location, uint cover)
         {
             bytes[location] = (byte)(cover & 0x000000ff);
             bytes[location + 1] = (byte)((cover & 0x0000ff00) >> 8);
@@ -328,21 +330,21 @@ namespace PopStudio.Package.Rsb
 
     internal class RsbExtraInfo : ExtraInfo
     {
-        public int index;
+        public uint index;
 
         public RsbExtraInfo()
         {
 
         }
 
-        public RsbExtraInfo(int index)
+        public RsbExtraInfo(uint index)
         {
             this.index = index;
         }
 
         public override ExtraInfo Read(BinaryStream bs)
         {
-            index = bs.ReadInt32();
+            index = bs.ReadUInt32();
             return this;
         }
     }
@@ -355,15 +357,15 @@ namespace PopStudio.Package.Rsb
     internal class RsgpPart0ExtraInfo : RsgpExtraInfo
     {
         public int type = 0x0;
-        public int offset;
-        public int size;
+        public uint offset;
+        public uint size;
 
         public RsgpPart0ExtraInfo()
         {
 
         }
 
-        public RsgpPart0ExtraInfo(int offset, int size)
+        public RsgpPart0ExtraInfo(uint offset, uint size)
         {
             this.offset = offset;
             this.size = size;
@@ -372,8 +374,8 @@ namespace PopStudio.Package.Rsb
         public override ExtraInfo Read(BinaryStream bs)
         {
             bs.IdInt32(type);
-            offset = bs.ReadInt32();
-            size = bs.ReadInt32();
+            offset = bs.ReadUInt32();
+            size = bs.ReadUInt32();
             return this;
         }
     }
@@ -381,20 +383,20 @@ namespace PopStudio.Package.Rsb
     internal class RsgpPart1ExtraInfo : RsgpExtraInfo
     {
         public int type = 0x1;
-        public int offset;
-        public int size;
-        public int index;
+        public uint offset;
+        public uint size;
+        public uint index;
         public int empty1 = 0x0;
         public int empty2 = 0x0;
-        public int width;
-        public int height;
+        public uint width;
+        public uint height;
 
         public RsgpPart1ExtraInfo()
         {
 
         }
 
-        public RsgpPart1ExtraInfo(int offset, int size, int index, int width, int height)
+        public RsgpPart1ExtraInfo(uint offset, uint size, uint index, uint width, uint height)
         {
             this.offset = offset;
             this.size = size;
@@ -406,13 +408,13 @@ namespace PopStudio.Package.Rsb
         public override ExtraInfo Read(BinaryStream bs)
         {
             bs.IdInt32(type);
-            offset = bs.ReadInt32();
-            size = bs.ReadInt32();
-            index = bs.ReadInt32();
+            offset = bs.ReadUInt32();
+            size = bs.ReadUInt32();
+            index = bs.ReadUInt32();
             bs.IdInt32(empty1);
             bs.IdInt32(empty2);
-            width = bs.ReadInt32();
-            height = bs.ReadInt32();
+            width = bs.ReadUInt32();
+            height = bs.ReadUInt32();
             return this;
         }
     }
