@@ -6,7 +6,7 @@
         RGBA4444,
         RGB565,
         RGBA5551,
-        DXT5 = 5,
+        DXT5_RGBA_MortonBlock = 5,
         RGBA4444_Block = 21,
         RGB565_Block,
         RGBA5551_Block,

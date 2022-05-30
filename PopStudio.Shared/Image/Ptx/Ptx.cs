@@ -86,12 +86,14 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.DXT5_RGBA;
                             break;
                         case 14:
-                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
-                            head.format = PtxFormat.DXT5;
+                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
+                            head.check = Texture.DXT5_RGBA_MortonBlock.Write(bs, sKBitmap); //Just in ps4
+                            head.format = PtxFormat.DXT5_RGBA_MortonBlock;
                             break;
                         case 15:
                             head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
-                            head.format = PtxFormat.DXT5; //the texture is also small endian
+                            head.format = PtxFormat.DXT5_RGBA_MortonBlock; //the texture is also small endian
                             bs.Endian = Endian.Big; //but the info is big endian
                             break;
                         case 16:
@@ -171,11 +173,19 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.RGBA5551:
                             head.check = Texture.RGBA5551.Write(bs, sKBitmap);
                             break;
-                        case PtxFormat.DXT5:
-                            Endian backendian = bs.Endian;
-                            bs.Endian = Endian.Small;
-                            head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
-                            bs.Endian = backendian;
+                        case PtxFormat.DXT5_RGBA_MortonBlock:
+                            if (bs.Endian == Endian.Small)
+                            {
+                                if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
+                                if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
+                                head.check = Texture.DXT5_RGBA_MortonBlock.Write(bs, sKBitmap);
+                            }
+                            else
+                            {
+                                bs.Endian = Endian.Small;
+                                head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
+                                bs.Endian = Endian.Big;
+                            }
                             break;
                         case PtxFormat.RGBA4444_Block:
                             if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
@@ -289,11 +299,22 @@ namespace PopStudio.Image.Ptx
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case PtxFormat.DXT5:
-                        bs.Endian = Endian.Small;
-                        using (YFBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
+                    case PtxFormat.DXT5_RGBA_MortonBlock:
+                        if (bs.Endian == Endian.Small)
                         {
-                            sKBitmap.Save(outFile);
+                            using (YFBitmap sKBitmap = Texture.DXT5_RGBA_MortonBlock.Read(bs, head.width, head.height))
+                            {
+                                sKBitmap.Save(outFile);
+                            }
+                        }
+                        else
+                        {
+                            bs.Endian = Endian.Small;
+                            using (YFBitmap sKBitmap = Texture.DXT5_RGBA.Read(bs, head.width, head.height))
+                            {
+                                sKBitmap.Save(outFile);
+                            }
+                            bs.Endian = Endian.Big;
                         }
                         break;
                     case PtxFormat.RGBA4444_Block:

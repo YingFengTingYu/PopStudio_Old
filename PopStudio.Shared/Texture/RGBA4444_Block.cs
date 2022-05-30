@@ -41,21 +41,15 @@ namespace PopStudio.Texture
             int width = image.Width;
             int height = image.Height;
             int newwidth = width;
-            int newheight = height;
             if ((newwidth & 31) != 0)
             {
                 newwidth |= 31;
                 newwidth++;
             }
-            if ((newheight & 31) != 0)
-            {
-                newheight |= 31;
-                newheight++;
-            }
             int temp;
-            for (int i = 0; i < newheight; i += 32)
+            for (int i = 0; i < height; i += 32)
             {
-                for (int w = 0; w < newwidth; w += 32)
+                for (int w = 0; w < width; w += 32)
                 {
                     for (int j = 0; j < 32; j++)
                     {

@@ -144,6 +144,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT2_RGBA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT3_RGBA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT4_RGBA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5_RGBA_MortonBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5_RGBA_Morton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5_RGBA_Padding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\DXT5_RGBA.cs" />

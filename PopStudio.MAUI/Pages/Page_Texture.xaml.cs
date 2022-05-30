@@ -52,8 +52,8 @@ namespace PopStudio.MAUI
             CB_FMode.Items.Add("DXT1_RGB(35)");
             CB_FMode.Items.Add("DXT3_RGBA(36)");
             CB_FMode.Items.Add("DXT5_RGBA(37)");
-            CB_FMode.Items.Add("DXT5(5)");
-            CB_FMode.Items.Add("DXT5(BE)(5)");
+            CB_FMode.Items.Add("DXT5_RGBA_MortonBlock(5)");
+            CB_FMode.Items.Add("DXT5_RGBA(BE)(5)");
             CB_FMode.Items.Add("ETC1_RGB(32)");
             CB_FMode.Items.Add("ETC1_RGB_A8(147)");
             CB_FMode.Items.Add("ETC1_RGB_A_Palette(147)");
@@ -164,8 +164,8 @@ namespace PopStudio.MAUI
                 CB_FMode.Items.Add("DXT1_RGB(35)");
                 CB_FMode.Items.Add("DXT3_RGBA(36)");
                 CB_FMode.Items.Add("DXT5_RGBA(37)");
-                CB_FMode.Items.Add("DXT5(5)");
-                CB_FMode.Items.Add("DXT5(BE)(5)");
+                CB_FMode.Items.Add("DXT5_RGBA_MortonBlock(5)");
+                CB_FMode.Items.Add("DXT5_RGBA(BE)(5)");
                 CB_FMode.Items.Add("ETC1_RGB(32)");
                 CB_FMode.Items.Add("ETC1_RGB_A8(147)");
                 CB_FMode.Items.Add("ETC1_RGB_A_Palette(147)");

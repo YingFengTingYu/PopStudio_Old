@@ -328,8 +328,8 @@ namespace PopStudio.ConsoleProject
                     Add(11, "DXT1_RGB(35)");
                     Add(12, "DXT3_RGBA(36)");
                     Add(13, "DXT5_RGBA(37)");
-                    Add(14, "DXT5(5)");
-                    Add(15, "DXT5(BE)(5)");
+                    Add(14, "DXT5_RGBA_MortonBlock(5)");
+                    Add(15, "DXT5_RGBA(BE)(5)");
                     Add(16, "ETC1_RGB(32)");
                     Add(17, "ETC1_RGB_A8(147)");
                     Add(18, "ETC1_RGB_A_Palette(147)");

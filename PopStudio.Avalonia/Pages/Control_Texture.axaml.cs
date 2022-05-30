@@ -44,8 +44,8 @@ namespace PopStudio.Avalonia.Pages
                 "DXT1_RGB(35)",
                 "DXT3_RGBA(36)",
                 "DXT5_RGBA(37)",
-                "DXT5(5)",
-                "DXT5(BE)(5)",
+                "DXT5_RGBA_MortonBlock(5)",
+                "DXT5_RGBA(BE)(5)",
                 "ETC1_RGB(32)",
                 "ETC1_RGB_A8(147)",
                 "ETC1_RGB_A_Palette(147)",
@@ -236,8 +236,8 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("DXT1_RGB(35)");
                     FMode_Items.Add("DXT3_RGBA(36)");
                     FMode_Items.Add("DXT5_RGBA(37)");
-                    FMode_Items.Add("DXT5(5)");
-                    FMode_Items.Add("DXT5(BE)(5)");
+                    FMode_Items.Add("DXT5_RGBA_MortonBlock(5)");
+                    FMode_Items.Add("DXT5_RGBA(BE)(5)");
                     FMode_Items.Add("ETC1_RGB(32)");
                     FMode_Items.Add("ETC1_RGB_A8(147)");
                     FMode_Items.Add("ETC1_RGB_A_Palette(147)");
