@@ -86,8 +86,6 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.DXT5_RGBA;
                             break;
                         case 14:
-                            if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
-                            if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                             head.check = Texture.DXT5_RGBA_MortonBlock.Write(bs, sKBitmap); //Just in ps4
                             head.format = PtxFormat.DXT5_RGBA_MortonBlock;
                             break;
@@ -176,8 +174,6 @@ namespace PopStudio.Image.Ptx
                         case PtxFormat.DXT5_RGBA_MortonBlock:
                             if (bs.Endian == Endian.Small)
                             {
-                                if (head.width % 32 != 0) head.width = head.width / 32 * 32 + 32;
-                                if (head.height % 32 != 0) head.height = head.height / 32 * 32 + 32;
                                 head.check = Texture.DXT5_RGBA_MortonBlock.Write(bs, sKBitmap);
                             }
                             else

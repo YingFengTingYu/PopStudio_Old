@@ -178,7 +178,7 @@ namespace PopStudio.Avalonia.Pages
                 string err = null;
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                try
+                //try
                 {
                     if (!File.Exists(inFile))
                     {
@@ -193,9 +193,9 @@ namespace PopStudio.Avalonia.Pages
                         YFAPI.DecodeImage(inFile, outFile, cmode);
                     }
                 }
-                catch (Exception ex)
+                //catch (Exception ex)
                 {
-                    err = ex.Message;
+                    //err = ex.Message;
                 }
                 sw.Stop();
                 decimal time = sw.ElapsedMilliseconds / 1000m;

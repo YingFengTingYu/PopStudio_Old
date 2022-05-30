@@ -762,7 +762,7 @@ namespace PopStudio.Plugin
                 num2 = BaseStream.Read(m_buffer, num, numBytes - num);
                 if (num2 == 0)
                 {
-                    throw new Exception(Constant.Str.Obj.EndOfFile);
+                    throw new Exception(Str.Obj.EndOfFile);
                 }
                 num += num2;
             }
