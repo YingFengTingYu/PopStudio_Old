@@ -4,11 +4,11 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>
-	<TrimMode>copyused</TrimMode>
+	<!--<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>
+	<TrimMode>copyused</TrimMode>-->
 	<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
-	<!--<TrimmerDefaultAction>link</TrimmerDefaultAction>-->
-	<!--<TrimMode>link</TrimMode>-->
+	<TrimmerDefaultAction>link</TrimmerDefaultAction>
+	<TrimMode>link</TrimMode>
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
     <FileVersion>5.0</FileVersion>
@@ -20,45 +20,45 @@
 	<IlcDisableUnhandledExceptionExperience>true</IlcDisableUnhandledExceptionExperience>
   </PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+		<DefineConstants>TRACE;WINDOWS</DefineConstants>
 		<DebugType>full</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE;WINDOWS</DefineConstants>
+		<DefineConstants>TRACE;WINDOWS</DefineConstants>
 		<DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-x64'">
-		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+		<DefineConstants>TRACE;LINUX</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm'">
-		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+		<DefineConstants>TRACE;LINUX</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-arm64'">
-		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+		<DefineConstants>TRACE;LINUX</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-x64'">
-		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+		<DefineConstants>TRACE;LINUX</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm'">
-		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+		<DefineConstants>TRACE;LINUX</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
-		<DefineConstants>$(DefineConstants)TRACE;LINUX</DefineConstants>
+		<DefineConstants>TRACE;LINUX</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-x64'">
-		<DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
+		<DefineConstants>TRACE;MACOS</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|osx-arm64'">
-		<DefineConstants>$(DefineConstants)TRACE;MACOS</DefineConstants>
+		<DefineConstants>TRACE;MACOS</DefineConstants>
 	</PropertyGroup>
 
 	<!--AOT Support-->
@@ -67,7 +67,7 @@
 		<RdXmlFile Include="rd.xml" />
 	</ItemGroup>
 
-	<!--<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-x64'">
+	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|win-x64'">
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
 	</ItemGroup>
 
@@ -93,7 +93,7 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
-	</ItemGroup>-->
+	</ItemGroup>
 
     <ItemGroup>
 	<!--This helps with theme dll-s trimming.

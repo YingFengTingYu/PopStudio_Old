@@ -9,9 +9,9 @@ namespace PopStudio.ConsoleProject
         {
             YFAPI.RegistPlatform<ConsoleAPI>();
 #if LINUXCONSOLE
-            YFBitmap.RegistPlatform<SkiaBitmap>();
+            YFBitmap.RegistPlatform<ImageBitmap>();
 #elif MACOSCONSOLE
-            YFBitmap.RegistPlatform<SkiaBitmap>();
+            YFBitmap.RegistPlatform<ImageBitmap>();
 #else
             YFBitmap.RegistPlatform<GDIBitmap>();
 #endif
