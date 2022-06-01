@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.Avalonia", "PopSt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.MAUI", "PopStudio.MAUI\PopStudio.MAUI.csproj", "{A64A682A-C5A1-4A2C-B1F7-E6AA9550A3A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopStudio.ConsoleProject", "PopStudio.ConsoleProject\PopStudio.ConsoleProject.csproj", "{D850B9EE-3DF2-4D5E-99D0-0769EA550EBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopStudio.ConsoleProject", "PopStudio.ConsoleProject\PopStudio.ConsoleProject.csproj", "{D850B9EE-3DF2-4D5E-99D0-0769EA550EBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
