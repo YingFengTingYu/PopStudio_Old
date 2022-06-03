@@ -266,6 +266,16 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("RGBA5551(8)");
                     FMode_Items.Add("XRGB8888(9)");
                     FMode_Items.Add("LA88(10)");
+                    FMode_Items.Add("LUT8(NoZlib)(1)(Invalid)");
+                    FMode_Items.Add("ARGB8888(NoZlib)(2)");
+                    FMode_Items.Add("ARGB4444(NoZlib)(3)");
+                    FMode_Items.Add("ARGB1555(NoZlib)(4)");
+                    FMode_Items.Add("RGB565(NoZlib)(5)");
+                    FMode_Items.Add("ABGR8888(NoZlib)(6)");
+                    FMode_Items.Add("RGBA4444(NoZlib)(7)");
+                    FMode_Items.Add("RGBA5551(NoZlib)(8)");
+                    FMode_Items.Add("XRGB8888(NoZlib)(9)");
+                    FMode_Items.Add("LA88(NoZlib)(10)");
                     break;
                 case 5:
                     FMode_Items.Add("DXT5_RGBA_Padding(BE)");

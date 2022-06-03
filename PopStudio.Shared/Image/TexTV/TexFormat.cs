@@ -3,7 +3,7 @@
     internal enum TexFormat
     {
         NONE,
-        LUT8,
+        LUT8, //Invalid in game because "(unsigned int)(format - 2) > 8" will return directly
         ARGB8888,
         ARGB4444,
         ARGB1555,

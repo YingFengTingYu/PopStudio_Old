@@ -358,6 +358,16 @@ namespace PopStudio.ConsoleProject
                     Add(7, "RGBA5551(8)");
                     Add(8, "XRGB8888(9)");
                     Add(9, "LA88(10)");
+                    Add(10, "LUT8(NoZlib)(1)(Invalid)");
+                    Add(11, "ARGB8888(NoZlib)(2)");
+                    Add(12, "ARGB4444(NoZlib)(3)");
+                    Add(13, "ARGB1555(NoZlib)(4)");
+                    Add(14, "RGB565(NoZlib)(5)");
+                    Add(15, "ABGR8888(NoZlib)(6)");
+                    Add(16, "RGBA4444(NoZlib)(7)");
+                    Add(17, "RGBA5551(NoZlib)(8)");
+                    Add(18, "XRGB8888(NoZlib)(9)");
+                    Add(19, "LA88(NoZlib)(10)");
                     break;
                 case 5:
                     Add(0, "DXT5_RGBA_Padding(BE)");

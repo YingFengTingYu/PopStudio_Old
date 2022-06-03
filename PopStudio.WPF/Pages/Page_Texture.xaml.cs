@@ -210,6 +210,16 @@ namespace PopStudio.WPF.Pages
                 CB_FMode.Items.Add("RGBA5551(8)");
                 CB_FMode.Items.Add("XRGB8888(9)");
                 CB_FMode.Items.Add("LA88(10)");
+                CB_FMode.Items.Add("LUT8(NoZlib)(1)(Invalid)");
+                CB_FMode.Items.Add("ARGB8888(NoZlib)(2)");
+                CB_FMode.Items.Add("ARGB4444(NoZlib)(3)");
+                CB_FMode.Items.Add("ARGB1555(NoZlib)(4)");
+                CB_FMode.Items.Add("RGB565(NoZlib)(5)");
+                CB_FMode.Items.Add("ABGR8888(NoZlib)(6)");
+                CB_FMode.Items.Add("RGBA4444(NoZlib)(7)");
+                CB_FMode.Items.Add("RGBA5551(NoZlib)(8)");
+                CB_FMode.Items.Add("XRGB8888(NoZlib)(9)");
+                CB_FMode.Items.Add("LA88(NoZlib)(10)");
             }
             else if (index == 5)
             {

@@ -7,6 +7,7 @@
         public int width;
         public int height;
         public TexFormat format;
+        public uint flags = 1u;
         public int zsize;
 
         public TexHead Read(BinaryStream bs)
@@ -16,12 +17,10 @@
             width = bs.ReadInt32();
             height = bs.ReadInt32();
             format = (TexFormat)bs.ReadInt32();
-            bs.IdInt32(1);
-            bs.IdInt32(1);
+            flags = bs.ReadUInt32();
+            bs.Position += 4;
             zsize = bs.ReadInt32();
-            bs.IdInt32(0);
-            bs.IdInt32(0);
-            bs.IdInt32(0);
+            bs.Position += 12;
             return this;
         }
 
@@ -32,7 +31,7 @@
             bs.WriteInt32(width);
             bs.WriteInt32(height);
             bs.WriteInt32((int)format);
-            bs.WriteInt32(1);
+            bs.WriteUInt32(flags);
             bs.WriteInt32(1);
             bs.WriteInt32(zsize);
             bs.WriteInt32(0);

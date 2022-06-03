@@ -6,6 +6,12 @@ namespace PopStudio.Image.TexTV
     {
         public static void Encode(string inFile, string outFile, int format)
         {
+            bool zlib = true;
+            if (format >= 10)
+            {
+                format -= 10;
+                zlib = false;
+            }
             using (BinaryStream bs = BinaryStream.Create(outFile))
             {
                 using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
@@ -60,72 +66,23 @@ namespace PopStudio.Image.TexTV
                                 throw new Exception(Str.Obj.UnknownFormat);
                         }
                         bs2.Position = 0;
-                        using (ZLibStream zLibStream = new ZLibStream(bs, CompressionMode.Compress, true))
+                        if (zlib)
                         {
-                            bs2.CopyTo(zLibStream);
+                            using (ZLibStream zLibStream = new ZLibStream(bs, CompressionMode.Compress, true))
+                            {
+                                bs2.CopyTo(zLibStream);
+                            }
+                            head.zsize = (int)(bs.Length - 0x30);
+                            head.flags |= 1u;
+                        }
+                        else
+                        {
+                            bs2.CopyTo(bs);
+                            head.zsize = 0;
+                            head.flags &= ~1u;
                         }
                     }
-                    head.zsize = (int)(bs.Length - 0x30);
-                    bs.Position = 0;
-                    head.Write(bs);
-                }
-            }
-        }
-
-        public static void Encode(string inFile, string outFile, TexFormat format, Endian _ = Endian.Null)
-        {
-            using (BinaryStream bs = BinaryStream.Create(outFile))
-            {
-                using (YFBitmap sKBitmap = YFBitmap.Create(inFile))
-                {
-                    TexHead head = new TexHead
-                    {
-                        width = sKBitmap.Width,
-                        height = sKBitmap.Height,
-                        format = format
-                    };
-                    head.Write(bs);
-                    using (BinaryStream bs2 = new BinaryStream())
-                    {
-                        switch (format)
-                        {
-                            case TexFormat.ARGB8888:
-                                Texture.ARGB8888.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.ARGB4444:
-                                Texture.ARGB4444.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.ARGB1555:
-                                Texture.ARGB1555.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.RGB565:
-                                Texture.RGB565.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.ABGR8888:
-                                Texture.ABGR8888.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.RGBA4444:
-                                Texture.RGBA4444.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.RGBA5551:
-                                Texture.RGBA5551.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.XRGB8888:
-                                Texture.XRGB8888.Write(bs2, sKBitmap);
-                                break;
-                            case TexFormat.LA88:
-                                Texture.LA88.Write(bs2, sKBitmap);
-                                break;
-                            default:
-                                throw new Exception(Str.Obj.UnknownFormat);
-                        }
-                        bs2.Position = 0;
-                        using (ZLibStream zLibStream = new ZLibStream(bs, CompressionMode.Compress, true))
-                        {
-                            bs2.CopyTo(zLibStream);
-                        }
-                    }
-                    head.zsize = (int)(bs.Length - 0x30);
+                    
                     bs.Position = 0;
                     head.Write(bs);
                 }
@@ -140,9 +97,16 @@ namespace PopStudio.Image.TexTV
                 using (BinaryStream bs_file = new BinaryStream(inFile, FileMode.Open))
                 {
                     head = new TexHead().Read(bs_file);
-                    using (ZLibStream zLibStream = new ZLibStream(bs_file, CompressionMode.Decompress))
+                    if ((head.flags & 0b1) != 0)
                     {
-                        zLibStream.CopyTo(bs);
+                        using (ZLibStream zLibStream = new ZLibStream(bs_file, CompressionMode.Decompress))
+                        {
+                            zLibStream.CopyTo(bs);
+                        }
+                    }
+                    else
+                    {
+                        bs_file.CopyTo(bs);
                     }
                 }
                 bs.Position = 0;

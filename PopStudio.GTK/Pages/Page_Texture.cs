@@ -87,7 +87,17 @@ namespace PopStudio.GTK.Pages
                 "RGBA4444(7)",
                 "RGBA5551(8)",
                 "XRGB8888(9)",
-                "LA88(10)"
+                "LA88(10)",
+                "LUT8(NoZlib)(1)(Invalid)",
+                "ARGB8888(NoZlib)(2)",
+                "ARGB4444(NoZlib)(3)",
+                "ARGB1555(NoZlib)(4)",
+                "RGB565(NoZlib)(5)",
+                "ABGR8888(NoZlib)(6)",
+                "RGBA4444(NoZlib)(7)",
+                "RGBA5551(NoZlib)(8)",
+                "XRGB8888(NoZlib)(9)",
+                "LA88(NoZlib)(10)"
             },
             new string[]
             {
