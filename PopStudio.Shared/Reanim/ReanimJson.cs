@@ -369,6 +369,14 @@ namespace PopStudio.Reanim
                             {
                                 transform.i2Path = value.GetString();
                             }
+                            if (jsontransform.TryGetProperty("font", out value))
+                            {
+                                transform.font = value.GetString();
+                            }
+                            if (jsontransform.TryGetProperty("text", out value))
+                            {
+                                transform.text = value.GetString();
+                            }
                             track.transforms[j] = transform;
                         }
                     }

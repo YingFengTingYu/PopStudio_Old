@@ -75,28 +75,20 @@ namespace PopStudio.Texture
             int bitsLength;
             byte[] indexTable;
             byte bufferbyte;
-            switch (indexNumber)
+            if (indexNumber == 0)
             {
-                case 0:
-                    bitsLength = 1;
-                    indexTable = new byte[2] { 0, 255 };
-                    break;
-                case 1: //??
-                    bitsLength = 1;
-                    indexTable = new byte[2];
-                    indexTable[0] = 0;
+                bitsLength = 1;
+                indexTable = new byte[2] { 0, 255 };
+            }
+            else
+            {
+                bitsLength = indexNumber == 1 ? 1 : Math.ILogB(indexNumber - 1) + 1;
+                indexTable = new byte[indexNumber];
+                for (int i = 0; i < indexNumber; i++)
+                {
                     bufferbyte = bs.ReadByte();
-                    indexTable[1] = (byte)((bufferbyte << 4) | bufferbyte);
-                    break;
-                default:
-                    bitsLength = Math.ILogB(indexNumber - 1) + 1;
-                    indexTable = new byte[indexNumber];
-                    for (int i = 0; i < indexNumber; i++)
-                    {
-                        bufferbyte = bs.ReadByte();
-                        indexTable[i] = (byte)((bufferbyte << 4) | bufferbyte);
-                    }
-                    break;
+                    indexTable[i] = (byte)((bufferbyte << 4) | bufferbyte);
+                }
             }
             using (BitStream bitstream = new BitStream(bs))
             {

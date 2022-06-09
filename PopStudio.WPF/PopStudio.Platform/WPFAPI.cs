@@ -29,7 +29,12 @@ namespace PopStudio.Platform
                 }
                 str.Remove(str.Length - 1, 1);
             }
-            box.Dispatcher.BeginInvoke(() => { Paragraph para = new(); para.Inlines.Add(new Run(str.ToString())); box.Document.Blocks.Add(para); });
+            box.Dispatcher.BeginInvoke(() =>
+            {
+                Paragraph para = new();
+                para.Inlines.Add(new Run(str.ToString()));
+                box.Document.Blocks.Add(para);
+            });
         }
 
         public override bool? InternalAlert(string text, string title, bool ask)
@@ -38,11 +43,19 @@ namespace PopStudio.Platform
             bool a = false;
             if (ask)
             {
-                box.Dispatcher.BeginInvoke(async () => { ans = await PopupDialog.DisplayAlert(title, text, "OK", "Cancel"); a = true; });
+                box.Dispatcher.BeginInvoke(async () =>
+                {
+                    ans = await PopupDialog.DisplayAlert(title, text, "OK", "Cancel");
+                    a = true;
+                });
             }
             else
             {
-                box.Dispatcher.BeginInvoke(async () => { await PopupDialog.DisplayAlert(title, text, "Cancel"); a = true; });
+                box.Dispatcher.BeginInvoke(async () =>
+                {
+                    await PopupDialog.DisplayAlert(title, text, "Cancel");
+                    a = true;
+                });
             }
             while (!a) Thread.Sleep(200);
             return ans;
@@ -52,7 +65,11 @@ namespace PopStudio.Platform
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(async () => { ans = await PopupDialog.DisplayPromptAsync(title, text, initialValue: defaulttext); a = true; });
+            box.Dispatcher.BeginInvoke(async () =>
+            {
+                ans = await PopupDialog.DisplayPromptAsync(title, text, initialValue: defaulttext);
+                a = true;
+            });
             while (!a) Thread.Sleep(200);
             return ans;
         }
@@ -61,7 +78,11 @@ namespace PopStudio.Platform
         {
             string ans = null;
             bool a = false;
-            box.Dispatcher.BeginInvoke(async () => { ans = await PopupDialog.DisplayActionSheet(title, "Cancel\0", "OK\0", items); a = true; });
+            box.Dispatcher.BeginInvoke(async () =>
+            {
+                ans = await PopupDialog.DisplayActionSheet(title, "Cancel\0", "OK\0", items);
+                a = true;
+            });
             while (!a) Thread.Sleep(200);
             if (ans == "OK\0" && ans == "Cancel\0")
             {
