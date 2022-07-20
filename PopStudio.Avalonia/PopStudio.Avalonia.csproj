@@ -18,6 +18,8 @@
 	<IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
 	<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
 	<IlcDisableUnhandledExceptionExperience>true</IlcDisableUnhandledExceptionExperience>
+	  <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>TRACE;WINDOWS</DefineConstants>

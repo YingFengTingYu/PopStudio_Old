@@ -61,11 +61,13 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<Image x:Name="Image_Shell" HorizontalAlignment="Left" Margin="10 0 0 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio/Assets/Images/shell.png" ZIndex="2" Tapped="Image_Shell_Tapped" />
+				<StackPanel Orientation="Horizontal" Background="CornflowerBlue" >
+					<Image x:Name="Image_Shell" Margin="10 0 0 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio/Assets/Images/shell.png" ZIndex="2" Tapped="Image_Shell_Tapped" />
 
-				<Image x:Name="Image_TopMost" HorizontalAlignment="Right" Margin="0 0 10 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio/Assets/Images/topmost.png" ZIndex="2" Tapped="Image_TopMost_Tapped" />
+					<Image x:Name="Image_TopMost" Margin="10 0 0 0" Width="20" Height="20" Stretch="Fill" Cursor="Hand" Source="avares://PopStudio/Assets/Images/topmost.png" ZIndex="2" Tapped="Image_TopMost_Tapped" />
 
-				<Label x:Name="Label_Head" Background="CornflowerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
+					<Label x:Name="Label_Head" Margin="10 0 0 0" VerticalContentAlignment="Center" FontSize="18" Foreground="White" />
+				</StackPanel>
 
 				<ContentControl x:Name="PageControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"/>
 			</Grid>

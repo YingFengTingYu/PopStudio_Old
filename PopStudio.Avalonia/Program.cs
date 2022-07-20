@@ -24,7 +24,7 @@ namespace PopStudio.Avalonia
             catch (Exception)
             {
             }
-            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args, global::Avalonia.Controls.ShutdownMode.OnMainWindowClose);
         }
 
         // Avalonia configuration, don't remove; also used by visual designer.

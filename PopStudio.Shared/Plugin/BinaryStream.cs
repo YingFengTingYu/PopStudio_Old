@@ -1253,12 +1253,47 @@ namespace PopStudio.Plugin
 
         public void CopyTo(Stream s)
         {
-            BaseStream.CopyTo(s);
+            byte[] array = new byte[81920];
+            int count;
+            while ((count = Read(array, 0, array.Length)) != 0)
+            {
+                s.Write(array, 0, count);
+            }
         }
 
         public void CopyTo(Stream s, long Length)
         {
             byte[] array = new byte[81920];
+            int count;
+            int length2 = array.Length;
+            long times = Length / length2;
+            for (long i = 0; i < times; i++)
+            {
+                count = Read(array, 0, length2);
+                if (count == 0) return;
+                s.Write(array, 0, count);
+            }
+            length2 = (int)(Length % length2);
+            if (length2 != 0)
+            {
+                Read(array, 0, length2);
+                s.Write(array, 0, length2);
+            }
+        }
+
+        public void CopyTo(Stream s, byte[] array)
+        {
+            array ??= new byte[81920];
+            int count;
+            while ((count = Read(array, 0, array.Length)) != 0)
+            {
+                s.Write(array, 0, count);
+            }
+        }
+
+        public void CopyTo(Stream s, long Length, byte[] array)
+        {
+            array ??= new byte[81920];
             int count;
             int length2 = array.Length;
             long times = Length / length2;

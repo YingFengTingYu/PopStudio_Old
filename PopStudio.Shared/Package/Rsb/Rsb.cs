@@ -8,6 +8,7 @@ namespace PopStudio.Package.Rsb
 
         public static void Pack(string inFolder, string outFile)
         {
+            byte[] RsbPackBuffer = new byte[81920];
             Dir.FormatAndDeleteEndPathSeparator(ref inFolder);
             Dir.FormatAndDeleteEndPathSeparator(ref outFile);
             if (!Directory.Exists(inFolder))
@@ -199,7 +200,7 @@ namespace PopStudio.Package.Rsb
                                                 ptx.alphaSize = bsindexunknow.ReadUInt32();
                                                 ptx.alphaFormat = bsindexunknow.ReadUInt32();
                                                 rsgp.fileList.Add(new CompressString(fileid, new RsgpPart1ExtraInfo((uint)bsP1.Position, (uint)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
-                                                bsindexunknow.CopyTo(bsP1);
+                                                bsindexunknow.CopyTo(bsP1, RsbPackBuffer);
                                                 bsP1.Length = FourK(bsP1.Position);
                                                 bsP1.Position = bsP1.Length;
                                             }
@@ -212,7 +213,7 @@ namespace PopStudio.Package.Rsb
                                             using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value)))
                                             {
                                                 rsgp.fileList.Add(new CompressString(fileid, new RsgpPart0ExtraInfo((uint)bsP0.Position, (uint)bsindexunknow.Length)));
-                                                bsindexunknow.CopyTo(bsP0);
+                                                bsindexunknow.CopyTo(bsP0, RsbPackBuffer);
                                                 bsP0.Length = FourK(bsP0.Position);
                                                 bsP0.Position = bsP0.Length;
                                             }
@@ -230,7 +231,7 @@ namespace PopStudio.Package.Rsb
                                     {
                                         using (ZLibStream zLibStream = new ZLibStream(bsP0over, level, true))
                                         {
-                                            bsP0.CopyTo(zLibStream);
+                                            bsP0.CopyTo(zLibStream, RsbPackBuffer);
                                         }
                                         if (bsP0over.Length == 0)
                                         {
@@ -246,18 +247,18 @@ namespace PopStudio.Package.Rsb
                                     }
                                     else
                                     {
-                                        bsP0.CopyTo(bsP0over);
+                                        bsP0.CopyTo(bsP0over, RsbPackBuffer);
                                     }
                                     if (compressPart1)
                                     {
                                         using (ZLibStream zLibStream = new ZLibStream(bsP1over, level, true))
                                         {
-                                            bsP1.CopyTo(zLibStream);
+                                            bsP1.CopyTo(zLibStream, RsbPackBuffer);
                                         }
                                     }
                                     else
                                     {
-                                        bsP1.CopyTo(bsP1over);
+                                        bsP1.CopyTo(bsP1over, RsbPackBuffer);
                                     }
                                     bsP0over.Length = FourK(bsP0over.Position);
                                     bsP1over.Length = FourK(bsP1over.Position);
@@ -281,14 +282,14 @@ namespace PopStudio.Package.Rsb
                             bs_rsgpfile.Length = FourK(bs_rsgpfile.Position);
                             bs_rsgpfile.Position = bs_rsgpfile.Length;
                             rsgp.head.fileOffset = rsgp.head.part0_Offset = rsgpinfo.fileOffset = rsgpinfo.part0_Offset = (uint)(bs_rsgpfile.Position - off);
-                            bsP0over.CopyTo(bs_rsgpfile);
+                            bsP0over.CopyTo(bs_rsgpfile, RsbPackBuffer);
                             rsgp.head.part1_Offset = rsgpinfo.part1_Offset = (uint)(bs_rsgpfile.Position - off);
                             uint poolp1size = rsgp.head.part0_Offset + rsgp.head.part0_Size;
                             if (poolp1size > autopool.part1_MaxOffset_InDecompress)
                             {
                                 autopool.part1_MaxOffset_InDecompress = poolp1size;
                             }
-                            bsP1over.CopyTo(bs_rsgpfile);
+                            bsP1over.CopyTo(bs_rsgpfile, RsbPackBuffer);
                         }
                     }
                     //write head
@@ -395,7 +396,7 @@ namespace PopStudio.Package.Rsb
                                                 ptx.alphaSize = bsindexunknow.ReadUInt32();
                                                 ptx.alphaFormat = bsindexunknow.ReadUInt32();
                                                 rsgp.fileList.Add(new CompressString(fileid, new RsgpPart1ExtraInfo((uint)bsP1.Position, (uint)(bsindexunknow.Length - 0x20), thisPtxNumber++, ptx.width, ptx.height)));
-                                                bsindexunknow.CopyTo(bsP1);
+                                                bsindexunknow.CopyTo(bsP1, RsbPackBuffer);
                                                 bsP1.Length = FourK(bsP1.Position);
                                                 bsP1.Position = bsP1.Length;
                                             }
@@ -408,7 +409,7 @@ namespace PopStudio.Package.Rsb
                                             using (BinaryStream bsindexunknow = BinaryStream.Open(Dir.FormatPath(inFolder + childchildlist[j].Attributes["id"].Value)))
                                             {
                                                 rsgp.fileList.Add(new CompressString(fileid, new RsgpPart0ExtraInfo((uint)bsP0.Position, (uint)bsindexunknow.Length)));
-                                                bsindexunknow.CopyTo(bsP0);
+                                                bsindexunknow.CopyTo(bsP0, RsbPackBuffer);
                                                 bsP0.Length = FourK(bsP0.Position);
                                                 bsP0.Position = bsP0.Length;
                                             }
@@ -422,7 +423,7 @@ namespace PopStudio.Package.Rsb
                                     {
                                         using (ZLibStream zLibStream = new ZLibStream(bsP0over, level, true))
                                         {
-                                            bsP0.CopyTo(zLibStream);
+                                            bsP0.CopyTo(zLibStream, RsbPackBuffer);
                                         }
                                         if (bsP0over.Length == 0)
                                         {
@@ -438,18 +439,18 @@ namespace PopStudio.Package.Rsb
                                     }
                                     else
                                     {
-                                        bsP0.CopyTo(bsP0over);
+                                        bsP0.CopyTo(bsP0over, RsbPackBuffer);
                                     }
                                     if (compressPart1)
                                     {
                                         using (ZLibStream zLibStream = new ZLibStream(bsP1over, level, true))
                                         {
-                                            bsP1.CopyTo(zLibStream);
+                                            bsP1.CopyTo(zLibStream, RsbPackBuffer);
                                         }
                                     }
                                     else
                                     {
-                                        bsP1.CopyTo(bsP1over);
+                                        bsP1.CopyTo(bsP1over, RsbPackBuffer);
                                     }
                                     bsP0over.Length = FourK(bsP0over.Position);
                                     bsP1over.Length = FourK(bsP1over.Position);
@@ -473,10 +474,10 @@ namespace PopStudio.Package.Rsb
                             bs_rsgpfile.Length = FourK(bs_rsgpfile.Position);
                             bs_rsgpfile.Position = bs_rsgpfile.Length;
                             rsgp.head.fileOffset = rsgp.head.part0_Offset = rsgpinfo.fileOffset = rsgpinfo.part0_Offset = (uint)(bs_rsgpfile.Position - off);
-                            bsP0over.CopyTo(bs_rsgpfile);
+                            bsP0over.CopyTo(bs_rsgpfile, RsbPackBuffer);
                             rsgp.head.part1_Offset = rsgpinfo.part1_Offset = (uint)(bs_rsgpfile.Position - off);
                             autopool.part1_MaxOffset_InDecompress = rsgp.head.part0_Offset + rsgp.head.part0_Size; //Not zsize
-                            bsP1over.CopyTo(bs_rsgpfile);
+                            bsP1over.CopyTo(bs_rsgpfile, RsbPackBuffer);
                         }
                     }
                     //write head
@@ -590,7 +591,7 @@ namespace PopStudio.Package.Rsb
                         int k = bs_xml.ReadInt32();
                         rsb.head.xmlPart2_BeginOffset = (uint)(rsb.head.xmlPart1_BeginOffset + bs_xml.ReadInt32() - k);
                         rsb.head.xmlPart3_BeginOffset = (uint)(rsb.head.xmlPart1_BeginOffset + bs_xml.ReadInt32() - k);
-                        bs_xml.CopyTo(bs);
+                        bs_xml.CopyTo(bs, RsbPackBuffer);
                     }
                 }
                 bs.Length = FourK(bs.Position);
@@ -601,7 +602,7 @@ namespace PopStudio.Package.Rsb
                     rsb.rsgpInfo[i].offset += rsb.head.headLength;
                 }
                 bs_rsgpfile.Position = 0;
-                bs_rsgpfile.CopyTo(bs);
+                bs_rsgpfile.CopyTo(bs, RsbPackBuffer);
                 bs.Position = rsb.head.rsgpInfo_BeginOffset;
                 for (int i = 0; i < rsb.head.rsgp_Number; i++)
                 {
@@ -618,7 +619,7 @@ namespace PopStudio.Package.Rsb
                         bs_e.WriteInt32((int)bs.Length);
                         using (ZLibStream zLibStream = new ZLibStream(bs_e, CompressionLevel.SmallestSize))
                         {
-                            bs.CopyTo(zLibStream);
+                            bs.CopyTo(zLibStream, RsbPackBuffer);
                         }
                     }
                 }

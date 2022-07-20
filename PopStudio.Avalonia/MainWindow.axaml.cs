@@ -10,6 +10,8 @@ namespace PopStudio.Avalonia
     public partial class MainWindow : Window
     {
         public static MainWindow Singleten;
+        public Point downPos;
+        // public bool isPressed = false;
 
         public MainWindow()
         {
@@ -23,6 +25,27 @@ namespace PopStudio.Avalonia
             //Binding size changed event
             this.GetObservable(ClientSizeProperty).Subscribe(Window_SizeChanged);
         }
+
+        //private void Label_Head_PointerMoved(object sender, global::Avalonia.Input.PointerEventArgs e)
+        //{
+        //    if (isPressed)
+        //    {
+        //        PixelPoint po = Position;
+        //        Point po2 = e.GetPosition(this);
+        //        Position = new PixelPoint((int)(po.X + po2.X - downPos.X), (int)(po.Y + po2.Y - downPos.Y));
+        //    }
+        //}
+
+        //private void Label_Head_PointerPressed(object sender, global::Avalonia.Input.PointerPressedEventArgs e)
+        //{
+        //    downPos = e.GetPosition(this);
+        //    isPressed = true;
+        //}
+
+        //private void Label_Head_PointerReleased(object sender, global::Avalonia.Input.PointerReleasedEventArgs e)
+        //{
+        //    isPressed = false;
+        //}
 
         public async void Prepare()
         {
