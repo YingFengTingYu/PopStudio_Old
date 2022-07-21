@@ -294,6 +294,14 @@
         public string Compress_Choose4 => "The compressed file path";
         public string Compress_Choose5 => "The path of generated file";
         public string Compress_Choose6 => "Compressing Mode";
+        public string Compress_Mode1_Batch => "Batch Decompress";
+        public string Compress_Mode2_Batch => "Batch Compress";
+        public string Compress_Choose1_Batch => "The decompressed folder path";
+        public string Compress_Choose2_Batch => "The path of generated folder";
+        public string Compress_Choose3_Batch => "Decompressing Mode";
+        public string Compress_Choose4_Batch => "The compressed folder path";
+        public string Compress_Choose5_Batch => "The path of generated folder";
+        public string Compress_Choose6_Batch => "Compressing Mode";
 
         //Package
         public string Package_Title => "Package";
@@ -339,6 +347,8 @@
         public string Share_RunStatue => "Execution status:";
         public string Share_Waiting => "Waiting";
         public string Share_Running => "Executing......";
+        public string Share_SingleMode => "Single File Mode";
+        public string Share_BatchMode => "Batch Mode";
 
         //Permission
         public string Permission_Title => "Permissions Request";

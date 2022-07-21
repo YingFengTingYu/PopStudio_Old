@@ -294,6 +294,14 @@
         public string Compress_Choose4 => "请填写被压缩的文件路径";
         public string Compress_Choose5 => "请填写压缩生成文件存放路径";
         public string Compress_Choose6 => "请选择压缩模式";
+        public string Compress_Mode1_Batch => "批量解压模式";
+        public string Compress_Mode2_Batch => "批量压缩模式";
+        public string Compress_Choose1_Batch => "请填写被解压的文件夹路径";
+        public string Compress_Choose2_Batch => "请填写解压生成文件夹存放路径";
+        public string Compress_Choose3_Batch => "请选择解压模式";
+        public string Compress_Choose4_Batch => "请填写被压缩的文件夹路径";
+        public string Compress_Choose5_Batch => "请填写压缩生成文件夹存放路径";
+        public string Compress_Choose6_Batch => "请选择压缩模式";
 
         //Package
         public string Package_Title => "解包打包";
@@ -339,6 +347,8 @@
         public string Share_RunStatue => "执行状态：";
         public string Share_Waiting => "等待中";
         public string Share_Running => "执行中......";
+        public string Share_SingleMode => "单文件模式";
+        public string Share_BatchMode => "批量模式";
 
         //Permission
         public string Permission_Title => "权限申请";

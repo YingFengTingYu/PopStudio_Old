@@ -298,6 +298,14 @@
         public string Compress_Choose4 { get; }
         public string Compress_Choose5 { get; }
         public string Compress_Choose6 { get; }
+        public string Compress_Mode1_Batch { get; }
+        public string Compress_Mode2_Batch { get; }
+        public string Compress_Choose1_Batch { get; }
+        public string Compress_Choose2_Batch { get; }
+        public string Compress_Choose3_Batch { get; }
+        public string Compress_Choose4_Batch { get; }
+        public string Compress_Choose5_Batch { get; }
+        public string Compress_Choose6_Batch { get; }
 
         //Package
         public string Package_Title { get; }
@@ -342,6 +350,8 @@
         public string Share_RunStatue { get; }
         public string Share_Waiting { get; }
         public string Share_Running { get; }
+        public string Share_SingleMode { get; }
+        public string Share_BatchMode { get; }
 
         //Permission
         public string Permission_Title { get; }
