@@ -262,6 +262,14 @@
         public string RTON_Choose4 { get; }
         public string RTON_Choose5 { get; }
         public string RTON_Choose6 { get; }
+        public string RTON_Mode1_Batch { get; }
+        public string RTON_Mode2_Batch { get; }
+        public string RTON_Choose1_Batch { get; }
+        public string RTON_Choose2_Batch { get; }
+        public string RTON_Choose3_Batch { get; }
+        public string RTON_Choose4_Batch { get; }
+        public string RTON_Choose5_Batch { get; }
+        public string RTON_Choose6_Batch { get; }
 
         //Trail
         public string Trail_Title { get; }

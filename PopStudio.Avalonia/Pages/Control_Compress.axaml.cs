@@ -181,17 +181,28 @@ namespace PopStudio.Avalonia.Pages
                         {
                             throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
                         }
+                        inFile = YFAPI.FormatPath(inFile);
+                        int length = inFile.Length;
                         string[] files = YFAPI.GetFiles(inFile);
                         YFAPI.NewDir(outFile);
                         foreach (string mfile in files)
                         {
-                            if (mode)
+                            string newPath = YFAPI.FormatPath(outFile + mfile[length..] + ".out");
+                            YFAPI.NewDir(newPath, false);
+                            try
                             {
-                                YFAPI.Compress(mfile, YFAPI.FormatPath(outFile + "/" + Path.GetFileName(mfile) + ".out"), cmode);
+                                if (mode)
+                                {
+                                    YFAPI.Compress(mfile, newPath, cmode);
+                                }
+                                else
+                                {
+                                    YFAPI.Decompress(mfile, newPath, cmode);
+                                }
                             }
-                            else
+                            catch (Exception)
                             {
-                                YFAPI.Decompress(mfile, YFAPI.FormatPath(outFile + "/" + Path.GetFileName(mfile) + ".out"), cmode);
+                                File.Delete(newPath);
                             }
                         }
                     }

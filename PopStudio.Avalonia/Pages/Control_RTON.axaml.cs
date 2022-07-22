@@ -36,6 +36,9 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadControl()
         {
+            label_batch1 = this.Get<TextBlock>("label_batch1");
+            label_batch2 = this.Get<TextBlock>("label_batch2");
+            batch_mode = this.Get<ToggleSwitch>("batch_mode");
             label_introduction = this.Get<TextBlock>("label_introduction");
             label_choosemode = this.Get<TextBlock>("label_choosemode");
             label_mode1 = this.Get<TextBlock>("label_mode1");
@@ -56,10 +59,20 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadFont()
         {
+            label_batch1.Text = MAUIStr.Obj.Share_SingleMode;
+            label_batch2.Text = MAUIStr.Obj.Share_BatchMode;
             label_introduction.Text = MAUIStr.Obj.RTON_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-            label_mode1.Text = MAUIStr.Obj.RTON_Mode1;
-            label_mode2.Text = MAUIStr.Obj.RTON_Mode2;
+            if (batch_mode.IsChecked == true)
+            {
+                label_mode1.Text = MAUIStr.Obj.RTON_Mode1_Batch;
+                label_mode2.Text = MAUIStr.Obj.RTON_Mode2_Batch;
+            }
+            else
+            {
+                label_mode1.Text = MAUIStr.Obj.RTON_Mode1;
+                label_mode2.Text = MAUIStr.Obj.RTON_Mode2;
+            }
             LoadFont_Checked(TB_Mode.IsChecked == true);
             button1.Content = MAUIStr.Obj.Share_Choose;
             button2.Content = MAUIStr.Obj.Share_Choose;
@@ -70,17 +83,35 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadFont_Checked(bool v)
         {
-            if (v)
+            if (batch_mode.IsChecked == true)
             {
-                text1.Text = MAUIStr.Obj.RTON_Choose4;
-                text2.Text = MAUIStr.Obj.RTON_Choose5;
-                text3.Text = MAUIStr.Obj.RTON_Choose6;
+                if (v)
+                {
+                    text1.Text = MAUIStr.Obj.RTON_Choose4_Batch;
+                    text2.Text = MAUIStr.Obj.RTON_Choose5_Batch;
+                    text3.Text = MAUIStr.Obj.RTON_Choose6_Batch;
+                }
+                else
+                {
+                    text1.Text = MAUIStr.Obj.RTON_Choose1_Batch;
+                    text2.Text = MAUIStr.Obj.RTON_Choose2_Batch;
+                    text3.Text = MAUIStr.Obj.RTON_Choose3_Batch;
+                }
             }
             else
             {
-                text1.Text = MAUIStr.Obj.RTON_Choose1;
-                text2.Text = MAUIStr.Obj.RTON_Choose2;
-                text3.Text = MAUIStr.Obj.RTON_Choose3;
+                if (v)
+                {
+                    text1.Text = MAUIStr.Obj.RTON_Choose4;
+                    text2.Text = MAUIStr.Obj.RTON_Choose5;
+                    text3.Text = MAUIStr.Obj.RTON_Choose6;
+                }
+                else
+                {
+                    text1.Text = MAUIStr.Obj.RTON_Choose1;
+                    text2.Text = MAUIStr.Obj.RTON_Choose2;
+                    text3.Text = MAUIStr.Obj.RTON_Choose3;
+                }
             }
         }
 
@@ -93,11 +124,16 @@ namespace PopStudio.Avalonia.Pages
             }
         }
 
+        private void Switch_Batch_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadFont();
+        }
+
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string val = (await new OpenFileDialog { AllowMultiple = false }.ShowAsync(MainWindow.Singleten))?[0];
+                string val = batch_mode.IsChecked == false ? (await new OpenFileDialog { AllowMultiple = false }.ShowAsync(MainWindow.Singleten))?[0] : (await new OpenFolderDialog().ShowAsync(MainWindow.Singleten));
                 if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
             }
             catch (Exception)
@@ -109,7 +145,7 @@ namespace PopStudio.Avalonia.Pages
         {
             try
             {
-                string val = await new SaveFileDialog().ShowAsync(MainWindow.Singleten);
+                string val = batch_mode.IsChecked == false ? (await new SaveFileDialog().ShowAsync(MainWindow.Singleten)) : (await new OpenFolderDialog().ShowAsync(MainWindow.Singleten));
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
             }
             catch (Exception)
@@ -126,6 +162,7 @@ namespace PopStudio.Avalonia.Pages
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
             int cmode = CB_CMode.SelectedIndex;
+            bool batchmode = batch_mode.IsChecked == true;
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
@@ -133,17 +170,57 @@ namespace PopStudio.Avalonia.Pages
                 sw.Start();
                 try
                 {
-                    if (!File.Exists(inFile))
+                    if (batchmode)
                     {
-                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
-                    }
-                    if (mode == true)
-                    {
-                        YFAPI.EncodeRTON(inFile, outFile, cmode);
+                        if (!Directory.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
+                        }
+                        inFile = YFAPI.FormatPath(inFile);
+                        int length = inFile.Length;
+                        string[] files = YFAPI.GetFiles(inFile);
+                        YFAPI.NewDir(outFile);
+                        foreach (string mfile in files)
+                        {
+                            string newPath = YFAPI.FormatPath(outFile + mfile[length..] + ".out");
+                            YFAPI.NewDir(newPath, false);
+                            try
+                            {
+                                if (mode)
+                                {
+                                    YFAPI.EncodeRTON(mfile, newPath, cmode);
+                                }
+                                else
+                                {
+                                    YFAPI.DecodeRTON(mfile, newPath, cmode);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                File.Delete(newPath);
+                            }
+                        }
                     }
                     else
                     {
-                        YFAPI.DecodeRTON(inFile, outFile, cmode);
+                        if (!File.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
+                        }
+                        if (Directory.Exists(outFile))
+                        {
+                            outFile += "/" + Path.GetFileName(inFile) + ".out";
+                            outFile = YFAPI.FormatPath(outFile);
+                        }
+                        YFAPI.NewDir(outFile, false);
+                        if (mode)
+                        {
+                            YFAPI.EncodeRTON(inFile, outFile, cmode);
+                        }
+                        else
+                        {
+                            YFAPI.DecodeRTON(inFile, outFile, cmode);
+                        }
                     }
                 }
                 catch (Exception ex)

@@ -258,6 +258,14 @@
         public string RTON_Choose4 => "请填写被编码的文件路径";
         public string RTON_Choose5 => "请填写编码生成文件存放路径";
         public string RTON_Choose6 => "请选择编码模式";
+        public string RTON_Mode1_Batch => "批量解码模式";
+        public string RTON_Mode2_Batch => "批量编码模式";
+        public string RTON_Choose1_Batch => "请填写被解码的文件夹路径";
+        public string RTON_Choose2_Batch => "请填写解码生成文件夹存放路径";
+        public string RTON_Choose3_Batch => "请选择解码模式";
+        public string RTON_Choose4_Batch => "请填写被编码的文件夹路径";
+        public string RTON_Choose5_Batch => "请填写编码生成文件夹存放路径";
+        public string RTON_Choose6_Batch => "请选择编码模式";
 
         //Trail
         public string Trail_Title => "Trail转码";

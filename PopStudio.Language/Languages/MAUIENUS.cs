@@ -258,6 +258,14 @@
         public string RTON_Choose4 => "The encoded file path";
         public string RTON_Choose5 => "The path of generated file";
         public string RTON_Choose6 => "Encoding Mode";
+        public string RTON_Mode1_Batch => "Batch Decode";
+        public string RTON_Mode2_Batch => "Batch Encode";
+        public string RTON_Choose1_Batch => "The decoded folder path";
+        public string RTON_Choose2_Batch => "The path of generated folder";
+        public string RTON_Choose3_Batch => "Decoding Mode";
+        public string RTON_Choose4_Batch => "The encoded folder path";
+        public string RTON_Choose5_Batch => "The path of generated folder";
+        public string RTON_Choose6_Batch => "Encoding Mode";
 
         //Trail
         public string Trail_Title => "Trail";
