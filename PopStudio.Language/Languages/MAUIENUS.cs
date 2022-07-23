@@ -175,10 +175,10 @@
         public string Setting_Clear => "Clear All";
         public string Setting_ItemPak => "Compression Method of PakPS3 Packing";
         public string Setting_IntroPak => "Different compression methods can be selected for each format of files when packing Pak for PS3. Store and Zlib compression are supported now. If the compression method of a format is not specified, the default compression method will be adopted. ";
-        public string Setting_ItemRsb => "PTX0 Format of Rsb Unpacking and Packing";
-        public string Setting_IntroRsb => "If it is necessary to decode and encode PTX when unpacking and packing Rsb, you need to specify the decoding and encoding method of ptx0. If neither is checked, it will use ARGB8888 mode. ";
-        public string Setting_ItemPtx => "PTX0 Format for decoding";
-        public string Setting_IntroPtx => "When decoding PTX0, you need to specify the decoding method. If neither is checked, it will use ARGB8888 mode. ";
+        public string Setting_ItemRsb => "PTX0/149 Format of Rsb Unpacking and Packing";
+        public string Setting_IntroRsb => "If it is necessary to decode and encode PTX when unpacking and packing Rsb, you need to specify the decoding and encoding method of ptx0/149. If neither is checked, it will use ARGB8888 mode. ";
+        public string Setting_ItemPtx => "PTX0/149 Format for decoding";
+        public string Setting_IntroPtx => "When decoding PTX0/149, you need to specify the decoding method. If neither is checked, it will use ARGB8888 mode. ";
         public string Setting_ItemCdat => "Cdat Cipher";
         public string Setting_IntroCdat => "Cdat is the encryption PNG format of PVZ free. The program provides the key by default, and you can change it by yourself. ";
         public string Setting_ItemRTON => "RTON Cipher";
@@ -289,6 +289,8 @@
         public string Trail_Introduction => "Through trail transcoding, you can obtain and modify the content of the game trail effect! ";
         public string Trail_Choose1 => "Path of in file";
         public string Trail_Choose2 => "Path of out file";
+        public string Trail_Choose1_Batch => "Path of in folder";
+        public string Trail_Choose2_Batch => "Path of out folder";
         public string Trail_InFormat => "Format of in file";
         public string Trail_OutFormat => "Format of out file";
 
@@ -297,6 +299,8 @@
         public string Reanim_Introduction => "Obtain and modify the game action content through reanim transcoding! ";
         public string Reanim_Choose1 => "Path of in file";
         public string Reanim_Choose2 => "Path of out file";
+        public string Reanim_Choose1_Batch => "Path of in folder";
+        public string Reanim_Choose2_Batch => "Path of out folder";
         public string Reanim_InFormat => "Format of in file";
         public string Reanim_OutFormat => "Format of out file";
 
@@ -305,6 +309,8 @@
         public string Particles_Introduction => "Get and modify the content of game particle effects through particles transcoding! ";
         public string Particles_Choose1 => "Path of in file";
         public string Particles_Choose2 => "Path of out file";
+        public string Particles_Choose1_Batch => "Path of in folder";
+        public string Particles_Choose2_Batch => "Path of out folder";
         public string Particles_InFormat => "Format of in file";
         public string Particles_OutFormat => "Format of out file";
 

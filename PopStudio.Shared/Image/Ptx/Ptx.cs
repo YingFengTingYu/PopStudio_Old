@@ -28,6 +28,7 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.ARGB8888;
                             break;
                         case 2:
+                        default:
                             head.check = Texture.RGBA4444.Write(bs, sKBitmap);
                             head.format = PtxFormat.RGBA4444;
                             break;
@@ -62,54 +63,53 @@ namespace PopStudio.Image.Ptx
                             head.format = PtxFormat.ARGB8888_A8;
                             break;
                         case 9:
+                            head.check = Texture.XBGR8888_A8.Write(bs, sKBitmap);
+                            head.format = PtxFormat.ARGB8888_A8;
+                            break;
+                        case 10:
                             bs.Endian = Endian.Big;
                             head.check = Texture.ARGB8888.Write(bs, sKBitmap);
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 10:
+                        case 11:
                             bs.Endian = Endian.Big;
                             int w = sKBitmap.Width;
                             if ((w % 64) != 0) w = (w / 64) * 64 + 64;
                             head.check = Texture.ARGB8888_Padding.Write(bs, sKBitmap, w << 2);
                             head.format = PtxFormat.ARGB8888;
                             break;
-                        case 11:
+                        case 12:
                             head.check = Texture.DXT1_RGB.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT1_RGB;
                             break;
-                        case 12:
+                        case 13:
                             head.check = Texture.DXT3_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT3_RGBA;
                             break;
-                        case 13:
+                        case 14:
                             head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT5_RGBA;
                             break;
-                        case 14:
+                        case 15:
                             head.check = Texture.DXT5_RGBA_MortonBlock.Write(bs, sKBitmap); //Just in ps4
                             head.format = PtxFormat.DXT5_RGBA_MortonBlock;
                             break;
-                        case 15:
+                        case 16:
                             head.check = Texture.DXT5_RGBA.Write(bs, sKBitmap);
                             head.format = PtxFormat.DXT5_RGBA_MortonBlock; //the texture is also small endian
                             bs.Endian = Endian.Big; //but the info is big endian
                             break;
-                        case 16:
+                        case 17:
                             head.check = Texture.ETC1_RGB.Write(bs, sKBitmap);
                             head.format = PtxFormat.ETC1_RGB;
                             break;
-                        case 17:
+                        case 18:
                             head.check = Texture.ETC1_RGB_A8.Write(bs, sKBitmap);
                             head.format = PtxFormat.ETC1_RGB_A8;
                             break;
-                        case 18:
-                            head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
-                            head.format = PtxFormat.ETC1_RGB_A8; //Also 147
-                            head.alphaFormat = 0x64;
-                            break;
                         case 19:
                             head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
-                            head.format = PtxFormat.ETC1_RGB_A_Palette;
+                            head.format = PtxFormat.ETC1_RGB_A8; //Also 147
                             head.alphaFormat = 0x64;
                             break;
                         case 20:
@@ -132,8 +132,6 @@ namespace PopStudio.Image.Ptx
                             head.check = Texture.ATC_RGBA4.Write(bs, sKBitmap);
                             head.format = PtxFormat.ATC_RGBA4;
                             break;
-                        default:
-                            throw new Exception(Str.Obj.UnknownFormat);
                     }
                     bs.Position = off;
                     head.Write(bs);
@@ -175,6 +173,7 @@ namespace PopStudio.Image.Ptx
                             }
                             break;
                         case PtxFormat.RGBA4444:
+                        default:
                             head.check = Texture.RGBA4444.Write(bs, sKBitmap);
                             break;
                         case PtxFormat.RGB565:
@@ -249,14 +248,19 @@ namespace PopStudio.Image.Ptx
                             head.check = Texture.PVRTC_4BPP_RGBA_A8.Write(bs, sKBitmap);
                             break;
                         case PtxFormat.ARGB8888_A8:
-                            head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
+                            if (Setting.RsbPtxABGR8888Mode)
+                            {
+                                head.check = Texture.XBGR8888_A8.Write(bs, sKBitmap);
+                            }
+                            else
+                            {
+                                head.check = Texture.XRGB8888_A8.Write(bs, sKBitmap);
+                            }
                             break;
                         case PtxFormat.ETC1_RGB_A_Palette:
                             head.check = Texture.ETC1_RGB_A_Palette.Write(bs, sKBitmap, out head.alphaSize);
                             head.alphaFormat = 0x64;
                             break;
-                        default:
-                            throw new Exception(Str.Obj.UnknownFormat);
                     }
                     bs.Position = off;
                     head.Write(bs);
@@ -299,6 +303,7 @@ namespace PopStudio.Image.Ptx
                         }
                         break;
                     case PtxFormat.RGBA4444:
+                    default:
                         using (YFBitmap sKBitmap = Texture.RGBA4444.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
@@ -424,19 +429,21 @@ namespace PopStudio.Image.Ptx
                         }
                         break;
                     case PtxFormat.ARGB8888_A8:
-                        using (YFBitmap sKBitmap = Texture.XRGB8888_A8.Read(bs, head.width, head.height))
+                        if ((fromrsb && Setting.RsbPtxABGR8888Mode) || ((!fromrsb) && Setting.PtxABGR8888Mode))
                         {
-                            sKBitmap.Save(outFile);
+                            using (YFBitmap sKBitmap = Texture.XBGR8888_A8.Read(bs, head.width, head.height))
+                            {
+                                sKBitmap.Save(outFile);
+                            }
+                        }
+                        else
+                        {
+                            using (YFBitmap sKBitmap = Texture.XRGB8888_A8.Read(bs, head.width, head.height))
+                            {
+                                sKBitmap.Save(outFile);
+                            }
                         }
                         break;
-                    case PtxFormat.ETC1_RGB_A_Palette:
-                        using (YFBitmap sKBitmap = Texture.ETC1_RGB_A_Palette.Read(bs, head.width, head.height))
-                        {
-                            sKBitmap.Save(outFile);
-                        }
-                        break;
-                    default:
-                        throw new Exception(Str.Obj.UnknownFormat);
                 }
             }
         }

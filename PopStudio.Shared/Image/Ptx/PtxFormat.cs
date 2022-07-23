@@ -20,7 +20,7 @@
         ATC_RGBA4,
         ETC1_RGB_A8 = 147, //ETC1_RGB_A_Palette
         PVRTC_4BPP_RGBA_A8,
-        ARGB8888_A8,
+        ARGB8888_A8, //ABGR8888_A8
         ETC1_RGB_A_Palette
     }
 }

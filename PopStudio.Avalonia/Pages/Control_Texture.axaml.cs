@@ -38,7 +38,8 @@ namespace PopStudio.Avalonia.Pages
                 "RGBA4444_Block(21)",
                 "RGB565_Block(22)",
                 "RGBA5551_Block(23)",
-                "XRGB8888_A8(149)",
+                "ARGB8888_A8(149)",
+                "ABGR8888_A8(149)",
                 "ARGB8888(BE)(0)",
                 "ARGB8888_Padding(BE)(0)",
                 "DXT1_RGB(35)",
@@ -49,9 +50,8 @@ namespace PopStudio.Avalonia.Pages
                 "ETC1_RGB(32)",
                 "ETC1_RGB_A8(147)",
                 "ETC1_RGB_A_Palette(147)",
-                "ETC1_RGB_A_Palette(150)",
                 "PVRTC_4BPP_RGBA(30)",
-                "PVRTC_4BPP_RGB_A8(148)",
+                "PVRTC_4BPP_RGBA_A8(148)",
                 "PVRTC_2BPP_RGBA(31)",
                 "ATC_RGB(38)",
                 "ATC_RGBA4(39)",
@@ -342,7 +342,8 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("RGBA4444_Block(21)");
                     FMode_Items.Add("RGB565_Block(22)");
                     FMode_Items.Add("RGBA5551_Block(23)");
-                    FMode_Items.Add("XRGB8888_A8(149)");
+                    FMode_Items.Add("ARGB8888_A8(149)");
+                    FMode_Items.Add("ABGR8888_A8(149)");
                     FMode_Items.Add("ARGB8888(BE)(0)");
                     FMode_Items.Add("ARGB8888_Padding(BE)(0)");
                     FMode_Items.Add("DXT1_RGB(35)");
@@ -353,9 +354,8 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("ETC1_RGB(32)");
                     FMode_Items.Add("ETC1_RGB_A8(147)");
                     FMode_Items.Add("ETC1_RGB_A_Palette(147)");
-                    FMode_Items.Add("ETC1_RGB_A_Palette(150)");
                     FMode_Items.Add("PVRTC_4BPP_RGBA(30)");
-                    FMode_Items.Add("PVRTC_4BPP_RGB_A8(148)");
+                    FMode_Items.Add("PVRTC_4BPP_RGBA_A8(148)");
                     FMode_Items.Add("PVRTC_2BPP_RGBA(31)");
                     FMode_Items.Add("ATC_RGB(38)");
                     FMode_Items.Add("ATC_RGBA4(39)");

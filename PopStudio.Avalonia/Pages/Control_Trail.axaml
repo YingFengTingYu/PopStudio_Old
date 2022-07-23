@@ -6,6 +6,16 @@
              x:Class="PopStudio.Avalonia.Pages.Control_Trail">
 	<ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
 		<StackPanel Orientation="Vertical" Margin="30,24,30,24">
+			<Grid HorizontalAlignment="Center" Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock FontSize="20" x:Name="label_batch1" VerticalAlignment="Center" />
+				<ToggleSwitch x:Name="batch_mode" Grid.Column="1" Checked="Switch_Batch_Checked" Unchecked="Switch_Batch_Checked" />
+				<TextBlock FontSize="20" x:Name="label_batch2" Grid.Column="2" VerticalAlignment="Center" />
+			</Grid>
 			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_introduction" FontSize="16"/>
 			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="text1" />
 			<Grid Margin="0 5 0 5">

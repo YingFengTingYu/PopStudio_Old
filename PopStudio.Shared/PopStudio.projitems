@@ -160,6 +160,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Texture\RGBA5551_Block.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Plugin\YFColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Texture\XBGR8888_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Texture\XRGB8888_A8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\GameConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trail\TrailFormat.cs" />

@@ -175,10 +175,10 @@
         public string Setting_Clear => "清空所有";
         public string Setting_ItemPak => "PakPS3打包文件压缩方式";
         public string Setting_IntroPak => "Pak数据包对于PS3平台打包时对每种格式的文件可以选择是否进行压缩，目前支持Store和Zlib压缩。若未指定某格式的压缩方式则采取默认压缩方式。";
-        public string Setting_ItemRsb => "Rsb解包打包PTX0格式";
-        public string Setting_IntroRsb => "Rsb解包打包时，若需同时进行解码编码PTX，需规定对PTX0解码编码的方式，两者都不勾选即为ARGB8888方式。";
-        public string Setting_ItemPtx => "PTX0图像解码格式";
-        public string Setting_IntroPtx => "PTX0解码时，需规定对PTX0解码的方式，两者都不勾选即为ARGB8888方式。";
+        public string Setting_ItemRsb => "Rsb解包打包PTX0/149格式";
+        public string Setting_IntroRsb => "Rsb解包打包时，若需同时进行解码编码PTX，需规定对PTX0/149解码编码的方式，两者都不勾选即为ARGB8888方式。";
+        public string Setting_ItemPtx => "PTX0/149图像解码格式";
+        public string Setting_IntroPtx => "PTX0/149解码时，需规定解码方式，两者都不勾选即为ARGB8888方式。";
         public string Setting_ItemCdat => "Cdat加密解密密钥";
         public string Setting_IntroCdat => "Cdat是PVZ Free的加密png格式，程序默认提供密钥，你也可以自行更改。";
         public string Setting_ItemRTON => "RTON加密解密密钥";
@@ -289,6 +289,8 @@
         public string Trail_Introduction => "通过Trail转码功能获取和修改游戏拖尾特效内容！";
         public string Trail_Choose1 => "请填写被转换的文件路径";
         public string Trail_Choose2 => "请填写转换生成文件存放路径";
+        public string Trail_Choose1_Batch => "请填写被转换的文件夹路径";
+        public string Trail_Choose2_Batch => "请填写转换生成文件夹存放路径";
         public string Trail_InFormat => "请选择被转换的文件格式";
         public string Trail_OutFormat => "请选择转换生成文件格式";
 
@@ -297,6 +299,8 @@
         public string Reanim_Introduction => "通过Reanim转码功能获取和修改游戏动作内容！";
         public string Reanim_Choose1 => "请填写被转换的文件路径";
         public string Reanim_Choose2 => "请填写转换生成文件存放路径";
+        public string Reanim_Choose1_Batch => "请填写被转换的文件夹路径";
+        public string Reanim_Choose2_Batch => "请填写转换生成文件夹存放路径";
         public string Reanim_InFormat => "请选择被转换的文件格式";
         public string Reanim_OutFormat => "请选择转换生成文件格式";
 
@@ -305,6 +309,8 @@
         public string Particles_Introduction => "通过Particles转码功能获取和修改游戏粒子特效内容！";
         public string Particles_Choose1 => "请填写被转换的文件路径";
         public string Particles_Choose2 => "请填写转换生成文件存放路径";
+        public string Particles_Choose1_Batch => "请填写被转换的文件夹路径";
+        public string Particles_Choose2_Batch => "请填写转换生成文件夹存放路径";
         public string Particles_InFormat => "请选择被转换的文件格式";
         public string Particles_OutFormat => "请选择转换生成文件格式";
 

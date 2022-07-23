@@ -54,6 +54,9 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadControl()
         {
+            label_batch1 = this.Get<TextBlock>("label_batch1");
+            label_batch2 = this.Get<TextBlock>("label_batch2");
+            batch_mode = this.Get<ToggleSwitch>("batch_mode");
             label_introduction = this.Get<TextBlock>("label_introduction");
             text1 = this.Get<TextBlock>("text1");
             text2 = this.Get<TextBlock>("text2");
@@ -72,9 +75,19 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadFont()
         {
+            label_batch1.Text = MAUIStr.Obj.Share_SingleMode;
+            label_batch2.Text = MAUIStr.Obj.Share_BatchMode;
             label_introduction.Text = MAUIStr.Obj.Trail_Introduction;
-            text1.Text = MAUIStr.Obj.Trail_Choose1;
-            text2.Text = MAUIStr.Obj.Trail_Choose2;
+            if (batch_mode.IsChecked == true)
+            {
+                text1.Text = MAUIStr.Obj.Trail_Choose1_Batch;
+                text2.Text = MAUIStr.Obj.Trail_Choose2_Batch;
+            }
+            else
+            {
+                text1.Text = MAUIStr.Obj.Trail_Choose1;
+                text2.Text = MAUIStr.Obj.Trail_Choose2;
+            }
             text_in.Text = MAUIStr.Obj.Trail_InFormat;
             text_out.Text = MAUIStr.Obj.Trail_OutFormat;
             button1.Content = MAUIStr.Obj.Share_Choose;
@@ -84,11 +97,16 @@ namespace PopStudio.Avalonia.Pages
             text4.Text = MAUIStr.Obj.Share_Waiting;
         }
 
+        private void Switch_Batch_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadFont();
+        }
+
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string val = (await new OpenFileDialog { AllowMultiple = false }.ShowAsync(MainWindow.Singleten))?[0];
+                string val = batch_mode.IsChecked == false ? (await new OpenFileDialog { AllowMultiple = false }.ShowAsync(MainWindow.Singleten))?[0] : (await new OpenFolderDialog().ShowAsync(MainWindow.Singleten));
                 if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
             }
             catch (Exception)
@@ -100,7 +118,7 @@ namespace PopStudio.Avalonia.Pages
         {
             try
             {
-                string val = await new SaveFileDialog().ShowAsync(MainWindow.Singleten);
+                string val = batch_mode.IsChecked == false ? (await new SaveFileDialog().ShowAsync(MainWindow.Singleten)) : (await new OpenFolderDialog().ShowAsync(MainWindow.Singleten));
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
             }
             catch (Exception)
@@ -117,6 +135,7 @@ namespace PopStudio.Avalonia.Pages
             string outFile = textbox2.Text;
             int inmode = CB_InMode.SelectedIndex;
             int outmode = CB_OutMode.SelectedIndex;
+            bool batchmode = batch_mode.IsChecked == true;
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
@@ -124,11 +143,73 @@ namespace PopStudio.Avalonia.Pages
                 sw.Start();
                 try
                 {
-                    if (!File.Exists(inFile))
+                    string outFormat = outmode switch
                     {
-                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
+                        0 => ".trail.compiled",
+                        1 => ".trail.compiled",
+                        2 => ".trail.compiled",
+                        3 => ".xnb",
+                        4 => ".trail.compiled",
+                        5 => ".trail.compiled",
+                        6 => ".trail.json",
+                        7 => ".trail",
+                        _ => null
+                    };
+                    if (batchmode)
+                    {
+                        if (!Directory.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
+                        }
+                        inFile = YFAPI.FormatPath(inFile);
+                        int length = inFile.Length;
+                        string[] files = YFAPI.GetFiles(inFile);
+                        YFAPI.NewDir(outFile);
+                        string rightFormat = inmode switch
+                        {
+                            0 => ".trail.compiled",
+                            1 => ".trail.compiled",
+                            2 => ".trail.compiled",
+                            3 => ".xnb",
+                            4 => ".trail.compiled",
+                            5 => ".trail.compiled",
+                            6 => ".trail.json",
+                            7 => ".trail",
+                            _ => null
+                        };
+                        int rightFormatLength = rightFormat.Length;
+                        foreach (string mfile in files)
+                        {
+                            if (mfile.Length < rightFormatLength || mfile[^rightFormatLength..].ToLower() != rightFormat)
+                            {
+                                continue;
+                            }
+                            string newPath = YFAPI.FormatPath(outFile + mfile[length..] + outFormat);
+                            YFAPI.NewDir(newPath, false);
+                            try
+                            {
+                                YFAPI.Trail(mfile, newPath, inmode, outmode);
+                            }
+                            catch (Exception)
+                            {
+                                File.Delete(newPath);
+                            }
+                        }
                     }
-                    YFAPI.Trail(inFile, outFile, inmode, outmode);
+                    else
+                    {
+                        if (!File.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
+                        }
+                        if (outmode != 8 && Directory.Exists(outFile))
+                        {
+                            outFile += "/" + Path.GetFileName(inFile) + outFormat;
+                            outFile = YFAPI.FormatPath(outFile);
+                        }
+                        YFAPI.NewDir(outFile, false);
+                        YFAPI.Trail(inFile, outFile, inmode, outmode);
+                    }
                 }
                 catch (Exception ex)
                 {

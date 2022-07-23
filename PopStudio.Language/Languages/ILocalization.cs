@@ -293,6 +293,8 @@
         public string Trail_Introduction { get; }
         public string Trail_Choose1 { get; }
         public string Trail_Choose2 { get; }
+        public string Trail_Choose1_Batch { get; }
+        public string Trail_Choose2_Batch { get; }
         public string Trail_InFormat { get; }
         public string Trail_OutFormat { get; }
 
@@ -301,6 +303,8 @@
         public string Reanim_Introduction { get; }
         public string Reanim_Choose1 { get; }
         public string Reanim_Choose2 { get; }
+        public string Reanim_Choose1_Batch { get; }
+        public string Reanim_Choose2_Batch { get; }
         public string Reanim_InFormat { get; }
         public string Reanim_OutFormat { get; }
 
@@ -309,6 +313,8 @@
         public string Particles_Introduction { get; }
         public string Particles_Choose1 { get; }
         public string Particles_Choose2 { get; }
+        public string Particles_Choose1_Batch { get; }
+        public string Particles_Choose2_Batch { get; }
         public string Particles_InFormat { get; }
         public string Particles_OutFormat { get; }
 
