@@ -51,7 +51,10 @@ namespace PopStudio.Avalonia.Pages
                 "ETC1_RGB_A_Palette(147)",
                 "ETC1_RGB_A_Palette(150)",
                 "PVRTC_4BPP_RGBA(30)",
-                "PVRTC_4BPP_RGB_A8(148)"
+                "PVRTC_4BPP_RGB_A8(148)",
+                "PVRTC_2BPP_RGBA(31)",
+                "ATC_RGB(38)",
+                "ATC_RGBA4(39)",
             };
             CB_FMode.SelectedIndex = 0;
             CB_CMode.SelectionChanged += CB_CMode_Selected;
@@ -353,6 +356,9 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("ETC1_RGB_A_Palette(150)");
                     FMode_Items.Add("PVRTC_4BPP_RGBA(30)");
                     FMode_Items.Add("PVRTC_4BPP_RGB_A8(148)");
+                    FMode_Items.Add("PVRTC_2BPP_RGBA(31)");
+                    FMode_Items.Add("ATC_RGB(38)");
+                    FMode_Items.Add("ATC_RGBA4(39)");
                     break;
                 case 1:
                     FMode_Items.Add("Encrypt");
@@ -365,7 +371,6 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("RGB565(4)");
                     break;
                 case 4:
-                    FMode_Items.Add("LUT8(1)(Invalid)");
                     FMode_Items.Add("ARGB8888(2)");
                     FMode_Items.Add("ARGB4444(3)");
                     FMode_Items.Add("ARGB1555(4)");
@@ -373,9 +378,6 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("ABGR8888(6)");
                     FMode_Items.Add("RGBA4444(7)");
                     FMode_Items.Add("RGBA5551(8)");
-                    FMode_Items.Add("XRGB8888(9)");
-                    FMode_Items.Add("LA88(10)");
-                    FMode_Items.Add("LUT8(NoZlib)(1)(Invalid)");
                     FMode_Items.Add("ARGB8888(NoZlib)(2)");
                     FMode_Items.Add("ARGB4444(NoZlib)(3)");
                     FMode_Items.Add("ARGB1555(NoZlib)(4)");
@@ -383,8 +385,6 @@ namespace PopStudio.Avalonia.Pages
                     FMode_Items.Add("ABGR8888(NoZlib)(6)");
                     FMode_Items.Add("RGBA4444(NoZlib)(7)");
                     FMode_Items.Add("RGBA5551(NoZlib)(8)");
-                    FMode_Items.Add("XRGB8888(NoZlib)(9)");
-                    FMode_Items.Add("LA88(NoZlib)(10)");
                     break;
                 case 5:
                     FMode_Items.Add("DXT5_RGBA_Padding(BE)");

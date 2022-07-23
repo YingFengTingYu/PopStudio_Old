@@ -635,12 +635,14 @@ namespace PopStudio.Package.Rsb
         {
             Dir.FormatAndDeleteEndPathSeparator(ref inFile);
             Dir.FormatAndDeleteEndPathSeparator(ref outFolder);
+            string inFile_Folder = Path.GetDirectoryName(inFile) + Const.PATHSEPARATOR;
             if (!File.Exists(inFile))
             {
                 throw new Exception(string.Format(Str.Obj.FileNotFound, inFile));
             }
             Dir.NewDir(outFolder);
             outFolder += Const.PATHSEPARATOR;
+            uint? CompressMethod = null;
             using (BinaryStream bs_memory = new BinaryStream())
             {
                 using (BinaryStream bs_origin = BinaryStream.Open(inFile))
@@ -669,6 +671,13 @@ namespace PopStudio.Package.Rsb
                         throw new Exception(Str.Obj.DataMisMatch);
                     }
                     RsbInfo rsb = new RsbInfo().Read(bs);
+                    //ReadSubInfo
+                    //rsb.rsgp = new RsgpInfo[rsb.head.rsgp_Number];
+                    //for (int i = 0; i < rsb.rsgpInfo.Length; i++)
+                    //{
+                    //    bs.Position = rsb.rsgpInfo[i].offset;
+                    //    rsb.rsgp[i] = new RsgpInfo().Read(bs);
+                    //}
                     //We need to test if it's necessary to use Pool.xml
                     bool usePoolXml = false;
                     if (rsb.rsgpInfo.Length != rsb.autopoolInfo.Length)
@@ -736,113 +745,178 @@ namespace PopStudio.Package.Rsb
                                 sw.Write($" poolindex=\"{rsb.rsgpInfo[i].pool_Index}\"");
                             }
                             sw.WriteLine(">");
+                            RsgpInfo rsgp = null;
                             uint rback = rsb.rsgpInfo[i].offset;
-                            using (BinaryStream bs_p0 = new BinaryStream())
+                            BinaryStream innerRsgpFile = null;
+                            try
                             {
-                                using (BinaryStream bs_p1 = new BinaryStream())
+                                try
                                 {
-                                    bs.Position = rback + rsb.rsgp[i].head.part0_Offset;
-                                    using (BinaryStream bs_temp = new BinaryStream())
+                                    bs.Position = rback;
+                                    rsgp = new RsgpInfo().Read(bs);
+                                }
+                                catch (Exception)
+                                {
+                                    // rsgp is out of rsb
+                                    string guess_rsg_name = inFile_Folder + rsb.rsgpInfo[i].ID;
+                                    if (!File.Exists(guess_rsg_name))
                                     {
-                                        bs_temp.WriteBytes(bs.ReadBytes((int)rsb.rsgp[i].head.part0_ZSize));
-                                        bs_temp.Position = 0;
-                                        try
+                                        guess_rsg_name += ".rsg";
+                                        if (!File.Exists(guess_rsg_name))
                                         {
-                                            if (getlevel)
+                                            string guess_rsg_name_2 = guess_rsg_name + "p";
+                                            if (!File.Exists(guess_rsg_name_2))
                                             {
-                                                compresslevel = bs.PeekUInt16(Endian.Small) >> 14;
+                                                guess_rsg_name += ".smf";
+                                                if (!File.Exists(guess_rsg_name))
+                                                {
+                                                    guess_rsg_name = guess_rsg_name_2 + ".smf";
+                                                    if (!File.Exists(guess_rsg_name))
+                                                    {
+                                                        continue;
+                                                    }
+                                                }
                                             }
-                                            using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
+                                            else
                                             {
-                                                zLibStream.CopyTo(bs_p0);
+                                                guess_rsg_name = guess_rsg_name_2;
                                             }
-                                            getlevel = false;
-                                        }
-                                        catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
-                                        {
-                                            bs_temp.Position = 0;
-                                            bs_p0.Position = 0;
-                                            bs_temp.CopyTo(bs_p0);
                                         }
                                     }
-                                    bs.Position = rback + rsb.rsgp[i].head.part1_Offset;
-                                    using (BinaryStream bs_temp = new BinaryStream())
+                                    rback = 0;
+                                    innerRsgpFile = new BinaryStream(guess_rsg_name, FileMode.Open);
+                                    innerRsgpFile.Position = rback;
+                                    int headmagic = innerRsgpFile.PeekInt32();
+                                    if (headmagic == 1885827954)
                                     {
-                                        bs_temp.WriteBytes(bs.ReadBytes((int)rsb.rsgp[i].head.part1_ZSize));
-                                        bs_temp.Position = 0;
-                                        try
-                                        {
-                                            if (getlevel)
-                                            {
-                                                compresslevel = bs.PeekUInt16(Endian.Small) >> 14;
-                                            }
-                                            using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
-                                            {
-                                                zLibStream.CopyTo(bs_p1);
-                                            }
-                                            getlevel = false;
-                                        }
-                                        catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
-                                        {
-                                            bs_temp.Position = 0;
-                                            bs_p1.Position = 0;
-                                            bs_temp.CopyTo(bs_p1);
-                                        }
+                                        innerRsgpFile.Endian = Endian.Big;
                                     }
-                                    bs_p0.Position = 0;
-                                    bs_p1.Position = 0;
-                                    for (int xhi = 0; xhi < rsb.rsgp[i].fileList.Length; xhi++)
+                                    else if (headmagic == 1920165744)
                                     {
-                                        CompressString str = rsb.rsgp[i].fileList[xhi];
-                                        string nname = Dir.FormatPath(outFolder + str.name);
-                                        Dir.NewDir(nname, false);
-                                        if (str.type == 1)
+                                        innerRsgpFile.Endian = Endian.Small;
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                    rsgp = new RsgpInfo().Read(innerRsgpFile);
+                                }
+                                BinaryStream bs_used = innerRsgpFile ?? bs;
+                                CompressMethod ??= rsgp.head.flags & 3;
+                                using (BinaryStream bs_p0 = new BinaryStream())
+                                {
+                                    using (BinaryStream bs_p1 = new BinaryStream())
+                                    {
+                                        bs_used.Position = rback + rsgp.head.part0_Offset;
+                                        using (BinaryStream bs_temp = new BinaryStream())
                                         {
-                                            var p0ex = (RsgpPart0ExtraInfo)str.extraInfo;
-                                            if (p0ex == null) throw new Exception();
-                                            bs_p0.Position = p0ex.offset;
-                                            using (BinaryStream bs4 = BinaryStream.Create(nname))
+                                            bs_temp.WriteBytes(bs_used.ReadBytes((int)rsgp.head.part0_ZSize));
+                                            bs_temp.Position = 0;
+                                            try
                                             {
-                                                bs4.WriteBytes(bs_p0.ReadBytes((int)p0ex.size));
+                                                if (getlevel)
+                                                {
+                                                    compresslevel = bs_temp.PeekUInt16(Endian.Small) >> 14;
+                                                }
+                                                using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
+                                                {
+                                                    zLibStream.CopyTo(bs_p0);
+                                                }
+                                                getlevel = false;
                                             }
-                                            sw.WriteLine("    <Res id=\"" + str.name.Replace("&", "&amp;") + "\" />");
+                                            catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
+                                            {
+                                                bs_temp.Position = 0;
+                                                bs_p0.Position = 0;
+                                                bs_temp.CopyTo(bs_p0);
+                                            }
                                         }
-                                        else if (str.type == 2)
+                                        bs_used.Position = rback + rsgp.head.part1_Offset;
+                                        using (BinaryStream bs_temp = new BinaryStream())
                                         {
-                                            var p1ex = (RsgpPart1ExtraInfo)str.extraInfo;
-                                            if (p1ex == null) throw new Exception();
-                                            var ptx = rsb.ptxInfo[rsb.rsgpInfo[i].ptx_BeforeNumber + p1ex.index];
-                                            if (ptx == null) throw new Exception();
-                                            bs_p1.Position = p1ex.offset;
-                                            using (BinaryStream bs4 = BinaryStream.Create(nname))
+                                            bs_temp.WriteBytes(bs_used.ReadBytes((int)rsgp.head.part1_ZSize));
+                                            bs_temp.Position = 0;
+                                            try
                                             {
-                                                bs4.Endian = bs.Endian;
-                                                bs4.WriteInt32(1886681137);
-                                                bs4.WriteInt32(1);
-                                                bs4.WriteUInt32(ptx.width);
-                                                bs4.WriteUInt32(ptx.height);
-                                                bs4.WriteUInt32(ptx.check);
-                                                bs4.WriteUInt32(ptx.format);
-                                                bs4.WriteUInt32(ptx.alphaSize);
-                                                bs4.WriteUInt32(ptx.alphaFormat);
-                                                bs4.WriteBytes(bs_p1.ReadBytes((int)p1ex.size));
+                                                if (getlevel)
+                                                {
+                                                    compresslevel = bs_temp.PeekUInt16(Endian.Small) >> 14;
+                                                }
+                                                using (ZLibStream zLibStream = new ZLibStream(bs_temp, CompressionMode.Decompress, true))
+                                                {
+                                                    zLibStream.CopyTo(bs_p1);
+                                                }
+                                                getlevel = false;
                                             }
-                                            if (changeimage)
+                                            catch (Exception) //Someone (such as SmallPea) use a wrong compression flags on purpose. Maybe it isn't zlib compress file.
                                             {
-                                                Image.Ptx.Ptx.Decode(nname, Path.ChangeExtension(nname, ".PNG"), true);
-                                                if (delete) File.Delete(nname);
+                                                bs_temp.Position = 0;
+                                                bs_p1.Position = 0;
+                                                bs_temp.CopyTo(bs_p1);
                                             }
-                                            sw.WriteLine("    <Img id=\"" + str.name.Replace("&", "&amp;") + "\" defaultformat=\"" + ptx.format + "\" />");
                                         }
-                                        else
+                                        bs_p0.Position = 0;
+                                        bs_p1.Position = 0;
+                                        for (int xhi = 0; xhi < rsgp.fileList.Length; xhi++)
                                         {
-                                            throw new Exception();
+                                            CompressString str = rsgp.fileList[xhi];
+                                            string nname = Dir.FormatPath(outFolder + str.name);
+                                            Dir.NewDir(nname, false);
+                                            if (str.type == 1)
+                                            {
+                                                var p0ex = (RsgpPart0ExtraInfo)str.extraInfo;
+                                                if (p0ex == null) throw new Exception();
+                                                bs_p0.Position = p0ex.offset;
+                                                using (BinaryStream bs4 = BinaryStream.Create(nname))
+                                                {
+                                                    bs4.WriteBytes(bs_p0.ReadBytes((int)p0ex.size));
+                                                }
+                                                sw.WriteLine("    <Res id=\"" + str.name.Replace("&", "&amp;") + "\" />");
+                                            }
+                                            else if (str.type == 2)
+                                            {
+                                                var p1ex = (RsgpPart1ExtraInfo)str.extraInfo;
+                                                if (p1ex == null) throw new Exception();
+                                                var ptx = rsb.ptxInfo[rsb.rsgpInfo[i].ptx_BeforeNumber + p1ex.index];
+                                                if (ptx == null) throw new Exception();
+                                                bs_p1.Position = p1ex.offset;
+                                                using (BinaryStream bs4 = BinaryStream.Create(nname))
+                                                {
+                                                    bs4.Endian = bs_used.Endian;
+                                                    bs4.WriteInt32(1886681137);
+                                                    bs4.WriteInt32(1);
+                                                    bs4.WriteUInt32(ptx.width);
+                                                    bs4.WriteUInt32(ptx.height);
+                                                    bs4.WriteUInt32(ptx.check);
+                                                    bs4.WriteUInt32(ptx.format);
+                                                    bs4.WriteUInt32(ptx.alphaSize);
+                                                    bs4.WriteUInt32(ptx.alphaFormat);
+                                                    bs4.WriteBytes(bs_p1.ReadBytes((int)p1ex.size));
+                                                }
+                                                if (changeimage)
+                                                {
+                                                    Image.Ptx.Ptx.Decode(nname, Path.ChangeExtension(nname, ".PNG"), true);
+                                                    if (delete) File.Delete(nname);
+                                                }
+                                                sw.WriteLine("    <Img id=\"" + str.name.Replace("&", "&amp;") + "\" defaultformat=\"" + ptx.format + "\" />");
+                                            }
+                                            else
+                                            {
+                                                throw new Exception();
+                                            }
                                         }
                                     }
                                 }
+                                sw.WriteLine("  </Group>");
                             }
-                            sw.WriteLine("  </Group>");
-                            GC.Collect();
+                            finally
+                            {
+                                if (innerRsgpFile != null)
+                                {
+                                    innerRsgpFile.Dispose();
+                                }
+                                GC.Collect();
+                            }
                         }
                         sw.WriteLine("</ResourcesGroupInfo>");
                     }
@@ -873,7 +947,7 @@ namespace PopStudio.Package.Rsb
                         sw.WriteLine("<PackInfo version=\"1\">");
                         sw.WriteLine("    <PackageVersion>" + rsb.head.version + "</PackageVersion>");
                         sw.WriteLine("    <UseBigEndian>" + (bs.Endian == Endian.Big) + "</UseBigEndian>");
-                        sw.WriteLine("    <CompressMethod>" + (rsb.rsgp.Length > 0 ? (rsb.rsgp[0].head.flags & 0b11) : 1) + "</CompressMethod>");
+                        sw.WriteLine("    <CompressMethod>" + (CompressMethod ?? 1) + "</CompressMethod>");
                         sw.WriteLine("    <CompressLevel>" + compresslevelinfo + "</CompressLevel>");
                         sw.WriteLine("    <PtxInfoLength>" + rsb.head.ptxInfo_EachLength + "</PtxInfoLength>");
                         sw.WriteLine("    <ZlibAll>" + usesmf + "</ZlibAll>");

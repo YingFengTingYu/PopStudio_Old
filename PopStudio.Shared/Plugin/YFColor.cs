@@ -35,6 +35,46 @@ namespace PopStudio.Plugin
             Alpha = 255;
         }
 
+        public byte GetChannel(int channel) => channel switch
+        {
+            0 => Red,
+            1 => Green,
+            2 => Blue,
+            3 => Alpha,
+            _ => 0
+        };
+
+        public void SetChannel(int i, byte value)
+        {
+            switch (i)
+            {
+                case 0:
+                    Blue = value;
+                    break;
+                case 1:
+                    Green = value;
+                    break;
+                case 2:
+                    Red = value;
+                    break;
+                case 3:
+                    Alpha = value;
+                    break;
+            }
+        }
+
+        public byte GetLuminance()
+        {
+            return (byte)((77 * Red + 150 * Green + 28 * Blue) / 255);
+        }
+
+        public void SetLuminance(byte l)
+        {
+            Red = l;
+            Green = l;
+            Blue = l;
+        }
+
         public YFColor WithRed(byte red)
         {
             return new YFColor(red, Green, Blue, Alpha);

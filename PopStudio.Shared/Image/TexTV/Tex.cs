@@ -7,9 +7,9 @@ namespace PopStudio.Image.TexTV
         public static void Encode(string inFile, string outFile, int format)
         {
             bool zlib = true;
-            if (format >= 10)
+            if (format >= 7)
             {
-                format -= 10;
+                format -= 7;
                 zlib = false;
             }
             using (BinaryStream bs = BinaryStream.Create(outFile))
@@ -26,41 +26,33 @@ namespace PopStudio.Image.TexTV
                     {
                         switch (format)
                         {
-                            case 1:
+                            case 0:
                                 Texture.ARGB8888.Write(bs2, sKBitmap);
-                                head.format =  TexFormat.ARGB8888;
+                                head.format = 2;
+                                break;
+                            case 1:
+                                Texture.ARGB4444.Write(bs2, sKBitmap);
+                                head.format = 3;
                                 break;
                             case 2:
-                                Texture.ARGB4444.Write(bs2, sKBitmap);
-                                head.format = TexFormat.ARGB4444;
+                                Texture.ARGB1555.Write(bs2, sKBitmap);
+                                head.format = 4;
                                 break;
                             case 3:
-                                Texture.ARGB1555.Write(bs2, sKBitmap);
-                                head.format = TexFormat.ARGB1555;
+                                Texture.RGB565.Write(bs2, sKBitmap);
+                                head.format = 5;
                                 break;
                             case 4:
-                                Texture.RGB565.Write(bs2, sKBitmap);
-                                head.format = TexFormat.RGB565;
+                                Texture.ABGR8888.Write(bs2, sKBitmap);
+                                head.format = 6;
                                 break;
                             case 5:
-                                Texture.ABGR8888.Write(bs2, sKBitmap);
-                                head.format = TexFormat.ABGR8888;
+                                Texture.RGBA4444.Write(bs2, sKBitmap);
+                                head.format = 7;
                                 break;
                             case 6:
-                                Texture.RGBA4444.Write(bs2, sKBitmap);
-                                head.format = TexFormat.RGBA4444;
-                                break;
-                            case 7:
                                 Texture.RGBA5551.Write(bs2, sKBitmap);
-                                head.format = TexFormat.RGBA5551;
-                                break;
-                            case 8:
-                                Texture.XRGB8888.Write(bs2, sKBitmap);
-                                head.format = TexFormat.XRGB8888;
-                                break;
-                            case 9:
-                                Texture.LA88.Write(bs2, sKBitmap);
-                                head.format = TexFormat.LA88;
+                                head.format = 8;
                                 break;
                             default:
                                 throw new Exception(Str.Obj.UnknownFormat);
@@ -112,56 +104,44 @@ namespace PopStudio.Image.TexTV
                 bs.Position = 0;
                 switch (head.format)
                 {
-                    case TexFormat.ARGB8888:
+                    case 2:
                         using (YFBitmap sKBitmap = Texture.ARGB8888.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case TexFormat.ARGB4444:
+                    case 3:
                         using (YFBitmap sKBitmap = Texture.ARGB4444.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case TexFormat.ARGB1555:
+                    case 4:
                         using (YFBitmap sKBitmap = Texture.ARGB1555.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case TexFormat.RGB565:
+                    case 5:
                         using (YFBitmap sKBitmap = Texture.RGB565.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case TexFormat.ABGR8888:
+                    case 6:
                         using (YFBitmap sKBitmap = Texture.ABGR8888.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case TexFormat.RGBA4444:
+                    case 7:
                         using (YFBitmap sKBitmap = Texture.RGBA4444.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }
                         break;
-                    case TexFormat.RGBA5551:
+                    case 8:
                         using (YFBitmap sKBitmap = Texture.RGBA5551.Read(bs, head.width, head.height))
-                        {
-                            sKBitmap.Save(outFile);
-                        }
-                        break;
-                    case TexFormat.XRGB8888:
-                        using (YFBitmap sKBitmap = Texture.XRGB8888.Read(bs, head.width, head.height))
-                        {
-                            sKBitmap.Save(outFile);
-                        }
-                        break;
-                    case TexFormat.LA88:
-                        using (YFBitmap sKBitmap = Texture.LA88.Read(bs, head.width, head.height))
                         {
                             sKBitmap.Save(outFile);
                         }

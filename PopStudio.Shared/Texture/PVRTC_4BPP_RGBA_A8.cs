@@ -2,8 +2,18 @@
 
 namespace PopStudio.Texture
 {
-    internal static unsafe class PVRTC_4BPP_RGB
+    internal static unsafe class PVRTC_4BPP_RGBA_A8
     {
+        static int GetNextPOT(int v)
+        {
+            int k = 1;
+            while (k < v)
+            {
+                k <<= 1;
+            }
+            return k;
+        }
+
         public static YFBitmap Read(BinaryStream bs, int width, int height)
         {
             bool t = false;
@@ -21,20 +31,15 @@ namespace PopStudio.Texture
             }
             if ((newwidth & (newwidth - 1)) != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth = GetNextPOT(newwidth);
                 t = true;
             }
             if ((newheight & (newheight - 1)) != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
+                newheight = GetNextPOT(newheight);
                 t = true;
             }
-            if (newwidth != newheight)
-            {
-                newwidth = newheight = Math.Max(newwidth, newheight);
-                t = true;
-            }
-            byte[] packets = new byte[(newwidth * newwidth) >> 1];
+            byte[] packets = new byte[(newwidth * newheight) >> 1];
             bs.Read(packets, 0, packets.Length);
             YFBitmap image = YFBitmap.Create(newwidth, newheight);
             YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
@@ -46,13 +51,21 @@ namespace PopStudio.Texture
             {
                 YFBitmap image2 = image.Cut(0, 0, width, height);
                 image.Dispose();
-                return image2;
+                image = image2;
+            }
+            pixels = (YFColor*)image.GetPixels().ToPointer();
+            int S = image.Square;
+            for (int i = 0; i < S; i++)
+            {
+                pixels++->Alpha = bs.ReadByte();
             }
             return image;
         }
 
         public static int Write(BinaryStream bs, YFBitmap image)
         {
+            YFColor* pixels_raw = (YFColor*)image.GetPixels().ToPointer();
+            int S = image.Square;
             int ans = image.Width;
             bool t = false;
             int newwidth = image.Width;
@@ -69,17 +82,12 @@ namespace PopStudio.Texture
             }
             if ((newwidth & (newwidth - 1)) != 0)
             {
-                newwidth = 0b10 << ((int)Math.Floor(Math.Log2(newwidth)));
+                newwidth = GetNextPOT(newwidth);
                 t = true;
             }
             if ((newheight & (newheight - 1)) != 0)
             {
-                newheight = 0b10 << ((int)Math.Floor(Math.Log2(newheight)));
-                t = true;
-            }
-            if (newwidth != newheight)
-            {
-                newwidth = newheight = Math.Max(newwidth, newheight);
+                newheight = GetNextPOT(newheight);
                 t = true;
             }
             if (t)
@@ -89,17 +97,21 @@ namespace PopStudio.Texture
                 image = image2;
             }
             YFColor* pixels = (YFColor*)image.GetPixels().ToPointer();
-            PVRTCEncode.PvrTcPacket[] words = PVRTCEncode.EncodeRGB4Bpp(pixels, newwidth);
-            int index = words.Length;
-            for (int i = 0; i < index; i++)
+            byte[] outData = new byte[(newwidth * newheight) >> 1];
+            fixed (byte* outDataPtr = outData)
             {
-                bs.WriteUInt64(words[i].PvrTcWord);
+                PVRTCEncode.CompressPVRTCI_4BPP(pixels, (uint)newwidth, (uint)newheight, outDataPtr, false);
+            }
+            bs.WriteBytes(outData);
+            for (int i = 0; i < S; i++)
+            {
+                bs.WriteByte(pixels_raw++->Alpha);
             }
             if (t)
             {
                 image.Dispose();
             }
-            return newwidth >> 1;
+            return newwidth << 2;
         }
     }
 }

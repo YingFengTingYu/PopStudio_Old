@@ -6,7 +6,7 @@
         public static readonly int version = 0;
         public int width;
         public int height;
-        public TexFormat format;
+        public int format;
         public uint flags = 1u;
         public int zsize;
 
@@ -16,7 +16,7 @@
             bs.IdInt32(version);
             width = bs.ReadInt32();
             height = bs.ReadInt32();
-            format = (TexFormat)bs.ReadInt32();
+            format = bs.ReadInt32();
             flags = bs.ReadUInt32();
             bs.Position += 4;
             zsize = bs.ReadInt32();
@@ -30,7 +30,7 @@
             bs.WriteInt32(version);
             bs.WriteInt32(width);
             bs.WriteInt32(height);
-            bs.WriteInt32((int)format);
+            bs.WriteInt32(format);
             bs.WriteUInt32(flags);
             bs.WriteInt32(1);
             bs.WriteInt32(zsize);
