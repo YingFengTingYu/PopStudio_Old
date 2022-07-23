@@ -194,9 +194,9 @@
             }
         }
 
-        public virtual void InternalDecodePam(string inFile, string outFile) => PopAnim.PamJson.Decode(inFile, outFile);
+        public virtual void InternalDecodePam(string inFile, string outFile) => PopAnim.Pam.Decode(inFile, outFile);
 
-        public virtual void InternalEncodePam(string inFile, string outFile) => PopAnim.PamJson.Encode(inFile, outFile);
+        public virtual void InternalEncodePam(string inFile, string outFile) => PopAnim.Pam.Encode(inFile, outFile);
 
         public virtual void InternalDecodeImage(string inFile, string outFile, int format)
         {

@@ -238,6 +238,15 @@
         public string Texture_Choose5 { get; }
         public string Texture_Choose6 { get; }
         public string Texture_Choose7 { get; }
+        public string Texture_Mode1_Batch { get; }
+        public string Texture_Mode2_Batch { get; }
+        public string Texture_Choose1_Batch { get; }
+        public string Texture_Choose2_Batch { get; }
+        public string Texture_Choose3_Batch { get; }
+        public string Texture_Choose4_Batch { get; }
+        public string Texture_Choose5_Batch { get; }
+        public string Texture_Choose6_Batch { get; }
+        public string Texture_Choose7_Batch { get; }
 
         //Pam
         public string Pam_Title { get; }
@@ -250,6 +259,14 @@
         public string Pam_Choose4 { get; }
         public string Pam_Choose5 { get; }
         public string Pam_Choose6 { get; }
+        public string Pam_Mode1_Batch { get; }
+        public string Pam_Mode2_Batch { get; }
+        public string Pam_Choose1_Batch { get; }
+        public string Pam_Choose2_Batch { get; }
+        public string Pam_Choose3_Batch { get; }
+        public string Pam_Choose4_Batch { get; }
+        public string Pam_Choose5_Batch { get; }
+        public string Pam_Choose6_Batch { get; }
 
         //RTON
         public string RTON_Title { get; }

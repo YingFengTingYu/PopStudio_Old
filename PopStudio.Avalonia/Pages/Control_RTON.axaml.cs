@@ -170,6 +170,7 @@ namespace PopStudio.Avalonia.Pages
                 sw.Start();
                 try
                 {
+                    string outFormat = (!mode) ? ".json" : ".rton";
                     if (batchmode)
                     {
                         if (!Directory.Exists(inFile))
@@ -180,9 +181,14 @@ namespace PopStudio.Avalonia.Pages
                         int length = inFile.Length;
                         string[] files = YFAPI.GetFiles(inFile);
                         YFAPI.NewDir(outFile);
+                        string rightFormat = mode ? ".json" : ".rton";
                         foreach (string mfile in files)
                         {
-                            string newPath = YFAPI.FormatPath(outFile + mfile[length..] + ".out");
+                            if (Path.GetExtension(mfile).ToLower() != rightFormat)
+                            {
+                                continue;
+                            }
+                            string newPath = YFAPI.FormatPath(outFile + mfile[length..] + outFormat);
                             YFAPI.NewDir(newPath, false);
                             try
                             {
@@ -209,7 +215,7 @@ namespace PopStudio.Avalonia.Pages
                         }
                         if (Directory.Exists(outFile))
                         {
-                            outFile += "/" + Path.GetFileName(inFile) + ".out";
+                            outFile += "/" + Path.GetFileName(inFile) + outFormat;
                             outFile = YFAPI.FormatPath(outFile);
                         }
                         YFAPI.NewDir(outFile, false);

@@ -234,6 +234,15 @@
         public string Texture_Choose5 => "The path of generated special image";
         public string Texture_Choose6 => "Encoding Mode";
         public string Texture_Choose7 => "Encoding Format";
+        public string Texture_Mode1_Batch => "Decode";
+        public string Texture_Mode2_Batch => "Encode";
+        public string Texture_Choose1_Batch => "The decoded special image folder path";
+        public string Texture_Choose2_Batch => "The path of generated PNG image folder";
+        public string Texture_Choose3_Batch => "Decoding Mode";
+        public string Texture_Choose4_Batch => "The encoded PNG image folder path";
+        public string Texture_Choose5_Batch => "The path of generated special image folder";
+        public string Texture_Choose6_Batch => "Encoding Mode";
+        public string Texture_Choose7_Batch => "Encoding Format";
 
         //Pam
         public string Pam_Title => "Pam";
@@ -246,6 +255,14 @@
         public string Pam_Choose4 => "The encoded file path";
         public string Pam_Choose5 => "The path of generated file";
         public string Pam_Choose6 => "Encoding Mode";
+        public string Pam_Mode1_Batch => "Batch Decode";
+        public string Pam_Mode2_Batch => "Batch Encode";
+        public string Pam_Choose1_Batch => "The decoded folder path";
+        public string Pam_Choose2_Batch => "The path of generated folder";
+        public string Pam_Choose3_Batch => "Decoding Mode";
+        public string Pam_Choose4_Batch => "The encoded folder path";
+        public string Pam_Choose5_Batch => "The path of generated folder";
+        public string Pam_Choose6_Batch => "Encoding Mode";
 
         //RTON
         public string RTON_Title => "RTON";

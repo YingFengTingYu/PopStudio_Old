@@ -234,6 +234,15 @@
         public string Texture_Choose5 => "请填写编码生成特殊图像存放路径";
         public string Texture_Choose6 => "请选择编码模式";
         public string Texture_Choose7 => "请选择编码格式";
+        public string Texture_Mode1_Batch => "批量解码模式";
+        public string Texture_Mode2_Batch => "批量编码模式";
+        public string Texture_Choose1_Batch => "请填写被解码的特殊图像文件夹路径";
+        public string Texture_Choose2_Batch => "请填写解码生成png图像文件夹路径";
+        public string Texture_Choose3_Batch => "请选择解码模式";
+        public string Texture_Choose4_Batch => "请填写被编码的png图像文件夹路径";
+        public string Texture_Choose5_Batch => "请填写编码生成特殊图像文件夹路径";
+        public string Texture_Choose6_Batch => "请选择编码模式";
+        public string Texture_Choose7_Batch => "请选择编码格式";
 
         //Pam
         public string Pam_Title => "Pam转码";
@@ -246,6 +255,14 @@
         public string Pam_Choose4 => "请填写被编码的文件路径";
         public string Pam_Choose5 => "请填写编码生成文件存放路径";
         public string Pam_Choose6 => "请选择编码模式";
+        public string Pam_Mode1_Batch => "批量解码模式";
+        public string Pam_Mode2_Batch => "批量编码模式";
+        public string Pam_Choose1_Batch => "请填写被解码的文件夹路径";
+        public string Pam_Choose2_Batch => "请填写解码生成文件夹存放路径";
+        public string Pam_Choose3_Batch => "请选择解码模式";
+        public string Pam_Choose4_Batch => "请填写被编码的文件夹路径";
+        public string Pam_Choose5_Batch => "请填写编码生成文件夹存放路径";
+        public string Pam_Choose6_Batch => "请选择编码模式";
 
         //RTON
         public string RTON_Title => "RTON转码";

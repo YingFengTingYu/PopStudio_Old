@@ -65,7 +65,7 @@
 
 	<!--AOT Support-->
 
-	<ItemGroup>
+	<!--<ItemGroup>
 		<RdXmlFile Include="rd.xml" />
 	</ItemGroup>
 
@@ -95,7 +95,7 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)|$(RuntimeIdentifier)'=='Release|AnyCPU|linux-musl-arm64'">
 		<PackageReference Include="Microsoft.DotNet.ILCompiler; runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
-	</ItemGroup>
+	</ItemGroup>-->
 
     <ItemGroup>
 	<!--This helps with theme dll-s trimming.

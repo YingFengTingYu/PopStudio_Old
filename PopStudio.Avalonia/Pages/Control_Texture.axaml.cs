@@ -70,6 +70,9 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadControl()
         {
+            label_batch1 = this.Get<TextBlock>("label_batch1");
+            label_batch2 = this.Get<TextBlock>("label_batch2");
+            batch_mode = this.Get<ToggleSwitch>("batch_mode");
             label_introduction = this.Get<TextBlock>("label_introduction");
             label_choosemode = this.Get<TextBlock>("label_choosemode");
             label_mode1 = this.Get<TextBlock>("label_mode1");
@@ -93,12 +96,23 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadFont()
         {
+            label_batch1.Text = MAUIStr.Obj.Share_SingleMode;
+            label_batch2.Text = MAUIStr.Obj.Share_BatchMode;
             label_introduction.Text = MAUIStr.Obj.Texture_Introduction;
             label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-            label_mode1.Text = MAUIStr.Obj.Texture_Mode1;
-            label_mode2.Text = MAUIStr.Obj.Texture_Mode2;
+            if (batch_mode.IsChecked == true)
+            {
+                label_mode1.Text = MAUIStr.Obj.Texture_Mode1_Batch;
+                label_mode2.Text = MAUIStr.Obj.Texture_Mode2_Batch;
+                textN.Text = MAUIStr.Obj.Texture_Choose7_Batch;
+            }
+            else
+            {
+                label_mode1.Text = MAUIStr.Obj.Texture_Mode1;
+                label_mode2.Text = MAUIStr.Obj.Texture_Mode2;
+                textN.Text = MAUIStr.Obj.Texture_Choose7;
+            }
             LoadFont_Checked(TB_Mode.IsChecked == true);
-            textN.Text = MAUIStr.Obj.Texture_Choose7;
             button1.Content = MAUIStr.Obj.Share_Choose;
             button2.Content = MAUIStr.Obj.Share_Choose;
             button_run.Content = MAUIStr.Obj.Share_Run;
@@ -108,17 +122,35 @@ namespace PopStudio.Avalonia.Pages
 
         void LoadFont_Checked(bool v)
         {
-            if (v)
+            if (batch_mode.IsChecked == true)
             {
-                text1.Text = MAUIStr.Obj.Texture_Choose4;
-                text2.Text = MAUIStr.Obj.Texture_Choose5;
-                text3.Text = MAUIStr.Obj.Texture_Choose6;
+                if (v)
+                {
+                    text1.Text = MAUIStr.Obj.Texture_Choose4_Batch;
+                    text2.Text = MAUIStr.Obj.Texture_Choose5_Batch;
+                    text3.Text = MAUIStr.Obj.Texture_Choose6_Batch;
+                }
+                else
+                {
+                    text1.Text = MAUIStr.Obj.Texture_Choose1_Batch;
+                    text2.Text = MAUIStr.Obj.Texture_Choose2_Batch;
+                    text3.Text = MAUIStr.Obj.Texture_Choose3_Batch;
+                }
             }
             else
             {
-                text1.Text = MAUIStr.Obj.Texture_Choose1;
-                text2.Text = MAUIStr.Obj.Texture_Choose2;
-                text3.Text = MAUIStr.Obj.Texture_Choose3;
+                if (v)
+                {
+                    text1.Text = MAUIStr.Obj.Texture_Choose4;
+                    text2.Text = MAUIStr.Obj.Texture_Choose5;
+                    text3.Text = MAUIStr.Obj.Texture_Choose6;
+                }
+                else
+                {
+                    text1.Text = MAUIStr.Obj.Texture_Choose1;
+                    text2.Text = MAUIStr.Obj.Texture_Choose2;
+                    text3.Text = MAUIStr.Obj.Texture_Choose3;
+                }
             }
         }
 
@@ -139,11 +171,16 @@ namespace PopStudio.Avalonia.Pages
             }
         }
 
+        private void Switch_Batch_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadFont();
+        }
+
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string val = (await new OpenFileDialog { AllowMultiple = false }.ShowAsync(MainWindow.Singleten))?[0];
+                string val = batch_mode.IsChecked == false ? (await new OpenFileDialog { AllowMultiple = false }.ShowAsync(MainWindow.Singleten))?[0] : (await new OpenFolderDialog().ShowAsync(MainWindow.Singleten));
                 if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
             }
             catch (Exception)
@@ -155,7 +192,7 @@ namespace PopStudio.Avalonia.Pages
         {
             try
             {
-                string val = await new SaveFileDialog().ShowAsync(MainWindow.Singleten);
+                string val = batch_mode.IsChecked == false ? (await new SaveFileDialog().ShowAsync(MainWindow.Singleten)) : (await new OpenFolderDialog().ShowAsync(MainWindow.Singleten));
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
             }
             catch (Exception)
@@ -171,6 +208,7 @@ namespace PopStudio.Avalonia.Pages
             bool mode = TB_Mode.IsChecked == true;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
+            bool batchmode = batch_mode.IsChecked == true;
             int cmode = CB_CMode.SelectedIndex;
             int fmode = CB_FMode.SelectedIndex;
             new Thread(new ThreadStart(() =>
@@ -180,17 +218,88 @@ namespace PopStudio.Avalonia.Pages
                 sw.Start();
                 try
                 {
-                    if (!File.Exists(inFile))
+                    string outFormat = mode ? (cmode switch
                     {
-                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
-                    }
-                    if (mode)
+                        0 => ".ptx",
+                        1 => ".cdat",
+                        2 => ".tex",
+                        3 => ".txz",
+                        4 => ".tex",
+                        5 => ".ptx",
+                        6 => ".ptx",
+                        7 => ".ptx",
+                        8 => ".xnb",
+                        _ => null
+                    }) : ".png";
+                    if (batchmode)
                     {
-                        YFAPI.EncodeImage(inFile, outFile, cmode, fmode);
+                        if (!Directory.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
+                        }
+                        inFile = YFAPI.FormatPath(inFile);
+                        int length = inFile.Length;
+                        string[] files = YFAPI.GetFiles(inFile);
+                        YFAPI.NewDir(outFile);
+                        string rightFormat = (!mode) ? (cmode switch
+                        {
+                            0 => ".ptx",
+                            1 => ".cdat",
+                            2 => ".tex",
+                            3 => ".txz",
+                            4 => ".tex",
+                            5 => ".ptx",
+                            6 => ".ptx",
+                            7 => ".ptx",
+                            8 => ".xnb",
+                            _ => null
+                        }) : ".png";
+                        int rightFormatLength = rightFormat.Length;
+                        foreach (string mfile in files)
+                        {
+                            if (mfile.Length < rightFormatLength || mfile[^rightFormatLength..].ToLower() != rightFormat)
+                            {
+                                continue;
+                            }
+                            string newPath = YFAPI.FormatPath(outFile + mfile[length..] + outFormat);
+                            YFAPI.NewDir(newPath, false);
+                            try
+                            {
+                                if (mode)
+                                {
+                                    YFAPI.EncodeImage(mfile, newPath, cmode, fmode);
+                                }
+                                else
+                                {
+                                    YFAPI.DecodeImage(mfile, newPath, cmode);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                File.Delete(newPath);
+                            }
+                        }
                     }
                     else
                     {
-                        YFAPI.DecodeImage(inFile, outFile, cmode);
+                        if (!File.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
+                        }
+                        if (Directory.Exists(outFile))
+                        {
+                            outFile += "/" + Path.GetFileName(inFile) + outFormat;
+                            outFile = YFAPI.FormatPath(outFile);
+                        }
+                        YFAPI.NewDir(outFile, false);
+                        if (mode)
+                        {
+                            YFAPI.EncodeImage(inFile, outFile, cmode, fmode);
+                        }
+                        else
+                        {
+                            YFAPI.DecodeImage(inFile, outFile, cmode);
+                        }
                     }
                 }
                 catch (Exception ex)
