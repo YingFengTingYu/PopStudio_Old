@@ -15,9 +15,10 @@ namespace PopStudio.Image.Cdat
                     {
                         size = bs.Length
                     };
+                    head.Write(bs2);
                     if (head.size >= 0x100)
                     {
-                        head.Write(bs2);
+                        
                         int index = 0;
                         int arysize = code.Length;
                         for (int i = 0; i < 0x100; i++)

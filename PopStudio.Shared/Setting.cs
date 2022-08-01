@@ -511,13 +511,18 @@ namespace PopStudio
             if (o == null) return -1;
             if (o is string os)
             {
-                if (ImageConvertStringToInteger.ContainsKey(os))
+                int? tryAns = null;
+                var b = from pair in ImageConvertStringToInteger
+                        where pair.Key == os
+                        select pair.Value;
+                foreach (var pair in b)
                 {
-                    return ImageConvertStringToInteger[os];
+                    tryAns = pair;
                 }
                 try
                 {
-                    return Convert.ToInt32(os);
+                    int ans = tryAns ?? Convert.ToInt32(os);
+                    return ans;
                 }
                 catch (Exception)
                 {
@@ -529,7 +534,7 @@ namespace PopStudio
 
         private class CPR : IEqualityComparer<string>
         {
-            public bool Equals(string x, string y) => x != y;
+            public bool Equals(string x, string y) => false;
 
             public int GetHashCode([DisallowNull] string obj) => obj.GetHashCode();
         }
