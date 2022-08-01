@@ -11,7 +11,7 @@
 	<TrimMode>link</TrimMode>
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>5.0</FileVersion>
+    <FileVersion>5.1</FileVersion>
 	<AssemblyName>PopStudio</AssemblyName>
 	<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
 	

@@ -24,7 +24,6 @@ namespace PopStudio.Avalonia
             Prepare();
             //Binding size changed event
             this.GetObservable(ClientSizeProperty).Subscribe(Window_SizeChanged);
-            throw new Exception(Brushes.RoyalBlue.Color.ToUint32().ToString());
         }
 
         //private void Label_Head_PointerMoved(object sender, global::Avalonia.Input.PointerEventArgs e)
