@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using PopStudio.PopAnim;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
 namespace PopStudio
@@ -69,6 +70,7 @@ namespace PopStudio
         <String id=""PopStudioExample"" value=""99999"" />
     </ImageString>
     <ReanimXfl width=""80"" height=""80"" uselabelname=""0"" scalex=""1"" scaley=""1"" />
+    <PamXfl resolution=""768"" />
     <AD>True</AD>
 </Description>";
 
@@ -79,6 +81,8 @@ namespace PopStudio
         public static double ReanimXflScaleX = 1;
         public static double ReanimXflScaleY = 1;
         public static int ReanimXflLabelName = 0;
+
+        public static int PamXflResolution = 768;
 
         public static readonly Dictionary<Package.Dz.CompressFlags, string> DzCompressMethodName = new Dictionary<Package.Dz.CompressFlags, string> { { Package.Dz.CompressFlags.ZLIB, "Gzip" }, { Package.Dz.CompressFlags.LZMA, "Lzma" }, { Package.Dz.CompressFlags.STORE, "Store" }, { Package.Dz.CompressFlags.BZIP, "Bzip2" } };
         public static readonly Dictionary<Package.Pak.CompressFlags, string> PakPS3CompressMethodName = new Dictionary<Package.Pak.CompressFlags, string> { { Package.Pak.CompressFlags.ZLIB, "Zlib" }, { Package.Pak.CompressFlags.STORE, "Store" } };
@@ -303,6 +307,14 @@ namespace PopStudio
                                 }
                             }
                             break;
+                        case "PamXfl":
+                            {
+                                if (child.Attributes["resolution"] != null)
+                                {
+                                    PamXflResolution = Convert.ToInt32(child.Attributes["resolution"].Value);
+                                }
+                            }
+                            break;
                         case "AD":
                             {
                                 OpenProgramAD = Convert.ToBoolean(child.InnerText);
@@ -381,6 +393,8 @@ namespace PopStudio
                     sw.Write(ReanimXflScaleX);
                     sw.Write("\" scaley=\"");
                     sw.Write(ReanimXflScaleY);
+                    sw.Write("\" />\n    <PamXfl resolution=\"");
+                    sw.Write(PamXflResolution);
                     sw.Write("\" />\n    <AD>");
                     sw.Write(OpenProgramAD);
                     sw.Write("</AD>\n</Description>");

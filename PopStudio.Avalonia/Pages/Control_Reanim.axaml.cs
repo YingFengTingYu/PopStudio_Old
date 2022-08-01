@@ -194,7 +194,10 @@ namespace PopStudio.Avalonia.Pages
                             }
                             catch (Exception)
                             {
-                                File.Delete(newPath);
+                                if (outmode != 8)
+                                {
+                                    File.Delete(newPath);
+                                }
                             }
                         }
                     }

@@ -203,6 +203,9 @@
         public string Setting_XflLabelName { get; }
         public string Setting_XflScaleX { get; }
         public string Setting_XflScaleY { get; }
+        public string Setting_ItemPamXfl { get; }
+        public string Setting_IntroPamXfl { get; }
+        public string Setting_PamXflResolution { get; }
         public string Setting_AD { get; }
         public string Setting_Load { get; }
         public string Setting_Unload { get; }
@@ -267,6 +270,8 @@
         public string Pam_Choose4_Batch { get; }
         public string Pam_Choose5_Batch { get; }
         public string Pam_Choose6_Batch { get; }
+        public string Pam_InFormat { get; }
+        public string Pam_OutFormat { get; }
 
         //RTON
         public string RTON_Title { get; }

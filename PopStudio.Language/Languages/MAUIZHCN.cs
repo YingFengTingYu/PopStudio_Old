@@ -192,13 +192,16 @@
         public string Setting_CompiledLoadError_Title => "加载错误";
         public string Setting_CompiledLoadError_Text_NoFile => "无可用的文件，请联系作者！";
         public string Setting_CompiledLoadError_Text => "文件似乎已损坏，该设置已清空！";
-        public string Setting_ItemXfl => "Xfl生成设置";
+        public string Setting_ItemXfl => "Reanim_Xfl生成设置";
         public string Setting_IntroXfl => "当使用reanim转码生成Flash_Xfl文档以供使用Adobe Animate查看时，可指定画布大小、生成图片名是使用i标签名还是name标签名、横纵坐标缩放倍数。";
         public string Setting_XflWidth => "画布宽度";
         public string Setting_XflHeight => "画布高度";
         public string Setting_XflLabelName => "使用标签名";
         public string Setting_XflScaleX => "横坐标缩放";
         public string Setting_XflScaleY => "纵坐标缩放";
+        public string Setting_ItemPamXfl => "Pam_Xfl生成设置";
+        public string Setting_IntroPamXfl => "当使用pam转码生成Flash_Xfl文档以供使用Adobe Animate查看时，可指定分辨率大小。";
+        public string Setting_PamXflResolution => "分辨率";
         public string Setting_AD => "程序启动时加载广告";
         public string Setting_Load => "加载文件";
         public string Setting_Unload => "清空项目";
@@ -263,6 +266,8 @@
         public string Pam_Choose4_Batch => "请填写被编码的文件夹路径";
         public string Pam_Choose5_Batch => "请填写编码生成文件夹存放路径";
         public string Pam_Choose6_Batch => "请选择编码模式";
+        public string Pam_InFormat => "请选择被转换的文件格式";
+        public string Pam_OutFormat => "请选择转换生成文件格式";
 
         //RTON
         public string RTON_Title => "RTON转码";
@@ -359,7 +364,7 @@
         public string HomePage_Author_String => "作者：";
         public string HomePage_Author => "萌新迎风听雨";
         public string HomePage_Thanks_String => "特别感谢：";
-        public string HomePage_Thanks => "2508 和风唐舞 补补23456 孤独泪痕 63enjoy AS魇梦蚀 伊特 某个萌新 天天 Indestructible_Ch 僵学者 An-Haze";
+        public string HomePage_Thanks => "Bomb 补补23456 2508 和风唐舞 孤独泪痕 63enjoy AS魇梦蚀 伊特 某个萌新 天天 Indestructible_Ch 僵学者 An-Haze";
         public string HomePage_QQGroup_String => "交流QQ群：";
         public string HomePage_QQGroup => "1017246977";
         public string HomePage_Course_String => "教学视频：";

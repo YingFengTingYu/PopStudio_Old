@@ -137,6 +137,23 @@
 				<TextBlock FontSize="20" x:Name="label_xfllabelname" VerticalAlignment="Center" Grid.Row="8" />
 				<ComboBox HorizontalAlignment="Stretch" x:Name="xfllabelname" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" FontSize="16" />
 			</Grid>
+			<TextBlock TextWrapping="Wrap" FontSize="20" Margin="0 5 0 5" x:Name="label_itempamxfl" />
+			<TextBlock TextWrapping="Wrap" Margin="0 5 0 5" x:Name="label_intropamxfl" FontSize="14" />
+			<Grid Margin="0 5 0 5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="5*" />
+					<ColumnDefinition Width="10" />
+					<ColumnDefinition Width="3*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock FontSize="20" x:Name="label_pamxflresolution" VerticalAlignment="Center" />
+				<TextBox x:Name="pamxflresolution" Grid.Column="2" />
+				<Button x:Name="button_pamxflresolution" Grid.Column="4" Click="Entry_PamXflSize_Resolution_TextChanged" />
+			</Grid>
 			<Grid Margin="0 5 0 5">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />

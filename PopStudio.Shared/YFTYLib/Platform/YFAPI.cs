@@ -48,9 +48,7 @@
 
         public static void Pack(string inFile, string outFile, int format) => InternalYFAPI.InternalPack(inFile, outFile, format);
 
-        public static void DecodePam(string inFile, string outFile) => InternalYFAPI.InternalDecodePam(inFile, outFile);
-
-        public static void EncodePam(string inFile, string outFile) => InternalYFAPI.InternalEncodePam(inFile, outFile);
+        public static void Pam(string inFile, string outFile, int informat, int outformat) => InternalYFAPI.InternalPam(inFile, outFile, informat, outformat);
 
         public static void DecodeImage(string inFile, string outFile, int format) => InternalYFAPI.InternalDecodeImage(inFile, outFile, format);
 
@@ -194,10 +192,6 @@
             }
         }
 
-        public virtual void InternalDecodePam(string inFile, string outFile) => PopAnim.Pam.Decode(inFile, outFile);
-
-        public virtual void InternalEncodePam(string inFile, string outFile) => PopAnim.Pam.Encode(inFile, outFile);
-
         public virtual void InternalDecodeImage(string inFile, string outFile, int format)
         {
             switch (format)
@@ -212,6 +206,24 @@
                 case 7: Image.PtxPSV.Ptx.Decode(inFile, outFile); return;
                 case 8: Image.Xnb.Xnb.Decode(inFile, outFile); return;
                 default: throw new Exception(Str.Obj.TypeMisMatch);
+            }
+        }
+
+        public virtual void InternalPam(string inFile, string outFile, int informat, int outformat)
+        {
+            PopAnim.PopAnimInfo pam = informat switch
+            {
+                0 => PopAnim.PamBinary.Decode(inFile),
+                1 => PopAnim.PamJson.Decode(inFile),
+                2 => PopAnim.PamXfl.Decode(inFile),
+                _ => throw new NotImplementedException()
+            };
+            switch (outformat)
+            {
+                case 0: PopAnim.PamBinary.Encode(pam, outFile); break;
+                case 1: PopAnim.PamJson.Encode(pam, outFile); break;
+                case 2: PopAnim.PamXfl.Encode(pam, outFile, Setting.PamXflResolution); break;
+                default: throw new NotImplementedException();
             }
         }
 

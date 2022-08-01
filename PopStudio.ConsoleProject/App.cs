@@ -214,10 +214,10 @@ namespace PopStudio.ConsoleProject
                     YFAPI.ParseTrail(filePath, HandleRPTExtension(filePath, ".trail"), 7);
                     break;
                 case CommandCode.DecodePam:
-                    YFAPI.DecodePam(filePath, Path.ChangeExtension(filePath, ".pam.json"));
+                    YFAPI.Pam(filePath, Path.ChangeExtension(filePath, ".pam.json"), 0, 1);
                     break;
                 case CommandCode.EncodePam:
-                    YFAPI.EncodePam(filePath, Path.GetExtension(Path.GetFileNameWithoutExtension(filePath)).ToLower() == ".pam" ? Path.ChangeExtension(Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath)), ".pam") : Path.ChangeExtension(filePath, ".pam"));
+                    YFAPI.Pam(filePath, Path.GetExtension(Path.GetFileNameWithoutExtension(filePath)).ToLower() == ".pam" ? Path.ChangeExtension(Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath)), ".pam") : Path.ChangeExtension(filePath, ".pam"), 1, 0);
                     break;
                 case CommandCode.DecodeRTON_Simple:
                     YFAPI.DecodeRTON(filePath, Path.ChangeExtension(filePath, ".json"), 0);

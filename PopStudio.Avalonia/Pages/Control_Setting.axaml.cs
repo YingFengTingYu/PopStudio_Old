@@ -21,6 +21,7 @@ namespace PopStudio.Avalonia.Pages
             InitRTONKeySetting();
             InitImageStringSetting();
             InitXflSetting();
+            InitPamXflSetting();
             switch_ad.IsChecked = Setting.OpenProgramAD;
             Setting.CanSave = true;
         }
@@ -91,6 +92,10 @@ namespace PopStudio.Avalonia.Pages
             xflscalex = this.Get<TextBox>("xflscalex");
             label_xflscaley = this.Get<TextBlock>("label_xflscaley");
             xflscaley = this.Get<TextBox>("xflscaley");
+            label_itempamxfl = this.Get<TextBlock>("label_itempamxfl");
+            label_intropamxfl = this.Get<TextBlock>("label_intropamxfl");
+            label_pamxflresolution = this.Get<TextBlock>("label_pamxflresolution");
+            pamxflresolution = this.Get<TextBox>("pamxflresolution");
             label_ad = this.Get<TextBlock>("label_ad");
             switch_ad = this.Get<ToggleSwitch>("switch_ad");
             button_recover = this.Get<Button>("button_recover");
@@ -100,6 +105,7 @@ namespace PopStudio.Avalonia.Pages
             button_xflheight = this.Get<Button>("button_xflheight");
             button_xflscalex = this.Get<Button>("button_xflscalex");
             button_xflscaley = this.Get<Button>("button_xflscaley");
+            button_pamxflresolution = this.Get<Button>("button_pamxflresolution");
         }
 
         void LoadFont()
@@ -133,6 +139,9 @@ namespace PopStudio.Avalonia.Pages
             label_xflscalex.Text = MAUIStr.Obj.Setting_XflScaleX;
             label_xflscaley.Text = MAUIStr.Obj.Setting_XflScaleY;
             label_ad.Text = MAUIStr.Obj.Setting_AD;
+            label_itempamxfl.Text = MAUIStr.Obj.Setting_ItemPamXfl;
+            label_intropamxfl.Text = MAUIStr.Obj.Setting_IntroPamXfl;
+            label_pamxflresolution.Text = MAUIStr.Obj.Setting_PamXflResolution;
             button_compiled_1.Content = MAUIStr.Obj.Setting_Load;
             button_compiled_2.Content = MAUIStr.Obj.Setting_Unload;
             button_recover.Content = MAUIStr.Obj.Setting_Recover;
@@ -142,6 +151,7 @@ namespace PopStudio.Avalonia.Pages
             button_xflheight.Content = MAUIStr.Obj.Setting_Submit;
             button_xflscalex.Content = MAUIStr.Obj.Setting_Submit;
             button_xflscaley.Content = MAUIStr.Obj.Setting_Submit;
+            button_pamxflresolution.Content = MAUIStr.Obj.Setting_Submit;
         }
 
         private void Button_Dz_1_Clicked(object sender, RoutedEventArgs e)
@@ -540,6 +550,11 @@ namespace PopStudio.Avalonia.Pages
             Setting.SaveAsXml(Permission.GetSettingPath());
         }
 
+        void InitPamXflSetting()
+        {
+            pamxflresolution.Text = Setting.PamXflResolution.ToString();
+        }
+
         /// <summary>
         /// Xfl Setting Begin
         /// </summary>
@@ -579,6 +594,20 @@ namespace PopStudio.Avalonia.Pages
             try
             {
                 Setting.ReanimXflHeight = Convert.ToSingle(n);
+                Setting.SaveAsXml(Permission.GetSettingPath());
+            }
+            catch (Exception)
+            {
+                await PopupDialog.DisplayAlert(MAUIStr.Obj.Setting_InvalidData_Title, MAUIStr.Obj.Setting_InvalidData_Text, MAUIStr.Obj.Setting_OK);
+            }
+        }
+
+        private async void Entry_PamXflSize_Resolution_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string n = pamxflresolution.Text;
+            try
+            {
+                Setting.PamXflResolution = Convert.ToInt32(n);
                 Setting.SaveAsXml(Permission.GetSettingPath());
             }
             catch (Exception)

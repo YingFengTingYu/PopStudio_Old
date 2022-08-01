@@ -4,11 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>disable</Nullable>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	<!--<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>
-	<TrimMode>copyused</TrimMode>-->
+	<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>
+	<TrimMode>copyused</TrimMode>
 	<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
-	<TrimmerDefaultAction>link</TrimmerDefaultAction>
-	<TrimMode>link</TrimMode>
+	<!--<TrimmerDefaultAction>link</TrimmerDefaultAction>-->
+	<!--<TrimMode>link</TrimMode>-->
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
     <FileVersion>5.1</FileVersion>

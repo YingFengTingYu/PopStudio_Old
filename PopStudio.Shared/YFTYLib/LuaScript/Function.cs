@@ -263,36 +263,17 @@ namespace PopStudio.LuaScript
             }
         }
 
-        public static void DecodePam(params object[] args)
+        public static void Pam(params object[] args)
         {
             try
             {
-                object[] n = new object[2];
+                object[] n = new object[4];
                 int min = args.Length > n.Length ? n.Length : args.Length;
                 for (int i = 0; i < min; i++)
                 {
                     n[i] = args[i];
                 }
-                YFAPI.DecodePam(n[0]?.ToString(), n[1]?.ToString());
-            }
-            catch (Exception ex)
-            {
-                if (Script.luavm.ErrorThrow) throw;
-                else Print(ex.Message);
-            }
-        }
-
-        public static void EncodePam(params object[] args)
-        {
-            try
-            {
-                object[] n = new object[2];
-                int min = args.Length > n.Length ? n.Length : args.Length;
-                for (int i = 0; i < min; i++)
-                {
-                    n[i] = args[i];
-                }
-                YFAPI.EncodePam(n[0]?.ToString(), n[1]?.ToString());
+                YFAPI.Pam(n[0]?.ToString(), n[1]?.ToString(), Convert.ToInt32(n[2] ?? "-1"), Convert.ToInt32(n[3] ?? "-1"));
             }
             catch (Exception ex)
             {
