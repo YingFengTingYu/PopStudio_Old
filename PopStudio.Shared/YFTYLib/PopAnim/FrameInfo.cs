@@ -4,24 +4,24 @@
     {
         public string label { get; set; }
         public bool stop { get; set; }
-        public CommandsInfo[] command { get; set; }
-        public RemovesInfo[] remove { get; set; }
-        public AddsInfo[] append { get; set; }
-        public MovesInfo[] change { get; set; }
+        public List<CommandsInfo> command { get; set; }
+        public List<RemovesInfo> remove { get; set; }
+        public List<AddsInfo> append { get; set; }
+        public List<MovesInfo> change { get; set; }
 
         public void Write(BinaryStream bs, int version)
         {
             FrameFlags flags = 0;
-            if (remove != null && remove.Length > 0) flags |= FrameFlags.Removes;
-            if (append != null && append.Length > 0) flags |= FrameFlags.Adds;
-            if (change != null && change.Length > 0) flags |= FrameFlags.Moves;
+            if (remove != null && remove.Count > 0) flags |= FrameFlags.Removes;
+            if (append != null && append.Count > 0) flags |= FrameFlags.Adds;
+            if (change != null && change.Count > 0) flags |= FrameFlags.Moves;
             if (label != null) flags |= FrameFlags.FrameName;
             if (stop) flags |= FrameFlags.Stop;
-            if (command != null && command.Length > 0) flags |= FrameFlags.Commands;
+            if (command != null && command.Count > 0) flags |= FrameFlags.Commands;
             bs.WriteByte((byte)flags);
             if ((flags & FrameFlags.Removes) != 0)
             {
-                int count = remove.Length;
+                int count = remove.Count;
                 if (count < 255 && count >= 0)
                 {
                     bs.WriteByte((byte)count);
@@ -38,7 +38,7 @@
             }
             if ((flags & FrameFlags.Adds) != 0)
             {
-                int count = append.Length;
+                int count = append.Count;
                 if (count < 255 && count >= 0)
                 {
                     bs.WriteByte((byte)count);
@@ -55,7 +55,7 @@
             }
             if ((flags & FrameFlags.Moves) != 0)
             {
-                int count = change.Length;
+                int count = change.Count;
                 if (count < 255 && count >= 0)
                 {
                     bs.WriteByte((byte)count);
@@ -81,7 +81,7 @@
             if ((flags & FrameFlags.Commands) != 0)
             {
                 //Can't bigger than 255
-                int count = command.Length;
+                int count = command.Count;
                 if (count > 255) count = 255;
                 bs.WriteByte((byte)count);
                 for (int i = 0; i < count; i++)
@@ -94,6 +94,7 @@
         public FrameInfo Read(BinaryStream bs, int version)
         {
             FrameFlags flags = (FrameFlags)bs.ReadByte();
+            remove = new List<RemovesInfo>();
             if ((flags & FrameFlags.Removes) != 0)
             {
                 int count = bs.ReadByte();
@@ -101,16 +102,12 @@
                 {
                     count = bs.ReadInt16();
                 }
-                remove = new RemovesInfo[count];
                 for (int i = 0; i < count; i++)
                 {
-                    remove[i] = new RemovesInfo().Read(bs, version);
+                    remove.Add(new RemovesInfo().Read(bs, version));
                 }
             }
-            else
-            {
-                remove = Array.Empty<RemovesInfo>();
-            }
+            append = new List<AddsInfo>();
             if ((flags & FrameFlags.Adds) != 0)
             {
                 int count = bs.ReadByte();
@@ -118,16 +115,12 @@
                 {
                     count = bs.ReadInt16();
                 }
-                append = new AddsInfo[count];
                 for (int i = 0; i < count; i++)
                 {
-                    append[i] = new AddsInfo().Read(bs, version);
+                    append.Add(new AddsInfo().Read(bs, version));
                 }
             }
-            else
-            {
-                append = Array.Empty<AddsInfo>();
-            }
+            change = new List<MovesInfo>();
             if ((flags & FrameFlags.Moves) != 0)
             {
                 int count = bs.ReadByte();
@@ -135,15 +128,10 @@
                 {
                     count = bs.ReadInt16();
                 }
-                change = new MovesInfo[count];
                 for (int i = 0; i < count; i++)
                 {
-                    change[i] = new MovesInfo().Read(bs, version);
+                    change.Add(new MovesInfo().Read(bs, version));
                 }
-            }
-            else
-            {
-                change = Array.Empty<MovesInfo>();
             }
             if ((flags & FrameFlags.FrameName) != 0)
             {
@@ -153,18 +141,14 @@
             {
                 stop = true;
             }
+            command = new List<CommandsInfo>();
             if ((flags & FrameFlags.Commands) != 0)
             {
                 int num12 = bs.ReadByte();
-                command = new CommandsInfo[num12];
                 for (int m = 0; m < num12; m++)
                 {
-                    command[m] = new CommandsInfo().Read(bs, version);
+                    command.Add(new CommandsInfo().Read(bs, version));
                 }
-            }
-            else
-            {
-                command = Array.Empty<CommandsInfo>();
             }
             return this;
         }
@@ -324,6 +308,7 @@
             public static readonly int LongCoordsMinVersion = 5;
             public static readonly int MatrixMinVersion = 2;
 
+            [Flags]
             public enum MoveFlags
             {
                 SrcRect = 32768,
@@ -355,101 +340,31 @@
                     flags |= index;
                 }
                 MoveFlags f7 = 0;
-                if (transform == null || transform.Length < 2)
+                if (transform.Length == 6)
                 {
-                    if (version >= LongCoordsMinVersion)
-                    {
-                        bs.WriteInt32(0);
-                        bs.WriteInt32(0);
-                        f7 |= MoveFlags.LongCoords;
-                    }
-                    else
-                    {   
-                        bs.WriteInt16(0);
-                        bs.WriteInt16(0);
-                    }
+                    f7 |= MoveFlags.Matrix;
+                    bs.WriteInt32((int)(transform[0] * 65536));
+                    bs.WriteInt32((int)(transform[2] * 65536));
+                    bs.WriteInt32((int)(transform[1] * 65536));
+                    bs.WriteInt32((int)(transform[3] * 65536));
                 }
-                else if (transform.Length < 4)
+                else if (transform.Length == 3)
                 {
-                    int v0 = (int)(transform[0] * 20);
-                    int v1 = (int)(transform[1] * 20);
-                    if (version >= LongCoordsMinVersion)
-                    {
-                        bs.WriteInt32(v0);
-                        bs.WriteInt32(v1);
-                        f7 |= MoveFlags.LongCoords;
-                    }
-                    else
-                    {
-                        bs.WriteInt16((short)v0);
-                        bs.WriteInt16((short)v1);
-                    }
+                    f7 |= MoveFlags.Rotate;
+                    bs.WriteInt16((short)(transform[0] * 1000));
                 }
-                else if (transform.Length < 6)
+                int v0 = (int)(transform[^2] * 20);
+                int v1 = (int)(transform[^1] * 20);
+                if (version >= LongCoordsMinVersion)
                 {
-                    if (version >= MatrixMinVersion)
-                    {
-                        f7 |= MoveFlags.Matrix;
-                        bs.WriteInt32((int)(transform[0] * 65536));
-                        bs.WriteInt32((int)(transform[2] * 65536));
-                        bs.WriteInt32((int)(transform[1] * 65536));
-                        bs.WriteInt32((int)(transform[3] * 65536));
-                    }
-                    else
-                    {
-                        f7 |= MoveFlags.Rotate;
-                        double Rcos = Math.Acos(transform[0]);
-                        if (transform[1] * (version == 2 ? -1 : 1) < 0) //sin < 0 => cos + pi
-                        {
-                            Rcos = -Rcos;
-                        }
-                        bs.WriteInt16((short)(Rcos * 1000));
-                    }
-                    if (version >= LongCoordsMinVersion)
-                    {
-                        bs.WriteInt32(0);
-                        bs.WriteInt32(0);
-                        f7 |= MoveFlags.LongCoords;
-                    }
-                    else
-                    {
-                        bs.WriteInt16(0);
-                        bs.WriteInt16(0);
-                    }
+                    bs.WriteInt32(v0);
+                    bs.WriteInt32(v1);
+                    f7 |= MoveFlags.LongCoords;
                 }
                 else
                 {
-                    if (version >= MatrixMinVersion)
-                    {
-                        f7 |= MoveFlags.Matrix;
-                        bs.WriteInt32((int)(transform[0] * 65536));
-                        bs.WriteInt32((int)(transform[2] * 65536));
-                        bs.WriteInt32((int)(transform[1] * 65536));
-                        bs.WriteInt32((int)(transform[3] * 65536));
-                    }
-                    else
-                    {
-                        f7 |= MoveFlags.Rotate;
-                        double Rcos = Math.Acos(transform[0]);
-                        if (transform[1] * (version == 2 ? -1 : 1) < 0) //sin < 0 => cos + pi
-                        {
-                            Rcos = -Rcos;
-                        }
-                        bs.WriteInt16((short)(Rcos * 1000));
-                    }
-                    int v0 = (int)(transform[4] * 20);
-                    int v1 = (int)(transform[5] * 20);
-                    if (version >= LongCoordsMinVersion)
-                    {
-                        bs.WriteInt32(v0);
-                        bs.WriteInt32(v1);
-                        f7 |= MoveFlags.LongCoords;
-                    }
-                    else
-                    {
-                        bs.WriteInt16((short)v0);
-                        bs.WriteInt16((short)v1);
-                    }
+                    bs.WriteInt16((short)v0);
+                    bs.WriteInt16((short)v1);
                 }
                 if (src_rect != null && src_rect.Length >= 4)
                 {
@@ -499,18 +414,9 @@
                 }
                 else if ((f7 & MoveFlags.Rotate) != 0)
                 {
-                    transform = new double[6];
+                    transform = new double[3];
                     double num9 = bs.ReadInt16() / 1000d;
-                    double num10 = Math.Sin((double)num9);
-                    double num11 = Math.Cos((double)num9);
-                    if (version == 2)
-                    {
-                        num10 = -num10;
-                    }
-                    transform[0] = num11;
-                    transform[2] = -num10;
-                    transform[1] = num10;
-                    transform[3] = num11;
+                    transform[0] = num9;
                 }
                 else
                 {
