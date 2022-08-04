@@ -249,7 +249,7 @@
 
         //Pam
         public string Pam_Title => "Pam转码";
-        public string Pam_Introduction => "通过Pam转码功能，实现Pam动画文件和json文件的互相转换操作，来修改游戏动画！Pam版本号1-6的都支持！你还可以使用TwinKleS-ToolKit将生成的json文件转为xfl动画供Adobe Animate查看！";
+        public string Pam_Introduction => "通过Pam转码功能，实现Pam动画文件和json文件的互相转换操作，来修改游戏动画！";
         public string Pam_Mode1 => "解码模式";
         public string Pam_Mode2 => "编码模式";
         public string Pam_Choose1 => "请填写被解码的文件路径";
@@ -370,7 +370,7 @@
         public string HomePage_Course_String => "教学视频：";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "更新公告：";
-        public string HomePage_AppNewNotice => "1.支持批量转码文件；\n2.修复compiled Phone32/64编码导致图像名被清除的问题；\n3.修复cdat编码256字节及以下文件错误的问题。";
+        public string HomePage_AppNewNotice => "1.支持Pam Xfl转换；\n2.支持WebAssembly平台。";
         //Share
         public string Share_FileNotFound => "文件{0}不存在！";
         public string Share_FolderNotFound => "文件夹{0}不存在！";

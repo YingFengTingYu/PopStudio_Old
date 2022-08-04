@@ -249,7 +249,7 @@
 
         //Pam
         public string Pam_Title => "Pam";
-        public string Pam_Introduction => "Through PAM transcoding, you can convert PAM animation file and json file to modify game animation! Pam versions 1 to 6 are all supported! You can also use Twinkles-Toolkit to convert the generated JSON file into XFL animation for Adobe animation to view! ";
+        public string Pam_Introduction => "Through PAM transcoding, you can convert PAM animation file and json file to modify game animation! ";
         public string Pam_Mode1 => "Decode";
         public string Pam_Mode2 => "Encode";
         public string Pam_Choose1 => "The decoded file path";
@@ -370,7 +370,7 @@
         public string HomePage_Course_String => "Course Video:";
         public string HomePage_Course => "https://space.bilibili.com/411256864";
         public string HomePage_AppNewNotice_String => "Update announcement:";
-        public string HomePage_AppNewNotice => "1. Support batch transcoding files; \n2. Fix the bug that the image name is cleared by compiled phone32/64 format; \n3. Fix the bug of file errors with Cdat encoding of 256 bytes or less.";
+        public string HomePage_AppNewNotice => "1. Support pam xfl transcoding; \n2. Support WebAssembly platform. ";
         //Share
         public string Share_FileNotFound => "File {0} does not exist! ";
         public string Share_FolderNotFound => "Folder {0} does not exist! ";

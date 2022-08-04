@@ -134,14 +134,6 @@
                 <Label x:Name="label_xfllabelname" VerticalTextAlignment="Center" Grid.Row="8" />
                 <Picker x:Name="xfllabelname" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" />
             </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Label x:Name="label_ad" VerticalTextAlignment="Center" />
-                <Switch x:Name="switch_ad" Grid.Column="1" Toggled="Switch_AD_1_Toggled" />
-            </Grid>
             <Button x:Name="button_recover" Clicked="Button_ResetSetting_Clicked" />
         </StackLayout>
     </ScrollView>

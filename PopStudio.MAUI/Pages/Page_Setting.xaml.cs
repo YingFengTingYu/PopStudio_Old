@@ -36,7 +36,6 @@ namespace PopStudio.MAUI
             label_xfllabelname.Text = MAUIStr.Obj.Setting_XflLabelName;
             label_xflscalex.Text = MAUIStr.Obj.Setting_XflScaleX;
             label_xflscaley.Text = MAUIStr.Obj.Setting_XflScaleY;
-            label_ad.Text = MAUIStr.Obj.Setting_AD;
             button_compiled_1.Text = MAUIStr.Obj.Setting_Load;
             button_compiled_2.Text = MAUIStr.Obj.Setting_Unload;
             button_recover.Text = MAUIStr.Obj.Setting_Recover;
@@ -59,7 +58,6 @@ namespace PopStudio.MAUI
             InitRTONKeySetting();
             InitImageStringSetting();
             InitXflSetting();
-            switch_ad.IsToggled = Setting.OpenProgramAD;
             Setting.CanSave = true;
         }
 
@@ -604,12 +602,6 @@ namespace PopStudio.MAUI
 		private void button_chooselanguage_Clicked(object sender, EventArgs e)
 		{
 			ChangeLanguageSetting();
-		}
-
-		private void Switch_AD_1_Toggled(object sender, EventArgs e)
-		{
-			Setting.OpenProgramAD = ((Switch)sender).IsToggled;
-			Setting.SaveAsXml(Permission.GetSettingPath());
 		}
 	}
 

@@ -5,17 +5,6 @@
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
         <StackLayout Orientation="Vertical" Margin="30,24,30,24" Spacing="10">
             <Label x:Name="label_introduction" FontSize="16"/>
-            <Label x:Name="label_choosemode" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Label x:Name="label_mode1" VerticalOptions="Center" />
-                <Switch x:Name="TB_Mode" Grid.Column="1" Toggled="ToggleButton_Checked" />
-                <Label x:Name="label_mode2" Grid.Column="2" VerticalOptions="Center" />
-            </Grid>
             <Label x:Name="text1" />
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -36,6 +25,10 @@
                 <Entry x:Name="textbox2" />
                 <Button x:Name="button2" Grid.Column="2" Clicked="Button2_Clicked" />
             </Grid>
+            <Label x:Name="text_in" />
+            <Picker x:Name="CB_InMode" />
+            <Label x:Name="text_out" />
+            <Picker x:Name="CB_OutMode" />
             <Button x:Name="button_run" Clicked="Button_Click" />
             <Label x:Name="label_statue" />
             <Label x:Name="text4" />

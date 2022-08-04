@@ -80,7 +80,7 @@ namespace PopStudio.MAUI
         {
             InitializeComponent();
             LoadFont(true);
-            FlyoutBehavior = Permission.HiddenFlyout() ? FlyoutBehavior.Flyout : FlyoutBehavior.Locked;
+            FlyoutBehavior = FlyoutBehavior.Flyout;
             Permission.PlatformInit();
             MAUIStr.OnLanguageChanged += LoadFont;
         }

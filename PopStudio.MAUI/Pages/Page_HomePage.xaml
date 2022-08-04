@@ -3,29 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PopStudio.MAUI.Page_HomePage">
     <Grid>
-        <Grid IsVisible="False" ZIndex="2" x:Name="ProgramAD" BackgroundColor="{AppThemeBinding Light=#55000000, Dark=#55FFFFFF}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackLayout BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" Grid.Column="1" Grid.Row="1">
-                <Label Margin="10,10,10,0" x:Name="label_ad" FontSize="16" />
-                <ImageButton Margin="10,10,10,0" x:Name="image_ad" />
-                <Grid Margin="10,10,10,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button Margin="3,0,0,0" Grid.Column="1" x:Name="button_closead" Clicked="button_closead_Clicked" />
-                </Grid>
-            </StackLayout>
-        </Grid>
         <Grid IsVisible="False" ZIndex="3" x:Name="AndroidPermission" BackgroundColor="{AppThemeBinding Light=#55000000, Dark=#55FFFFFF}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

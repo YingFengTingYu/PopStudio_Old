@@ -9,10 +9,10 @@ namespace PopStudio.MAUI
         {
             Title = MAUIStr.Obj.Pam_Title;
             label_introduction.Text = MAUIStr.Obj.Pam_Introduction;
-            label_choosemode.Text = MAUIStr.Obj.Share_ChooseMode;
-            label_mode1.Text = MAUIStr.Obj.Pam_Mode1;
-            label_mode2.Text = MAUIStr.Obj.Pam_Mode2;
-            LoadFont_Checked(TB_Mode.IsToggled);
+            text1.Text = MAUIStr.Obj.Pam_Choose1;
+            text2.Text = MAUIStr.Obj.Pam_Choose2;
+            text_in.Text = MAUIStr.Obj.Pam_InFormat;
+            text_out.Text = MAUIStr.Obj.Pam_OutFormat;
             button1.Text = MAUIStr.Obj.Share_Choose;
             button2.Text = MAUIStr.Obj.Share_Choose;
             button_run.Text = MAUIStr.Obj.Share_Run;
@@ -25,6 +25,16 @@ namespace PopStudio.MAUI
 		{
 			InitializeComponent();
             LoadFont();
+            CB_InMode.Items.Clear();
+            CB_InMode.Items.Add("Raw_Binary");
+            CB_InMode.Items.Add("Studio_Json");
+            CB_InMode.Items.Add("Flash_Xfl");
+            CB_InMode.SelectedIndex = 0;
+            CB_OutMode.Items.Clear();
+            CB_OutMode.Items.Add("Raw_Binary");
+            CB_OutMode.Items.Add("Studio_Json");
+            CB_OutMode.Items.Add("Flash_Xfl");
+            CB_OutMode.SelectedIndex = 1;
             MAUIStr.OnLanguageChanged += LoadFont;
         }
 
@@ -33,35 +43,15 @@ namespace PopStudio.MAUI
             MAUIStr.OnLanguageChanged -= LoadFont;
         }
 
-        void LoadFont_Checked(bool v)
-        {
-            if (v)
-            {
-                text1.Text = MAUIStr.Obj.Pam_Choose4;
-                text2.Text = MAUIStr.Obj.Pam_Choose5;
-            }
-            else
-            {
-                text1.Text = MAUIStr.Obj.Pam_Choose1;
-                text2.Text = MAUIStr.Obj.Pam_Choose2;
-            }
-        }
-
-        private void ToggleButton_Checked(object sender, EventArgs e)
-		{
-            LoadFont_Checked(((Switch)sender).IsToggled);
-            (textbox1.Text, textbox2.Text) = (textbox2.Text, textbox1.Text);
-        }
-
         private void Button_Click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
             b.IsEnabled = false;
             text4.Text = MAUIStr.Obj.Share_Running;
-            bool mode = TB_Mode.IsToggled;
             string inFile = textbox1.Text;
             string outFile = textbox2.Text;
-            //int cmode = CB_CMode.SelectedIndex;
+            int inmode = CB_InMode.SelectedIndex;
+            int outmode = CB_OutMode.SelectedIndex;
             new Thread(new ThreadStart(() =>
             {
                 string err = null;
@@ -69,18 +59,21 @@ namespace PopStudio.MAUI
                 sw.Start();
                 try
                 {
-                    if (!File.Exists(inFile))
+                    if (inmode == 2)
                     {
-                        throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
-                    }
-                    if (mode == true)
-                    {
-                        YFAPI.EncodePam(inFile, outFile);
+                        if (!Directory.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FolderNotFound, inFile));
+                        }
                     }
                     else
                     {
-                        YFAPI.DecodePam(inFile, outFile);
+                        if (!File.Exists(inFile))
+                        {
+                            throw new Exception(string.Format(MAUIStr.Obj.Share_FileNotFound, inFile));
+                        }
                     }
+                    YFAPI.Pam(inFile, outFile, inmode, outmode);
                 }
                 catch (Exception ex)
                 {
@@ -106,26 +99,42 @@ namespace PopStudio.MAUI
 
 		private async void Button_Clicked(object sender, EventArgs e)
 		{
-			try
-			{
-				string val = await this.ChooseOpenFile(); //Can't default this
-                if (!string.IsNullOrEmpty(val)) textbox1.Text = val;
-			}
-			catch (Exception)
-			{
-			}
-		}
+            try
+            {
+                string val;
+                if (CB_InMode.SelectedIndex == 2)
+                {
+                    val = await this.ChooseFolder(); //Can't default this
+                }
+                else
+                {
+                    val = await this.ChooseOpenFile(); //Can't default this
+                }
+                if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
+            }
+            catch (Exception)
+            {
+            }
+        }
 
 		private async void Button2_Clicked(object sender, EventArgs e)
 		{
-			try
-			{
-				string val = await this.ChooseSaveFile(); //Can't default this
+            try
+            {
+                string val;
+                if (CB_OutMode.SelectedIndex == 2)
+                {
+                    val = await this.ChooseFolder(); //Can't default this
+                }
+                else
+                {
+                    val = await this.ChooseSaveFile(); //Can't default this
+                }
                 if (!string.IsNullOrEmpty(val)) textbox2.Text = val;
-			}
-			catch (Exception)
-			{
-			}
-		}
+            }
+            catch (Exception)
+            {
+            }
+        }
 	}
 }
