@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	<RuntimeIdentifiers>win-x86;win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm;linux-musl-arm64</RuntimeIdentifiers>
@@ -11,7 +11,7 @@
 	<!--<TrimMode>link</TrimMode>-->
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	<ApplicationIcon>Icon.ico</ApplicationIcon>
-    <FileVersion>5.1</FileVersion>
+    <FileVersion>6.0</FileVersion>
 	<AssemblyName>PopStudio</AssemblyName>
 	<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
 	

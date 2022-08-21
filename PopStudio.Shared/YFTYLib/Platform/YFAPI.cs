@@ -282,6 +282,7 @@
                 case 6: PopStudio.Reanim.ReanimJson.Encode(reanim, outFile); break;
                 case 7: PopStudio.Reanim.RawXml.Encode(reanim, outFile); break;
                 case 8: PopStudio.Reanim.FlashXfl.Encode(reanim, outFile); break;
+                case 9: PopStudio.Reanim.Godot.Encode(reanim, outFile); break;
                 default: throw new NotImplementedException();
             }
         }
@@ -391,6 +392,7 @@
                 case 6: PopStudio.Reanim.ReanimJson.Encode(reanim, outFile); break;
                 case 7: PopStudio.Reanim.RawXml.Encode(reanim, outFile); break;
                 case 8: PopStudio.Reanim.FlashXfl.Encode(reanim, outFile); break;
+                case 9: PopStudio.Reanim.Godot.Encode(reanim, outFile); break;
                 default: throw new NotImplementedException();
             }
         }

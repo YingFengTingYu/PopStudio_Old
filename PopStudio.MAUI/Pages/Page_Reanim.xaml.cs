@@ -44,6 +44,7 @@ namespace PopStudio.MAUI
             CB_OutMode.Items.Add("Studio_Json");
             CB_OutMode.Items.Add("Raw_Xml");
             CB_OutMode.Items.Add("Flash_Xfl_Folder");
+            CB_OutMode.Items.Add("Godot_Anim");
             CB_OutMode.SelectedIndex = 7;
             MAUIStr.OnLanguageChanged += LoadFont;
         }

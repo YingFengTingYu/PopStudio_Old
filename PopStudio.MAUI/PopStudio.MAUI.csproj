@@ -24,8 +24,8 @@
 		<ApplicationIdGuid>C84F4BA7-A986-43E3-96E7-AC7F24564FF1</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>5.1</ApplicationDisplayVersion>
-		<ApplicationVersion>20</ApplicationVersion>
+		<ApplicationDisplayVersion>6.0</ApplicationDisplayVersion>
+		<ApplicationVersion>21</ApplicationVersion>
 		<SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
@@ -37,6 +37,15 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
 	  <DefineConstants>$(DefineConstants)TRACE;ANDROID</DefineConstants>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <TrimMode>copyused</TrimMode>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <TrimMode>copyused</TrimMode>
+	  <PublishTrimmed>False</PublishTrimmed>
 	</PropertyGroup>
 
 	<ItemGroup>

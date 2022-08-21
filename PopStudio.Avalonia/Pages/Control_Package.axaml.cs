@@ -167,8 +167,8 @@ namespace PopStudio.Avalonia.Pages
                 string err = null;
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                //try
-                //{
+                try
+                {
                     if (mode == true)
                     {
                         if (!Directory.Exists(inFile))
@@ -185,11 +185,11 @@ namespace PopStudio.Avalonia.Pages
                         }
                         YFAPI.Unpack(inFile, outFile, pmode, c1, c2);
                     }
-                //}
-                //catch (Exception ex)
-                //{
-                //    err = ex.Message;
-                //}
+                }
+                catch (Exception ex)
+                {
+                    err = ex.Message;
+                }
                 sw.Stop();
                 decimal time = sw.ElapsedMilliseconds / 1000m;
                 Dispatcher.UIThread.InvokeAsync(() =>

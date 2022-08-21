@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BombLib\PopAnim\PamXfl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BombLib\Reanim\Godot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YFTYLib\Atlas\AncientXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YFTYLib\Atlas\NewXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YFTYLib\Atlas\ResRTON.cs" />

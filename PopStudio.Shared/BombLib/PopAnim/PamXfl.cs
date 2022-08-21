@@ -1233,6 +1233,7 @@ namespace PopStudio.PopAnim
             string path = outFolder + "/LIBRARY/media/";
             foreach (string p in pamInfo.image.Select((e) => path + e.name.Split("|")[0] + ".png"))
             {
+                Dir.NewDir(p, false);
                 if (!File.Exists(p))
                 {
                     using (FileStream fs = File.Create(p))

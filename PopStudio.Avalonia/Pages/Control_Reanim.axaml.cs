@@ -37,7 +37,8 @@ namespace PopStudio.Avalonia.Pages
                 "TV_Compiled",
                 "Studio_Json",
                 "Raw_Xml",
-                "Flash_Xfl_Folder"
+                "Flash_Xfl_Folder",
+                "Godot_Anim"
             };
             CB_OutMode.SelectedIndex = 7;
             MAUIStr.OnLanguageChanged += LoadFont;
@@ -155,6 +156,7 @@ namespace PopStudio.Avalonia.Pages
                         6 => ".reanim.json",
                         7 => ".reanim",
                         8 => ".xfl",
+                        9 => ".scn",
                         _ => null
                     };
                     if (batchmode)

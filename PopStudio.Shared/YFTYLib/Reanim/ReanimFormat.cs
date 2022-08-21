@@ -14,6 +14,7 @@ namespace PopStudio.Reanim
         TVCompiled,
         Json,
         RawXml,
-        FlashXfl
+        FlashXfl,
+        GodotAnim
     }
 }
